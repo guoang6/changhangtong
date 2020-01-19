@@ -2,10 +2,9 @@
   <div class="index">
         <!-- Start of Header -->
                 <div class="header-wrapper">
+                        
                         <header>
                                 <div class="container">
-
-
                                         <!-- Start of Main Navigation -->
                                         <nav class="main-nav">
                                                 <div class="menu-top-menu-container">
@@ -15,6 +14,7 @@
                                                                 <li><a href="home-categories-articles.html">活动</a></li>
                                                                 <li><a href="articles-list.html">失物品</a></li>
                                                                 <li><a href="faq.html">招聘信息</a></li>
+                                                                 <li><a href="#">二手信息</a></li>
                                                                 <li><a href="#">文章</a></li>
                                                                 <li><a href="#">个人中心</a></li>
                                                         </ul>
