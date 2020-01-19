@@ -3,12 +3,8 @@
     <!-- Start of Search Wrapper -->
     <div class="search-area-wrapper">
       <div class="search-area container">
-        <h3 class="search-header">昌航通</h3>
-        <p class="search-tag-line">
-          Information sharing and communication platform of Nanchang Hangkong University
-         , Makes information transfer easier
-        </p>
-
+       
+       
         <form
           id="search-form"
           class="search-form clearfix"
@@ -19,6 +15,10 @@
           <input class="search-btn" type="submit" value="发布信息" />
           <div id="search-error-container"></div>
         </form>
+        <p class="search-tag-line" style="margin-top:50px">
+          Information sharing and communication platform of Nanchang Hangkong University
+         , Makes information transfer easier
+        </p>
       </div>
     </div>
     <!-- End of Search Wrapper -->
