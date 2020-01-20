@@ -130,7 +130,23 @@ export default {
     },
     close () {
       this.i= !this.i
-    }
+    },
+    
+
+  // async registered() {
+
+      
+  //   const res=await this.$axios.post('webadmin/api/registered',this.model)
+  //   this.$messgae({
+  //     type:'success',
+  //     message:'创建成功'
+  //   })
+        
+  // }
+
+
+
+
   }
 };
 </script>
