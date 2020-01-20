@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <wrapper />
    
     <!-- Start of Page Container -->
     <div class="page-container">
@@ -27,7 +26,6 @@
 </template>
 <script>
 // @ is an alias to /src
-import wrapper from "@/components/wrapper.vue";
 import foot from "@/components/foot.vue";
 import job from "@/components/job.vue";
 import activity from "@/components/activity.vue";
@@ -37,7 +35,6 @@ import sidebar from "@/components/sidebar.vue";
 export default {
   name: "home",
   components: {
-    wrapper,
     foot,
     job,
     activity,

@@ -58,42 +58,25 @@
       </section>
 
       <section class="widget">
-        <h3 class="title">Categories</h3>
+        <h3 class="title">公司</h3>
         <ul>
           <li>
-            <a href="#" title="Lorem ipsum dolor sit amet,">Advanced Techniques</a>
+            <a href="#" title="Lorem ipsum dolor sit amet,">腾讯科技有限公司</a>
           </li>
           <li>
-            <a href="#" title="Lorem ipsum dolor sit amet,">Designing in WordPress</a>
-          </li>
-          <li>
-            <a href="#" title="Lorem ipsum dolor sit amet,">Server &amp; Database</a>
-          </li>
-          <li>
-            <a href="#" title="Lorem ipsum dolor sit amet, ">Theme Development</a>
-          </li>
-          <li>
-            <a href="#" title="Lorem ipsum dolor sit amet,">Website Dev</a>
-          </li>
-          <li>
-            <a href="#" title="Lorem ipsum dolor sit amet,">WordPress for Beginners</a>
-          </li>
-          <li>
-            <a href="#" title="Lorem ipsum dolor sit amet, ">WordPress Plugins</a>
+            <a href="#" title="Lorem ipsum dolor sit amet,">18栋小卖部有限公司</a>
           </li>
         </ul>
       </section>
 
       <section class="widget">
-        <h3 class="title">Recent Comments</h3>
+        <h3 class="title">岗位</h3>
         <ul id="recentcomments">
           <li class="recentcomments">
-            <a href="#" rel="external nofollow" class="url">John Doe</a> on
-            <a href="#">Integrating WordPress with Your Website</a>
+            <a href="#">前端开发工程师</a>
           </li>
           <li class="recentcomments">
-            saqib sarwar on
-            <a href="#">Integrating WordPress with Your Website</a>
+            <a href="#">Java开发工程师</a>
           </li>
           <li class="recentcomments">
             <a href="#" rel="external nofollow" class="url">John Doe</a> on
