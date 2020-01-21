@@ -8,8 +8,9 @@ import './assets/css/main5152.css'
 import './assets/css/red-skin5152.css'
 import './assets/css/responsive5152.css'
 import './assets/css/ali.css'
+import './plugins/element.js'
 // aiox需要的包
-import axios from 'axios'  
+import axios from 'axios'
 // axios.defaults.withCredentials = true
 //aciox基础url
 axios.defaults.baseURL = 'http://127.0.0.1:3000';
@@ -23,10 +24,12 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 //vue2中使用axios，我们请求的参数仍为json类型，是并没有序列化的。我们需要使用querystring解决该问题
 import qs from 'qs';
 Vue.prototype.qs = qs;
-
 Vue.config.productionTip = false
+
 //导入时间插件
 import moment from 'moment';
+
+
 //定义全局时间过滤器
 Vue.filter('dataFormat',function (datastr,pattern="YYYY-MM-DD HH:mm"){
   return moment(datastr).format(pattern)

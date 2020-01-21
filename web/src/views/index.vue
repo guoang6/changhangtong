@@ -54,16 +54,13 @@
             </select>
           </nav>
           <!-- End of Main Navigation -->
-          
         </div>
       </header>
     </div>
     <!-- End of Header -->
-<!-- Start of Search Wrapper -->
+    <!-- Start of Search Wrapper -->
     <div class="search-area-wrapper">
       <div class="search-area container">
-       
-       
         <form
           id="search-form"
           class="search-form clearfix"
@@ -71,12 +68,12 @@
           action="#"
           autocomplete="off"
         >
-          <input class="search-btn" type="submit" value="发布信息"  @click="close"/>
+          <input class="search-btn" type="submit" value="发布信息" @click="close" />
           <div id="search-error-container"></div>
         </form>
         <p class="search-tag-line" style="margin-top:50px">
           Information sharing and communication platform of Nanchang Hangkong University
-         , Makes information transfer easier
+          , Makes information transfer easier
         </p>
       </div>
     </div>
@@ -84,29 +81,31 @@
     <home />
     <!-- 弹窗组件 -->
     <div class="login" v-if="i">
-
-
-    <div id="mask"></div>
-    <div id="loginBox">
-      <h2>{{login?"网站登录":"新用户注册"}}</h2>
-      <div class="user">
-        账 号：
-        <input type="text" name="username" class="text" />
-      </div>
-      <div class="pass">
-        密 码：
-        <input type="password" name="password" class="text" />
-      </div>
-      <div class="button" v-if="login">
-        <input type="button" value="登录" class="submit" />
-      </div>
-      <div class="button" v-else>
-        <input type="button" value="注册" class="submit" />
-      </div>
-      <div class="other" @click="join">{{login?"注册新用户":"快去登录"}}</div>
-      <a class="iconfont" @click="close">&#xe608;</a>
-    </div>
+      <div id="mask"></div>
+      <div id="loginBox">
+        <h2>{{login?"网站登录":"新用户注册"}}</h2>
+        <div class="user">
+          账 号：
+          <input type="text" v-model="username" name="username" class="text" />
         </div>
+        <div class="pass">
+          密 码：
+          <input type="password" v-model="password" name="password" class="text" />
+        </div>
+        <div class="pass" v-if="!login">
+          确 认：
+          <input type="password" v-model="password1" name="password" class="text" />
+        </div>
+        <div class="button" v-if="login">
+          <input type="button" value="登录" class="submit" />
+        </div>
+        <div class="button" v-else>
+          <input type="button" value="注册" @click="   registered " class="submit" />
+        </div>
+        <div class="other" @click="join">{{login?"注册新用户":"快去登录"}}</div>
+        <a class="iconfont" @click="close">&#xe608;</a>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -118,35 +117,31 @@ export default {
   data() {
     return {
       login: true,
-      i:false,
+      i: false,
+      password: "",
+      password1: "",
+      username: ""
     };
   },
   components: {
-    home,
+    home
   },
-   methods: {
-    join () {
-      this.login = !this.login
+  methods: {
+    join() {
+      this.login = !this.login;
     },
-    close () {
-      this.i= !this.i
+    close() {
+      this.i = !this.i;
     },
-    
 
-  // async registered() {
-
-      
-  //   const res=await this.$axios.post('webadmin/api/registered',this.model)
-  //   this.$messgae({
-  //     type:'success',
-  //     message:'创建成功'
-  //   })
-        
-  // }
-
-
-
-
+    async registered() {
+      const model = {
+        password: this.password,
+        username: this.username
+      };
+      const res = await this.$axios.post("webadmin/api/registered", model);
+     console.log(res)
+    }
   }
 };
 </script>
@@ -172,7 +167,7 @@ export default {
   transform: translate(-50%, -50%); /*自己的50% */
   z-index: 1000;
   width: 380px;
-  height: 300px;
+  height: 330px;
   border: 1px solid #ccc;
   background-color: #fff;
   /* display: none;  */
