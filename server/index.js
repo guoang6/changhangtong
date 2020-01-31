@@ -1,11 +1,17 @@
-const express = require("express")
+var express = require('express')
+var bodyParser = require('body-parser')
 
-const app = express()
-app.use(require('cors')())
-app.use(express.json())
-require('./plugins/db')(app)
-require('./routers/webadmin')(app)
+const localPort = 3000
+var app = express()
 
-app.listen(3000,()=>{
-    console.log('http://127.0.0.1:3000')
+// create application/json parser
+var jsonParser = bodyParser.json()
+
+// create application/x-www-form-urlencoded parser
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
+// require('./routers/webadmin')(app)
+
+app.listen(localPort, () => {
+    console.log('启动成功')
 })

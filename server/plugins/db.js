@@ -1,17 +1,14 @@
-module.exports = app=>{
-    const mongoose= require('mongoose')
-    mongoose.set('useCreateIndex', true) 
-   mongoose.connect('mongodb://127.0.0.1:27017/changhangtong', {useNewUrlParser:true, useUnifiedTopology: true}, function(err){
-
-    　　if(err){
-    
-    　　　　console.log('Connection Error:' + err)
-    
-    　　}else{
-    
-    　　　　console.log('Connection success!')
-    
-    　　}
-    
-    })  
-}
+var mysql      = require('mysql');
+var connection = mysql.createConnection({
+  host     : '120.27.242.132',
+  user     : 'root',
+  password : 'Ga-384019118',
+  database : 'changhangtong'
+});
+ 
+connection.connect();
+ 
+connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
+  if (error) throw error;
+  console.log('The solution is: ', results[0].solution);
+});
