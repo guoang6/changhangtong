@@ -1,14 +1,23 @@
-var mysql      = require('mysql');
+var mysql = require('mysql');
+const DBini = require('./DataBase.ini')
+const dbmysql = DBini.dbmysql
+exports.base = (sql,data,callback) =>{
+
+
 var connection = mysql.createConnection({
-  host     : '120.27.242.132',
-  user     : 'root',
-  password : 'Ga-384019118',
-  database : 'changhangtong'
+  host: dbmysql.host,
+  user: dbmysql.user,
+  password: dbmysql.password,
+  database: dbmysql.database,
+  port: dbmysql.port
 });
  
 connection.connect();
  
-connection.query('SELECT 1 + 1 AS solution', function (error, results, fields) {
+connection.query(sql,data,function (error, results, fields) {
   if (error) throw error;
-  console.log('The solution is: ', results[0].solution);
+  callback(results)
+
 });
+connection.end();
+}

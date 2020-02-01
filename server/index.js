@@ -1,5 +1,6 @@
 var express = require('express')
 var bodyParser = require('body-parser')
+var router = require('./routers/webadmin')
 
 const localPort = 3000
 var app = express()
@@ -10,8 +11,10 @@ var jsonParser = bodyParser.json()
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-// require('./routers/webadmin')(app)
 
+app.use(jsonParser)
+app.use(urlencodedParser)
+app.use(router)
 app.listen(localPort, () => {
     console.log('启动成功')
 })
