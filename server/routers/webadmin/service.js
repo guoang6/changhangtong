@@ -1,8 +1,14 @@
 const db = require('../../plugins/db.js')
 exports.registered = (req,res) => {
-    let info = req.body
+    let info = {
+        username:req.body.username,
+        password:req.body.password
+    }
     let sql = 'insert into user set ?'
     db.base(sql,info,(result) =>{
-        res.send('chenggong')
+        let data={
+            type:'SUCCESS'
+        }
+        res.send(data)
     })
 }

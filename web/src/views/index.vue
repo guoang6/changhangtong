@@ -80,10 +80,10 @@
     <!-- End of Search Wrapper -->
     <home />
     <!-- 弹窗组件 -->
-    <div class="login" v-if="i">
+    <div class="login" v-if="isclose">
       <div id="mask"></div>
       <div id="loginBox">
-        <h2>{{login?"网站登录":"新用户注册"}}</h2>
+        <h2>{{islogin?"网站登录":"新用户注册"}}</h2>
         <div class="user">
           账 号：
           <input type="text" v-model="username" name="username" class="text" />
@@ -92,17 +92,17 @@
           密 码：
           <input type="password" v-model="password" name="password" class="text" />
         </div>
-        <div class="pass" v-if="!login">
+        <div class="pass" v-if="!islogin">
           确 认：
           <input type="password" v-model="password1" name="password" class="text" />
         </div>
-        <div class="button" v-if="login">
+        <div class="button" v-if="islogin">
           <input type="button" value="登录" class="submit" />
         </div>
         <div class="button" v-else>
           <input type="button" value="注册" @click="   registered " class="submit" />
         </div>
-        <div class="other" @click="join">{{login?"注册新用户":"快去登录"}}</div>
+        <div class="other" @click="join">{{islogin?"注册新用户":"快去登录"}}</div>
         <a class="iconfont" @click="close">&#xe608;</a>
       </div>
     </div>
@@ -116,8 +116,8 @@ export default {
   name: "index",
   data() {
     return {
-      login: true,
-      i: false,
+      islogin: true,
+      isclose: false,
       password: "",
       password1: "",
       username: ""
@@ -128,20 +128,88 @@ export default {
   },
   methods: {
     join() {
-      this.login = !this.login;
+      this.islogin = !this.islogin;
     },
     close() {
-      this.i = !this.i;
+      this.isclose = !this.isclose;
     },
 
-    async registered() {
-      const model = {
+    registered() {
+      const userReg = /^[1-9a-zA-Z]{1}[0-9a-zA-Z]{5,9}$/; //6-10位字母数字
+      const pwdReg = /^[a-zA-Z]\w{5,17}$/; //6-18位字母数字下划线 字母开头
+      if (
+        !userReg.test(this.username)
+      ) {
+        alert("账号为6-10位字母数字");
+        return;
+      }
+       if (
+        !pwdReg.test(this.password)
+      ) {
+        alert("密码为6-18位字母数字下划线 字母开头");
+        return;
+      }
+       if (
+        this.password!==this.password1
+      ) {
+        alert("两次密码不相等");
+        return;
+      }
+      let obj = {
         password: this.password,
         username: this.username
       };
-      const res = await this.$axios.post("webadmin/api/registered", model);
-     console.log(res)
-    }
+      this.$axios({
+        url: '/webadmin/registered',
+        method: "POST",
+        data: this.qs.stringify(obj)
+      })
+        .then(res => {
+          let data = res.data;
+          if (data.type !== "SUCCESS") {
+            if (data.type == "ERROR_PARAMS_EXIST") {
+              alert("用户已存在！请登录");
+            } else {
+              alert("注册失败");
+            }
+            return
+          }
+         alert("注册成功快去登录");
+         this.join()
+        })
+        .catch(e => {
+          alert(e);
+        });
+    },
+    // login() {
+    //   this.pwdhash = crypto
+    //     .createHash("sha1")
+    //     .update(this.password)
+    //     .digest("hex");
+    //   let this_ = this;
+    //   let obj = {
+    //     m: "login",
+    //     user: this_.user,
+    //     password: this_.pwdhash
+    //   };
+    //   axios({
+    //     url: CONST.baseUrl + "api",
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/x-www-form-urlencoded"
+    //     },
+    //     data: qs.stringify(obj)
+    //   })
+    //     .then(res => {
+    //       let data = res.data;
+    //       if (data.type === "SUCCESS") {
+    //         window.location.reload();
+    //       }
+    //     })
+    //     .catch(e => {
+    //       alert(e);
+    //     });
+    // }
   }
 };
 </script>
