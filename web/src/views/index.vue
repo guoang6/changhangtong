@@ -121,19 +121,12 @@ export default {
       password: "",
       password1: "",
       username: "",
-      Point:{ title: '成功',
-          message: '注册成功',
-          type: 'success'}
     };
   },
   components: {
    
   },
   methods: {
-    //提示弹窗
-    point() {
-        this.$notify(this.Point);
-      },
     join() {
       this.islogin = !this.islogin;
     },
@@ -147,20 +140,20 @@ export default {
       if (
         !userReg.test(this.username)
       ) {
-        alert("账号为6-10位字母数字");
+        this.$message("账号为6-10位字母数字");
         return;
       }
        if (
         !pwdReg.test(this.password)
       ) {
-        alert("密码为6-18位字母数字下划线 字母开头");
-        return;
+        this.$message("密码为6-18位字母数字下划线 字母开头")
+        return
       }
        if (
         this.password!==this.password1
       ) {
-        alert("两次密码不相等");
-        return;
+        this.$message("两次密码不相等")
+        return
       }
       let obj = {
         password: this.password,
@@ -172,29 +165,35 @@ export default {
         data: this.qs.stringify(obj)
       })
         .then(res => {
-          let data = res.data;
+          let data = res.data
           if (data.state.type !== "SUCCESS") {
             if (data.state.type == "ERROR_PARAMS_EXIST") {
-              this.point()
+               this.$message('用户名重复')
             } else {
-              alert("注册失败");
+               this.$message('注册失败');
             }
             return
           }
-         this.point()
+         this.$message('注册成功请登录');
          this.join()
         })
         .catch(e => {
           alert(e);
         });
     },
+    //登录
     login() {
+      if (
+        !this.password||!this.password1
+      ) {
+        this.$message("账号或者密码为空")
+        return
+      }
       // this.pwdhash = crypto
       //   .createHash("sha1")
       //   .update(this.password)
       //   .digest("hex");
       // let this_ = this;
-      console.log(111)
        let obj = {
         password: this.password,
         username: this.username
@@ -208,8 +207,8 @@ export default {
           let data = res.data;
           console.log(data)
           if (data.state.type === "SUCCESS") {
-            alert("登录成功")
-          }
+            this.$message("登录成功")
+          }else this.$message("用户名或密码错误")
         })
         .catch(e => {
           alert(e);

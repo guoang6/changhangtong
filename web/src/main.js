@@ -9,6 +9,10 @@ import './assets/css/red-skin5152.css'
 import './assets/css/responsive5152.css'
 import './assets/css/ali.css'
 import './plugins/element.js'
+//vuex
+import Vuex from 'vuex'
+import store from './store/index'
+Vue.use(Vuex)   
 // aiox需要的包
 import axios from 'axios'
 // axios.defaults.withCredentials = true
@@ -38,5 +42,6 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')
