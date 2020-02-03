@@ -15,8 +15,7 @@ var connection = mysql.createConnection({
 connection.connect();
  
 connection.query(sql,data,function (error, results, fields) {
-  if (error) throw error;
-  callback(results)
+  callback(results,error)
 
 });
 connection.end();

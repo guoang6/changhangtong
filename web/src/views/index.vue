@@ -13,33 +13,33 @@
           <nav class="main-nav">
             <div class="menu-top-menu-container">
               <ul id="menu-top-menu" class="clearfix">
-                <li class="current-menu-item">
-                  <a href="index-2.html">首页</a>
-                </li>
-                <li>
-                  <a href="home-categories-description.html">问答</a>
-                </li>
-                <li>
-                  <a href="home-categories-articles.html">活动</a>
-                </li>
-                <li>
-                  <a href="articles-list.html">失物品</a>
-                </li>
-                <li>
-                  <a href="faq.html">招聘信息</a>
-                </li>
-                <li>
-                  <a href="#">二手信息</a>
-                </li>
-                <li>
-                  <a href="#">文章</a>
-                </li>
-                <li>
-                  <a href="#" @click="close">登录</a>
-                </li>
-                <li>
-                  <a href="#">个人中心</a>
-                </li>
+                <router-link to="home" tag="li" exact-active-class="current-menu-item">
+                  <a>首页</a>
+                </router-link>
+              <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
+                  <a>问答</a>
+                </router-link>
+                <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
+                  <a>活动</a>
+              </router-link>
+                <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
+                  <a >失物品</a>
+                </router-link>
+                <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
+                  <a>招聘信息</a>
+              </router-link>
+              <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
+                  <a >二手信息</a>
+              </router-link>
+                <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
+                  <a >文章</a>
+              </router-link>
+              <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
+                  <a @click="close">登录</a>
+                </router-link>
+                <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
+                  <a>个人中心</a>
+                </router-link>
               </ul>
             </div>
             <select class="responsive-nav">
@@ -78,7 +78,7 @@
       </div>
     </div>
     <!-- End of Search Wrapper -->
-    <home />
+    <router-view/>
     <!-- 弹窗组件 -->
     <div class="login" v-if="isclose">
       <div id="mask"></div>
@@ -97,7 +97,7 @@
           <input type="password" v-model="password1" name="password" class="text" />
         </div>
         <div class="button" v-if="islogin">
-          <input type="button" value="登录" class="submit" />
+          <input type="button" @click="login"   value="登录" class="submit" />
         </div>
         <div class="button" v-else>
           <input type="button" value="注册" @click="   registered " class="submit" />
@@ -111,7 +111,7 @@
 
 <script>
 // @ is an alias to /src
-import home from "@/views/home.vue";
+// import home from "@/views/home.vue";
 export default {
   name: "index",
   data() {
@@ -120,13 +120,20 @@ export default {
       isclose: false,
       password: "",
       password1: "",
-      username: ""
+      username: "",
+      Point:{ title: '成功',
+          message: '注册成功',
+          type: 'success'}
     };
   },
   components: {
-    home
+   
   },
   methods: {
+    //提示弹窗
+    point() {
+        this.$notify(this.Point);
+      },
     join() {
       this.islogin = !this.islogin;
     },
@@ -166,50 +173,48 @@ export default {
       })
         .then(res => {
           let data = res.data;
-          if (data.type !== "SUCCESS") {
-            if (data.type == "ERROR_PARAMS_EXIST") {
-              alert("用户已存在！请登录");
+          if (data.state.type !== "SUCCESS") {
+            if (data.state.type == "ERROR_PARAMS_EXIST") {
+              this.point()
             } else {
               alert("注册失败");
             }
             return
           }
-         alert("注册成功快去登录");
+         this.point()
          this.join()
         })
         .catch(e => {
           alert(e);
         });
     },
-    // login() {
-    //   this.pwdhash = crypto
-    //     .createHash("sha1")
-    //     .update(this.password)
-    //     .digest("hex");
-    //   let this_ = this;
-    //   let obj = {
-    //     m: "login",
-    //     user: this_.user,
-    //     password: this_.pwdhash
-    //   };
-    //   axios({
-    //     url: CONST.baseUrl + "api",
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/x-www-form-urlencoded"
-    //     },
-    //     data: qs.stringify(obj)
-    //   })
-    //     .then(res => {
-    //       let data = res.data;
-    //       if (data.type === "SUCCESS") {
-    //         window.location.reload();
-    //       }
-    //     })
-    //     .catch(e => {
-    //       alert(e);
-    //     });
-    // }
+    login() {
+      // this.pwdhash = crypto
+      //   .createHash("sha1")
+      //   .update(this.password)
+      //   .digest("hex");
+      // let this_ = this;
+      console.log(111)
+       let obj = {
+        password: this.password,
+        username: this.username
+      };
+      this.$axios({
+        url: '/webadmin/login',
+        method: "POST",
+        data: this.qs.stringify(obj)
+      })
+        .then(res => {
+          let data = res.data;
+          console.log(data)
+          if (data.state.type === "SUCCESS") {
+            alert("登录成功")
+          }
+        })
+        .catch(e => {
+          alert(e);
+        });
+    }
   }
 };
 </script>

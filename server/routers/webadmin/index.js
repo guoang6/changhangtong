@@ -5,6 +5,8 @@
 
     //注册
     router.post ('/webadmin/registered', service.registered)
+    //登录
+    router.post ('/webadmin/login', service.login)
     
 
     module.exports = router
