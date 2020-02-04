@@ -61,16 +61,7 @@
     <!-- Start of Search Wrapper -->
     <div class="search-area-wrapper">
       <div class="search-area container">
-        <form
-          id="search-form"
-          class="search-form clearfix"
-          method="get"
-          action="#"
-          autocomplete="off"
-        >
-          <input class="search-btn" type="submit" value="发布信息" @click="close" />
-          <div id="search-error-container"></div>
-        </form>
+          <button class="header-btn">发布信息</button>
         <p class="search-tag-line" style="margin-top:50px">
           Information sharing and communication platform of Nanchang Hangkong University
           , Makes information transfer easier
@@ -219,6 +210,16 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.header-btn{
+    background-color: #2c696d;
+    font-size: 14px;
+    line-height: 19px;
+    font-weight: 600;
+    padding: 14px 30px 15px;
+    color: #fff;
+    display:table;
+    margin: 0 auto;
+    }
 #mask {
   position: fixed;
   z-index: 999;
