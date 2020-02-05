@@ -16,29 +16,29 @@
                 <router-link to="home" tag="li" exact-active-class="current-menu-item">
                   <a>首页</a>
                 </router-link>
-              <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
+                <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
                   <a>问答</a>
                 </router-link>
                 <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
                   <a>活动</a>
-              </router-link>
+                </router-link>
                 <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
-                  <a >失物品</a>
+                  <a>失物品</a>
                 </router-link>
                 <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
                   <a>招聘信息</a>
-              </router-link>
-              <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
-                  <a >二手信息</a>
-              </router-link>
-                <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
-                  <a >文章</a>
-              </router-link>
-              <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
-                  <a @click="close">登录</a>
                 </router-link>
                 <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
-                  <a>个人中心</a>
+                  <a>二手信息</a>
+                </router-link>
+                <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
+                  <a>文章</a>
+                </router-link>
+                <li v-if="islog">
+                  <a @click="close">登录</a>
+                </li>
+                <router-link v-else to="/adminhome" tag="li" exact-active-class="current-menu-item">
+                  <a>{{uname}}</a>
                 </router-link>
               </ul>
             </div>
@@ -61,7 +61,7 @@
     <!-- Start of Search Wrapper -->
     <div class="search-area-wrapper">
       <div class="search-area container">
-          <button class="header-btn">发布信息</button>
+        <button class="header-btn">发布信息</button>
         <p class="search-tag-line" style="margin-top:50px">
           Information sharing and communication platform of Nanchang Hangkong University
           , Makes information transfer easier
@@ -69,7 +69,7 @@
       </div>
     </div>
     <!-- End of Search Wrapper -->
-    <router-view/>
+    <router-view />
     <!-- 弹窗组件 -->
     <div class="login" v-if="isclose">
       <div id="mask"></div>
@@ -88,7 +88,7 @@
           <input type="password" v-model="password1" name="password" class="text" />
         </div>
         <div class="button" v-if="islogin">
-          <input type="button" @click="login"   value="登录" class="submit" />
+          <input type="button" @click="login" value="登录" class="submit" />
         </div>
         <div class="button" v-else>
           <input type="button" value="注册" @click="   registered " class="submit" />
@@ -101,8 +101,7 @@
 </template>
 
 <script>
-// @ is an alias to /src
-// import home from "@/views/home.vue";
+import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   name: "index",
   data() {
@@ -111,13 +110,17 @@ export default {
       isclose: false,
       password: "",
       password1: "",
-      username: "",
+      username: ""
     };
   },
-  components: {
-   
+  computed: {
+    ...mapState({
+      islog: state => state.user.islog,
+      uname: state => state.user.userinfo.uname
+    })
   },
   methods: {
+    ...mapActions('user', ['setUserInfo', 'changeislog']),
     join() {
       this.islogin = !this.islogin;
     },
@@ -128,81 +131,77 @@ export default {
     registered() {
       const userReg = /^[1-9a-zA-Z]{1}[0-9a-zA-Z]{5,9}$/; //6-10位字母数字
       const pwdReg = /^[a-zA-Z]\w{5,17}$/; //6-18位字母数字下划线 字母开头
-      if (
-        !userReg.test(this.username)
-      ) {
+      if (!userReg.test(this.username)) {
         this.$message("账号为6-10位字母数字");
         return;
       }
-       if (
-        !pwdReg.test(this.password)
-      ) {
-        this.$message("密码为6-18位字母数字下划线 字母开头")
-        return
+      if (!pwdReg.test(this.password)) {
+        this.$message("密码为6-18位字母数字下划线 字母开头");
+        return;
       }
-       if (
-        this.password!==this.password1
-      ) {
-        this.$message("两次密码不相等")
-        return
+      if (this.password !== this.password1) {
+        this.$message("两次密码不相等");
+        return;
       }
       let obj = {
         password: this.password,
         username: this.username
       };
       this.$axios({
-        url: '/webadmin/registered',
+        url: "/webadmin/registered",
         method: "POST",
         data: this.qs.stringify(obj)
       })
         .then(res => {
-          let data = res.data
+          let data = res.data;
           if (data.state.type !== "SUCCESS") {
             if (data.state.type == "ERROR_PARAMS_EXIST") {
-               this.$message('用户名重复')
+              this.$message("用户名重复");
             } else {
-               this.$message('注册失败');
+              this.$message("注册失败");
             }
-            return
+            return;
           }
-         this.$message('注册成功请登录');
-         this.join()
+          this.$message("注册成功请登录");
+          this.join();
         })
         .catch(e => {
-          alert(e);
+          this.$message(e);
         });
     },
     //登录
     login() {
-      if (
-        !this.password||!this.password1
-      ) {
-        this.$message("账号或者密码为空")
-        return
+      if (this.password == "" || this.password == "") {
+        this.$message("账号或者密码为空");
+        return;
       }
       // this.pwdhash = crypto
       //   .createHash("sha1")
       //   .update(this.password)
       //   .digest("hex");
       // let this_ = this;
-       let obj = {
+      let obj = {
         password: this.password,
         username: this.username
       };
       this.$axios({
-        url: '/webadmin/login',
+        url: "/webadmin/login",
         method: "POST",
         data: this.qs.stringify(obj)
       })
         .then(res => {
-          let data = res.data;
-          console.log(data)
-          if (data.state.type === "SUCCESS") {
-            this.$message("登录成功")
-          }else this.$message("用户名或密码错误")
+          let data = res.data.data.userinfo;
+          if (res.data.state.type === "SUCCESS") {
+            this.$message("登录成功");
+            // this.$store.user.dispatch("setUserInfo", data)
+            this.setUserInfo(data);
+            this.changeislog();
+            console.log(data);
+            this.close();
+          } else this.$message("用户名或密码错误");
         })
         .catch(e => {
-          alert(e);
+          this.$message(e);
         });
     }
   }
@@ -210,16 +209,16 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.header-btn{
-    background-color: #2c696d;
-    font-size: 14px;
-    line-height: 19px;
-    font-weight: 600;
-    padding: 14px 30px 15px;
-    color: #fff;
-    display:table;
-    margin: 0 auto;
-    }
+.header-btn {
+  background-color: #2c696d;
+  font-size: 14px;
+  line-height: 19px;
+  font-weight: 600;
+  padding: 14px 30px 15px;
+  color: #fff;
+  display: table;
+  margin: 0 auto;
+}
 #mask {
   position: fixed;
   z-index: 999;

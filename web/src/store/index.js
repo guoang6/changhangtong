@@ -1,26 +1,29 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import actions from './actions'
-import mutations from './mutations'
-import getters from './getter'
+import user from './modules/user'
 
 Vue.use(Vuex)
 
+
+
+const state = {
+}
+const getters = {
+//
+}
+const mutations = {
+  //
+}
+const actions = {
+//  
+}
 export default new Vuex.Store({
-    state: {
-        userInfo: {
-            user: '',
-            sex: '',
-            nickname: '',
-            icon: '',
-            createdTime: ''
-        },
-    },
+    state,
     actions,
     mutations,
     getters,
     modules: {
-    
+        user
     }
     
 })

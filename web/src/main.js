@@ -11,7 +11,7 @@ import './assets/css/ali.css'
 import './plugins/element.js'
 //vuex
 import Vuex from 'vuex'
-import store from './store/index'
+import store from './store'
 Vue.use(Vuex)   
 // aiox需要的包
 import axios from 'axios'
