@@ -10,19 +10,19 @@
         <i class="el-icon-s-shop"></i>
         <span slot="title">主页</span>
       </el-menu-item>
-      <el-menu-item index="4">
+      <el-menu-item index="7">
         <i class="el-icon-user-solid"></i>
         <span slot="title">个人中心</span>
       </el-menu-item>
-      <el-submenu index="1">
+      <el-submenu >
         <template slot="title">
           <i class="el-icon-location"></i>
           <span>问答</span>
         </template>
-          <el-menu-item index="1-4-1">提问</el-menu-item>
+          <el-menu-item index="/">提问</el-menu-item>
           <el-menu-item index="1-4-1">评论管理</el-menu-item>
       </el-submenu>
-       <el-submenu index="1" disabled>
+       <el-submenu  disabled>
         <template slot="title">
           <i class="el-icon-location"></i>
           <span>线下线上活动</span>
@@ -69,8 +69,8 @@
     color: #333;
   }
 .min{
-    width: 80%;
+    width: 70%;
     min-height: 500px;
-    margin-left: 10%;
+    margin-left: 15%;
 }
 </style>
