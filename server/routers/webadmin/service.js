@@ -1,6 +1,7 @@
 const db = require('../../plugins/db.js')
 const { md5 } = require('../../plugins/md5.js')
-const { PED_SALT } = require('../../plugins/config.js')
+const { PED_SALT, EXPIRE_SIN, PEIVATE_KEY } = require('../../plugins/config.js')
+var jwt = require('jsonwebtoken');
 let data
 const s = {
     "type": 'SUCCESS',
@@ -40,8 +41,9 @@ exports.registered = (req, res) => {
 }
 //登录
 exports.login = (req, res) => {
+    req.body.password = md5(`${req.body.password}${PED_SALT}`)
     let info = [req.body.username, req.body.password]
-    info.password = md5(`${info.password}${PED_SALT}`)
+
     let sql = 'select * from user where username=? and password=?'
     db.base(sql, info, (result) => {
         if (result.length == 0) {
@@ -51,9 +53,17 @@ exports.login = (req, res) => {
                 }
             }   //    数据库里面没找到配对的内容返回参数
         } else {
+            let uid = result[0].id
+            //通过jwt生成token     npm i -s jsonwebtoken
+            let token = jwt.sign(
+                { uid },
+                PEIVATE_KEY,
+                { expiresIn: EXPIRE_SIN }
+            )
             data = {
                 state: s,
                 data: {
+                    token: token,
                     userinfo: {
                         uid: result[0].id,
                         uname: result[0].username

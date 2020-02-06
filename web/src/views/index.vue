@@ -120,7 +120,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions('user', ['setUserInfo', 'changeislog']),
+    ...mapActions('user', ['setUserInfo', 'changeislog','setToken']),
     join() {
       this.islogin = !this.islogin;
     },
@@ -190,11 +190,12 @@ export default {
         data: this.qs.stringify(obj)
       })
         .then(res => {
-          let data = res.data.data.userinfo;
+          let data = res.data.data;
           if (res.data.state.type === "SUCCESS") {
             this.$message("登录成功");
             // this.$store.user.dispatch("setUserInfo", data)
-            this.setUserInfo(data);
+            this.setUserInfo(data.userinfo);
+            this.setToken(data.token);
             this.changeislog();
             console.log(data);
             this.close();

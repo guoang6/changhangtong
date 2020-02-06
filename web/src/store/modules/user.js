@@ -1,4 +1,4 @@
-
+import Cookies from 'js-cookie'
 const state = {
     islog: true,
     userinfo: {
@@ -12,20 +12,27 @@ const getters = {
 
 }
 const mutations = {
-    SET_USERINFO (state, data){
-         state.userinfo.uid = data.uid
-         state.userinfo.uname = data.uname
+    SET_USERINFO(state, data) {
+        state.userinfo.uid = data.uid
+        state.userinfo.uname = data.uname
     },
-    CHANGE_ISLOG(state){
+    CHANGE_ISLOG(state) {
         state.islog = !state.islog
-    }
+    },
+    SET_TOKEN(state, data) {
+        state.token = data
+        Cookies.set('token', state.token)
+    },
 }
 const actions = {
-    setUserInfo({ commit }, data){
+    setUserInfo({ commit }, data) {
         commit('SET_USERINFO', data)
     },
-    changeislog ({ commit }){
+    changeislog({ commit }) {
         commit('CHANGE_ISLOG')
+    },
+    setToken({ commit }, data) {
+        commit('SET_TOKEN', data)
     }
 }
 export default {
