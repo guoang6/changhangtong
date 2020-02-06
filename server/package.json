@@ -13,6 +13,7 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "express": "^5.0.0-alpha.7",
     "mongoose": "^5.8.9",
     "mysql": "github:mysqljs/mysql"

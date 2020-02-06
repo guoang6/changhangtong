@@ -13,7 +13,6 @@ const getters = {
 }
 const mutations = {
     SET_USERINFO (state, data){
-        console.log(data.uid)
          state.userinfo.uid = data.uid
          state.userinfo.uname = data.uname
     },

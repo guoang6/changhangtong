@@ -1,4 +1,6 @@
 const db = require('../../plugins/db.js')
+const {md5} = require('../../plugins/md5.js')
+const {PED_SALT} = require('../../plugins/config.js')
 let data
 const s = {
     "type": 'SUCCESS',
@@ -12,11 +14,13 @@ const ep = {
     "type": 'ERROR_PARAMS_EXIST',
     "msg": "用户名重复"
 }
+//注册
 exports.registered = (req, res) => {
     let info = {
         username: req.body.username,
         password: req.body.password
     }
+    info.password=md5(`${info.password}${PED_SALT}`)
     let sql = 'insert into user set ?'
     db.base(sql, info, (result, error) => {
         if (error && error.errno == 1062) {
