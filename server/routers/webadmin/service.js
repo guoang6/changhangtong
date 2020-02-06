@@ -1,6 +1,6 @@
 const db = require('../../plugins/db.js')
-const {md5} = require('../../plugins/md5.js')
-const {PED_SALT} = require('../../plugins/config.js')
+const { md5 } = require('../../plugins/md5.js')
+const { PED_SALT } = require('../../plugins/config.js')
 let data
 const s = {
     "type": 'SUCCESS',
@@ -20,7 +20,7 @@ exports.registered = (req, res) => {
         username: req.body.username,
         password: req.body.password
     }
-    info.password=md5(`${info.password}${PED_SALT}`)
+    info.password = md5(`${info.password}${PED_SALT}`)
     let sql = 'insert into user set ?'
     db.base(sql, info, (result, error) => {
         if (error && error.errno == 1062) {
@@ -41,6 +41,7 @@ exports.registered = (req, res) => {
 //登录
 exports.login = (req, res) => {
     let info = [req.body.username, req.body.password]
+    info.password = md5(`${info.password}${PED_SALT}`)
     let sql = 'select * from user where username=? and password=?'
     db.base(sql, info, (result) => {
         if (result.length == 0) {
