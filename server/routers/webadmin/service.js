@@ -17,6 +17,7 @@ const ep = {
 }
 //注册
 exports.registered = (req, res) => {
+    console.log(req)
     let info = {
         username: req.body.username,
         password: req.body.password

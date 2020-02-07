@@ -25,6 +25,11 @@ axios.defaults.baseURL = 'http://127.0.0.1:3000';
 Vue.prototype.$axios = axios;
 //为post请求设置默认请求头
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
+//
+// const luffy_jwt_token = window.localStorage.getItem('luffy_jwt_token');
+// axios.defaults.headers.common['Authorization'] = luffy_jwt_token;
+
+// axios.defaults.headers.common['Authorization'] =`Bearer ${luffy_jwt_token}`;
 //vue2中使用axios，我们请求的参数仍为json类型，是并没有序列化的。我们需要使用querystring解决该问题
 import qs from 'qs';
 Vue.prototype.qs = qs;

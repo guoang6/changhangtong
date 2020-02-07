@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie'
 const state = {
     islog: true,
     userinfo: {
@@ -21,7 +20,7 @@ const mutations = {
     },
     SET_TOKEN(state, data) {
         state.token = data
-        Cookies.set('token', state.token)
+        window.localStorage.setItem('luffy_jwt_token', state.token);
     },
 }
 const actions = {
