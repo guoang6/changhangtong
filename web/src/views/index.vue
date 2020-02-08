@@ -150,9 +150,12 @@ export default {
       this.$axios({
         url: "/webadmin/registered",
         method: "POST",
+        //  headers:{
+        //    'Content-Type':'application/x-www-form-urlencoded',
+        //    'Authorization': 'Bearer ' + window.localStorage.getItem('luffy_jwt_token')
+        //    },
         data: this.qs.stringify(obj)
-      })
-        .then(res => {
+      }).then(res => {
           let data = res.data;
           if (data.state.type !== "SUCCESS") {
             if (data.state.type == "ERROR_PARAMS_EXIST") {
