@@ -5,6 +5,7 @@ import home from "../views/home.vue"
 import adminindex from "../views/webadmin/adminindex.vue"
 import adminhome from "../views/webadmin/adminhome.vue"
 import createhelp from "../views/webadmin/help/createhelp.vue"
+import createactivity from "../views/webadmin/activity/createactivity.vue"
 Vue.use(VueRouter)
 
 const routes = [
@@ -19,6 +20,9 @@ const routes = [
           // { path: '*', redirect: 'admin/home', },
           { path: '/admin/home', name: 'adminhome', component: adminhome },
           { path: '/admin/createhelp', name: 'createhelp', component: createhelp },
+          { path: '/admin/createactivity', name: 'createactivity', component: createactivity },
+
+
         ]
       }
     ]
