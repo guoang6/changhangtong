@@ -6,6 +6,7 @@ module.exports = jwt({
 }).unless({
     path:[
         '/',
+        '/webadmin/registered',
         '/webadmin/login'
     ]
 })

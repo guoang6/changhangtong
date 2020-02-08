@@ -1,76 +1,65 @@
 <template>
-    <div class="adminhome">
-         <div class="min">
-              <el-container style="min-height: 500px;; border: 1px solid #eee">
-  <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-     <el-menu
-      default-active="2"
-      class="el-menu-vertical-demo">
-      <el-menu-item index="4">
-        <i class="el-icon-s-shop"></i>
-        <span slot="title">主页</span>
-      </el-menu-item>
-      <el-menu-item index="7">
-        <i class="el-icon-user-solid"></i>
-        <span slot="title">个人中心</span>
-      </el-menu-item>
-      <el-submenu >
-        <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>问答</span>
-        </template>
-          <el-menu-item index="/">提问</el-menu-item>
-          <el-menu-item index="1-4-1">评论管理</el-menu-item>
-      </el-submenu>
-       <el-submenu  disabled>
-        <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>线下线上活动</span>
-        </template>
-          <el-menu-item index="1-4-1">发布活动</el-menu-item>
-          <el-menu-item index="1-4-1">评论管理</el-menu-item>
-      </el-submenu>
-    </el-menu>
-  </el-aside>
-  
-  <el-container>
-    <el-main>
-     1111111111111111111111111111111111111111111111111111111
-    </el-main>
-  </el-container>
-</el-container>
-
-
-         </div>
-    </div>
+    
+<el-upload
+  class="avatar-uploader"
+  action="https://jsonplaceholder.typicode.com/posts/"
+  :show-file-list="false"
+  :on-success="handleAvatarSuccess"
+  :before-upload="beforeAvatarUpload">
+  <img v-if="imageUrl" :src="imageUrl" class="avatar">
+  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+</el-upload>
 </template>
+
+<style>
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+</style>
+
 <script>
   export default {
     data() {
-      const item = {
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      };
       return {
-        tableData: Array(20).fill(item)
+        imageUrl: ''
+      };
+    },
+    methods: {
+      handleAvatarSuccess(res, file) {
+        this.imageUrl = URL.createObjectURL(file.raw);
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
       }
     }
-  };
+  }
 </script>
-<style scoped>
-  .el-header {
-    background-color: #B3C0D1;
-    color: #333;
-    line-height: 60px;
-  }
-  
-  .el-aside {
-    color: #333;
-  }
-.min{
-    width: 70%;
-    min-height: 500px;
-    margin-left: 15%;
-}
-</style>

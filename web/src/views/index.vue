@@ -37,7 +37,7 @@
                 <li v-if="islog">
                   <a @click="close">登录</a>
                 </li>
-                <router-link v-else to="/adminhome" tag="li" exact-active-class="current-menu-item">
+                <router-link v-else to="/admin" tag="li" exact-active-class="current-menu-item">
                   <a>{{uname}}</a>
                 </router-link>
               </ul>
