@@ -4,6 +4,8 @@ const router = require('./routers/webadmin')
 
 const localPort = 3000
 const app = express()
+//静态文件文件
+app.use('uplodes',express.static(__dirname+'/uplodes'))//图片
 // 自定义跨域中间件
 var allowCors = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', req.headers.origin);

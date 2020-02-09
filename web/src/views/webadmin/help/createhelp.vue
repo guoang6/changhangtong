@@ -18,7 +18,7 @@
   </el-form-item>
    <el-form-item label="图片">
   <el-upload
-  action="https://jsonplaceholder.typicode.com/posts/"
+  :action="$axios.defaults.baseURL+'/uplod'"
   list-type="picture-card"
   :on-preview="handlePictureCardPreview"
   :on-remove="handleRemove">
@@ -38,6 +38,7 @@
 </template>
 
 <script>
+// import { mapState } from "vuex";
   export default {
     data() {
       return {
@@ -55,6 +56,11 @@
         }
       }
     },
+  //    computed: {
+  //   ...mapState({
+  //     uplod: state => state.uplod,
+  //   })
+  // },
     methods: {
       onSubmit() {
         console.log('submit!');

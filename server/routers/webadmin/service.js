@@ -76,3 +76,10 @@ exports.login = (req, res) => {
         res.send(data);
     })
 }
+//图片上传  
+exports.uplod = (req, res) => {
+    const file=req.file
+    file.url=`http://127.0.0.1:3000/uplodes/${file.filename}`
+    res.send(file)
+    
+}

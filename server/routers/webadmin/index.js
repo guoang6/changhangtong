@@ -13,6 +13,11 @@ router.use(function (err, req, res, next) {
       res.status(401).send('invalid token...');
     }
   });
+  //上传中间件
+const multer=require('multer')//上传npm i multer
+const uplod = multer({dest:__dirname+'/../../uplodes'})//
+//图片图片上传
+router.post('/uplod',uplod.single('file') ,service.uplod)
 //注册
 router.post('/webadmin/registered', service.registered)
 //登录

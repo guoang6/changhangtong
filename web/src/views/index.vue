@@ -101,7 +101,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
+import { mapState,  mapActions } from "vuex";
 export default {
   name: "index",
   data() {

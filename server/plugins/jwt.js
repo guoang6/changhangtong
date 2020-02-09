@@ -7,6 +7,7 @@ module.exports = jwt({
     path:[
         '/',
         '/webadmin/registered',
-        '/webadmin/login'
+        '/webadmin/login',
+        '/uplod',
     ]
 })
