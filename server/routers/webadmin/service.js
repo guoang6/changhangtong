@@ -88,13 +88,13 @@ exports.createhelp = (req, res) => {
     let info = {
         help_id: '',   //互助id 
         user_id: req.user.uid,//  用户di 
-        help_title: req.body.name,// 标题   
-        help_lable: req.body.type,// 标签
-        help_content: req.basc,//内容
+        help_title: req.body.help_title,// 标题   
+        help_lable: req.body.help_lable,// 标签
+        help_content: req.body.help_content,//内容  
+        help_img: req.body.help_img,//图片
         help_favour_num: 0,//点赞数    
         help_read_num: 0,//浏览量
         help_state: 0, //状态  
-        help_img: req.body.img,//图片
         help_istop: 0,//是否显示
         help_ispublic: 0,//是否置顶
     }

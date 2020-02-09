@@ -2,10 +2,10 @@
   <div class="crestehelp">
     <el-form ref="form" :model="form" label-width="80px" size="medium ">
       <el-form-item label="标题">
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="form.help_title"></el-input>
       </el-form-item>
       <el-form-item label="标签">
-        <el-checkbox-group v-model="form.type">
+        <el-checkbox-group v-model="form.help_lable">
           <el-checkbox label="学习" name="type"></el-checkbox>
           <el-checkbox label="生活" name="type"></el-checkbox>
           <el-checkbox label="娱乐" name="type"></el-checkbox>
@@ -13,7 +13,7 @@
         </el-checkbox-group>
       </el-form-item>
       <el-form-item label="内容">
-        <el-input type="textarea" v-model="form.desc" rows="8"></el-input>
+        <el-input type="textarea" v-model="form.help_content" rows="8"></el-input>
       </el-form-item>
       <el-form-item label="图片">
         <el-upload
@@ -45,10 +45,10 @@ export default {
       dialogImageUrl: "",
       dialogVisible: false,
       form: {
-        name: "",
-        type: [],
-        resource: "",
-        img: []
+        nahelp_titleme: "",
+        help_lable: [],
+        help_content: "",
+        help_img: []
       }
     };
   },
@@ -86,8 +86,9 @@ export default {
     },
     //文件上传成功时的钩子
     uplogsuccess(res) {
-      this.form.img = `${this.form.img}|${res.url}`;
-      console.log(this.form.img);
+      this.form.help_img = `${this.form.help_img}|${res.url}`;
+      // console.log(this.form.help_img); 
+      console.log(res.url)
     }
   }
 };
