@@ -20,7 +20,7 @@ const mutations = {
     },
     SET_TOKEN(state, data) {
         state.token = data
-        window.localStorage.setItem('luffy_jwt_token', state.token);
+        window.sessionStorage.setItem('luffy_jwt_token', state.token);
     },
 }
 const actions = {
