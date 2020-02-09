@@ -78,8 +78,25 @@ exports.login = (req, res) => {
 }
 //图片上传  
 exports.uplod = (req, res) => {
-    const file=req.file
-    file.url=`http://127.0.0.1:3000/uplodes/${file.filename}`
+    const file = req.file
+    file.url = `http://127.0.0.1:3000/uplodes/${file.filename}`
     res.send(file)
-    
+
+}
+//创建求助
+exports.createhelp = (req, res) => {
+    let info = {
+        help_id: '',   //互助id 
+        user_id: req.user.uid,//  用户di 
+        help_title: req.body.name,// 标题   
+        help_lable: req.body.type,// 标签
+        help_content: req.basc,//内容
+        help_favour_num: 0,//点赞数    
+        help_read_num: 0,//浏览量
+        help_state: 0, //状态  
+        help_img: req.body.img,//图片
+        help_istop: 0,//是否显示
+        help_ispublic: 0,//是否置顶
+    }
+    console.log(info)
 }

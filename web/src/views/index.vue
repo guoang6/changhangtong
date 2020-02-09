@@ -61,11 +61,22 @@
     <!-- Start of Search Wrapper -->
     <div class="search-area-wrapper">
       <div class="search-area container">
-        <button class="header-btn">发布信息</button>
+         <h3 class="search-header">changhangtong</h3>
+        <!-- <button class="header-btn">发布信息</button> -->
         <p class="search-tag-line" style="margin-top:50px">
           Information sharing and communication platform of Nanchang Hangkong University
           , Makes information transfer easier
         </p>
+
+        <form class="search-form clearfix" @submit.prevent="onSubmit" >
+          <input
+            class="search-term required"
+            type="text"
+            placeholder="Type your search terms here"
+          />
+          <input class="search-btn" type="submit" @click="search()" value="搜索" />
+          <div id="search-error-container"></div>
+        </form>
       </div>
     </div>
     <!-- End of Search Wrapper -->
@@ -101,7 +112,7 @@
 </template>
 
 <script>
-import { mapState,  mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
   name: "index",
   data() {
@@ -120,14 +131,19 @@ export default {
     })
   },
   methods: {
-    ...mapActions('user', ['setUserInfo', 'changeislog','setToken']),
+    ...mapActions("user", ["setUserInfo", "changeislog", "setToken"]),
     join() {
       this.islogin = !this.islogin;
     },
     close() {
       this.isclose = !this.isclose;
     },
-
+     onSubmit() {
+      return false;
+    },
+    search(){
+      console.log(111)
+    },
     registered() {
       const userReg = /^[1-9a-zA-Z]{1}[0-9a-zA-Z]{5,9}$/; //6-10位字母数字
       const pwdReg = /^[a-zA-Z]\w{5,17}$/; //6-18位字母数字下划线 字母开头
@@ -155,7 +171,8 @@ export default {
         //    'Authorization': 'Bearer ' + window.localStorage.getItem('luffy_jwt_token')
         //    },
         data: this.qs.stringify(obj)
-      }).then(res => {
+      })
+        .then(res => {
           let data = res.data;
           if (data.state.type !== "SUCCESS") {
             if (data.state.type == "ERROR_PARAMS_EXIST") {

@@ -22,6 +22,8 @@ router.post('/uplod',uplod.single('file') ,service.uplod)
 router.post('/webadmin/registered', service.registered)
 //登录
 router.post('/webadmin/login', service.login)
+//创建求助
+router.post('/webadmin/createhelp', service.createhelp)
 
 
 module.exports = router
