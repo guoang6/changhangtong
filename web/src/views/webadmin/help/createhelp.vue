@@ -6,10 +6,13 @@
         <el-input v-model="form.help_title"></el-input>
       </el-form-item>
       <el-form-item label="标签">
-
-          <el-radio  v-for="(item,id) in lable"
-            :key="id"
-            :class="'page_span_'+id " v-model="form.help_lable" :label="item">{{item}}</el-radio>
+        <el-radio
+          v-for="(item,id) in lable"
+          :key="id"
+          :class="'page_span_'+id "
+          v-model="form.help_lable"
+          :label="item"
+        >{{item}}</el-radio>
       </el-form-item>
       <el-form-item label="内容">
         <el-input type="textarea" v-model="form.help_content" rows="8"></el-input>
@@ -41,12 +44,12 @@
 export default {
   data() {
     return {
-      lable:['学习', '生活', '娱乐', '其他'],
+      lable: ["学习", "生活", "娱乐", "其他"],
       dialogImageUrl: "",
       dialogVisible: false,
       form: {
         nahelp_titleme: "",
-        help_lable:'',
+        help_lable: "",
         help_content: "",
         help_img: []
       }
@@ -59,21 +62,16 @@ export default {
   // },
   methods: {
     //发布
-    onSubmit() {
-      this.$axios({
-        url: "/webadmin/createhelp",
-        method: "POST",
-        data: this.qs.stringify(this.form)
-      })
-        .then(res => {
-          let data = res.data.data;
-          if (res.data.state.type === "SUCCESS") {
-            this.$message("成功");
-          } else this.$message("失败");
-        })
-        .catch(e => {
-          this.$message(e);
-        });
+    async onSubmit() {
+      const res = await this.$axios.post(
+        "/webadmin/createhelp",
+        this.qs.stringify(this.form)
+      );
+      let data = res.data.data;
+      if (res.data.state.type === "SUCCESS") {
+        this.$message("成功");
+        this.$router.push("/admin/createhelplist")
+      }
     },
     //文件列表移除文件时的钩子
     handleRemove(file, fileList) {
@@ -87,8 +85,8 @@ export default {
     //文件上传成功时的钩子
     uplogsuccess(res) {
       this.form.help_img = `${this.form.help_img}|${res.url}`;
-      // console.log(this.form.help_img); 
-      console.log(res.url)
+      // console.log(this.form.help_img);
+      console.log(res.url);
     }
   }
 };

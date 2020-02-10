@@ -19,7 +19,7 @@
                 <span>问答</span>
               </template>
               <el-menu-item index="/admin/createhelp">提问</el-menu-item>
-              <el-menu-item index="1-4-1">评论管理</el-menu-item>
+              <el-menu-item index="/admin/createhelplist">提问列表</el-menu-item>
             </el-submenu>
             <el-submenu index="2">
               <template slot="title">

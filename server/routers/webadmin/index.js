@@ -24,6 +24,6 @@ router.post('/webadmin/registered', service.registered)
 router.post('/webadmin/login', service.login)
 //创建求助
 router.post('/webadmin/createhelp', service.createhelp)
-
-
+//获取求助列表
+router.post('/webadmin/getwebhelplist', service.getwebhelplist)
 module.exports = router

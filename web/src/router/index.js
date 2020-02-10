@@ -5,6 +5,7 @@ import home from "../views/home.vue"
 import adminindex from "../views/webadmin/adminindex.vue"
 import adminhome from "../views/webadmin/adminhome.vue"
 import createhelp from "../views/webadmin/help/createhelp.vue"
+import createhelplist from "../views/webadmin/help/createhelplist.vue"
 import createactivity from "../views/webadmin/activity/createactivity.vue"
 import { Form } from 'element-ui'
 Vue.use(VueRouter)
@@ -21,6 +22,7 @@ const routes = [
           // { path: '*', redirect: 'admin/home', },
           { path: '/admin/home', name: 'adminhome', component: adminhome },
           { path: '/admin/createhelp', name: 'createhelp', component: createhelp },
+          { path: '/admin/createhelplist', name: 'createhelplist', component: createhelplist },
           { path: '/admin/createactivity', name: 'createactivity', component: createactivity },
         ]
       }

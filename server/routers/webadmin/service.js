@@ -99,8 +99,8 @@ exports.createhelp = (req, res) => {
         help_lable: req.body.help_lable,// 标签
         help_content: req.body.help_content,//内容  
         help_img: req.body.help_img,//图片
-        createtime: time,
-        updatetime:time,
+        createtime: time,//创建时间
+        updatetime:time,//更新时间
         help_favour_num: 0,//点赞数    
         help_read_num: 0,//浏览量
         help_state: 0, //状态  
@@ -114,5 +114,27 @@ exports.createhelp = (req, res) => {
                 data: {}
             }
         res.send(data)
+    })
+}
+//获取求助列表
+exports.getwebhelplist = (req, res) => {
+    let info = [req.user.uid]
+
+    let sql = 'select * from help where user_id=?'
+    db.base(sql, info, (result) => {
+        if (result.length == 0) {
+            data = {
+                state: s,
+                data: {
+                }
+            }   //    数据库里面没找到配对的内容返回参数
+        } else {
+            data = {
+                state: s,
+                data: result
+            }
+        }
+        console.log(result)
+        res.send(data);
     })
 }
