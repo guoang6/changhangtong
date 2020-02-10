@@ -22,6 +22,7 @@ const routes = [
           // { path: '*', redirect: 'admin/home', },
           { path: '/admin/home', name: 'adminhome', component: adminhome },
           { path: '/admin/createhelp', name: 'createhelp', component: createhelp },
+          { path: '/admin/updatehelp/:id', name: 'createhelp', component: createhelp ,props:true},
           { path: '/admin/createhelplist', name: 'createhelplist', component: createhelplist },
           { path: '/admin/createactivity', name: 'createactivity', component: createactivity },
         ]

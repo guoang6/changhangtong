@@ -1,6 +1,6 @@
 <template>
   <div class="crestehelp">
-    <h2>创建信息</h2>
+    <h2>{{id?'编辑':'创建' }}信息</h2>
     <el-form ref="form" :model="form" label-width="80px" size="medium ">
       <el-form-item label="标题">
         <el-input v-model="form.help_title"></el-input>
@@ -55,6 +55,9 @@ export default {
       }
     };
   },
+  props: {
+    id: {}
+  },
   //    computed: {
   //   ...mapState({
   //     uplod: state => state.uplod,
@@ -70,7 +73,7 @@ export default {
       let data = res.data.data;
       if (res.data.state.type === "SUCCESS") {
         this.$message("成功");
-        this.$router.push("/admin/createhelplist")
+        this.$router.push("/admin/createhelplist");
       }
     },
     //文件列表移除文件时的钩子
@@ -87,7 +90,22 @@ export default {
       this.form.help_img = `${this.form.help_img}|${res.url}`;
       // console.log(this.form.help_img);
       console.log(res.url);
+    },
+    async gethelpdetails() {
+      const res = await this.$axios.post(
+        "/webadmin/gethelpdetails",
+        this.qs.stringify({ id: this.id })
+      );
+      let data = res.data.data;
+      console.log(data)
+      this.form.help_title = data.help_title;
+      this.form.help_lable = data.help_lable;
+      this.form.help_content = data.help_content;
+      this.form.help_img = data.help_img;
     }
+  },
+  created() {
+    this.id && this.gethelpdetails();
   }
 };
 </script>

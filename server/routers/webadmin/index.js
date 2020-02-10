@@ -26,4 +26,27 @@ router.post('/webadmin/login', service.login)
 router.post('/webadmin/createhelp', service.createhelp)
 //获取求助列表
 router.post('/webadmin/getwebhelplist', service.getwebhelplist)
+//求助详情
+router.post('/webadmin/gethelpdetails', service.gethelpdetails)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 module.exports = router

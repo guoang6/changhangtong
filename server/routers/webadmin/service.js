@@ -1,7 +1,7 @@
 const db = require('../../plugins/db.js')
 const { md5 } = require('../../plugins/md5.js')
 
-var uuid = require('node-uuid');
+var uuid = require('node-uuid');//npm install node-uuid
 
 const { PED_SALT, EXPIRE_SIN, PEIVATE_KEY } = require('../../plugins/config.js')
 var jwt = require('jsonwebtoken');
@@ -9,7 +9,7 @@ let data
 const s = {
     "type": 'SUCCESS',
     "msg": "操作成功"
-}
+} 
 const e = {
     "type": 'ERROE',
     "msg": "操作失败"
@@ -138,3 +138,48 @@ exports.getwebhelplist = (req, res) => {
         res.send(data);
     })
 }
+//求助详情
+exports.gethelpdetails = (req, res) => {
+    console.log(req.body)
+    let info = [req.body.id]
+    let sql = 'select * from help where help_id=?'
+    db.base(sql, info, (result) => {
+        if (result.length == 0) {
+            data = {
+                state: e,
+                data: {
+                }
+            }
+        } else {
+            data = {
+                state: s,
+                data:result[0]
+            }
+        }
+        console.log(result)
+        res.send(data);
+    })
+}
+
+// exports.aaa = (req, res) => {
+//     let info = [req.body.username, req.body.password]
+
+//     let sql = 'select * from user where username=? and password=?'
+//     db.base(sql, info, (result) => {
+//         if (result.length == 0) {
+//             data = {
+//                 state: e,
+//                 data: {
+//                 }
+//             }
+//         } else {
+//             data = {
+//                 state: s,
+//                 data: {
+//                 }
+//             }
+//         }
+//         console.log(result)
+//         res.send(data);
+//     })
+// }

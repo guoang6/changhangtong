@@ -15,6 +15,7 @@ var connection = mysql.createConnection({
 connection.connect();
 
 connection.query(sql,data,function (error, results, fields) {
+  debug &&console.log('查询语句:'+JSON.stringify(sql))
   if(error){
     debug &&console.log('数据库操作失败:'+JSON.stringify(error))
   }
