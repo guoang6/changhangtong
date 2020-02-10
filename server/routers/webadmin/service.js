@@ -1,5 +1,8 @@
 const db = require('../../plugins/db.js')
 const { md5 } = require('../../plugins/md5.js')
+
+var uuid = require('node-uuid');
+
 const { PED_SALT, EXPIRE_SIN, PEIVATE_KEY } = require('../../plugins/config.js')
 var jwt = require('jsonwebtoken');
 let data
@@ -19,8 +22,9 @@ const ep = {
 exports.registered = (req, res) => {
     console.log(req)
     let info = {
-        username: req.body.username,
-        password: req.body.password
+        user_id: uuid.v1(),   //用户id 
+        username: req.body.username,//用户名
+        password: req.body.password,//密码
     }
     info.password = md5(`${info.password}${PED_SALT}`)
     let sql = 'insert into user set ?'
@@ -54,7 +58,8 @@ exports.login = (req, res) => {
                 }
             }   //    数据库里面没找到配对的内容返回参数
         } else {
-            let uid = result[0].id
+            console.log(result[0].user_id)
+            let uid = result[0].user_id
             //通过jwt生成token     npm i -s jsonwebtoken
             let token = jwt.sign(
                 { uid },
@@ -85,18 +90,29 @@ exports.uplod = (req, res) => {
 }
 //创建求助
 exports.createhelp = (req, res) => {
+    // console.log(req)
+    let time = Date.now()-8*60*60
     let info = {
-        help_id: '',   //互助id 
+        help_id: uuid.v1(),   //互助id 
         user_id: req.user.uid,//  用户di 
         help_title: req.body.help_title,// 标题   
         help_lable: req.body.help_lable,// 标签
         help_content: req.body.help_content,//内容  
         help_img: req.body.help_img,//图片
+        createtime: time,
+        updatetime:time,
         help_favour_num: 0,//点赞数    
         help_read_num: 0,//浏览量
         help_state: 0, //状态  
         help_istop: 0,//是否显示
         help_ispublic: 0,//是否置顶
     }
-    console.log(info)
+    let sql = 'insert into help set ?'
+    db.base(sql, info, (result, error) => {
+            data = {
+                state: s,
+                data: {}
+            }
+        res.send(data)
+    })
 }

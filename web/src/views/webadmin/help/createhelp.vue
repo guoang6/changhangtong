@@ -1,16 +1,15 @@
 <template>
   <div class="crestehelp">
+    <h2>创建信息</h2>
     <el-form ref="form" :model="form" label-width="80px" size="medium ">
       <el-form-item label="标题">
         <el-input v-model="form.help_title"></el-input>
       </el-form-item>
       <el-form-item label="标签">
-        <el-checkbox-group v-model="form.help_lable">
-          <el-checkbox label="学习" name="type"></el-checkbox>
-          <el-checkbox label="生活" name="type"></el-checkbox>
-          <el-checkbox label="娱乐" name="type"></el-checkbox>
-          <el-checkbox label="其他" name="type"></el-checkbox>
-        </el-checkbox-group>
+
+          <el-radio  v-for="(item,id) in lable"
+            :key="id"
+            :class="'page_span_'+id " v-model="form.help_lable" :label="item">{{item}}</el-radio>
       </el-form-item>
       <el-form-item label="内容">
         <el-input type="textarea" v-model="form.help_content" rows="8"></el-input>
@@ -42,11 +41,12 @@
 export default {
   data() {
     return {
+      lable:['学习', '生活', '娱乐', '其他'],
       dialogImageUrl: "",
       dialogVisible: false,
       form: {
         nahelp_titleme: "",
-        help_lable: [],
+        help_lable:'',
         help_content: "",
         help_img: []
       }
