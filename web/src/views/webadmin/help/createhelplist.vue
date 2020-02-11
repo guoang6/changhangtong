@@ -7,7 +7,11 @@
     <el-table-column prop="help_lable" label="类型"></el-table-column>
     <el-table-column fixed="right" label="操作" width="100">
       <template slot-scope="scope">
-        <el-button @click="$router.push(`/admin/updatehelp/${scope.row.help_id}`) " type="text" size="small">编辑</el-button>
+        <el-button
+          @click="$router.push(`/admin/updatehelp/${scope.row.help_id}`) "
+          type="text"
+          size="small"
+        >编辑</el-button>
         <el-button type="text" size="small">删除</el-button>
       </template>
     </el-table-column>
@@ -24,7 +28,9 @@ export default {
   methods: {
     async gethelplist() {
       const res = await this.$axios.post("/webadmin/getwebhelplist");
-      this.tableData=res.data.data;
+      if (res.data.state.type === "SUCCESS") {
+        this.tableData = res.data.data;
+      }
     }
   },
   created() {

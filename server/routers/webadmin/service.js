@@ -9,7 +9,7 @@ let data
 const s = {
     "type": 'SUCCESS',
     "msg": "操作成功"
-} 
+}
 const e = {
     "type": 'ERROE',
     "msg": "操作失败"
@@ -91,7 +91,7 @@ exports.uplod = (req, res) => {
 //创建求助
 exports.createhelp = (req, res) => {
     // console.log(req)
-    let time = Date.now()-8*60*60
+    let time = Date.now() - 8 * 60 * 60
     let info = {
         help_id: uuid.v1(),   //互助id 
         user_id: req.user.uid,//  用户di 
@@ -100,7 +100,7 @@ exports.createhelp = (req, res) => {
         help_content: req.body.help_content,//内容  
         help_img: req.body.help_img,//图片
         createtime: time,//创建时间
-        updatetime:time,//更新时间
+        updatetime: time,//更新时间
         help_favour_num: 0,//点赞数    
         help_read_num: 0,//浏览量
         help_state: 0, //状态  
@@ -109,22 +109,22 @@ exports.createhelp = (req, res) => {
     }
     let sql = 'insert into help set ?'
     db.base(sql, info, (result, error) => {
-            data = {
-                state: s,
-                data: {}
-            }
+
+        data = {
+            state: s,
+            data: {}
+        }
         res.send(data)
     })
 }
 //获取求助列表
 exports.getwebhelplist = (req, res) => {
     let info = [req.user.uid]
-
     let sql = 'select * from help where user_id=?'
     db.base(sql, info, (result) => {
         if (result.length == 0) {
             data = {
-                state: s,
+                state: e,
                 data: {
                 }
             }   //    数据库里面没找到配对的内容返回参数
@@ -134,7 +134,8 @@ exports.getwebhelplist = (req, res) => {
                 data: result
             }
         }
-        console.log(result)
+        // console.log(data)
+        // console.log(result)
         res.send(data);
     })
 }
@@ -153,7 +154,38 @@ exports.gethelpdetails = (req, res) => {
         } else {
             data = {
                 state: s,
-                data:result[0]
+                data: result[0]
+            }
+        }
+        console.log(result)
+        res.send(data);
+    })
+}
+//修改求助
+exports.updateehelp = (req, res) => {
+    console.log(req.user)
+    let info = [
+        req.body.help_title,
+        req.body.help_lable,
+        req.body.help_content,
+        req.body.help_img,
+        req.user.uid,
+        req.body.id]
+
+    let sql = 'update help set help_title =?, help_lable=?,help_content=?,help_img=? where user_id =?and help_id=?'
+
+    // let sql = `update help set help_title ='${req.body.help_title}', help_lable='${req.body.help_lable}' ,help_content='${req.body.help_content}',help_img='${req.body.help_img}',where user_id = '${req.user.uid}'and help_id='${req.body.id}'`
+    db.base(sql, info, (result) => {
+        if (result.length == 0) {
+            data = {
+                state: e,
+                data: {
+                }
+            }
+        } else {
+            data = {
+                state: s,
+                data: result[0]
             }
         }
         console.log(result)
