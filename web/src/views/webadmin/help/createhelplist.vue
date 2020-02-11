@@ -20,7 +20,6 @@
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="currentPage4"
       :page-sizes="[10, 20, 50, 100]"
       :page-size="pagelistquery.pagesize"
       layout="total, sizes, prev, pager, next, jumper"
@@ -37,7 +36,6 @@ export default {
         total:0,
         page: 1,
         pagesize: 10,
-        currentPage4: 4
       },
       tableData: []
     };
