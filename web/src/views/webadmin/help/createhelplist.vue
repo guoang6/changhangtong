@@ -33,34 +33,39 @@
 export default {
   data() {
     return {
-      pagelistquery:{
-      total:21,
-      page:1,
-      pagesize:10,
-      currentPage4: 4,
+      pagelistquery: {
+        total:0,
+        page: 1,
+        pagesize: 10,
+        currentPage4: 4
       },
       tableData: []
     };
   },
   methods: {
     handleSizeChange(val) {
-      this.pagelistquery.pagesize=val
-      this.gethelplist()
+      this.pagelistquery.pagesize = val;
+      this.gethelplist();
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
-      this.pagelistquery.page=val
-      this.gethelplist()
+      this.pagelistquery.page = val;
+      this.gethelplist();
       console.log(`当前页: ${val}`);
     },
     async gethelplist() {
-      let data={
-        page : this.pagelistquery.page,
-        pagesize:this.pagelistquery.pagesize
-      }
-      let res = await this.$axios.post("/webadmin/getwebhelplist", this.qs.stringify(data));
+      let data = {
+        page: this.pagelistquery.page,
+        pagesize: this.pagelistquery.pagesize
+      };
+      let res = await this.$axios.post(
+        "/webadmin/getwebhelplist",
+        this.qs.stringify(data)
+      );
       if (res.data.state.type === "SUCCESS") {
         this.tableData = res.data.data;
+        console.log(res.data)
+        this.pagelistquery.total=res.data.count
       }
     }
   },
