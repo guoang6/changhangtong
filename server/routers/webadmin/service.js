@@ -118,9 +118,15 @@ exports.createhelp = (req, res) => {
     })
 }
 //获取求助列表
-exports.getwebhelplist = (req, res) => {
-    let info = [req.user.uid]
-    let sql = 'select * from help where user_id=?'
+exports.getwebhelplist = async (req, res) => {
+    let count
+    let sql1 = ' select count(*) as count from help where user_id=?'
+    let info1 = [req.user.uid]
+    db.base(sql1, info1, (result) => { count = result[0].count })
+    let page = (req.body.page - 1) * req.body.pagesize
+    let pagesize = req.body.pagesize * 1
+    let info = [req.user.uid, pagesize, page]
+    let sql = 'select * from help where user_id=? limit ? offset ?'
     db.base(sql, info, (result) => {
         if (result.length == 0) {
             data = {
@@ -131,13 +137,17 @@ exports.getwebhelplist = (req, res) => {
         } else {
             data = {
                 state: s,
-                data: result
+                data: result,
+                count: count
             }
         }
-        // console.log(data)
+
+        console.log(data)
         // console.log(result)
         res.send(data);
     })
+
+
 }
 //求助详情
 exports.gethelpdetails = (req, res) => {
