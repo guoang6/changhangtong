@@ -21,12 +21,11 @@
       </div>
     </div>
     <!-- End of Page Container -->
-    <foot />
+   
   </div>
 </template>
 <script>
 // @ is an alias to /src
-import foot from "@/components/foot.vue";
 import job from "@/components/job.vue";
 import activity from "@/components/activity.vue";
 import news from "@/components/news.vue";
@@ -35,7 +34,6 @@ import sidebar from "@/components/sidebar.vue";
 export default {
   name: "home",
   components: {
-    foot,
     job,
     activity,
     news,

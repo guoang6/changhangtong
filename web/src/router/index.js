@@ -2,11 +2,14 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import index from '../views/index.vue'
 import home from "../views/home.vue"
+import help from "../views/help.vue"
+
 import adminindex from "../views/webadmin/adminindex.vue"
 import adminhome from "../views/webadmin/adminhome.vue"
 import createhelp from "../views/webadmin/help/createhelp.vue"
 import createhelplist from "../views/webadmin/help/createhelplist.vue"
 import createactivity from "../views/webadmin/activity/createactivity.vue"
+
 import { Form } from 'element-ui'
 Vue.use(VueRouter)
 
@@ -16,6 +19,7 @@ const routes = [
     path: '/index', name: 'index', component: index, redirect: '/home',meta:{ispublic:true}, children: [
       { path: '*', redirect: '/home', },
       { path: '/home', name: 'home', component: home, meta:{ispublic:true}},
+      { path: '/help', name: 'help', component: help, meta:{ispublic:true}},
       // { path: '/admin', name: 'adminindex', component: adminindex },
       {
         path: '/admin', name: 'adminindex',  component: adminindex, children: [

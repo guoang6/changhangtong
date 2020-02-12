@@ -16,7 +16,7 @@
                 <router-link to="home" tag="li" exact-active-class="current-menu-item">
                   <a>首页</a>
                 </router-link>
-                <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
+                <router-link to="/help" tag="li" exact-active-class="current-menu-item">
                   <a>问答</a>
                 </router-link>
                 <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
@@ -81,6 +81,9 @@
     </div>
     <!-- End of Search Wrapper -->
     <router-view />
+    <!-- start of foot -->
+          <foot />
+          <!-- end of foot -->
     <!-- 弹窗组件 -->
     <div class="login" v-if="isclose">
       <div id="mask"></div>
@@ -113,8 +116,12 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import foot from "@/components/foot.vue";
 export default {
   name: "index",
+  components: {
+    foot,
+  },
   data() {
     return {
       islogin: true,
