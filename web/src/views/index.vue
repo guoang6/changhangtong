@@ -19,23 +19,23 @@
                 <router-link to="/help" tag="li" exact-active-class="current-menu-item">
                   <a>问答</a>
                 </router-link>
-                <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
+                <router-link to="/activity" tag="li" exact-active-class="current-menu-item">
                   <a>活动</a>
                 </router-link>
                 <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
                   <a>失物品</a>
                 </router-link>
-                <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
+                <router-link to="/job" tag="li" exact-active-class="current-menu-item">
                   <a>招聘信息</a>
                 </router-link>
                 <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
                   <a>二手信息</a>
                 </router-link>
-                <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
+                <router-link to="/news" tag="li" exact-active-class="current-menu-item">
                   <a>文章</a>
                 </router-link>
                 <li v-if="islog">
-                  <a @click="close">登录</a>
+                  <a @click="close">登录/注册</a>
                 </li>
                 <router-link v-else to="/admin" tag="li" exact-active-class="current-menu-item">
                   <a>{{uname}}</a>
