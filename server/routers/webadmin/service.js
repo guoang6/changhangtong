@@ -203,6 +203,39 @@ exports.updateehelp = (req, res) => {
         res.send(data);
     })
 }
+//获取求助列表
+exports.webgetwebhelplist = async (req, res) => {
+    let sql1 = ' select count(*) as count from help '
+    let info1 = [req.user.uid]
+    db.base(sql1, info1, (result) => {
+        let count = result[0].count
+        let page = (req.body.page - 1) * 10
+        let pagesize = 10
+        let info = [ pagesize, page]
+        let sql = 'select help_id,help_title,createtime from help  limit ? offset ?'
+        db.base(sql, info, (result) => {
+            if (result.length == 0) {
+                data = {
+                    state: e,
+                    data: {
+                    }
+                }   //    数据库里面没找到配对的内容返回参数
+            } else {
+                data = {
+                    state: s,
+                    data: result,
+                    count: count
+                }
+            }
+            console.log(data)
+            // console.log(result)
+            res.send(data);
+        })
+    })
+
+
+
+}
 
 // exports.aaa = (req, res) => {
 //     let info = [req.body.username, req.body.password]

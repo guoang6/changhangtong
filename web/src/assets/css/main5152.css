@@ -378,6 +378,8 @@ li.comment > article .avatar {
   margin: 0px 10px 10px 0;
   position: relative;
   z-index: 1;
+  width: 60px;
+  height: 60px;
   -webkit-border-radius: 60px;
   -moz-border-radius: 60px;
   border-radius: 60px;

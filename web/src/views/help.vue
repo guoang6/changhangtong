@@ -1,34 +1,42 @@
 <template>
   <div class="help">
-       <!-- Start of Page Container -->
+    <!-- Start of Page Container -->
     <div class="page-container">
       <div class="container">
         <div class="row">
           <!-- start of page content -->
           <div class="span8 page-content">
-            <!-- Basic Home Page Template -->              
+            <!-- Basic Home Page Template -->
 
-               <section class="widget">
-        <h3 class="title">Featured Articles</h3>
-        <ul class="articles">
-          <li class="article-entry standard">
-            <h4>
-              <a >Integrating WordPress with Your Website</a>
-            </h4>
-            <span class="article-meta">
-              25 Feb, 2013 in
-              <a href="#" title="View all posts in Server &amp; Database">Server &amp; Database</a>
-            </span>
-            <span class="like-count">66</span>
-          </li>
-         
-        </ul>
-      </section>
-             
+            <section class="widget">
+              <h3 class="title">问答区</h3>
+              <ul class="articles">
+                <li class="article-entry standard" 
+                v-for="(item,id) in tableData"
+            :key="id">
+                  <h4>
+                     <router-link :to="'/helpcontent/'+item.help_id">{{item.help_title}}</router-link>
+                  </h4>
+                  <span class="article-meta">
+                    {{item.createtime}}
+                    <a
+                      href="#"
+                      title="View all posts in Server &amp; Database"
+                    >Server &amp; Database</a>
+                  </span>
+                  <span class="like-count">66</span>
+                </li>
+              </ul>
+            </section>
+            <el-pagination
+              @current-change="handleCurrentChange"
+    layout="prev, pager, next"
+    :total="pagelistquery.total">
+  </el-pagination>
           </div>
           <!-- end of page content -->
           <!-- start of sidebar -->
-         <sidebar />
+          <sidebar />
           <!-- end of sidebar -->
         </div>
       </div>
@@ -46,10 +54,37 @@ export default {
   },
   data() {
     return {
-      imageUrl: ""
+      pagelistquery:{
+        total:100,
+        page:1
+    },
+      tableData: {}
     };
   },
-  methods: {}
+  methods: {
+      handleCurrentChange(val) {
+      this.pagelistquery.page = val;
+      this.gethelplist();
+      console.log(`当前页: ${val}`);
+    },
+    async gethelplist() {
+      let data = {
+        page: this.pagelistquery.page,
+      };
+      let res = await this.$axios.post(
+        "/webadmin/webgetwebhelplist",
+        this.qs.stringify(data)
+      );
+      if (res.data.state.type === "SUCCESS") {
+        this.tableData = res.data.data;
+        console.log(res.data);
+        this.pagelistquery.total = res.data.count;
+      }
+    }
+  },
+  created() {
+    this.gethelplist();
+  }
 };
 </script>
 <style>
