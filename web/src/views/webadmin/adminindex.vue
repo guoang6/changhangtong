@@ -45,8 +45,8 @@
                 <i class="el-icon-menu"></i>
                 <span>招聘</span>
               </template>
-              <el-menu-item index="/admin/createactivity">公司信息</el-menu-item>
-              <el-menu-item index="1-4-1">发布工作</el-menu-item>
+              <el-menu-item index="/admin/company">公司信息</el-menu-item>
+              <el-menu-item index="/admin/job">发布工作</el-menu-item>
             </el-submenu>
 
             <el-submenu index="5">

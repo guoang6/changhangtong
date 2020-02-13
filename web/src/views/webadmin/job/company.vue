@@ -1,37 +1,20 @@
 <template>
     <div class="createactivity">
 <el-form ref="form" :model="form" label-width="80px" size="medium ">
-  <el-form-item label="活动名称">
+  <el-form-item label="公司名称">
     <el-input v-model="form.name"></el-input>
   </el-form-item>
-  <el-form-item label="开始时间">
+  <el-form-item label="截至时间">
     <el-col :span="11">
       <el-date-picker type="date" placeholder="选择日期" v-model="form.startdate1" style="width: 100%;"></el-date-picker>
     </el-col>
-    <el-col class="line" :span="2">-</el-col>
-    <el-col :span="11">
-      <el-time-picker placeholder="选择时间" v-model="form.startdate2" style="width: 100%;"></el-time-picker>
-    </el-col>
   </el-form-item>
 
-  <el-form-item label="结束时间">
-    <el-col :span="11">
-      <el-date-picker type="date" placeholder="选择日期" v-model="form.enddate1" style="width: 100%;"></el-date-picker>
-    </el-col>
-    <el-col class="line" :span="2">-</el-col>
-    <el-col :span="11">
-      <el-time-picker placeholder="选择时间" v-model="form.enddate2" style="width: 100%;"></el-time-picker>
-    </el-col>
-  </el-form-item>
-  <el-form-item label="人数限制">
-    <el-switch v-model="form.impose"></el-switch>
-  </el-form-item>
-
-   <el-form-item label="活动人数" >
+   <el-form-item label="公司规模" >
     <el-input v-model="form.num" ></el-input>
   </el-form-item>
 
-  <el-form-item label="活动类型">
+  <el-form-item label="公司类型">
     <el-radio-group v-model="form.type">
       <el-radio label="娱乐"></el-radio>
       <el-radio label="运动"></el-radio>
@@ -40,18 +23,11 @@
     </el-radio-group>
      </el-form-item>
 
-  <el-form-item label="活动形式">
-    <el-radio-group v-model="form.resource">
-      <el-radio label="线上"></el-radio>
-      <el-radio label="线下"></el-radio>
-    </el-radio-group>
-  </el-form-item>
-  <el-form-item label="活动内容">
+  <el-form-item label="公司简介">
     <el-input type="textarea" v-model="form.desc"></el-input>
   </el-form-item>
   <el-form-item>
     <el-button type="primary" @click="onSubmit">确定</el-button>
-    <el-button>取消</el-button>
   </el-form-item>
 </el-form>
 

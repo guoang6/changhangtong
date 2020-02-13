@@ -9,6 +9,7 @@ import './assets/css/red-skin5152.css'
 import './assets/css/responsive5152.css'
 import './assets/css/ali.css'
 import './plugins/element.js'
+import ElementUI from 'element-ui';
 //vuex
 import Vuex from 'vuex'
 import store from './store'
@@ -58,26 +59,37 @@ Vue.prototype.qs = qs;
 //   return Promise.reject(error);
 // });
 
-// // 添加一个响应拦截器
-// axios.interceptors.response.use(function (response) {
-//   if (response.data && response.data.code) {
-//     if (parseInt(response.data.code) === 108 || parseInt(response.data.code) === 109 || response.data.msg === 'TOKEN失效，请重新登录' || response.data.msg === 'TOKEN不存在') {
-//       //未登录
-//       response.data.msg = "登录信息已失效，请重新登录";
-//       road.$message.error(response.data.msg);
-//       // routerIndex.push('/login');
-//     }
-//     if (parseInt(response.data.code) === -1) {
-//       road.$message.error("请求失败");
-//     }
-//   }
-//   return response;
-// }, function (error) {
-//   // Do something with response error
-//   console.dir(error);
-//   road.$message.error("服务器连接失败");
-//   return Promise.reject(error);
-// })
+// 添加一个响应拦截器
+axios.interceptors.response.use(function (response) {
+  if (response.data && response.data.code) {
+    if (parseInt(response.data.code) === 108 || parseInt(response.data.code) === 109 || response.data.msg === 'TOKEN失效，请重新登录' || response.data.msg === 'TOKEN不存在') {
+      //未登录
+      ElementUI.Notification({
+        title: '警告',
+        message: '登录信息已失效，请重新登录',
+        type: 'warning'
+    });
+      // routerIndex.push('/login');
+    }
+    if (parseInt(response.data.code) === -1) {
+      ElementUI.Notification({
+        title: '警告',
+        message: '请求失败',
+        type: 'warning'
+    });
+    }
+  }
+  return response;
+}, function (error) {
+  // Do something with response error
+  console.dir(error);
+  ElementUI.Notification({
+    title: '警告',
+    message: '服务器连接失败',
+    type: 'warning'
+});
+  return Promise.reject(error);
+})
 
 
 new Vue({

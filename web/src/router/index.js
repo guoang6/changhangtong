@@ -13,8 +13,7 @@ import adminhome from "../views/webadmin/adminhome.vue"
 import createhelp from "../views/webadmin/help/createhelp.vue"
 import createhelplist from "../views/webadmin/help/createhelplist.vue"
 import createactivity from "../views/webadmin/activity/createactivity.vue"
-
-import { Form } from 'element-ui'
+import company from "../views/webadmin/job/company.vue"
 Vue.use(VueRouter)
 
 const routes = [
@@ -38,6 +37,7 @@ const routes = [
           { path: '/admin/updatehelp/:id', name: 'createhelp', component: createhelp ,props:true},
           { path: '/admin/createhelplist', name: 'createhelplist', component: createhelplist },
           { path: '/admin/createactivity', name: 'createactivity', component: createactivity },
+          { path: '/admin/company', name: 'company', component: company },
         ]
       }
     ]
