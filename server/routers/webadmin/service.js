@@ -204,8 +204,32 @@ exports.updateehelp = (req, res) => {
         res.send(data);
     })
 }
+//删除求助
 
 
+
+exports.deletehelp = (req, res) => {
+        let info = [req.body.help_id, req.user.uid]
+    
+        let sql = 'delete  from help where help_id=? and user_id=?'
+        db.base(sql, info, (result) => {
+            if (result.length == 0) {
+                data = {
+                    state: e,
+                    data: {
+                    }
+                }
+            } else {
+                data = {
+                    state: s,
+                    data: {
+                    }
+                }
+            }
+            console.log(result)
+            res.send(data);
+        })
+    }
 // exports.aaa = (req, res) => {
 //     let info = [req.body.username, req.body.password]
 

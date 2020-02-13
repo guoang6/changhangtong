@@ -13,7 +13,7 @@
             type="text"
             size="small"
           >编辑</el-button>
-          <el-button type="text" size="small">删除</el-button>
+          <el-button type="text" size="small" @click="del(scope.row.help_id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -41,6 +41,17 @@ export default {
     };
   },
   methods: {
+    async del(help_id){
+      console.log(help_id)
+      let res = await this.$axios.post(
+        "/webadmin/deletehelp",
+        this.qs.stringify({help_id:help_id})
+      );
+      if (res.data.state.type === "SUCCESS") {
+          this.$message("删除成功");
+          this.gethelplist()
+      }
+    },
     handleSizeChange(val) {
       this.pagelistquery.pagesize = val;
       this.gethelplist();

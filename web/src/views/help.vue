@@ -18,7 +18,7 @@
                      <router-link :to="'/helpcontent/'+item.help_id">{{item.help_title}}</router-link>
                   </h4>
                   <span class="article-meta">
-                    {{item.createtime}}
+                    {{item.createtime| dataFormat}}
                     <a
                       href="#"
                       title="View all posts in Server &amp; Database"

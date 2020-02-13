@@ -30,6 +30,8 @@ router.post('/webadmin/getwebhelplist', service.getwebhelplist)
 router.post('/webadmin/gethelpdetails', service.gethelpdetails)
 //修改求助
 router.post('/webadmin/updateehelp', service.updateehelp)
+//删除求助
+router.post('/webadmin/deletehelp', service.deletehelp)
 
 
 
