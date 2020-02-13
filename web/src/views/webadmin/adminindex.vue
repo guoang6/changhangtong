@@ -21,6 +21,7 @@
               <el-menu-item index="/admin/createhelp">提问</el-menu-item>
               <el-menu-item index="/admin/createhelplist">提问列表</el-menu-item>
             </el-submenu>
+
             <el-submenu index="2">
               <template slot="title">
                 <i class="el-icon-menu"></i>
@@ -29,6 +30,52 @@
               <el-menu-item index="/admin/createactivity">发布活动</el-menu-item>
               <el-menu-item index="1-4-1">活动列表</el-menu-item>
             </el-submenu>
+
+            <el-submenu index="3">
+              <template slot="title">
+                <i class="el-icon-menu"></i>
+                <span>失物</span>
+              </template>
+              <el-menu-item index="/admin/createactivity">失物发布</el-menu-item>
+              <el-menu-item index="1-4-1">失物管理</el-menu-item>
+            </el-submenu>
+            
+             <el-submenu index="4">
+              <template slot="title">
+                <i class="el-icon-menu"></i>
+                <span>招聘</span>
+              </template>
+              <el-menu-item index="/admin/createactivity">公司信息</el-menu-item>
+              <el-menu-item index="1-4-1">发布工作</el-menu-item>
+            </el-submenu>
+
+            <el-submenu index="5">
+              <template slot="title">
+                <i class="el-icon-menu"></i>
+                <span>二手交易</span>
+              </template>
+              <el-menu-item index="/admin/createactivity">二手发布</el-menu-item>
+              <el-menu-item index="1-4-1">二手列表</el-menu-item>
+ </el-submenu>
+              <el-submenu index="6">
+                <template slot="title">
+                  <i class="el-icon-menu"></i>
+                  <span>文章与新闻</span>
+                </template>
+                <el-menu-item index="/admin/createactivity">发布文章</el-menu-item>
+                <el-menu-item index="1-4-1">文章列表</el-menu-item>
+              </el-submenu>
+
+               <el-submenu index="7">
+                <template slot="title">
+                  <i class="el-icon-menu"></i>
+                  <span>赏金</span>
+                </template>
+                <el-menu-item index="/admin/createactivity">发布赏金</el-menu-item>
+                <el-menu-item index="1-4-1">赏金列表</el-menu-item>
+              </el-submenu>
+           
+
           </el-menu>
         </el-aside>
 

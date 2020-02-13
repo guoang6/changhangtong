@@ -72,7 +72,7 @@ export default {
         page: this.pagelistquery.page,
       };
       let res = await this.$axios.post(
-        "/webadmin/webgetwebhelplist",
+        "/web/webgetwebhelplist",
         this.qs.stringify(data)
       );
       if (res.data.state.type === "SUCCESS") {

@@ -26,8 +26,6 @@ router.post('/webadmin/login', service.login)
 router.post('/webadmin/createhelp', service.createhelp)
 //用户u获取求助列表
 router.post('/webadmin/getwebhelplist', service.getwebhelplist)
-//web获取求助列表
-router.post('/webadmin/webgetwebhelplist', service.webgetwebhelplist)
 //求助详情
 router.post('/webadmin/gethelpdetails', service.gethelpdetails)
 //修改求助

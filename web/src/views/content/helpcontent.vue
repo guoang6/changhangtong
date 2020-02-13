@@ -93,7 +93,6 @@
                         -
                         <a class="comment-reply-link" href="#">Reply</a>
                       </h5>
-
                       <p class="date">
                         <a href="#">
                           <time datetime="2013-02-26T13:18:47+00:00">February 26, 2013 at 1:18 pm</time>
