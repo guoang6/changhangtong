@@ -5,45 +5,22 @@
         <el-input v-model="form.activity_title"></el-input>
       </el-form-item>
       <el-form-item label="开始时间">
-        <el-col :span="11">
-          <el-date-picker
-            value-format="yyyy-MM-dd"
-            type="date"
-            placeholder="选择日期"
-            v-model="form.startdate1"
-            style="width: 100%;"
-          ></el-date-picker>
-        </el-col>
-        <el-col class="line" :span="2">-</el-col>
-        <el-col :span="11">
-          <el-time-picker
-            value-format="hh:mm:ss"
-            placeholder="选择时间"
-            v-model="form.startdate2"
-            style="width: 100%;"
-          ></el-time-picker>
-        </el-col>
+         <el-date-picker
+      v-model="form.activity_statetime"
+      type="datetime"
+      value-format="timestamp"
+      placeholder="选择日期时间">
+    </el-date-picker>
+         
       </el-form-item>
 
       <el-form-item label="结束时间">
-        <el-col :span="11">
-          <el-date-picker
-            type="date"
-            value-format="yyyy-MM-dd"
-            placeholder="选择日期"
-            v-model="form.enddate1"
-            style="width: 100%;"
-          ></el-date-picker>
-        </el-col>
-        <el-col class="line" :span="2">-</el-col>
-        <el-col :span="11">
-          <el-time-picker
-            value-format="hh:mm:ss"
-            placeholder="选择时间"
-            v-model="form.enddate2"
-            style="width: 100%;"
-          ></el-time-picker>
-        </el-col>
+         <el-date-picker
+          value-format="timestamp"
+      v-model="form.activity_endtime"
+      type="datetime"
+      placeholder="选择日期时间">
+    </el-date-picker>
       </el-form-item>
       <el-form-item label="人数限制">
         <el-switch v-model="form.activity_impose"></el-switch>
@@ -102,10 +79,6 @@ export default {
       dialogVisible: false,
       form: {
         activity_title: "",
-        startdate1: "",
-        startdate2: "",
-        enddate1: "",
-        enddate2: "",
         activity_impose: false,
         activity_num: 0,
         activity_type: "",
@@ -127,9 +100,7 @@ export default {
       let res;
       for (let i = 0; i < this.dialogImageUrl.length; i++) {
         img.push(this.dialogImageUrl[i].url);
-      }
-      this.form.activity_statetime = `${this.form.startdate1} ${this.form.startdate2}`;
-      this.form.activity_endtime = `${this.form.enddate1} ${this.form.enddate2}`;
+      }1
       console.log(this.form);
       this.form.activity_img = String(img);
       if (this.id) {
@@ -182,13 +153,8 @@ export default {
       this.form.activity_type = data.activity_type;
       this.form.activity_content = data.activity_content;
       this.form.activity_img = data.activity_img;
-     let state= data.activity_statetime.split(" ");
-     console.log(state)
-      this.form.startdate1=state[0]
-      this.form.startdate2=state[1]
-      let end= data.activity_endetime.split(" ");
-      this.form.enddate1=end[0]
-      this.form.enddate2=end[1]
+     this.form.activity_statetime = data.activity_statetime
+      this.form.activity_endtime = data.activity_endtime
       console.log(this.form)
       if (data.activity_img != "") {
         let img = data.activity_img.split(",");
