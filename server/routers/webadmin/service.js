@@ -274,14 +274,14 @@ exports.createactivity = (req, res) => {
 //获取活动列表
 exports.getwebactivitylist = (req, res) => {
     console.log(req)
-    let sql1 = ' select count(*) as count from help where user_id=?'
+    let sql1 = ' select count(*) as count from activity where user_id=?'
     let info1 = [req.user.uid]
     db.base(sql1, info1, (result) => {
         let count = result[0].count
         let page = (req.body.page - 1) * req.body.pagesize
         let pagesize = req.body.pagesize * 1
         let info = [req.user.uid, pagesize, page]
-        let sql = 'select * from help where user_id=? limit ? offset ?'
+        let sql = 'select * from activity where user_id=? limit ? offset ?'
         db.base(sql, info, (result) => {
             if (result.length == 0) {
                 data = {
@@ -360,9 +360,9 @@ exports.updateeactivity = (req, res) => {
 }
 //删除活动
 exports.deleteactivity = (req, res) => {
-        let info = [req.body.help_id, req.user.uid]
+        let info = [req.body.activity_id, req.user.uid]
     
-        let sql = 'delete  from help where help_id=? and user_id=?'
+        let sql = 'delete  from activity where activity_id=? and user_id=?'
         db.base(sql, info, (result) => {
             if (result.length == 0) {
                 data = {

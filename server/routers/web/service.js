@@ -16,12 +16,13 @@ const e = {
 //web获取求助列表
 exports.webgetwebhelplist = (req, res) => {
     let sql1 = ' select count(*) as count from help '
-    let info1 = [req.user.uid]
+    let info1 = []
     db.base(sql1, info1, (result) => {
         let count = result[0].count
-        let page = (req.body.page - 1) * 10
-        let pagesize = 10
-        let info = [ pagesize, page]
+        let pagesize = req.body.pagesize * 1
+        let page = (req.body.page - 1) * pagesize
+
+        let info = [pagesize, page]
         let sql = 'select help_id,help_title,createtime from help  limit ? offset ?'
         db.base(sql, info, (result) => {
             if (result.length == 0) {

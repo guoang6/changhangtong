@@ -126,7 +126,7 @@
       let data = res.data.data;
       if (res.data.state.type === "SUCCESS") {
         this.$message("成功");
-        // this.$router.push("/admin/createactivitylist");
+        this.$router.push("/admin/createactivitylist");
       }
     },
     //文件列表移除文件时的钩子

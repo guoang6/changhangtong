@@ -28,7 +28,7 @@
                 <span>线下线上活动</span>
               </template>
               <el-menu-item index="/admin/createactivity">发布活动</el-menu-item>
-              <el-menu-item index="1-4-1">活动列表</el-menu-item>
+              <el-menu-item index="/admin/createactivitylist">活动列表</el-menu-item>
             </el-submenu>
 
             <el-submenu index="3">

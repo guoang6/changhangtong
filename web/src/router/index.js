@@ -13,6 +13,7 @@ import adminhome from "../views/webadmin/adminhome.vue"
 import createhelp from "../views/webadmin/help/createhelp.vue"
 import createhelplist from "../views/webadmin/help/createhelplist.vue"
 import createactivity from "../views/webadmin/activity/createactivity.vue"
+import createactivitylist from "../views/webadmin/activity/createactivitylist.vue"
 import company from "../views/webadmin/job/company.vue"
 Vue.use(VueRouter)
 
@@ -36,6 +37,8 @@ const routes = [
           { path: '/admin/createhelp', name: 'createhelp', component: createhelp },
           { path: '/admin/updatehelp/:id', name: 'createhelp', component: createhelp ,props:true},
           { path: '/admin/createhelplist', name: 'createhelplist', component: createhelplist },
+          { path: '/admin/updateactivity/:id', name: 'updateactivity', component: createactivity ,props:true},
+          { path: '/admin/createactivitylist', name: 'createactivitylist', component: createactivitylist },
           { path: '/admin/createactivity', name: 'createactivity', component: createactivity },
           { path: '/admin/company', name: 'company', component: company },
         ]

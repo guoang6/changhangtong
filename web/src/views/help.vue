@@ -55,7 +55,8 @@ export default {
   data() {
     return {
       pagelistquery:{
-        total:100,
+        total:0,
+        pagesize:10,
         page:1
     },
       tableData: {}
@@ -70,6 +71,7 @@ export default {
     async gethelplist() {
       let data = {
         page: this.pagelistquery.page,
+        pagesize: this.pagelistquery.pagesize,
       };
       let res = await this.$axios.post(
         "/web/webgetwebhelplist",
