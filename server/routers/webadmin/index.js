@@ -32,6 +32,8 @@ router.post('/webadmin/gethelpdetails', service.gethelpdetails)
 router.post('/webadmin/updateehelp', service.updateehelp)
 //删除求助
 router.post('/webadmin/deletehelp', service.deletehelp)
+//活动
+router.post('/webadmin/createactivity', service.createactivity)
 
 
 

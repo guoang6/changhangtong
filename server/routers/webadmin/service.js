@@ -88,6 +88,11 @@ exports.uplod = (req, res) => {
     res.send(file)
 
 }
+
+/**
+ * 互助相关
+ * 
+ */
 //创建求助
 exports.createhelp = (req, res) => {
     // console.log(req)
@@ -104,8 +109,8 @@ exports.createhelp = (req, res) => {
         help_favour_num: 0,//点赞数    
         help_read_num: 0,//浏览量
         help_state: 0, //状态  
-        help_istop: 0,//是否显示
-        help_ispublic: 0,//是否置顶
+        help_istop: 0,//是否置顶
+        help_ispublic: 0,//是否显示
     }
     let sql = 'insert into help set ?'
     db.base(sql, info, (result, error) => {
@@ -205,10 +210,156 @@ exports.updateehelp = (req, res) => {
     })
 }
 //删除求助
-
-
-
 exports.deletehelp = (req, res) => {
+        let info = [req.body.help_id, req.user.uid]
+    
+        let sql = 'delete  from help where help_id=? and user_id=?'
+        db.base(sql, info, (result) => {
+            if (result.length == 0) {
+                data = {
+                    state: e,
+                    data: {
+                    }
+                }
+            } else {
+                data = {
+                    state: s,
+                    data: {
+                    }
+                }
+            }
+            console.log(result)
+            res.send(data);
+        })
+    }
+/**
+ * 
+ * 活动相关
+ * 
+ */
+
+//创建活动
+exports.createactivity = (req, res) => {
+    // console.log(req)
+    let time = Date.now() - 8 * 60 * 60
+    let info = {
+        activity_id: uuid.v1(),   //活动id 
+        user_id: req.user.uid,//  用户di 
+        activity_title: req.body.activity_title,// 标题   
+        activity_lable: req.body.activity_lable,// 标签
+        activity_type: req.body.activity_type,// 类型
+        activity_content: req.body.activity_content,//内容  
+        activity_img: req.body.activity_img,//图片
+        createtime: time,//创建时间
+        activity_num:req.body.activity_num,//人数
+        activity_statetime:req.body.activity_statetime,//活动开始时间
+        activity_endtime:req.body.activity_endtime,//活动结束时间
+        updatetime: time,//更新时间
+        activity_favour_num: 0,//点赞数    
+        activity_read_num: 0,//浏览量
+        activity_state: 0, //状态  
+        activity_istop: 0,//是否置顶
+        activity_ispublic: 0,//是否显示
+    }
+    let sql = 'insert into activity set ?'
+    db.base(sql, info, (result, error) => {
+
+        data = {
+            state: s,
+            data: {}
+        }
+        res.send(data)
+    })
+}
+//获取活动列表
+exports.getwebactivitylist = (req, res) => {
+    console.log(req)
+    let sql1 = ' select count(*) as count from help where user_id=?'
+    let info1 = [req.user.uid]
+    db.base(sql1, info1, (result) => {
+        let count = result[0].count
+        let page = (req.body.page - 1) * req.body.pagesize
+        let pagesize = req.body.pagesize * 1
+        let info = [req.user.uid, pagesize, page]
+        let sql = 'select * from help where user_id=? limit ? offset ?'
+        db.base(sql, info, (result) => {
+            if (result.length == 0) {
+                data = {
+                    state: e,
+                    data: {
+                    }
+                }   //    数据库里面没找到配对的内容返回参数
+            } else {
+                data = {
+                    state: s,
+                    data: result,
+                    count: count
+                }
+            }
+            console.log(data)
+            // console.log(result)
+            res.send(data);
+        })
+    })
+
+
+
+}
+//活动详情
+exports.getactivitydetails = (req, res) => {
+    console.log(req.body)
+    let info = [req.body.id]
+    let sql = 'select * from help where help_id=?'
+    db.base(sql, info, (result) => {
+        if (result.length == 0) {
+            data = {
+                state: e,
+                data: {
+                }
+            }
+        } else {
+            data = {
+                state: s,
+                data: result[0]
+            }
+        }
+        console.log(result)
+        res.send(data);
+    })
+}
+//修改活动
+exports.updateeactivity = (req, res) => {
+    console.log(req.user)
+    let info = [
+        req.body.help_title,
+        req.body.help_lable,
+        req.body.help_content,
+        req.body.help_img,
+        req.user.uid,
+        req.body.id]
+
+    let sql = 'update help set help_title =?, help_lable=?,help_content=?,help_img=? where user_id =?and help_id=?'
+
+    // let sql = `update help set help_title ='${req.body.help_title}', help_lable='${req.body.help_lable}' ,help_content='${req.body.help_content}',help_img='${req.body.help_img}',where user_id = '${req.user.uid}'and help_id='${req.body.id}'`
+    db.base(sql, info, (result) => {
+        if (result.length == 0) {
+            data = {
+                state: e,
+                data: {
+                }
+            }
+        } else {
+            data = {
+                state: s,
+                data: result[0]
+            }
+        }
+        console.log(result)
+        res.send(data);
+    })
+}
+//删除活动
+exports.deleteactivity = (req, res) => {
         let info = [req.body.help_id, req.user.uid]
     
         let sql = 'delete  from help where help_id=? and user_id=?'

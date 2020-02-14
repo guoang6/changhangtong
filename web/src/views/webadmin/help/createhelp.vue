@@ -105,7 +105,6 @@ export default {
     },
     //文件上传成功时的钩子
     uplogsuccess(res) {
-      this.form.help_img = `${this.form.help_img}|${res.url}`;
       this.dialogImageUrl.push({ url: res.url });
       console.log(this.dialogImageUrl);
       console.log(res.url);
