@@ -120,7 +120,7 @@ export default {
       this.form.help_lable = data.help_lable;
       this.form.help_content = data.help_content;
       this.form.help_img = data.help_img;
-      if (data.help_img != null) {
+      if (data.help_img != "") {
         let img = data.help_img.split(",");
         for (let i = 0; i < img.length; i++) {
           this.dialogImageUrl.push({ url: img[i] });

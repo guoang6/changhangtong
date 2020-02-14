@@ -37,7 +37,7 @@ router.post('/webadmin/createactivity', service.createactivity)
 //用户u获取求助列表
 router.post('/webadmin/getwebactivitylist', service.getwebactivitylist)
 //求助详情
-// router.post('/webadmin/gethelpdetails', service.gethelpdetails)
+router.post('/webadmin/getactivitydetails', service.getactivitydetails)
 //修改求助
 // router.post('/webadmin/updateehelp', service.updateehelp)
 //删除求助

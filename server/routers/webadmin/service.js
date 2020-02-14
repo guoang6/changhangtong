@@ -250,6 +250,7 @@ exports.createactivity = (req, res) => {
         activity_type: req.body.activity_type,// 类型
         activity_content: req.body.activity_content,//内容  
         activity_img: req.body.activity_img,//图片
+        activity_impose:req.body.activity_impose,//是否限制人数
         createtime: time,//创建时间
         activity_num:req.body.activity_num,//人数
         activity_statetime:req.body.activity_statetime,//活动开始时间
@@ -273,7 +274,7 @@ exports.createactivity = (req, res) => {
 }
 //获取活动列表
 exports.getwebactivitylist = (req, res) => {
-    console.log(req)
+    // console.log(req)
     let sql1 = ' select count(*) as count from activity where user_id=?'
     let info1 = [req.user.uid]
     db.base(sql1, info1, (result) => {
@@ -309,7 +310,7 @@ exports.getwebactivitylist = (req, res) => {
 exports.getactivitydetails = (req, res) => {
     console.log(req.body)
     let info = [req.body.id]
-    let sql = 'select * from help where help_id=?'
+    let sql = 'select * from activity where activity_id=?'
     db.base(sql, info, (result) => {
         if (result.length == 0) {
             data = {
