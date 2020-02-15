@@ -1,26 +1,30 @@
 const state = {
     islog: true,
-    userinfo: {
-        uid: '',
-        uname: 'guoang',
-        nickname: '',
-        icon: ''
-    },
+    islogin: true,
+    isclose: false,
+    userinfo: JSON.parse(localStorage.getItem("userinfo")) || {},//先去localStorage中获取数据
 }
 const getters = {
 
 }
 const mutations = {
-    SET_USERINFO(state, data) {
-        state.userinfo.uid = data.uid
-        state.userinfo.uname = data.uname
+    SET_USERINFO(state, userinfo) {
+        console.log(userinfo)
+        state.userinfo = userinfo,
+            localStorage.setItem('userinfo', JSON.stringify(userinfo))
     },
     CHANGE_ISLOG(state) {
         state.islog = !state.islog
     },
     SET_TOKEN(state, data) {
         state.token = data
-        window.sessionStorage.setItem('luffy_jwt_token', state.token);
+        window.localStorage.setItem('luffy_jwt_token', state.token);
+    },
+    JOIN() {
+        state.islogin = !state.islogin;
+    },
+    CLOSE() {
+        state.isclose = !state.isclose;
     },
 }
 const actions = {
@@ -29,6 +33,12 @@ const actions = {
     },
     changeislog({ commit }) {
         commit('CHANGE_ISLOG')
+    },
+    join({ commit }) {
+        commit('JOIN')
+    },
+    close({ commit }) {
+        commit('CLOSE')
     },
     setToken({ commit }, data) {
         commit('SET_TOKEN', data)

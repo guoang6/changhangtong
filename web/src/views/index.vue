@@ -33,13 +33,14 @@
                 </router-link>
                 <router-link to="/news" tag="li" exact-active-class="current-menu-item">
                   <a>文章</a>
-                </router-link>
-                <li v-if="islog">
-                  <a @click="close">登录/注册</a>
-                </li>
-                <router-link v-else to="/admin" tag="li" exact-active-class="current-menu-item">
+                </router-link> 
+                 <router-link v-if="uname" to="/admin" tag="li" exact-active-class="current-menu-item">
                   <a>{{uname}}</a>
                 </router-link>
+                <li v-else>
+                  <a @click="closein">登录/注册</a>
+                </li>
+              
               </ul>
             </div>
             <select class="responsive-nav">
@@ -50,7 +51,7 @@
               <option value="articles-list.html">失物</option>
               <option value="faq.html">招聘信息</option>
               <option value="#">二手信息</option>
-              <option value="blue-skin.html" @click="close">个人中心</option>
+              <option value="blue-skin.html" @click="closein">个人中心</option>
             </select>
           </nav>
           <!-- End of Main Navigation -->
@@ -124,8 +125,6 @@ export default {
   },
   data() {
     return {
-      islogin: true,
-      isclose: false,
       password: "",
       password1: "",
       username: ""
@@ -133,17 +132,18 @@ export default {
   },
   computed: {
     ...mapState({
-      islog: state => state.user.islog,
+      isclose: state => state.user.isclose,
+       islogin: state => state.user.islogin,
       uname: state => state.user.userinfo.uname
     })
   },
   methods: {
-    ...mapActions("user", ["setUserInfo", "changeislog", "setToken"]),
-    join() {
-      this.islogin = !this.islogin;
+    ...mapActions("user", ["setUserInfo", "changeislog", "setToken", "join", "close"]),
+    joinin() {
+      this.join()
     },
-    close() {
-      this.isclose = !this.isclose;
+    closein() {
+      this.close()
     },
      onSubmit() {
       return false;

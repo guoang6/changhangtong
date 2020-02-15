@@ -10,7 +10,12 @@ router.use(function (err, req, res, next) {
   }
   if (err.name === 'UnauthorizedError') {
     //  这个需要根据自己的业务逻辑来处理（ 具体的err值 请看下面）
-    res.status(401).send('invalid token...');
+    res.send({    
+        state:{
+          "type": 'ERROE',
+          "msg": "操作失败"
+      },
+        code:401});
   }
 });
 //上传中间件
