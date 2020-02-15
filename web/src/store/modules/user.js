@@ -16,6 +16,9 @@ const mutations = {
     CHANGE_ISLOG(state) {
         state.islog = !state.islog
     },
+    DELETE_USERINFO(state) {
+        state.userinfo ={}
+    },
     SET_TOKEN(state, data) {
         state.token = data
         window.localStorage.setItem('luffy_jwt_token', state.token);
@@ -40,9 +43,13 @@ const actions = {
     close({ commit }) {
         commit('CLOSE')
     },
+    deleteuserinfo({ commit }) {
+        commit('DELETE_USERINFO')
+    },
     setToken({ commit }, data) {
         commit('SET_TOKEN', data)
     }
+    
 }
 export default {
     namespaced: true,

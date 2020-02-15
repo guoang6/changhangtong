@@ -60,7 +60,8 @@ axios.interceptors.response.use(function (response) {
         message: '登录过期请重新登录',
         type: 'warning'
       });
-      store.dispatch('user/close')
+      store.dispatch('user/close')//登录弹窗
+      store.dispatch('user/deleteuserinfo')//清楚用户信息
       // routerIndex.push('/login');
     }
     if (parseInt(response.data.code) === -1) {
