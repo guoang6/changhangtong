@@ -1203,7 +1203,9 @@ p.notice {
 .wpcf7-form p {
   margin-bottom: 10px;
 }
-
+.touxiang{
+  border-radius: 50%;
+}
 /* Scroll Top ------------------------------------------------------------------------------------------------------- */
 a#scroll-top {
   display: none;
@@ -1220,9 +1222,6 @@ a#scroll-top {
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
-  -webkit-transition: all 0.25s ease-in-out;
-  -moz-transition: all 0.25s ease-in-out;
-  -o-transition: all 0.25s ease-in-out;
 }
 
 a#scroll-top:hover {

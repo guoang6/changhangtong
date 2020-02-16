@@ -80,7 +80,7 @@
                       <img
                         alt
                         src="http://1.gravatar.com/avatar/50a7625001317a58444a20ece817aeca?s=60&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D60&amp;r=G"
-                        class="avatar avatar-60 photo"
+                        class="avatar touxiang avatar-60 photo"
                         height="20"
                         width="20"
                       />

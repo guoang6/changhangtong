@@ -4,15 +4,12 @@
       <el-container style="min-height: 500px;; border: 1px solid #eee">
         <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
           <el-menu router default-active="2" class="el-menu-vertical-demo">
-            <el-menu-item index="admin/home">
-              <i class="el-icon-s-shop"></i>
-              <span slot="title">主页</span>
-            </el-menu-item>
 
-            <el-menu-item index="7">
+            <el-menu-item index="/admin">
               <i class="el-icon-user-solid"></i>
               <span slot="title">个人中心</span>
             </el-menu-item>
+            
             <el-submenu index="1">
               <template slot="title">
                 <i class="el-icon-menu"></i>

@@ -18,29 +18,26 @@ import company from "../views/webadmin/job/company.vue"
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', name: 'index', redirect: '/home', component: index, meta:{ispublic:true}},
+  // { path: '/', name: 'index',  component: index, meta:{ispublic:true}},
   {
-    path: '/index', name: 'index', component: index, redirect: '/home',meta:{ispublic:true}, children: [
-      { path: '*', redirect: '/home', },
-      { path: '/home', name: 'home', component: home, meta:{ispublic:true}},
-      { path: '/help', name: 'help', component: help, meta:{ispublic:true}},
-      { path: '/helpcontent/:id', name: 'helpcontent', component: helpcontent,props:true, meta:{ispublic:true}},
-
-      { path: '/news', name: 'news', component: news, meta:{ispublic:true}},
-      { path: '/job', name: 'job', component: job, meta:{ispublic:true}},
-      { path: '/activity', name: 'activity', component: activity, meta:{ispublic:true}},
-      // { path: '/admin', name: 'adminindex', component: adminindex },
+    path: '/', name: 'index', component: index,meta:{ispublic:true}, children: [
+      { path: '', name: 'home', component: home, meta:{ispublic:true} },
+      { path: 'help', name: 'help', component: help, meta:{ispublic:true}},
+      { path: 'helpcontent/:id', name: 'helpcontent', component: helpcontent,props:true, meta:{ispublic:true}},
+      { path: 'news', name: 'news', component: news, meta:{ispublic:true}},
+      { path: 'job', name: 'job', component: job, meta:{ispublic:true}},
+      { path: 'activity', name: 'activity', component: activity, meta:{ispublic:true}},
       {
-        path: '/admin', name: 'adminindex',  component: adminindex, children: [
+        path: 'admin', name: 'adminindex',  component: adminindex, children: [
           // { path: '*', redirect: 'admin/home', },
-          { path: '/admin/home', name: 'adminhome', component: adminhome },
-          { path: '/admin/createhelp', name: 'createhelp', component: createhelp },
-          { path: '/admin/updatehelp/:id', name: 'createhelp', component: createhelp ,props:true},
-          { path: '/admin/createhelplist', name: 'createhelplist', component: createhelplist },
-          { path: '/admin/updateactivity/:id', name: 'updateactivity', component: createactivity ,props:true},
-          { path: '/admin/createactivitylist', name: 'createactivitylist', component: createactivitylist },
-          { path: '/admin/createactivity', name: 'createactivity', component: createactivity },
-          { path: '/admin/company', name: 'company', component: company },
+          { path: '', name: 'adminhome', component: adminhome },
+          { path: 'createhelp', name: 'createhelp', component: createhelp },
+          { path: 'updatehelp/:id', name: 'createhelp', component: createhelp ,props:true},
+          { path: 'createhelplist', name: 'createhelplist', component: createhelplist },
+          { path: 'updateactivity/:id', name: 'updateactivity', component: createactivity ,props:true},
+          { path: 'createactivitylist', name: 'createactivitylist', component: createactivitylist },
+          { path: 'createactivity', name: 'createactivity', component: createactivity },
+          { path: 'company', name: 'company', component: company },
         ]
       }
     ]
@@ -53,7 +50,7 @@ const router = new VueRouter({
 
 router.beforeEach((to,Form,next)=>{
   // console.log(to)
-  if(!to.meta.ispublic&&!sessionStorage.luffy_jwt_token){
+  if(!to.meta.ispublic&&!localStorage.luffy_jwt_token){
     return next('/home')
   }
   next()

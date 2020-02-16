@@ -1,48 +1,46 @@
 <template>
     <div class="adminhome">
-<el-upload
-  class="avatar-uploader"
-  action="https://jsonplaceholder.typicode.com/posts/"
-  :show-file-list="false"
-  :on-success="handleAvatarSuccess"
-  :before-upload="beforeAvatarUpload">
-  <img v-if="imageUrl" :src="imageUrl" class="avatar">
-  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-</el-upload>
+
+
+
+
+       <li class="comment even thread-odd thread-alt depth-1" id="li-comment-4">
+                  <article id="comment-4">
+                      <img
+                       :src="circleUrl"
+                        class="avatar touxiang avatar-60 photo"
+                        height="60"
+                        width="60"
+                      />
+
+                    <div class="comment-meta">
+                      <h5 class="author">
+                        guoang
+                      </h5>
+
+                      <p class="date">
+                          未学生认证
+                          
+                      </p>
+                       <p>编辑个人信息</p>
+                    </div>
+                  </article>
+                  <!-- end of comment -->
+                </li>
+                <el-steps :active="2" align-center>
+  <el-step title="账号注册" description="填写个人信息"></el-step>
+  <el-step title="完善信息" description="普通用户只能发布普通问答信息"></el-step>
+  <el-step title="实名认证" description="实名认证猴就可以获取更多权力和功能"></el-step>
+  <el-step title="认证成功" description="快去使用更多功能吧"></el-step>
+</el-steps>
+                          
 </div>
 </template>
-
-<style>
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
-</style>
-
 <script>
   export default {
     data() {
       return {
-        imageUrl: ''
+        circleUrl: 'http://127.0.0.1:3000/uplodes/moren'
       };
     },
     methods: {

@@ -25,6 +25,8 @@ exports.registered = (req, res) => {
         user_id: uuid.v1(),   //用户id 
         username: req.body.username,//用户名
         password: req.body.password,//密码
+        nickname:req.body.username,//昵称
+        realstate:'0'
     }
     info.password = md5(`${info.password}${PED_SALT}`)
     let sql = 'insert into user set ?'

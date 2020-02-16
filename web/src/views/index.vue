@@ -13,7 +13,7 @@
           <nav class="main-nav">
             <div class="menu-top-menu-container">
               <ul id="menu-top-menu" class="clearfix">
-                <router-link to="home" tag="li" exact-active-class="current-menu-item">
+                <router-link to="/" tag="li" exact-active-class="current-menu-item">
                   <a>首页</a>
                 </router-link>
                 <router-link to="/help" tag="li" exact-active-class="current-menu-item">
@@ -35,7 +35,12 @@
                   <a>文章</a>
                 </router-link> 
                  <router-link v-if="uname" to="/admin" tag="li" exact-active-class="current-menu-item">
-                  <a>{{uname}}</a>
+                 <a>    <img
+                        :src="circleUrl"
+                        class="avatar touxiang avatar-60 photo"
+                        height="20"
+                        width="20"
+                      />  {{uname}}</a>
                 </router-link>
                 <li v-else>
                   <a @click="closein">登录/注册</a>
@@ -125,6 +130,7 @@ export default {
   },
   data() {
     return {
+      circleUrl: 'http://127.0.0.1:3000/uplodes/moren',
       password: "",
       password1: "",
       username: ""
@@ -237,6 +243,7 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
 .header-btn {
   background-color: #2c696d;
   font-size: 14px;
