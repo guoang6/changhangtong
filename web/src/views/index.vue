@@ -22,7 +22,7 @@
                 <router-link to="/activity" tag="li" exact-active-class="current-menu-item">
                   <a>活动</a>
                 </router-link>
-                <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
+                <router-link to="/" tag="li" exact-active-class="current-menu-item">
                   <a>失物品</a>
                 </router-link>
                 <router-link to="/job" tag="li" exact-active-class="current-menu-item">
@@ -33,30 +33,41 @@
                 </router-link>
                 <router-link to="/news" tag="li" exact-active-class="current-menu-item">
                   <a>文章</a>
-                </router-link> 
-                 <router-link v-if="uname" to="/admin" tag="li" exact-active-class="current-menu-item">
-                 <a>    <img
-                        :src="circleUrl"
-                        class="avatar touxiang avatar-60 photo"
-                        height="20"
-                        width="20"
-                      />  {{uname}}</a>
+                </router-link>
+                <router-link
+                  v-if="uname"
+                  to="/admin"
+                  tag="li"
+                  exact-active-class="current-menu-item"
+                >
+                  <a>
+                    <img
+                      :src="circleUrl"
+                      class="avatar touxiang avatar-60 photo"
+                      height="20"
+                      width="20"
+                    />
+                    {{uname}}
+                  </a>
                 </router-link>
                 <li v-else>
                   <a @click="closein">登录/注册</a>
                 </li>
-              
               </ul>
             </div>
-            <select class="responsive-nav">
-              <option value selected>菜单</option>
-              <option value="index-2.html">首页</option>
-              <option value="home-categories-description.html">问答</option>
-              <option value="home-categories-articles.html">活动</option>
-              <option value="articles-list.html">失物</option>
-              <option value="faq.html">招聘信息</option>
-              <option value="#">二手信息</option>
-              <option value="blue-skin.html" @click="closein">个人中心</option>
+            <select
+              v-model="selected"
+              @change="changeHref(parseInt(selected))"
+              class="responsive-nav"
+            >
+              <option value="1">首页</option>
+              <option value="2">问答</option>
+              <option value="3">活动</option>
+              <option value="4">失物</option>
+              <option value="5">招聘信息</option>
+              <option value="6">二手信息</option>
+              <option value="7">{{uname}}</option>
+              <option value="8">登录/注册</option>
             </select>
           </nav>
           <!-- End of Main Navigation -->
@@ -67,19 +78,15 @@
     <!-- Start of Search Wrapper -->
     <div class="search-area-wrapper">
       <div class="search-area container">
-         <h3 class="search-header">changhangtong</h3>
+        <h3 class="search-header">changhangtong</h3>
         <!-- <button class="header-btn">发布信息</button> -->
         <p class="search-tag-line" style="margin-top:50px">
           Information sharing and communication platform of Nanchang Hangkong University
           , Makes information transfer easier
         </p>
 
-        <form class="search-form clearfix" @submit.prevent="onSubmit" >
-          <input
-            class="search-term required"
-            type="text"
-            placeholder="Type your search terms here"
-          />
+        <form class="search-form clearfix" @submit.prevent="onSubmit">
+          <input class="search-term required" type="text" placeholder="Type your search terms here" />
           <input class="search-btn" type="submit" @click="search()" value="搜索" />
           <div id="search-error-container"></div>
         </form>
@@ -88,8 +95,8 @@
     <!-- End of Search Wrapper -->
     <router-view />
     <!-- start of foot -->
-          <foot />
-          <!-- end of foot -->
+    <foot />
+    <!-- end of foot -->
     <!-- 弹窗组件 -->
     <div class="login" v-if="isclose">
       <div id="mask"></div>
@@ -126,11 +133,12 @@ import foot from "@/components/foot.vue";
 export default {
   name: "index",
   components: {
-    foot,
+    foot
   },
   data() {
     return {
-      circleUrl: 'http://127.0.0.1:3000/uplodes/moren',
+      selected: 1,
+      circleUrl: "http://127.0.0.1:3000/uplodes/moren",
       password: "",
       password1: "",
       username: ""
@@ -139,23 +147,57 @@ export default {
   computed: {
     ...mapState({
       isclose: state => state.user.isclose,
-       islogin: state => state.user.islogin,
+      islogin: state => state.user.islogin,
       uname: state => state.user.userinfo.uname
     })
   },
   methods: {
-    ...mapActions("user", ["setUserInfo", "changeislog", "setToken", "join", "close"]),
+    ...mapActions("user", [
+      "setUserInfo",
+      "changeislog",
+      "setToken",
+      "join",
+      "close"
+    ]),
+    changeHref(sortnum) {
+      switch (sortnum) {
+        case 1:
+          this.$router.push({ path: "/" });
+          break;
+        case 2:
+          this.$router.push({ path: "/help" });
+          break;
+        case 3:
+          this.$router.push({ path: "/activity" });
+          break;
+        case 4:
+          this.$router.push({ path: "/cityArea" });
+          break;
+        case 5:
+          this.$router.push({ path: "/cityArea" });
+          break;
+        case 6:
+          this.$router.push({ path: "/cityArea" });
+          break;
+        case 7:
+          this.$router.push({ path: "/admin" });
+          break;
+        case 8:
+          this.close();
+          break;
+      }
+    },
     joinin() {
-      this.join()
+      this.join();
     },
     closein() {
-      this.close()
+      this.close();
     },
-     onSubmit() {
+    onSubmit() {
       return false;
     },
-    search(){
-      console.log(111)
+    search() {
+      console.log(111);
     },
     registered() {
       const userReg = /^[1-9a-zA-Z]{1}[0-9a-zA-Z]{5,9}$/; //6-10位字母数字
@@ -243,7 +285,6 @@ export default {
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 .header-btn {
   background-color: #2c696d;
   font-size: 14px;
