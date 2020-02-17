@@ -35,19 +35,19 @@
                   <a>文章</a>
                 </router-link>
                 <router-link
-                  v-if="uname"
+                  v-if="nickname"
                   to="/admin"
                   tag="li"
                   exact-active-class="current-menu-item"
                 >
                   <a>
                     <img
-                      :src="circleUrl"
+                      :src="avatar"
                       class="avatar touxiang avatar-60 photo"
                       height="20"
                       width="20"
                     />
-                    {{uname}}
+                    {{nickname}}
                   </a>
                 </router-link>
                 <li v-else>
@@ -66,7 +66,7 @@
               <option value="4">失物</option>
               <option value="5">招聘信息</option>
               <option value="6">二手信息</option>
-              <option value="7">{{uname}}</option>
+              <option value="7">{{nickname}}</option>
               <option value="8">登录/注册</option>
             </select>
           </nav>
@@ -138,7 +138,6 @@ export default {
   data() {
     return {
       selected: 1,
-      circleUrl: "http://127.0.0.1:3000/uplodes/moren",
       password: "",
       password1: "",
       username: ""
@@ -148,7 +147,8 @@ export default {
     ...mapState({
       isclose: state => state.user.isclose,
       islogin: state => state.user.islogin,
-      uname: state => state.user.userinfo.uname
+      avatar: state => state.user.userinfo.avatar,
+      nickname: state => state.user.userinfo.nickname
     })
   },
   methods: {

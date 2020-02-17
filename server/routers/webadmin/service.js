@@ -25,7 +25,8 @@ exports.registered = (req, res) => {
         user_id: uuid.v1(),   //用户id 
         username: req.body.username,//用户名
         password: req.body.password,//密码
-        nickname:req.body.username,//昵称
+        nickname:'该用户还没没有设置昵称',//昵称
+        avatar:'http://127.0.0.1:3000/uplodes/moren',
         realstate:'0'
     }
     info.password = md5(`${info.password}${PED_SALT}`)
@@ -51,7 +52,7 @@ exports.login = (req, res) => {
     req.body.password = md5(`${req.body.password}${PED_SALT}`)
     let info = [req.body.username, req.body.password]
 
-    let sql = 'select * from user where username=? and password=?'
+    let sql = 'select nickname,user_id,avatar from user where username=? and password=?'
     db.base(sql, info, (result) => {
         if (result.length == 0) {
             data = {
@@ -74,7 +75,9 @@ exports.login = (req, res) => {
                     token: token,
                     userinfo: {
                         uid: result[0].id,
-                        uname: result[0].username
+                        nickname: result[0].nickname,
+                        avatar: result[0].avatar
+
                     }
                 }
             }//返回登录成功
@@ -116,7 +119,6 @@ exports.createhelp = (req, res) => {
     }
     let sql = 'insert into help set ?'
     db.base(sql, info, (result, error) => {
-
         data = {
             state: s,
             data: {}

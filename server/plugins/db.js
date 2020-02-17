@@ -16,7 +16,6 @@ connection.connect();
 
 connection.query(sql,data,function (error, results, fields) {
   if(error){
-    res.status(401).send(error);
     debug &&console.log('数据库操作失败:'+JSON.stringify(error))
     return
   }
