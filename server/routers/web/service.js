@@ -43,11 +43,28 @@ exports.webgetwebhelplist = (req, res) => {
             res.send(data);
         })
     })
-
-
-
 }
-
+//求助文章详情
+exports.gethelpcontent = (req, res) => {
+    let info = [req.body.id]
+    let sql = 'select * from help where help_id=?'
+    db.base(sql, info, (result) => {
+        if (result.length == 0) {
+            data = {
+                state: e,
+                data: {
+                }
+            }
+        } else {
+            data = {
+                state: s,
+                data: result[0]
+            }
+        }
+        console.log(result)
+        res.send(data);
+    })
+}
 // exports.aaa = (req, res) => {
 //     let info = [req.body.username, req.body.password]
 
