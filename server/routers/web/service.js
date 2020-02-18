@@ -65,25 +65,27 @@ exports.gethelpcontent = (req, res) => {
         res.send(data);
     })
 }
-// exports.aaa = (req, res) => {
-//     let info = [req.body.username, req.body.password]
-
-//     let sql = 'select * from user where username=? and password=?'
-//     db.base(sql, info, (result) => {
-//         if (result.length == 0) {
-//             data = {
-//                 state: e,
-//                 data: {
-//                 }
-//             }
-//         } else {
-//             data = {
-//                 state: s,
-//                 data: {
-//                 }
-//             }
-//         }
-//         console.log(result)
-//         res.send(data);
-//     })
-// }
+exports.createhelp = (req, res) => {
+    // console.log(req)
+    let time = Date.now() - 8 * 60 * 60
+    let info = {
+        comment_id: uuid.v1(),   //评论id 
+        user_id: req.user.uid,//  用户di 
+        content_id:req.body.content_id,//内容id
+        user_nickname: req.user.nickname,// 用户昵称
+        comment_content: req.body.comment_content,//内容  
+        createtime: time,//创建时间
+        comment_favour_num: 0,//点赞数    
+        comment_state: 0, //状态  
+        comment_istop: 0,//是否置顶
+        comment_ispublic: 0,//是否显示
+    }
+    let sql = 'insert comment help set ?'
+    db.base(sql, info, (result, error) => {
+        data = {
+            state: s,
+            data: {}
+        }
+        res.send(data)
+    })
+}

@@ -17,7 +17,7 @@
                   <a href="#" title="View all posts in Server &amp; Database">{{content.user_id}}</a>
                 </span>
                 <span class="comments">
-                  <a href="#" title="Comment on Integrating WordPress with Your Website">3 Comments</a>
+                  <a href="#" title="Comment on Integrating WordPress with Your Website">{{commentnum}} Comments</a>
                 </span>
                 <span class="like-count">66</span>
               </div>
@@ -58,6 +58,7 @@
 <script>
 import sidebar from "@/components/sidebar.vue";
 import comment from "@/components/comment.vue";
+import { mapState, mapActions } from "vuex";
 
 export default {
   components: {
@@ -72,7 +73,15 @@ export default {
   props: {
     id: {}
   },
+    computed: {
+    ...mapState({
+      commentnum: state => state.commentnum,
+    })
+  },
   methods: {
+    ...mapActions( [
+      "setcontentid",
+    ]),
     async gethelpcontent() {
       let data = {
         id: this.id
@@ -88,6 +97,7 @@ export default {
   },
   created() {
     this.gethelpcontent();
+    this.setcontentid(this.id)
   }
 };
 </script>

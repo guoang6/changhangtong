@@ -189,19 +189,23 @@
 
 
 <script>
+import { mapState, mapActions } from "vuex";
+
 export default {
-  components: {
+  
+   computed: {
+    ...mapState({
+      contentid: state => state.contentid,
+    })
   },
   data() {
     return {
     };
   },
   methods: {
-    handleCurrentChange(val) {
-      this.pagelistquery.page = val;
-      // this.gethelplist();
-      console.log(`当前页: ${val}`);
-    },
+      ...mapActions( [
+      "setcommentnum",
+    ]),
     async helpcontent() {
       let data = {
         page: this.pagelistquery.page

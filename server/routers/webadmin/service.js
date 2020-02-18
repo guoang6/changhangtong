@@ -63,9 +63,12 @@ exports.login = (req, res) => {
         } else {
             console.log(result[0].user_id)
             let uid = result[0].user_id
+            let nickname = result[0].nickname
+
+            nickname
             //通过jwt生成token     npm i -s jsonwebtoken
             let token = jwt.sign(
-                { uid },
+                { uid ,nickname},
                 PEIVATE_KEY,
                 { expiresIn: EXPIRE_SIN }
             )
