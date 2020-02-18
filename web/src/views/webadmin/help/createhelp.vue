@@ -3,7 +3,7 @@
     <h2>{{id?'编辑':'创建' }}信息</h2>
     <el-form ref="form" :model="form" label-width="80px" size="medium ">
       <el-form-item label="标题">
-        <el-input v-model="form.help_title"></el-input>
+        <el-input v-model="form.help_title" useCustomImageHandler @image-added="handleImageAdded"></el-input>
       </el-form-item>
       <el-form-item label="标签">
         <el-radio
@@ -15,22 +15,11 @@
         >{{item}}</el-radio>
       </el-form-item>
       <el-form-item label="内容">
-        <el-input type="textarea" v-model="form.help_content" rows="8"></el-input>
-      </el-form-item>
-      <el-form-item label="图片">
-        <el-upload
-          :action="$axios.defaults.baseURL+'/uplod'"
-          list-type="picture-card"
-          :on-preview="handlePictureCardPreview"
-          :on-remove="handleRemove"
-          :on-success="uplogsuccess"
-          :file-list="this.dialogImageUrl"
-        >
-          <i class="el-icon-plus"></i>
-        </el-upload>
-        <el-dialog :visible.sync="dialogVisible">
-          <img width="100%" :src="dialogImageUrl" alt />
-        </el-dialog>
+        <vue-editor
+          useCustomImageHandler
+          @image-added="handleImageAdded"
+          v-model="form.help_content"
+        ></vue-editor>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">确定</el-button>
@@ -41,38 +30,38 @@
 </template>
 
 <script>
-// import { mapState } from "vuex";
+import { VueEditor } from "vue2-editor";
 export default {
   data() {
     return {
       lable: ["学习", "生活", "娱乐", "其他"],
-      dialogImageUrl: [],
       dialogVisible: false,
       form: {
         help_title: "",
         help_lable: "",
         help_content: "",
-        help_img: ""
       }
     };
   },
   props: {
     id: {}
   },
-  //    computed: {
-  //   ...mapState({
-  //     uplod: state => state.uplod,
-  //   })
-  // },
+  components: {
+    VueEditor
+  },
   methods: {
+    //富文本编辑器图片上传npm install vue2-editor
+    async handleImageAdded(file, Editor, cursorLocation, resetUploader) {
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await this.$axios.post("/uplod", formData);
+      console.log(res);
+      Editor.insertEmbed(cursorLocation, "image", res.data.url);
+      resetUploader();
+    },
     //发布与编辑
     async onSubmit() {
-      let img = [];
       let res;
-      for (let i = 0; i < this.dialogImageUrl.length; i++) {
-        img.push(this.dialogImageUrl[i].url);
-      }
-      this.form.help_img = String(img);
       if (this.id) {
         this.form.id = this.id;
         res = await this.$axios.post(
@@ -91,24 +80,6 @@ export default {
         this.$router.push("/admin/createhelplist");
       }
     },
-    //文件列表移除文件时的钩子
-    handleRemove(file, fileList) {
-      console.log(file, fileList);
-      let b = this.dialogImageUrl.indexOf(file);
-      this.dialogImageUrl.splice(b, 1);
-      console.log(this.dialogImageUrl);
-    },
-    //点击文件列表中已上传的文件时的钩子
-    handlePictureCardPreview(file) {
-      // this.dialogImageUrl = file.url;
-      // this.dialogVisible = true;
-    },
-    //文件上传成功时的钩子
-    uplogsuccess(res) {
-      this.dialogImageUrl.push({ url: res.url });
-      console.log(this.dialogImageUrl);
-      console.log(res.url);
-    },
     async gethelpdetails() {
       const res = await this.$axios.post(
         "/webadmin/gethelpdetails",
@@ -119,14 +90,6 @@ export default {
       this.form.help_title = data.help_title;
       this.form.help_lable = data.help_lable;
       this.form.help_content = data.help_content;
-      this.form.help_img = data.help_img;
-      if (data.help_img != "") {
-        let img = data.help_img.split(",");
-        for (let i = 0; i < img.length; i++) {
-          this.dialogImageUrl.push({ url: img[i] });
-        }
-        console.log(this.dialogImageUrl);
-      }
     }
   },
   created() {

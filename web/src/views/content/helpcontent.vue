@@ -22,8 +22,7 @@
                 <span class="like-count">66</span>
               </div>
               <!-- end of post meta -->
-              <blockquote>
-                <p>{{content.help_content}}</p>
+              <blockquote v-html="content.help_content">
               </blockquote>
             </article>
 
