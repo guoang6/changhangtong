@@ -7,9 +7,7 @@ router.post('/web/webgetwebhelplist', service.webgetwebhelplist)
 router.post('/web/gethelpcontent', service.gethelpcontent)
 router.post('/web/setcomment', service.setcomment)
 
-
-
-
+router.post('/web/getcomment', service.getcomment)
 
 
 

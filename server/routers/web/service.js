@@ -65,22 +65,20 @@ exports.gethelpcontent = (req, res) => {
         res.send(data);
     })
 }
-exports.createhelp = (req, res) => {
+exports.setcomment = (req, res) => {
     // console.log(req)
     let time = Date.now() - 8 * 60 * 60
     let info = {
         comment_id: uuid.v1(),   //评论id 
         user_id: req.user.uid,//  用户di 
         content_id:req.body.content_id,//内容id
-        user_nickname: req.user.nickname,// 用户昵称
         comment_content: req.body.comment_content,//内容  
-        createtime: time,//创建时间
-        comment_favour_num: 0,//点赞数    
+        createtime: time,//创建时间  
         comment_state: 0, //状态  
         comment_istop: 0,//是否置顶
         comment_ispublic: 0,//是否显示
     }
-    let sql = 'insert comment help set ?'
+    let sql = 'insert comment set ?'
     db.base(sql, info, (result, error) => {
         data = {
             state: s,
@@ -88,4 +86,26 @@ exports.createhelp = (req, res) => {
         }
         res.send(data)
     })
+}
+exports.getcomment = (req, res) => {
+    let info = [req.body.content_id]//内容id
+    console.log(info)
+    let sql1 = ' select count(*) as count from comment where  content_id=?'
+    db.base(sql1, info, (result, error) => {
+        let count = result[0].count
+        let sql = 'select comment.comment_id ,comment.comment_content,comment.createtime,user.nickname,'+
+        'user.user_id,user.avatar from user,comment where comment.user_id = user.user_id and content_id=?'
+        db.base(sql, info, (result, error) => {
+            data = {
+                state: s,
+                data: result,
+                count: count
+            }
+            res.send(data)
+        })
+    })
+ 
+
+
+
 }

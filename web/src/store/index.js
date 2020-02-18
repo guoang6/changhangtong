@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 
 const state = {
-  commentmum: '',
+  commentnum: '',
   contentid: '',
 }
 const getters = {}
@@ -16,7 +16,7 @@ const mutations = {
     state.contentid = id
   },
   SET_COMMENTNUM(state, num) {
-    state.commentmum = num
+    state.commentnum = num
   },
 }
 const actions = {
