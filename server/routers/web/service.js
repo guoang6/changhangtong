@@ -87,6 +87,7 @@ exports.setcomment = (req, res) => {
         res.send(data)
     })
 }
+//获取评论列表
 exports.getcomment = (req, res) => {
     let info = [req.body.content_id]//内容id
     console.log(info)
@@ -94,7 +95,8 @@ exports.getcomment = (req, res) => {
     db.base(sql1, info, (result, error) => {
         let count = result[0].count
         let sql = 'select comment.comment_id ,comment.comment_content,comment.createtime,user.nickname,'+
-        'user.user_id,user.avatar from user,comment where comment.user_id = user.user_id and content_id=?'
+        'user.user_id,user.avatar from user,comment where comment.user_id = user.user_id and content_id=? '
+        'order by comment.createtime asc '
         db.base(sql, info, (result, error) => {
             data = {
                 state: s,
@@ -104,8 +106,44 @@ exports.getcomment = (req, res) => {
             res.send(data)
         })
     })
- 
-
-
-
+}
+//回复
+exports.setreply = (req, res) => {
+    // console.log(req)
+    let time = Date.now() - 8 * 60 * 60
+    let info = {
+        reply_id: uuid.v1(),//留言id
+        user_id: req.user.uid,//  用户di 
+        comment_id:req.body.comment_id,//内容id
+        reply_content: req.body.comment_content,//内容  
+        tousernickname:req.body.tousernickname,
+        touserid:req.body.touserid,
+        createtime: time,//创建时间  
+        reply_state: 0, //状态  
+        reply_istop: 0,//是否置顶
+        reply_ispublic: 0,//是否显示
+    }
+    let sql = 'insert reply set ?'
+    db.base(sql, info, (result, error) => {
+        data = {
+            state: s,
+            data: {}
+        }
+        res.send(data)
+    })
+}
+//获取回复列表
+exports.getreply = (req, res) => {
+    let info = [req.body.comment_id]//评论id
+    console.log(req.body)
+        let sql = 'select reply.reply_content ,reply.createtime,reply.touserid,reply.tousernickname,'+
+        'user.user_id,user.avatar,user.nickname from user,reply where reply.user_id = user.user_id and comment_id=? '+
+        'order by reply.createtime asc '
+        db.base(sql, info, (result, error) => {
+            data = {
+                state: s,
+                data: result,
+            }
+            res.send(data)
+        })
 }

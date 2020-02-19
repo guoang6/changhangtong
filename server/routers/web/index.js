@@ -8,7 +8,8 @@ router.post('/web/gethelpcontent', service.gethelpcontent)
 router.post('/web/setcomment', service.setcomment)
 
 router.post('/web/getcomment', service.getcomment)
-
+router.post('/web/setreply', service.setreply)
+router.post('/web/getreply', service.getreply)
 
 
 
