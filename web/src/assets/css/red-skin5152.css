@@ -39,10 +39,6 @@ a#scroll-top:hover {
   background-color: #9e4c47;
 }
 
-.tabs-nav li.active a {
-  color: #b0544f;
-  border-top: 2px solid #b0544f;
-}
 
 .toggle dt span,
 .accordion dt span {

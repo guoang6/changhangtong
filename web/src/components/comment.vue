@@ -182,6 +182,7 @@ export default {
     },
     //获取回复
     async getreply(comment_id, id) {
+      this.replylist=''
       this.replyid = id;
       this.commentid = comment_id;
       let data = {

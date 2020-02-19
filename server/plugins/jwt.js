@@ -11,6 +11,8 @@ module.exports = jwt({
         '/uplod',
         '/web/webgetwebhelplist',
         '/web/gethelpcontent',
-        '/web/getcomment'
+        '/web/getcomment',
+        '/web/getcomment',
+        '/web/getreply',
     ]
 })

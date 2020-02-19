@@ -638,7 +638,6 @@ ul.articles li.article-entry:last-child {
   line-height: 20px;
   padding: 5px 13px;
   padding-left: 25px;
-  background: #fafafa url("../images/like-btn.png") no-repeat 10px -20px;
   cursor: pointer;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -653,7 +652,6 @@ ul.articles li.article-entry:last-child {
   cursor: default;
 }
 .like-btn .like-it.already-voted:hover {
-  background: #fafafa url("../images/like-btn.png") no-repeat 10px -20px;
   color: #8cd24e;
 }
 
@@ -1123,12 +1121,9 @@ input[type=text].error,
   text-shadow: 0 1px 0 #fff;
 }
 
-.tabs-nav li:first-child a {
-  border-left: 1px solid #fbdfaa;
-}
+
 
 .tabs-nav li a:hover {
-  background: #fafafa;
   color: #395996;
 }
 
