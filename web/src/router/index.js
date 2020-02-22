@@ -15,6 +15,9 @@ import createhelplist from "../views/webadmin/help/createhelplist.vue"
 import createactivity from "../views/webadmin/activity/createactivity.vue"
 import createactivitylist from "../views/webadmin/activity/createactivitylist.vue"
 import company from "../views/webadmin/job/company.vue"
+import createarticle from "../views/webadmin/article/createarticle.vue"
+
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -37,6 +40,7 @@ const routes = [
           { path: 'updateactivity/:id', name: 'updateactivity', component: createactivity ,props:true},
           { path: 'createactivitylist', name: 'createactivitylist', component: createactivitylist },
           { path: 'createactivity', name: 'createactivity', component: createactivity },
+          { path: 'createarticle', name: 'createarticle', component: createarticle },
           { path: 'company', name: 'company', component: company },
         ]
       }

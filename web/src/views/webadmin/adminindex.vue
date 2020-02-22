@@ -59,7 +59,7 @@
                   <i class="el-icon-menu"></i>
                   <span>文章与新闻</span>
                 </template>
-                <el-menu-item index="/admin/createactivity">发布文章</el-menu-item>
+                <el-menu-item index="/admin/createarticle">发布文章</el-menu-item>
                 <el-menu-item index="1-4-1">文章列表</el-menu-item>
               </el-submenu>
 
