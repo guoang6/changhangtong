@@ -5,6 +5,9 @@
       <el-form-item label="标题">
         <el-input v-model="form.help_title" useCustomImageHandler @image-added="handleImageAdded"></el-input>
       </el-form-item>
+      <el-form-item label="简介">
+        <el-input type="textarea" :rows="2" placeholder="请输入文章简介" v-model="textarea"></el-input>
+      </el-form-item>
       <el-form-item label="标签">
         <el-radio
           v-for="(item,id) in lable"
@@ -39,7 +42,7 @@ export default {
       form: {
         help_title: "",
         help_lable: "",
-        help_content: "",
+        help_content: ""
       }
     };
   },

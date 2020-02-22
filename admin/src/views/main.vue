@@ -1,4 +1,16 @@
 <template>
+<div class="main">
+    <el-header style="text-align: right; font-size: 12px">
+      <el-dropdown>
+        <i class="el-icon-setting" style="margin-right: 15px"></i>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>查看</el-dropdown-item>
+          <el-dropdown-item>新增</el-dropdown-item>
+          <el-dropdown-item>删除</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+      <span>王小虎</span>
+    </el-header>
   <el-container style="height: 100vh; ">
     <el-aside width="200px" style="background-color: #545c64">
       <el-menu :default-openeds="['1', '3']"
@@ -9,56 +21,55 @@
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b">
+        <el-menu-item index="/admin">
+              <i class="el-icon-user-solid"></i>
+              <span slot="title">仪表盘</span>
+            </el-menu-item>
+        <el-menu-item index="/admin">
+              <i class="el-icon-user-solid"></i>
+              <span slot="title">个人中心</span>
+            </el-menu-item>
         <el-submenu index="1">
           <template slot="title">
-            <i class="el-icon-message"></i>导航一
+            <i class="el-icon-message"></i>审核中心
           </template>
-          <el-menu-item-group>
-            <template slot="title">分组一</template>
-            <el-menu-item index="1-1">选项1</el-menu-item>
-            <el-menu-item index="1-2">选项2</el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group title="分组2">
-            <el-menu-item index="1-3">选项3</el-menu-item>
-          </el-menu-item-group>
-          <el-submenu index="1-4">
-            <template slot="title">选项4</template>
-            <el-menu-item index="1-4-1">选项4-1</el-menu-item>
-          </el-submenu>
+            <el-menu-item index="1-1">内容审核</el-menu-item>
+            <el-menu-item index="1-2">留言审核</el-menu-item>
+
         </el-submenu>
         <el-submenu index="2">
           <template slot="title">
-            <i class="el-icon-menu"></i>导航二
+            <i class="el-icon-menu"></i>认证中心
           </template>
-          <el-menu-item-group>
-            <template slot="title">分组一</template>
-            <el-menu-item index="2-1">选项1</el-menu-item>
-            <el-menu-item index="2-2">选项2</el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group title="分组2">
-            <el-menu-item index="2-3">选项3</el-menu-item>
-          </el-menu-item-group>
-          <el-submenu index="2-4">
-            <template slot="title">选项4</template>
-            <el-menu-item index="2-4-1">选项4-1</el-menu-item>
-          </el-submenu>
+         <el-menu-item index="2-1">学生认证</el-menu-item>
+            <el-menu-item index="2-2">公司认证</el-menu-item>
         </el-submenu>
         <el-submenu index="3">
           <template slot="title">
-            <i class="el-icon-setting"></i>导航三
+            <i class="el-icon-setting"></i>网站管理中心
           </template>
-          <el-menu-item-group>
-            <template slot="title">分组一</template>
-            <el-menu-item index="3-1">选项1</el-menu-item>
-            <el-menu-item index="3-2">选项2</el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group title="分组2">
-            <el-menu-item index="3-3">选项3</el-menu-item>
-          </el-menu-item-group>
-          <el-submenu index="3-4">
-            <template slot="title">选项4</template>
-            <el-menu-item index="3-4-1">选项4-1</el-menu-item>
-          </el-submenu>
+        >
+            <el-menu-item index="3-1">标签管理</el-menu-item>
+            <el-menu-item index="3-2">预留</el-menu-item>
+         
+        </el-submenu>
+         <el-submenu index="3">
+          <template slot="title">
+            <i class="el-icon-setting"></i>反馈中心
+          </template>
+        >
+            <el-menu-item index="3-1">意见反馈</el-menu-item>
+            <el-menu-item index="3-2">违规举报</el-menu-item>
+         
+        </el-submenu>
+         <el-submenu index="3">
+          <template slot="title">
+            <i class="el-icon-setting"></i>账号管理
+          </template>
+        >
+            <el-menu-item index="3-1">标签管理</el-menu-item>
+            <el-menu-item index="3-2">预留</el-menu-item>
+         
         </el-submenu>
       </el-menu>
     </el-aside>
@@ -73,6 +84,7 @@
       </el-main>
     </el-container>
   </el-container>
+  </div>
 </template>
 <style>
 .el-header {

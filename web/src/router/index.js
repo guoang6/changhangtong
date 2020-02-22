@@ -6,8 +6,8 @@ import help from "../views//help.vue"
 import news from '../views/news.vue'
 import job from "../views/job.vue"
 import activity from "../views/activity.vue"
+import oldstuff from "../views/oldstuff.vue"
 import helpcontent from "../views/content/helpcontent.vue"
-
 import adminindex from "../views/webadmin/adminindex.vue"
 import adminhome from "../views/webadmin/adminhome.vue"
 import createhelp from "../views/webadmin/help/createhelp.vue"
@@ -29,6 +29,9 @@ const routes = [
       { path: 'helpcontent/:id', name: 'helpcontent', component: helpcontent,props:true, meta:{ispublic:true}},
       { path: 'news', name: 'news', component: news, meta:{ispublic:true}},
       { path: 'job', name: 'job', component: job, meta:{ispublic:true}},
+      { path: 'oldstuff', name: 'oldstuff', component: oldstuff, meta:{ispublic:true}},
+
+      
       { path: 'activity', name: 'activity', component: activity, meta:{ispublic:true}},
       {
         path: 'admin', name: 'adminindex',  component: adminindex, children: [

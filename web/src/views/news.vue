@@ -38,7 +38,40 @@
               </header>
 
               <p>
-                Many of us work in an endless stream of tasks, browser tasks, social media, emails, meetings, rushing from one thing to another, never pausing and never ending.&nbsp;Then the day is over, and we are exhausted, and we often have very little to show for it. And we start the next . . .
+                 meetings, rushing from one thing to another, never pausing and never ending.&nbsp;Then the day is over, and we are exhausted, and we often have very little to show for it. And we start the next . . .
+                <a
+                  class="readmore-link"
+                  href="http://knowledgebase.inspirythemes.com/integrating-wordpress-with-your-website/"
+                >Read more</a>
+              </p>
+            </article>
+             <article class="format-standard type-post hentry clearfix">
+              <header class="clearfix">
+                <h3 class="post-title">
+                  <a href="single.html">Integrating WordPress with Your Website</a>
+                </h3>
+
+                <div class="post-meta clearfix">
+                  <span class="date">25 Feb, 2013</span>
+                  <span class="category">
+                    <a
+                      href="#"
+                      title="View all posts in Server &amp; Database"
+                    >Server &amp; Database</a>
+                  </span>
+                  <span class="comments">
+                    <a
+                      href="#"
+                      title="Comment on Integrating WordPress with Your Website"
+                    >3 Comments</a>
+                  </span>
+                  <span class="like-count">66</span>
+                </div>
+                <!-- end of post meta -->
+              </header>
+
+              <p>
+                meetings, rushing ssdsssssssssssssssssssssss古古怪怪古古怪怪古古怪怪古古怪顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶  meetings, rushing ssdsssssssssssssssssssssss古古怪怪古古怪怪古古怪怪古古怪顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的         怪古古怪怪灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌from one thing to another, never pausing and never ending.&nbsp;Then the day is over, and we are exhausted, and we often have very little to show for it. And we start the next . . .
                 <a
                   class="readmore-link"
                   href="http://knowledgebase.inspirythemes.com/integrating-wordpress-with-your-website/"

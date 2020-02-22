@@ -28,7 +28,7 @@
                 <router-link to="/job" tag="li" exact-active-class="current-menu-item">
                   <a>招聘信息</a>
                 </router-link>
-                <router-link to="adminhome" tag="li" exact-active-class="current-menu-item">
+                <router-link to="/oldstuff" tag="li" exact-active-class="current-menu-item">
                   <a>二手信息</a>
                 </router-link>
                 <router-link to="/news" tag="li" exact-active-class="current-menu-item">
