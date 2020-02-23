@@ -10,6 +10,7 @@ import oldstuff from "../views/oldstuff.vue"
 import helpcontent from "../views/content/helpcontent.vue"
 import adminindex from "../views/webadmin/adminindex.vue"
 import adminhome from "../views/webadmin/adminhome.vue"
+import myself from "../views/webadmin/myself.vue"
 import createhelp from "../views/webadmin/help/createhelp.vue"
 import createhelplist from "../views/webadmin/help/createhelplist.vue"
 import createactivity from "../views/webadmin/activity/createactivity.vue"
@@ -37,6 +38,7 @@ const routes = [
         path: 'admin', name: 'adminindex',  component: adminindex, children: [
           // { path: '*', redirect: 'admin/home', },
           { path: '', name: 'adminhome', component: adminhome },
+          { path: 'myself', name: 'myself', component: myself },
           { path: 'createhelp', name: 'createhelp', component: createhelp },
           { path: 'updatehelp/:id', name: 'createhelp', component: createhelp ,props:true},
           { path: 'createhelplist', name: 'createhelplist', component: createhelplist },

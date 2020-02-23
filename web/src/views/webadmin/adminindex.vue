@@ -9,6 +9,10 @@
               <i class="el-icon-user-solid"></i>
               <span slot="title">个人中心</span>
             </el-menu-item>
+             <el-menu-item index="/admin/myself">
+              <i class="el-icon-user-solid"></i>
+              <span slot="title">个人信息编辑</span>
+            </el-menu-item>
             
             <el-submenu index="1">
               <template slot="title">
@@ -26,17 +30,7 @@
               </template>
               <el-menu-item index="/admin/createactivity">发布活动</el-menu-item>
               <el-menu-item index="/admin/createactivitylist">活动列表</el-menu-item>
-            </el-submenu>
-
-            <el-submenu index="3">
-              <template slot="title">
-                <i class="el-icon-menu"></i>
-                <span>失物</span>
-              </template>
-              <el-menu-item index="/admin/createactivity">失物发布</el-menu-item>
-              <el-menu-item index="1-4-1">失物管理</el-menu-item>
-            </el-submenu>
-            
+            </el-submenu>            
              <el-submenu index="4">
               <template slot="title">
                 <i class="el-icon-menu"></i>

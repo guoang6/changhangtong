@@ -22,9 +22,6 @@
                 <router-link to="/activity" tag="li" exact-active-class="current-menu-item">
                   <a>活动</a>
                 </router-link>
-                <router-link to="/" tag="li" exact-active-class="current-menu-item">
-                  <a>失物品</a>
-                </router-link>
                 <router-link to="/job" tag="li" exact-active-class="current-menu-item">
                   <a>招聘信息</a>
                 </router-link>

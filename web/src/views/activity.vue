@@ -43,7 +43,11 @@
          
         </ul>
       </section>
-             
+              <el-pagination
+              @current-change="handleCurrentChange"
+              layout="prev, pager, next"
+              :total="pagelistquery.total"
+            ></el-pagination>
           </div>
           <!-- end of page content -->
           <!-- start of sidebar -->

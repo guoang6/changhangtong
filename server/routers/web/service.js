@@ -147,3 +147,35 @@ exports.getreply = (req, res) => {
             res.send(data)
         })
 }
+
+
+//web获取活动列表
+exports.webgetwebactivitylist = (req, res) => {
+    let sql1 = ' select count(*) as count from activity '
+    let info1 = []
+    db.base(sql1, info1, (result) => {
+        let count = result[0].count
+        let pagesize = req.body.pagesize * 1
+        let page = (req.body.page - 1) * pagesize
+        let info = [pagesize, page]
+        let sql = 'select activity_id,activity_title,createtime from activity  limit ? offset ?'
+        db.base(sql, info, (result) => {
+            if (result.length == 0) {
+                data = {
+                    state: e,
+                    data: {
+                    }
+                }   //    数据库里面没找到配对的内容返回参数
+            } else {
+                data = {
+                    state: s,
+                    data: result,
+                    count: count
+                }
+            }
+            console.log(data)
+            // console.log(result)
+            res.send(data);
+        })
+    })
+}
