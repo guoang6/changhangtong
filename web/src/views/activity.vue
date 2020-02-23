@@ -63,12 +63,41 @@ export default {
   components: {
     sidebar
   },
-  data() {
+data() {
     return {
-      imageUrl: ""
+      pagelistquery: {
+        total: 0,
+        pagesize: 10,
+        page: 1
+      },
+      tableData: {}
     };
   },
-  methods: {}
+  methods: {
+    handleCurrentChange(val) {
+      this.pagelistquery.page = val;
+      this.gethelplist();
+      console.log(`当前页: ${val}`);
+    },
+    async getactivitylist() {
+      let data = {
+        page: this.pagelistquery.page,
+        pagesize: this.pagelistquery.pagesize
+      };
+      let res = await this.$axios.post(
+        "/web/webgetwebactivitylist",
+        this.qs.stringify(data)
+      );
+      if (res.data.state.type === "SUCCESS") {
+        this.tableData = res.data.data;
+        console.log(res.data);
+        this.pagelistquery.total = res.data.count;
+      }
+    }
+  },
+  created() {
+    this.getactivitylist();
+  }
 };
 </script>
 <style>
