@@ -6,6 +6,9 @@
         <div class="row">
           <!-- start of page content -->
           <div class="span8 page-content">
+            <div>
+              <h3 class="title">问答区</h3>
+            </div>
             <!-- Basic Home Page Template -->
             <ul class="tabs-nav">
               <li class="active" style>
@@ -25,20 +28,20 @@
               </li>
             </ul>
             <section class="widget">
-              <h3 class="title">问答区</h3>
               <ul class="articles">
                 <li class="article-entry standard" v-for="(item,id) in tableData" :key="id">
                   <h4>
                     <router-link :to="'/helpcontent/'+item.help_id">{{item.help_title}}</router-link>
                   </h4>
                   <span class="article-meta">
-                    {{item.createtime| dataFormat}}
-                    <a
-                      href="#"
-                      title="View all posts in Server &amp; Database"
-                    >Server &amp; Database</a>
+                   <a class="iconfont">&#xe619;</a> {{item.createtime| dataFormat}}
+                    <a class="iconfont" style="margin-left:50px">&#xe688;</a>哈哈哈哈
                   </span>
-                  <span class="like-count">66</span>
+                  <span class="like-count">
+                    <span class="like-count">
+                      <a class="iconfont">&#xe61c;</a>55
+                    </span>
+                  </span>
                 </li>
               </ul>
             </section>

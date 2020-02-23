@@ -32,7 +32,7 @@
               24 Feb, 2013 in
               <a href="#" title="View all posts in Website Dev">Website Dev</a>
             </span>
-            <span class="like-count">15</span>
+            <span class="like-count">  <a class="iconfont" style="color:red">&#xe647;</a>15</span>
           </li>
           <li class="article-entry video">
             <h4>

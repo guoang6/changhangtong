@@ -6,20 +6,39 @@
         <div class="row">
           <!-- start of page content -->
           <div class="span8 page-content">
-            <!-- Basic Home Page Template -->              
+             <div>
+              <h3 class="title">活动区</h3>
+            </div>
+            <!-- Basic Home Page Template -->
+            <ul class="tabs-nav">
+              <li class="active" style>
+                <a href="#">First Tab</a>
+              </li>
+              <li>
+                <a href="#">Second Tab</a>
+              </li>
+              <li>
+                <a href="#">Third Tab</a>
+              </li>
+              <li>
+                <a href="#">Third Tab</a>
+              </li>
+              <li>
+                <a href="#">Third Tab</a>
+              </li>
+            </ul>            
 
                <section class="widget">
-        <h3 class="title">Featured Articles</h3>
         <ul class="articles">
           <li class="article-entry standard">
             <h4>
-              <a >Integrating WordPress with Your Website</a>
+              <a >打球</a>
             </h4>
             <span class="article-meta">
-              25 Feb, 2013 in
-              <a href="#" title="View all posts in Server &amp; Database">Server &amp; Database</a>
+             <a class="iconfont">&#xe619;</a> 2020-2-5 20：20
+              <a class="iconfont" style="margin-left:50px">&#xe609;</a>体育馆
             </span>
-            <span class="like-count">66</span>
+            <span class="like-count"><a class="iconfont">&#xe61c;</a>55</span>
           </li>
          
         </ul>
