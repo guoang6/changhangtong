@@ -27,26 +27,26 @@ router.post('/uplod', uplod.single('file'), service.uplod)
 router.post('/webadmin/registered', service.registered)
 //登录
 router.post('/webadmin/login', service.login)
-//创建求助
+// //创建求助
 router.post('/webadmin/createhelp', service.createhelp)
 //用户u获取求助列表
 router.post('/webadmin/getwebhelplist', service.getwebhelplist)
-//求助详情
-router.post('/webadmin/gethelpdetails', service.gethelpdetails)
-//修改求助
-router.post('/webadmin/updateehelp', service.updateehelp)
-//删除求助
-router.post('/webadmin/deletehelp', service.deletehelp)
-//创建活动
-router.post('/webadmin/createactivity', service.createactivity)
-//用户u获取求助列表
-router.post('/webadmin/getwebactivitylist', service.getwebactivitylist)
-//求助详情
-router.post('/webadmin/getactivitydetails', service.getactivitydetails)
-//修改求助
+// //求助详情
+// router.post('/webadmin/gethelpdetails', service.gethelpdetails)
+// //修改求助
 // router.post('/webadmin/updateehelp', service.updateehelp)
-//删除求助
-router.post('/webadmin/deleteactivity', service.deleteactivity)
+// //删除求助
+// router.post('/webadmin/deletehelp', service.deletehelp)
+// //创建活动
+// router.post('/webadmin/createactivity', service.createactivity)
+// //用户u获取求助列表
+// router.post('/webadmin/getwebactivitylist', service.getwebactivitylist)
+// //求助详情
+// router.post('/webadmin/getactivitydetails', service.getactivitydetails)
+// //修改求助
+// // router.post('/webadmin/updateehelp', service.updateehelp)
+// //删除求助
+// router.post('/webadmin/deleteactivity', service.deleteactivity)
 
 
 
