@@ -151,11 +151,11 @@ exports.getwebhelplist = async (req, res) => {
     res.send(data);
 }
 //求助详情
-exports.gethelpdetails = (req, res) => {
+exports.gethelpdetails =async (req, res) => {
     console.log(req.body)
     let info = [req.body.id]
     let sql = 'select * from help where help_id=?'
-    db.base(sql, info, (result) => {
+    const result = await query(sql, info)
         if (result.length == 0) {
             data = {
                 state: e,
@@ -170,10 +170,9 @@ exports.gethelpdetails = (req, res) => {
         }
         console.log(result)
         res.send(data);
-    })
 }
 //修改求助
-exports.updateehelp = (req, res) => {
+exports.updateehelp =async (req, res) => {
     console.log(req.user)
     let info = [
         req.body.help_title,
@@ -186,7 +185,7 @@ exports.updateehelp = (req, res) => {
     let sql = 'update help set help_title =?, help_lable=?,help_content=?,help_img=? where user_id =?and help_id=?'
 
     // let sql = `update help set help_title ='${req.body.help_title}', help_lable='${req.body.help_lable}' ,help_content='${req.body.help_content}',help_img='${req.body.help_img}',where user_id = '${req.user.uid}'and help_id='${req.body.id}'`
-    db.base(sql, info, (result) => {
+    const result = await query(sql, info)
         if (result.length == 0) {
             data = {
                 state: e,
@@ -201,14 +200,13 @@ exports.updateehelp = (req, res) => {
         }
         console.log(result)
         res.send(data);
-    })
 }
 //删除求助
-exports.deletehelp = (req, res) => {
+exports.deletehelp =async (req, res) => {
     let info = [req.body.help_id, req.user.uid]
 
     let sql = 'delete  from help where help_id=? and user_id=?'
-    db.base(sql, info, (result) => {
+    const result = await query(sql, info)
         if (result.length == 0) {
             data = {
                 state: e,
@@ -223,8 +221,7 @@ exports.deletehelp = (req, res) => {
             }
         }
         console.log(result)
-        res.send(data);
-    })
+        res.send(data)
 }
 /**
  * 
@@ -233,7 +230,7 @@ exports.deletehelp = (req, res) => {
  */
 
 //创建活动
-exports.createactivity = (req, res) => {
+exports.createactivity = async (req, res) => {
     // console.log(req)
     let time = Date.now() - 8 * 60 * 60
     let info = {
@@ -257,55 +254,48 @@ exports.createactivity = (req, res) => {
         activity_ispublic: 0,//是否显示
     }
     let sql = 'insert into activity set ?'
-    db.base(sql, info, (result, error) => {
-
-        data = {
-            state: s,
-            data: {}
-        }
-        res.send(data)
-    })
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: {}
+    }
+    res.send(data)
 }
 //获取活动列表
-exports.getwebactivitylist = (req, res) => {
+exports.getwebactivitylist = async (req, res) => {
     // console.log(req)
     let sql1 = ' select count(*) as count from activity where user_id=?'
     let info1 = [req.user.uid]
-    db.base(sql1, info1, (result) => {
-        let count = result[0].count
-        let page = (req.body.page - 1) * req.body.pagesize
-        let pagesize = req.body.pagesize * 1
-        let info = [req.user.uid, pagesize, page]
-        let sql = 'select * from activity where user_id=? limit ? offset ?'
-        db.base(sql, info, (result) => {
-            if (result.length == 0) {
-                data = {
-                    state: e,
-                    data: {
-                    }
-                }   //    数据库里面没找到配对的内容返回参数
-            } else {
-                data = {
-                    state: s,
-                    data: result,
-                    count: count
-                }
+    const counts = await query(sql, info)
+    let count = counts[0].count
+    let page = (req.body.page - 1) * req.body.pagesize
+    let pagesize = req.body.pagesize * 1
+    let info = [req.user.uid, pagesize, page]
+    let sql = 'select * from activity where user_id=? limit ? offset ?'
+    const result = await query(sql, info)
+    if (result.length == 0) {
+        data = {
+            state: e,
+            data: {
             }
-            console.log(data)
-            // console.log(result)
-            res.send(data);
-        })
-    })
-
-
-
+        }   //    数据库里面没找到配对的内容返回参数
+    } else {
+        data = {
+            state: s,
+            data: result,
+            count: count
+        }
+    }
+    console.log(data)
+    // console.log(result)
+    res.send(data);
 }
 //活动详情
-exports.getactivitydetails = (req, res) => {
+exports.getactivitydetails =async (req, res) => {
     console.log(req.body)
     let info = [req.body.id]
     let sql = 'select * from activity where activity_id=?'
-    db.base(sql, info, (result) => {
+    const result = await query(sql, info)
         if (result.length == 0) {
             data = {
                 state: e,
@@ -320,10 +310,9 @@ exports.getactivitydetails = (req, res) => {
         }
         console.log(result)
         res.send(data);
-    })
 }
 //修改活动
-exports.updateeactivity = (req, res) => {
+exports.updateeactivity = async (req, res) => {
     console.log(req.user)
     let info = [
         req.body.help_title,
@@ -332,11 +321,9 @@ exports.updateeactivity = (req, res) => {
         req.body.help_img,
         req.user.uid,
         req.body.id]
-
     let sql = 'update help set help_title =?, help_lable=?,help_content=?,help_img=? where user_id =?and help_id=?'
-
     // let sql = `update help set help_title ='${req.body.help_title}', help_lable='${req.body.help_lable}' ,help_content='${req.body.help_content}',help_img='${req.body.help_img}',where user_id = '${req.user.uid}'and help_id='${req.body.id}'`
-    db.base(sql, info, (result) => {
+    const result = await query(sql, info)
         if (result.length == 0) {
             data = {
                 state: e,
@@ -351,14 +338,13 @@ exports.updateeactivity = (req, res) => {
         }
         console.log(result)
         res.send(data);
-    })
 }
 //删除活动
-exports.deleteactivity = (req, res) => {
+exports.deleteactivity = async (req, res) => {
     let info = [req.body.activity_id, req.user.uid]
 
     let sql = 'delete  from activity where activity_id=? and user_id=?'
-    db.base(sql, info, (result) => {
+    const result = await query(sql, info)
         if (result.length == 0) {
             data = {
                 state: e,
@@ -374,7 +360,6 @@ exports.deleteactivity = (req, res) => {
         }
         console.log(result)
         res.send(data);
-    })
 }
 // exports.aaa = (req, res) => {
 //     let info = [req.body.username, req.body.password]
