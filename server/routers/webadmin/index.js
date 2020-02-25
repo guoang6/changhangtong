@@ -23,10 +23,27 @@ const multer = require('multer')//上传npm i multer
 const uplod = multer({ dest: __dirname + '/../../uplodes' })//
 //图片图片上传
 router.post('/uplod', uplod.single('file'), service.uplod)
+/**
+ * 用户信息
+ * 
+ * 
+ * 
+ */
 //注册
 router.post('/webadmin/registered', service.registered)
 //登录
 router.post('/webadmin/login', service.login)
+//用户信息
+router.post('/webadmin/getuser', service.getuser)
+router.post('/webadmin/updatauser', service.updatauser)
+
+
+
+/**
+ * 
+ * 
+ * 求助
+ */
 // //创建求助
 router.post('/webadmin/createhelp', service.createhelp)
 //用户u获取求助列表

@@ -13,6 +13,7 @@ function connection() {
 function query(sql, data) {
   const conn = connection()
   return new Promise((resovle, reject) => {
+    debug && console.log('sql语句：' + JSON.stringify(sql))
     try {
       conn.query(sql, data, function (error, results, fields) {
         if (error) {

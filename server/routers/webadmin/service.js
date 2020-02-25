@@ -21,7 +21,6 @@ exports.registered = async (req, res) => {
     let infogetuser = [req.body.username]
     let sqlgetuser = 'select * from user where username =?'
     const result = await query(sqlgetuser, infogetuser)
-    console.log(rows)
     if (result.length != 0) {
         data = {
             state: ep,
@@ -84,6 +83,51 @@ exports.login = async (req, res) => {
         console.log(result)
         res.send(data);
     }
+}
+//获取用户信息
+exports.getuser = async (req, res) => {
+    let info = [req.user.uid]
+    let sql = 'select * from user where user_id =?'
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: result[0]
+    }
+    res.send(data)
+}
+//修改用户信息
+exports.updatauser = async (req, res) => {
+    let info = [
+        req.body.avatar,
+        req.body.nickname,
+        req.body.synopsis,
+        req.body.mail,
+        req.body.qq,
+        req.user.uid]
+    console.log(info)
+    let sql = 'update user set avatar =?,nickname=?,synopsis=?,mail=?,qq=? where user_id =?'
+    const result = await query(sql, info)
+    if(result.affectedRows===1){
+        let info = [req.user.uid]
+        let sql = 'select * from user where user_id =?'
+        const result = await query(sql, info)
+         data = {
+        state: s,
+        data: {
+            userinfo: {
+                uid: result[0].id,
+                nickname: result[0].nickname,
+                avatar: result[0].avatar
+            }
+        }
+    }
+    }else{
+        data = {
+            state: e,
+            data: {}
+        }
+    }
+    res.send(data)
 }
 //图片上传  
 exports.uplod = (req, res) => {
@@ -151,28 +195,28 @@ exports.getwebhelplist = async (req, res) => {
     res.send(data);
 }
 //求助详情
-exports.gethelpdetails =async (req, res) => {
+exports.gethelpdetails = async (req, res) => {
     console.log(req.body)
     let info = [req.body.id]
     let sql = 'select * from help where help_id=?'
     const result = await query(sql, info)
-        if (result.length == 0) {
-            data = {
-                state: e,
-                data: {
-                }
-            }
-        } else {
-            data = {
-                state: s,
-                data: result[0]
+    if (result.length == 0) {
+        data = {
+            state: e,
+            data: {
             }
         }
-        console.log(result)
-        res.send(data);
+    } else {
+        data = {
+            state: s,
+            data: result[0]
+        }
+    }
+    console.log(result)
+    res.send(data);
 }
 //修改求助
-exports.updateehelp =async (req, res) => {
+exports.updateehelp = async (req, res) => {
     console.log(req.user)
     let info = [
         req.body.help_title,
@@ -186,42 +230,42 @@ exports.updateehelp =async (req, res) => {
 
     // let sql = `update help set help_title ='${req.body.help_title}', help_lable='${req.body.help_lable}' ,help_content='${req.body.help_content}',help_img='${req.body.help_img}',where user_id = '${req.user.uid}'and help_id='${req.body.id}'`
     const result = await query(sql, info)
-        if (result.length == 0) {
-            data = {
-                state: e,
-                data: {
-                }
-            }
-        } else {
-            data = {
-                state: s,
-                data: result[0]
+    if (result.length == 0) {
+        data = {
+            state: e,
+            data: {
             }
         }
-        console.log(result)
-        res.send(data);
+    } else {
+        data = {
+            state: s,
+            data: result[0]
+        }
+    }
+    console.log(result)
+    res.send(data);
 }
 //删除求助
-exports.deletehelp =async (req, res) => {
+exports.deletehelp = async (req, res) => {
     let info = [req.body.help_id, req.user.uid]
 
     let sql = 'delete  from help where help_id=? and user_id=?'
     const result = await query(sql, info)
-        if (result.length == 0) {
-            data = {
-                state: e,
-                data: {
-                }
-            }
-        } else {
-            data = {
-                state: s,
-                data: {
-                }
+    if (result.length == 0) {
+        data = {
+            state: e,
+            data: {
             }
         }
-        console.log(result)
-        res.send(data)
+    } else {
+        data = {
+            state: s,
+            data: {
+            }
+        }
+    }
+    console.log(result)
+    res.send(data)
 }
 /**
  * 
@@ -291,25 +335,25 @@ exports.getwebactivitylist = async (req, res) => {
     res.send(data);
 }
 //活动详情
-exports.getactivitydetails =async (req, res) => {
+exports.getactivitydetails = async (req, res) => {
     console.log(req.body)
     let info = [req.body.id]
     let sql = 'select * from activity where activity_id=?'
     const result = await query(sql, info)
-        if (result.length == 0) {
-            data = {
-                state: e,
-                data: {
-                }
-            }
-        } else {
-            data = {
-                state: s,
-                data: result[0]
+    if (result.length == 0) {
+        data = {
+            state: e,
+            data: {
             }
         }
-        console.log(result)
-        res.send(data);
+    } else {
+        data = {
+            state: s,
+            data: result[0]
+        }
+    }
+    console.log(result)
+    res.send(data);
 }
 //修改活动
 exports.updateeactivity = async (req, res) => {
@@ -324,20 +368,20 @@ exports.updateeactivity = async (req, res) => {
     let sql = 'update help set help_title =?, help_lable=?,help_content=?,help_img=? where user_id =?and help_id=?'
     // let sql = `update help set help_title ='${req.body.help_title}', help_lable='${req.body.help_lable}' ,help_content='${req.body.help_content}',help_img='${req.body.help_img}',where user_id = '${req.user.uid}'and help_id='${req.body.id}'`
     const result = await query(sql, info)
-        if (result.length == 0) {
-            data = {
-                state: e,
-                data: {
-                }
-            }
-        } else {
-            data = {
-                state: s,
-                data: result[0]
+    if (result.length == 0) {
+        data = {
+            state: e,
+            data: {
             }
         }
-        console.log(result)
-        res.send(data);
+    } else {
+        data = {
+            state: s,
+            data: result[0]
+        }
+    }
+    console.log(result)
+    res.send(data);
 }
 //删除活动
 exports.deleteactivity = async (req, res) => {
@@ -345,21 +389,21 @@ exports.deleteactivity = async (req, res) => {
 
     let sql = 'delete  from activity where activity_id=? and user_id=?'
     const result = await query(sql, info)
-        if (result.length == 0) {
-            data = {
-                state: e,
-                data: {
-                }
-            }
-        } else {
-            data = {
-                state: s,
-                data: {
-                }
+    if (result.length == 0) {
+        data = {
+            state: e,
+            data: {
             }
         }
-        console.log(result)
-        res.send(data);
+    } else {
+        data = {
+            state: s,
+            data: {
+            }
+        }
+    }
+    console.log(result)
+    res.send(data);
 }
 // exports.aaa = (req, res) => {
 //     let info = [req.body.username, req.body.password]
