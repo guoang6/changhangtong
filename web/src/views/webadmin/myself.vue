@@ -63,6 +63,7 @@ export default {
         this.setUserInfo(data.userinfo);
       }
     },
+    //获取用户信息
     async getuser() {
       let res = await this.$axios.post("/webadmin/getuser");
       this.form = res.data.data;
