@@ -5,7 +5,8 @@
         <template slot-scope="scope">{{ scope.row.createtime | dataFormat }}</template>
       </el-table-column>
       <el-table-column prop="help_title" label="标题"></el-table-column>
-      <el-table-column prop="help_lable" label="类型"></el-table-column>
+      <el-table-column prop="help_lable" label="分类"></el-table-column>
+      <el-table-column prop="help_state" label="状态"></el-table-column>
       <el-table-column fixed="right" label="操作" width="100">
         <template slot-scope="scope">
           <el-button

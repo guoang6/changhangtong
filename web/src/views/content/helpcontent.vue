@@ -34,10 +34,8 @@
               </form>
 
               <span class="tags">
-                <strong>Tags:&nbsp;&nbsp;</strong>
-                <a href="#" rel="tag">basic</a>,
-                <a href="#" rel="tag">setting</a>,
-                <a href rel="tag">website</a>
+                <strong>标签</strong>
+              <span class="label ">Default</span>
               </span>
             </div>
 
@@ -104,5 +102,8 @@ export default {
 <style>
 .help {
   min-height: 200px;
+}
+.label{
+  margin-left: 15px;
 }
 </style>

@@ -6,8 +6,11 @@
         <div class="row">
           <!-- start of page content -->
           <div class="span8 page-content">
-            <div>
-              <h3 class="title">问答区</h3>
+            <div class="page-header">
+              <h1>
+                问答区
+                <small>Subtext for header</small>
+              </h1>
             </div>
             <!-- Basic Home Page Template -->
             <ul class="tabs-nav">
@@ -34,8 +37,12 @@
                     <router-link :to="'/helpcontent/'+item.help_id">{{item.help_title}}</router-link>
                   </h4>
                   <span class="article-meta">
-                   <a class="iconfont">&#xe619;</a> {{item.createtime| dataFormat}}
-                    <a class="iconfont" style="margin-left:50px">&#xe688;</a>哈哈哈哈
+                    <a class="iconfont">&#xe619;</a>
+                    {{item.createtime| dataFormat}}
+                    <a
+                      class="iconfont"
+                      style="margin-left:50px"
+                    >&#xe688;</a>哈哈哈哈
                   </span>
                   <span class="like-count">
                     <span class="like-count">

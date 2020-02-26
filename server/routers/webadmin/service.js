@@ -147,7 +147,8 @@ exports.createhelp = async (req, res) => {
         help_id: uuid.v1(),   //互助id 
         user_id: req.user.uid,//  用户di 
         help_title: req.body.help_title,// 标题   
-        help_lable: req.body.help_lable,// 标签
+        help_lable: req.body.help_lable,// 分类
+        help_tag: req.body.help_tag,// 分类
         help_content: req.body.help_content,//内容  
         help_img: req.body.help_img,//图片
         createtime: time,//创建时间
