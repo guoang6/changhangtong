@@ -19,23 +19,18 @@ exports.webgetwebhelplist = async (req, res) => {
     let count = counts[0].count
     let pagesize = req.body.pagesize * 1
     let page = (req.body.page - 1) * pagesize
-
     let info = [pagesize, page]
-    let sql = 'select help_id,help_title,createtime from help  limit ? offset ?'
+    console.log(req.body)
+    let sql = 'select help.help_id,help.help_title,help.createtime, user.nickname from help,user where help.user_id=user.user_id'
+     if(req.body.lable!='') sql=`${sql} and help.help_lable='${req.body.lable}'`//有分类时
+     if(req.body.tag!='') sql=`${sql} and help.help_tag like %${req.body.tag}%`//标签时
+    sql=`${sql} limit ? offset ?`
     const result = await query(sql, info)
-    if (result.length == 0) {
-        data = {
-            state: e,
-            data: {
-            }
-        }   //    数据库里面没找到配对的内容返回参数
-    } else {
         data = {
             state: s,
             data: result,
             count: count
         }
-    }
     // console.log(data)
     // console.log(result)
     res.send(data);

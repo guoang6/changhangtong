@@ -14,20 +14,19 @@
             </div>
             <!-- Basic Home Page Template -->
             <ul class="tabs-nav">
-              <li class="active" style>
-                <a href="#">First Tab</a>
+                <li
+                :class="pagelistquery.lable===''?'active':''"
+                @click="changelable('')"
+              >
+                <a>全部</a>
               </li>
-              <li>
-                <a href="#">Second Tab</a>
-              </li>
-              <li>
-                <a href="#">Third Tab</a>
-              </li>
-              <li>
-                <a href="#">Third Tab</a>
-              </li>
-              <li>
-                <a href="#">Third Tab</a>
+              <li
+                v-for="(lable,id) in lables"
+                :key="id"
+                :class="pagelistquery.lable===lable?'active':''"
+                @click="changelable(lable)"
+              >
+                <a>{{lable}}</a>
               </li>
             </ul>
             <section class="widget">
@@ -78,7 +77,10 @@ export default {
   },
   data() {
     return {
+      lables: ["学习", "生活", "娱乐", "其他"],
       pagelistquery: {
+        lable: "",
+        tag: "",
         total: 0,
         pagesize: 10,
         page: 1
@@ -87,19 +89,20 @@ export default {
     };
   },
   methods: {
+    changelable(lable){
+         this.pagelistquery.lable=lable
+    this.gethelplist();
+
+    },
     handleCurrentChange(val) {
       this.pagelistquery.page = val;
       this.gethelplist();
       console.log(`当前页: ${val}`);
     },
     async gethelplist() {
-      let data = {
-        page: this.pagelistquery.page,
-        pagesize: this.pagelistquery.pagesize
-      };
       let res = await this.$axios.post(
         "/web/webgetwebhelplist",
-        this.qs.stringify(data)
+        this.qs.stringify(this.pagelistquery)
       );
       if (res.data.state.type === "SUCCESS") {
         this.tableData = res.data.data;
