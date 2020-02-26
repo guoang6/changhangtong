@@ -9,15 +9,12 @@
             <div class="page-header">
               <h1>
                 问答区
-                <small>Subtext for header</small>
+                <small>{{smallttle}}</small>
               </h1>
             </div>
             <!-- Basic Home Page Template -->
             <ul class="tabs-nav">
-                <li
-                :class="pagelistquery.lable===''?'active':''"
-                @click="changelable('')"
-              >
+              <li :class="pagelistquery.lable===''&&pagelistquery.tag===''?'active':''" @click="changelable('')">
                 <a>全部</a>
               </li>
               <li
@@ -27,6 +24,9 @@
                 @click="changelable(lable)"
               >
                 <a>{{lable}}</a>
+              </li>
+               <li v-if="pagelistquery.tag!=''"  class="active" @click="changelable('')">
+                <a>{{this.pagelistquery.tag}}</a>
               </li>
             </ul>
             <section class="widget">
@@ -72,11 +72,13 @@
 <script>
 import sidebar from "@/components/sidebar.vue";
 export default {
+  name:'help',
   components: {
     sidebar
   },
   data() {
     return {
+      smallttle:'',
       lables: ["学习", "生活", "娱乐", "其他"],
       pagelistquery: {
         lable: "",
@@ -88,11 +90,19 @@ export default {
       tableData: {}
     };
   },
+  props: {
+    tag:{}
+  },
   methods: {
-    changelable(lable){
-         this.pagelistquery.lable=lable
-    this.gethelplist();
-
+    changelable(lable) {
+      this.pagelistquery.lable = lable;
+      this.smallttle=this.pagelistquery.lable
+      this.pagelistquery.tag = "";
+      this.gethelplist();
+    },
+    changetag() {
+      this.pagelistquery.tag = this.tag;
+      this.smallttle=this.tag
     },
     handleCurrentChange(val) {
       this.pagelistquery.page = val;
@@ -112,6 +122,7 @@ export default {
     }
   },
   created() {
+    this.tag && this.changetag();
     this.gethelplist();
   }
 };

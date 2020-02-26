@@ -8,7 +8,7 @@
           <div class="span8 page-content">
             <article class="type-post format-standard hentry clearfix">
               <h1 class="post-title">
-                <a >{{content.help_title}}</a>
+                <a>{{content.help_title}}</a>
               </h1>
 
               <div class="post-meta clearfix">
@@ -17,13 +17,15 @@
                   <a href="#" title="View all posts in Server &amp; Database">{{content.user_id}}</a>
                 </span>
                 <span class="comments">
-                  <a href="#" title="Comment on Integrating WordPress with Your Website">{{commentnum}} Comments</a>
+                  <a
+                    href="#"
+                    title="Comment on Integrating WordPress with Your Website"
+                  >{{commentnum}} Comments</a>
                 </span>
                 <span class="like-count">66</span>
               </div>
               <!-- end of post meta -->
-              <blockquote v-html="content.help_content">
-              </blockquote>
+              <blockquote v-html="content.help_content"></blockquote>
             </article>
 
             <div class="like-btn">
@@ -35,11 +37,16 @@
 
               <span class="tags">
                 <strong>标签</strong>
-              <span class="label ">Default</span>
+                <span
+                  v-for="(tag,id) in content.help_tag"
+                  @click="$router.push(`/help/${tag}`) "
+                  :key="id"
+                  class="label"
+                >{{tag}}</span>
               </span>
             </div>
 
-           <comment/>
+            <comment />
             <!-- end of comments -->
             <!-- end of page content -->
           </div>
@@ -65,21 +72,19 @@ export default {
   },
   data() {
     return {
-     content:{}
+      content: {}
     };
   },
   props: {
     id: {}
   },
-    computed: {
+  computed: {
     ...mapState({
-      commentnum: state => state.commentnum,
+      commentnum: state => state.commentnum
     })
   },
   methods: {
-    ...mapActions( [
-      "setcontentid",
-    ]),
+    ...mapActions(["setcontentid"]),
     async gethelpcontent() {
       let data = {
         id: this.id
@@ -89,13 +94,14 @@ export default {
         this.qs.stringify(data)
       );
       if (res.data.state.type === "SUCCESS") {
-        this.content= res.data.data;
+        this.content = res.data.data;
+        this.content.help_tag = res.data.data.help_tag.split(",");
       }
     }
   },
   created() {
     this.gethelpcontent();
-    this.setcontentid(this.id)
+    this.setcontentid(this.id);
   }
 };
 </script>
@@ -103,7 +109,7 @@ export default {
 .help {
   min-height: 200px;
 }
-.label{
+.label {
   margin-left: 15px;
 }
 </style>

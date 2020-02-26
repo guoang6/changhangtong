@@ -27,6 +27,7 @@ const routes = [
     path: '/', name: 'index', component: index,meta:{ispublic:true}, children: [
       { path: '', name: 'home', component: home, meta:{ispublic:true} },
       { path: 'help', name: 'help', component: help, meta:{ispublic:true}},
+      { path: 'help/:tag', name: 'help', component: help,props:true ,meta:{ispublic:true }},
       { path: 'helpcontent/:id', name: 'helpcontent', component: helpcontent,props:true, meta:{ispublic:true}},
       { path: 'news', name: 'news', component: news, meta:{ispublic:true}},
       { path: 'job', name: 'job', component: job, meta:{ispublic:true}},
