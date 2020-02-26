@@ -13,6 +13,8 @@ const e = {
 }
 //web获取求助列表
 exports.webgetwebhelplist = async (req, res) => {
+    console.log(req.body)
+
     let sql1 = ' select count(*) as count from help '
     let info1 = []
     const counts = await query(sql1, info1)
@@ -20,8 +22,7 @@ exports.webgetwebhelplist = async (req, res) => {
     let pagesize = req.body.pagesize * 1
     let page = (req.body.page - 1) * pagesize
     let info = [pagesize, page]
-    console.log(req.body)
-    let sql = 'select help.help_id,help.help_title,help.createtime, user.nickname from help,user where help.user_id=user.user_id'
+    let sql = 'select help.help_id,help.help_title,help.createtime,help.help_read_num, user.nickname from help,user where help.user_id=user.user_id'
      if(req.body.lable!='') sql=`${sql} and help.help_lable='${req.body.lable}'`//有分类时
      if(req.body.tag!='') sql=`${sql} and help.help_tag like '%${req.body.tag}%'`//标签时
     sql=`${sql} limit ? offset ?`
