@@ -1,15 +1,17 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import main from '../views/main.vue'
+import contentexamine from '../views/examine/contentexamine.vue'
+
+
 
 Vue.use(VueRouter)
 
 const routes = [
-  {
-    path: '/',
-    name: 'main',
-    component: main
-  },
+  {path: '/',name: 'main',component: main ,children: [
+    { path: '/contentexamine', name: 'contentexamine', component: contentexamine, },
+  ]
+}
   // {
   //   path: '/about',
   //   name: 'About',

@@ -7,8 +7,6 @@
           router
         default-active="2"
       class="el-menu-vertical-demo"
-      @open="handleOpen"
-      @close="handleClose"
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b">
@@ -25,7 +23,7 @@
            
             <i class="el-icon-folder-checked"></i>审核中心
           </template>
-            <el-menu-item index="1-1">内容审核</el-menu-item>
+            <el-menu-item index="/contentexamine">内容审核</el-menu-item>
             <el-menu-item index="1-2">留言审核</el-menu-item>
 
         </el-submenu>
@@ -79,16 +77,9 @@
       <span>王小虎</span>
     </el-header>
     
-    <el-main>
-      <el-table :data="tableData">
-        <el-table-column prop="date" label="日期" width="140">
-        </el-table-column>
-        <el-table-column prop="name" label="姓名" width="120">
-        </el-table-column>
-        <el-table-column prop="address" label="地址">
-        </el-table-column>
-      </el-table>
-    </el-main>
+     <el-main>
+            <router-view />
+          </el-main>
   </el-container>
 </el-container>
   </div>

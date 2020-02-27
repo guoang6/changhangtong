@@ -34,6 +34,7 @@ Vue.prototype.qs = qs;
 // http request 拦截器
 axios.interceptors.request.use(
   config => {
+    console.log(luffy_jwt_token)
     let luffy_jwt_token =window.localStorage.getItem('luffy_jwt_token');
     config.headers.Authorization = `Bearer ${luffy_jwt_token}`;
     return config;
@@ -53,8 +54,7 @@ axios.interceptors.response.use(function (response) {
         message: '登录过期请重新登录',
         type: 'warning'
       });
-      store.dispatch('user/close')//登录弹窗
-      store.dispatch('user/deleteuserinfo')//清楚用户信息
+      // store.dispatch('user/deleteuserinfo')//清除用户信息
       // routerIndex.push('/login');
     }
     if (parseInt(response.data.code) === -1) {

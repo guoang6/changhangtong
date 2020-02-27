@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const webadminrouter = require('./routers/webadmin')
 const webrouter = require('./routers/web')
-// const webadminrouter = require('./routers/webadmin')
+const adminrouter = require('./routers/admin')
 
 const localPort = 3000
 const app = express()
@@ -31,6 +31,8 @@ app.use(jsonParser)
 app.use(urlencodedParser)
 app.use(webadminrouter)
 app.use(webrouter)
+app.use(adminrouter)
+
 app.listen(localPort, () => {
     console.log('启动成功')
 })
