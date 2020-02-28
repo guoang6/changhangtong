@@ -285,7 +285,7 @@ exports.createactivity = async (req, res) => {
         activity_lable: req.body.activity_lable,// 标签
         activity_type: req.body.activity_type,// 类型
         activity_content: req.body.activity_content,//内容  
-        activity_img: req.body.activity_img,//图片
+        activity_locale: req.body.activity_locale,//地点
         activity_impose: req.body.activity_impose,//是否限制人数
         createtime: time,//创建时间
         activity_num: req.body.activity_num,//人数
@@ -311,7 +311,7 @@ exports.getwebactivitylist = async (req, res) => {
     // console.log(req)
     let sql1 = ' select count(*) as count from activity where user_id=?'
     let info1 = [req.user.uid]
-    const counts = await query(sql, info)
+    const counts = await query(sql1, info1)
     let count = counts[0].count
     let page = (req.body.page - 1) * req.body.pagesize
     let pagesize = req.body.pagesize * 1
@@ -357,16 +357,24 @@ exports.getactivitydetails = async (req, res) => {
     res.send(data);
 }
 //修改活动
-exports.updateeactivity = async (req, res) => {
-    console.log(req.user)
+exports.updateactivity = async (req, res) => {
+    // console.log(req.user)
+    let updatetime = Date.now() - 8 * 60 * 60
     let info = [
-        req.body.help_title,
-        req.body.help_lable,
-        req.body.help_content,
-        req.body.help_img,
+        req.body.activity_title,
+        req.body.activity_lable,
+        req.body.activity_content,
+        req.body.activity_locale,
+        req.body.activity_type,
+        req.body.activity_impose,
+        req.body.activity_num,
+        req.body.activity_statetime,
+        req.body.activity_endtime,
+        updatetime,
         req.user.uid,
         req.body.id]
-    let sql = 'update help set help_title =?, help_lable=?,help_content=?,help_img=? where user_id =?and help_id=?'
+    let sql = 'update activity set activity_title =?, activity_lable=?,activity_content=?,activity_locale=?,'+
+    ' activity_type=?,activity_impose=?,activity_num=?,activity_statetime=?,activity_endtime=?,updatetime=? where user_id =?and activity_id=?'
     // let sql = `update help set help_title ='${req.body.help_title}', help_lable='${req.body.help_lable}' ,help_content='${req.body.help_content}',help_img='${req.body.help_img}',where user_id = '${req.user.uid}'and help_id='${req.body.id}'`
     const result = await query(sql, info)
     if (result.length == 0) {

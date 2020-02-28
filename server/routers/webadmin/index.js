@@ -61,7 +61,7 @@ router.post('/webadmin/getwebactivitylist', service.getwebactivitylist)
 //活动详情
 router.post('/webadmin/getactivitydetails', service.getactivitydetails)
 //修改活动
-// router.post('/webadmin/updateehelp', service.updateehelp)
+router.post('/webadmin/updateactivity', service.updateactivity)
 //删除活动
 router.post('/webadmin/deleteactivity', service.deleteactivity)
 
