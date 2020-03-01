@@ -184,3 +184,26 @@ exports.webgetwebactivitylist = async (req, res) => {
     // console.log(result)
     res.send(data);
 }
+//web获取二手列表
+exports.webgetweboldstufflist = async (req, res) => {
+    console.log(req.body.lable)
+    let sql1 = ' select count(*) as count from oldstuff '
+    let info1 = []
+    const counts = await query(sql1, info1)
+    let count = counts[0].count
+    let pagesize = req.body.pagesize * 1
+    let page = (req.body.page - 1) * pagesize
+    let info = [pagesize, page]
+    let sql = 'select * from oldstuff,user where oldstuff.user_id=user.user_id'
+     if(req.body.lable!='') sql=`${sql} and activity.oldstuff_lable='${req.body.lable}'`//有分类时
+    sql=`${sql} limit ? offset ?`
+    const result = await query(sql, info)
+        data = {
+            state: s,
+            data: result,
+            count: count
+        }
+    // console.log(data)
+    // console.log(result)
+    res.send(data);
+}

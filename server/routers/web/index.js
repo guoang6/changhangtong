@@ -13,6 +13,9 @@ router.post('/web/getreply', service.getreply)
 //活动
 router.post('/web/webgetwebactivitylist', service.webgetwebactivitylist)
 
+router.post('/web/webgetweboldstufflist', service.webgetweboldstufflist)
+
+
 
 
 

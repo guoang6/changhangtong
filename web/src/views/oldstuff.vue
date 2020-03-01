@@ -8,32 +8,28 @@
           <div class="span8 page-content">
               <div> <h3 class="title">二手交易中心</h3></div>
             <!-- Basic Home Page Template -->
-            <ul class="tabs-nav">
-              <li class="active" style>
-                <a href="#">First Tab</a>
+ <ul class="tabs-nav">
+              <li :class="pagelistquery.lable===''?'active':''" @click="changelable('')">
+                <a>全部</a>
               </li>
-              <li>
-                <a href="#">Second Tab</a>
-              </li>
-              <li>
-                <a href="#">Third Tab</a>
-              </li>
-              <li>
-                <a href="#">Third Tab</a>
-              </li>
-              <li>
-                <a href="#">Third Tab</a>
+              <li
+                v-for="(lable,id) in lables"
+                :key="id"
+                :class="pagelistquery.lable===lable?'active':''"
+                @click="changelable(lable)"
+              >
+                <a>{{lable}}</a>
               </li>
             </ul>
             <section class="widget">
              
      <div class="row">
-      <div class="col-sm-6 col-md-4">
+      <div class="col-sm-6 col-md-4" v-for="(oldstuff,id) in tableData" :key="id">
         <div class="thumbnail">
-          <img data-src="holder.js/100%x200" alt="100%x200" src="http://127.0.0.1:3000/uplodes/a12a383ee8fa82454bd5a194477f154b" data-holder-rendered="true" style="height: 200px; object-fit: cover;width: 100%; display: block;">
+          <img data-src="holder.js/100%x200" alt="100%x200" :src="oldstuff.oldstuff_img" data-holder-rendered="true" style="height: 200px; object-fit: cover;width: 100%; display: block;">
           <div class="caption">
-            <h3 style="color:red">￥ 50</h3>
-            <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+            <h3 style="color:red">￥{{oldstuff.oldstuff_price}}</h3>
+            <p>{{oldstuff.oldstuff_name}}</p>
           </div>
         </div>
       </div>
@@ -65,9 +61,16 @@ export default {
   },
   data() {
     return {
+      lables: ["学习", "生活", "娱乐", "其他"],
+   changelable(lable) {
+      this.pagelistquery.lable = lable;
+      this.smallttle=this.pagelistquery.lable
+      this.getactivitylist();
+    },
       pagelistquery: {
+        lable: "",
         total: 0,
-        pagesize: 10,
+        pagesize: 12,
         page: 1
       },
       tableData: {}
@@ -76,17 +79,13 @@ export default {
   methods: {
     handleCurrentChange(val) {
       this.pagelistquery.page = val;
-      this.gethelplist();
+      this.getoldstufflist();
       console.log(`当前页: ${val}`);
     },
-    async gethelplist() {
-      let data = {
-        page: this.pagelistquery.page,
-        pagesize: this.pagelistquery.pagesize
-      };
+    async getoldstufflist() {
       let res = await this.$axios.post(
-        "/web/webgetwebhelplist",
-        this.qs.stringify(data)
+        "/web/webgetweboldstufflist",
+        this.qs.stringify(this.pagelistquery)
       );
       if (res.data.state.type === "SUCCESS") {
         this.tableData = res.data.data;
@@ -96,7 +95,7 @@ export default {
     }
   },
   created() {
-    // this.gethelplist();
+    this.getoldstufflist();
   }
 };
 </script>
