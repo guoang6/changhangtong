@@ -24,7 +24,7 @@
             <section class="widget">
              
      <div class="row">
-      <div class="col-sm-6 col-md-4" v-for="(oldstuff,id) in tableData" :key="id">
+      <div style="margin :1%" class="col-sm-6 col-md-4" v-for="(oldstuff,id) in tableData" :key="id">
         <div class="thumbnail">
           <img data-src="holder.js/100%x200" alt="100%x200" :src="oldstuff.oldstuff_img" data-holder-rendered="true" style="height: 200px; object-fit: cover;width: 100%; display: block;">
           <div class="caption">
@@ -112,12 +112,12 @@ export default {
 }
 @media (min-width: 768px){
 .col-sm-6 {
-    width: 33.33333%;
+    width: 27.33333%;
 }
 }
 @media (max-width: 768px){
 .col-sm-6 {
-    width: 50%;
+    width: 48%;
 }
 }
 </style>
