@@ -79,9 +79,9 @@ data() {
         changelable(lable) {
       this.pagelistquery.lable = lable;
       this.smallttle=this.pagelistquery.lable
-      this.gethelplist();
+      this.getactivitylist();
     },
-    getactivitylist(val) {
+    handleCurrentChange(val) {
       this.pagelistquery.page = val;
       this.gethelplist();
       console.log(`当前页: ${val}`);

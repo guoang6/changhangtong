@@ -414,25 +414,29 @@ exports.deleteactivity = async (req, res) => {
     console.log(result)
     res.send(data);
 }
-// exports.aaa = (req, res) => {
-//     let info = [req.body.username, req.body.password]
-
-//     let sql = 'select * from user where username=? and password=?'
-//     db.base(sql, info, (result) => {
-//         if (result.length == 0) {
-//             data = {
-//                 state: e,
-//                 data: {
-//                 }
-//             }
-//         } else {
-//             data = {
-//                 state: s,
-//                 data: {
-//                 }
-//             }
-//         }
-//         console.log(result)
-//         res.send(data);
-//     })
-// }
+exports.createoldstuff =async  (req, res) => {
+ // console.log(req)
+ let time = Date.now() - 8 * 60 * 60
+ let info = {
+    oldstuff_id: uuid.v1(),   //活动id 
+     user_id: req.user.uid,//  用户di 
+     oldstuff_img: req.body.oldstuff_img,// 标题   
+     oldstuff_name: req.body.oldstuff_name,// 标签
+     oldstuff_lable: req.body.oldstuff_lable,// 类型
+     oldstuff_content: req.body.oldstuff_content,//内容  
+     createtime: time,//创建时间
+     updatetime: time,//更新时间
+     oldstuff_favour_num: 0,//点赞数    
+     oldstuff_read_num: 0,//浏览量
+     oldstuff_state: 0, //状态  
+     oldstuff_istop: 0,//是否置顶
+     oldstuff_ispublic: 0,//是否显示
+ }
+ let sql = 'insert into oldstuff set ?'
+ const result = await query(sql, info)
+ data = {
+     state: s,
+     data: {}
+ }
+ res.send(data)
+}

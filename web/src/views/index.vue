@@ -39,6 +39,7 @@
                 >
                   <a>
                     <img
+                      style="    height: 20px; "
                       :src="avatar"
                       class="avatar touxiang avatar-60 photo"
                       height="20"

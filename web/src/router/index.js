@@ -17,6 +17,8 @@ import createactivity from "../views/webadmin/activity/createactivity.vue"
 import createactivitylist from "../views/webadmin/activity/createactivitylist.vue"
 import company from "../views/webadmin/job/company.vue"
 import createarticle from "../views/webadmin/article/createarticle.vue"
+import createoldstuff from "../views/webadmin/oldstuff/createoldstuff.vue"
+
 
 
 Vue.use(VueRouter)
@@ -47,6 +49,9 @@ const routes = [
           { path: 'createactivitylist', name: 'createactivitylist', component: createactivitylist },
           { path: 'createactivity', name: 'createactivity', component: createactivity },
           { path: 'createarticle', name: 'createarticle', component: createarticle },
+          { path: 'createoldstuff', name: 'createoldstuff', component: createoldstuff },
+
+          
           { path: 'company', name: 'company', component: company },
         ]
       }

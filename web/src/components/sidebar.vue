@@ -2,14 +2,20 @@
   <div class="hello">
     <!-- start of sidebar -->
     <aside class="span4 page-sidebar">
-      <section class="widget">
+      <section class="widget">    
         <div class="support-widget">
-          <h3 class="title">Support</h3>
+    <el-carousel height="150px">
+      <el-carousel-item v-for="item in 4" :key="item">
+        <h3 class="title">Support</h3>
           <p
-            class="intro"
+            class="intro" 
           >Need more support? If you did not found an answer, contact us for further help.</p>
+      </el-carousel-item>
+    </el-carousel>
+         
         </div>
-      </section>   <activity />
+      </section>  
+       <activity />
       <help />
       <job />
     </aside>
@@ -34,4 +40,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+
 </style>
