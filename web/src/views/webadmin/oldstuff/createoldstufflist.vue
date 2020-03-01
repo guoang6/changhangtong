@@ -61,7 +61,7 @@ export default {
     },
     handleCurrentChange(val) {
       this.pagelistquery.page = val;
-      this.gethelplist();
+      this.getoldstufflist();
       console.log(`当前页: ${val}`);
     },
     async getoldstufflist() {

@@ -39,6 +39,7 @@
               @current-change="handleCurrentChange"
               layout="prev, pager, next"
               :total="pagelistquery.total"
+              :page-size="pagelistquery.pagesize"
             ></el-pagination>
           </div>
           <!-- end of page content -->
@@ -62,11 +63,6 @@ export default {
   data() {
     return {
       lables: ["学习", "生活", "娱乐", "其他"],
-   changelable(lable) {
-      this.pagelistquery.lable = lable;
-      this.smallttle=this.pagelistquery.lable
-      this.getactivitylist();
-    },
       pagelistquery: {
         lable: "",
         total: 0,
@@ -77,6 +73,11 @@ export default {
     };
   },
   methods: {
+            changelable(lable) {
+      this.pagelistquery.lable = lable;
+      this.smallttle=this.pagelistquery.lable
+      this.getoldstufflist();
+    },
     handleCurrentChange(val) {
       this.pagelistquery.page = val;
       this.getoldstufflist();

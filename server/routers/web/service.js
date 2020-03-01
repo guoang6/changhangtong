@@ -188,6 +188,7 @@ exports.webgetwebactivitylist = async (req, res) => {
 exports.webgetweboldstufflist = async (req, res) => {
     console.log(req.body.lable)
     let sql1 = ' select count(*) as count from oldstuff '
+    if(req.body.lable!='') sql1=`${sql1} where oldstuff_lable='${req.body.lable}'`//有分类时
     let info1 = []
     const counts = await query(sql1, info1)
     let count = counts[0].count
@@ -195,7 +196,7 @@ exports.webgetweboldstufflist = async (req, res) => {
     let page = (req.body.page - 1) * pagesize
     let info = [pagesize, page]
     let sql = 'select * from oldstuff,user where oldstuff.user_id=user.user_id'
-     if(req.body.lable!='') sql=`${sql} and activity.oldstuff_lable='${req.body.lable}'`//有分类时
+     if(req.body.lable!='') sql=`${sql} and oldstuff.oldstuff_lable='${req.body.lable}'`//有分类时
     sql=`${sql} limit ? offset ?`
     const result = await query(sql, info)
         data = {
