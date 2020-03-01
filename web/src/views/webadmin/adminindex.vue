@@ -46,7 +46,7 @@
                 <span>二手交易</span>
               </template>
               <el-menu-item index="/admin/createoldstuff">二手发布</el-menu-item>
-              <el-menu-item index="1-4-1">二手列表</el-menu-item>
+              <el-menu-item index="/admin/createoldstufflist">二手列表</el-menu-item>
  </el-submenu>
               <el-submenu index="6">
                 <template slot="title">

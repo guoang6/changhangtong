@@ -66,6 +66,9 @@ router.post('/webadmin/updateactivity', service.updateactivity)
 router.post('/webadmin/deleteactivity', service.deleteactivity)
 //添加二手信息
 router.post('/webadmin/createoldstuff', service.createoldstuff)
+//获取二手信息
+router.post('/webadmin/getweboldstufflist', service.getweboldstufflist)
+
 
 
 

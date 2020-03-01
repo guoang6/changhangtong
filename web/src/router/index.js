@@ -18,6 +18,8 @@ import createactivitylist from "../views/webadmin/activity/createactivitylist.vu
 import company from "../views/webadmin/job/company.vue"
 import createarticle from "../views/webadmin/article/createarticle.vue"
 import createoldstuff from "../views/webadmin/oldstuff/createoldstuff.vue"
+import createoldstufflist from "../views/webadmin/oldstuff/createoldstufflist.vue"
+
 
 
 
@@ -50,7 +52,7 @@ const routes = [
           { path: 'createactivity', name: 'createactivity', component: createactivity },
           { path: 'createarticle', name: 'createarticle', component: createarticle },
           { path: 'createoldstuff', name: 'createoldstuff', component: createoldstuff },
-
+          { path: 'createoldstufflist', name: 'createoldstufflist', component: createoldstufflist },
           
           { path: 'company', name: 'company', component: company },
         ]

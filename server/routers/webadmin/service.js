@@ -414,15 +414,18 @@ exports.deleteactivity = async (req, res) => {
     console.log(result)
     res.send(data);
 }
+//添加二手
 exports.createoldstuff =async  (req, res) => {
  // console.log(req)
  let time = Date.now() - 8 * 60 * 60
  let info = {
-    oldstuff_id: uuid.v1(),   //活动id 
+    oldstuff_id: uuid.v1(),   //二手id 
      user_id: req.user.uid,//  用户di 
      oldstuff_img: req.body.oldstuff_img,// 标题   
      oldstuff_name: req.body.oldstuff_name,// 标签
      oldstuff_lable: req.body.oldstuff_lable,// 类型
+     oldstuff_price: req.body.oldstuff_price,//内容  
+
      oldstuff_content: req.body.oldstuff_content,//内容  
      createtime: time,//创建时间
      updatetime: time,//更新时间
@@ -439,4 +442,54 @@ exports.createoldstuff =async  (req, res) => {
      data: {}
  }
  res.send(data)
+}
+//获取二手列表
+exports.getweboldstufflist = async (req, res) => {
+    // console.log(req)
+    let sql1 = ' select count(*) as count from oldstuff where user_id=?'
+    let info1 = [req.user.uid]
+    const counts = await query(sql1, info1)
+    let count = counts[0].count
+    let page = (req.body.page - 1) * req.body.pagesize
+    let pagesize = req.body.pagesize * 1
+    let info = [req.user.uid, pagesize, page]
+    let sql = 'select * from oldstuff where user_id=? limit ? offset ?'
+    const result = await query(sql, info)
+    if (result.length == 0) {
+        data = {
+            state: e,
+            data: {
+            }
+        }   //    数据库里面没找到配对的内容返回参数
+    } else {
+        data = {
+            state: s,
+            data: result,
+            count: count
+        }
+    }
+    console.log(data)
+    // console.log(result)
+    res.send(data);
+}
+//活动详情
+exports.getoldstuffdetails = async (req, res) => {
+    console.log(req.body)
+    let info = [req.body.id]
+    let sql = 'select * from activity where activity_id=?'
+    const result = await query(sql, info)
+    if (result.length == 0) {
+        data = {
+            state: e,
+            data: {
+            }
+        }
+    } else {
+        data = {
+            state: s,
+            data: result[0]
+        }
+    }
+    console.log(result)
+    res.send(data);
 }
