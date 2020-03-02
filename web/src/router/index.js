@@ -8,6 +8,7 @@ import job from "../views/job.vue"
 import activity from "../views/activity.vue"
 import oldstuff from "../views/oldstuff.vue"
 import helpcontent from "../views/content/helpcontent.vue"
+import oldstuffcontent from "../views/content/oldstuffcontent.vue"
 import adminindex from "../views/webadmin/adminindex.vue"
 import adminhome from "../views/webadmin/adminhome.vue"
 import myself from "../views/webadmin/myself.vue"
@@ -33,6 +34,8 @@ const routes = [
       { path: 'help', name: 'help', component: help, meta:{ispublic:true}},
       { path: 'help/:tag', name: 'help', component: help,props:true ,meta:{ispublic:true }},
       { path: 'helpcontent/:id', name: 'helpcontent', component: helpcontent,props:true, meta:{ispublic:true}},
+      { path: 'oldstuffcontent/:id', name: 'oldstuffcontent', component: oldstuffcontent,props:true, meta:{ispublic:true}},
+
       { path: 'news', name: 'news', component: news, meta:{ispublic:true}},
       { path: 'job', name: 'job', component: job, meta:{ispublic:true}},
       { path: 'oldstuff', name: 'oldstuff', component: oldstuff, meta:{ispublic:true}},

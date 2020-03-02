@@ -6,35 +6,50 @@
         <div class="row">
           <!-- start of page content -->
           <div class="span8 page-content">
-            <!-- Basic Home Page Template -->
-            <section class="widget">
-              <h3 class="title">问答区</h3>
-              <ul class="articles">
-                <li class="article-entry standard" 
-                v-for="(item,id) in tableData"
-            :key="id">
-                  <h4>
-                    <a>{{item.help_title}}</a>
-                  </h4>
-                  <span class="article-meta">
-                    {{item.createtime}}
-                    <a
-                      href="#"
-                      title="View all posts in Server &amp; Database"
-                    >Server &amp; Database</a>
-                  </span>
-                  <span class="like-count">66</span>
-                </li>
-              </ul>
-            </section>
-            <el-pagination
-              @current-change="handleCurrentChange"
-    layout="prev, pager, next"
-    :total="pagelistquery.total">
-  </el-pagination>
+            <el-page-header @back="$router.back(-1)" content="详情页面"></el-page-header>
+            <article class="type-post format-standard hentry clearfix">
+              <div>
+                <div class="oldstuffcontent">
+                  <img :src="content.oldstuff_img" alt="物品照片" />
+                </div>
+                <div class="oldstuffcontent">
+                  <h3>{{content.oldstuff_name}}</h3>
+                  <div class="prize_bar">
+                    <div class="show_prize fl">
+                      ￥
+                      <em>{{content.oldstuff_price}}</em>
+                    </div>
+                    <div style="margin-top:10px">原价：{{content.oldstuff_price}}</div>
+                    <div style="margin-top:10px;font-size:10px">卖家信息———————————————</div>
+                    <div class="show_unit fl">
+                      <a class="iconfont" style=" font-size: 30px">&#xe622;</a>{{content.nickname}}
+                    </div>
+                    <div class="show_unit fl">
+                      <a class="iconfont" style=" font-size: 30px">&#xe66a;</a>{{content.qq}}
+                    </div>
+                    <div class="show_unit fl">
+                      <a class="iconfont" style=" font-size: 30px">&#xe62a;</a>{{content.phone}}
+                    </div>
+                  </div>
+                  <el-button type="primary">有意向购买</el-button>
+                </div>
+                <div style="clear:both"></div>
+              </div>
+              <h3>商品描述</h3>
+              <blockquote v-html="content.oldstuff_content"></blockquote>
+            </article>
+            <div class="like-btn">
+              <form id="like-it-form" action="#" method="post">
+                <span class="like-it">66</span>
+                <input type="hidden" name="post_id" value="99" />
+                <input type="hidden" name="action" value="like_it" />
+              </form>
+            </div>
+
+            <comment />
+            <!-- end of comments -->
+            <!-- end of page content -->
           </div>
-          <!-- end of page content -->
-          <!-- start of sidebar -->
           <sidebar />
           <!-- end of sidebar -->
         </div>
@@ -47,47 +62,79 @@
 
 <script>
 import sidebar from "@/components/sidebar.vue";
+import comment from "@/components/comment.vue";
+import { mapState, mapActions } from "vuex";
+
 export default {
   components: {
-    sidebar
+    sidebar,
+    comment
   },
   data() {
     return {
-      pagelistquery:{
-        total:100,
-        page:1
-    },
-      tableData: {}
+      content: {}
     };
   },
+  props: {
+    id: {}
+  },
+  computed: {
+    ...mapState({
+      commentnum: state => state.commentnum
+    })
+  },
   methods: {
-      handleCurrentChange(val) {
-      this.pagelistquery.page = val;
-      // this.gethelplist();
-      console.log(`当前页: ${val}`);
-    },
-    async gethelplist() {
+    ...mapActions(["setcontentid"]),
+    async getoldstuffcontent() {
       let data = {
-        page: this.pagelistquery.page,
+        id: this.id
       };
       let res = await this.$axios.post(
-        "/webadmin/webgetwebhelplist",
+        "/web/getoldstuffcontent",
         this.qs.stringify(data)
       );
       if (res.data.state.type === "SUCCESS") {
-        this.tableData = res.data.data;
-        console.log(res.data);
-        this.pagelistquery.total = res.data.count;
+        this.content = res.data.data;
+        // this.content.help_tag = res.data.data.help_tag.split(",");
       }
     }
   },
   created() {
-    this.gethelplist();
+    this.getoldstuffcontent();
+    this.setcontentid(this.id);
   }
 };
 </script>
 <style>
 .help {
   min-height: 200px;
+}
+.label {
+  margin-left: 15px;
+}
+.oldstuffcontent {
+  width: 90%;
+  min-height: 200px;
+  padding: 5%;
+}
+.show_prize {
+  font-size: 20px;
+  color: #ff3e3e;
+  padding-left: 20px;
+}
+.iconfont {
+  color: #409eff;
+  margin-right: 30px;
+}
+.show_unit {
+  margin-bottom: 10px;
+  height: 50px;
+  line-height: 50px;
+}
+@media (min-width: 700px) {
+  .oldstuffcontent {
+    width: 40%;
+    float: left;
+  }
 }
 </style>

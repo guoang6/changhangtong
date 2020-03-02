@@ -208,3 +208,23 @@ exports.webgetweboldstufflist = async (req, res) => {
     // console.log(result)
     res.send(data);
 }
+//求助二手详情
+exports.getoldstuffcontent = async (req, res) => {
+    let info = [req.body.id]
+    let sql = 'select * from oldstuff,user where user.user_id=oldstuff.user_id and oldstuff.oldstuff_id=?'
+    const result = await query(sql, info)
+    if (result.length == 0) {
+        data = {
+            state: e,
+            data: {
+            }
+        }
+    } else {
+        data = {
+            state: s,
+            data: result[0]
+        }
+    }
+    console.log(result)
+    res.send(data);
+}

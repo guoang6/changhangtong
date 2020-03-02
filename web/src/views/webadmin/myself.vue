@@ -21,6 +21,9 @@
       <el-form-item label="qq">
         <el-input v-model="form.qq"></el-input>
       </el-form-item>
+            <el-form-item label="邮箱">
+        <el-input v-model="form.phone"></el-input>
+      </el-form-item>
       <el-form-item label="个人简介">
         <el-input type="textarea" v-model="form.synopsis" rows="4"></el-input>
       </el-form-item>
@@ -41,6 +44,7 @@ export default {
         nickname: "",
         qq: "",
         mail: "",
+        phone:'',
         synopsis: ""
       }
     };

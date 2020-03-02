@@ -103,9 +103,10 @@ exports.updatauser = async (req, res) => {
         req.body.synopsis,
         req.body.mail,
         req.body.qq,
+        req.body.phone,
         req.user.uid]
     console.log(info)
-    let sql = 'update user set avatar =?,nickname=?,synopsis=?,mail=?,qq=? where user_id =?'
+    let sql = 'update user set avatar =?,nickname=?,synopsis=?,mail=?,qq=?,phone=? where user_id =?'
     const result = await query(sql, info)
     if(result.affectedRows===1){
         let info = [req.user.uid]

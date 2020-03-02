@@ -15,6 +15,9 @@ router.post('/web/webgetwebactivitylist', service.webgetwebactivitylist)
 
 router.post('/web/webgetweboldstufflist', service.webgetweboldstufflist)
 
+router.post('/web/getoldstuffcontent', service.getoldstuffcontent)
+
+
 
 
 

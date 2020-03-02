@@ -6,9 +6,11 @@
         <div class="row">
           <!-- start of page content -->
           <div class="span8 page-content">
-              <div> <h3 class="title">二手交易中心</h3></div>
+            <div>
+              <h3 class="title">二手交易中心</h3>
+            </div>
             <!-- Basic Home Page Template -->
- <ul class="tabs-nav">
+            <ul class="tabs-nav">
               <li :class="pagelistquery.lable===''?'active':''" @click="changelable('')">
                 <a>全部</a>
               </li>
@@ -22,18 +24,31 @@
               </li>
             </ul>
             <section class="widget">
-             
-     <div class="row">
-      <div style="margin :1%" class="col-sm-6 col-md-4" v-for="(oldstuff,id) in tableData" :key="id">
-        <div class="thumbnail">
-          <img data-src="holder.js/100%x200" alt="100%x200" :src="oldstuff.oldstuff_img" data-holder-rendered="true" style="height: 200px; object-fit: cover;width: 100%; display: block;">
-          <div class="caption">
-            <h3 style="color:red">￥{{oldstuff.oldstuff_price}}</h3>
-            <p>{{oldstuff.oldstuff_name}}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+              <div class="row">
+                <div
+                  style="margin :1%"
+                  class="col-sm-6 col-md-4"
+                  v-for="(oldstuff,id) in tableData"
+                  :key="id"
+                >
+                 <router-link 
+                  :to="'/oldstuffcontent/'+oldstuff.oldstuff_id">
+                  <div class="thumbnail">
+                    <img
+                      data-src="holder.js/100%x200"
+                      alt="100%x200"
+                      :src="oldstuff.oldstuff_img"
+                      data-holder-rendered="true"
+                      style="height: 200px; object-fit: cover;width: 100%; display: block;"
+                    />
+                    <div class="caption">
+                      <h3 style="color:red">￥{{oldstuff.oldstuff_price}}</h3>
+                      <p>{{oldstuff.oldstuff_name}}</p>
+                    </div>
+                  </div>
+                </router-link>
+              </div>
+              </div>
             </section>
             <el-pagination
               @current-change="handleCurrentChange"
@@ -73,9 +88,9 @@ export default {
     };
   },
   methods: {
-            changelable(lable) {
+    changelable(lable) {
       this.pagelistquery.lable = lable;
-      this.smallttle=this.pagelistquery.lable
+      this.smallttle = this.pagelistquery.lable;
       this.getoldstufflist();
     },
     handleCurrentChange(val) {
@@ -101,23 +116,23 @@ export default {
 };
 </script>
 <style>
-.col-sm-6{
-    float: left;
+.col-sm-6 {
+  float: left;
 }
 .help {
   min-height: 200px;
 }
-.row{
-    margin-top: 20px;
+.row {
+  margin-top: 20px;
 }
-@media (min-width: 768px){
-.col-sm-6 {
+@media (min-width: 768px) {
+  .col-sm-6 {
     width: 27.33333%;
+  }
 }
-}
-@media (max-width: 768px){
-.col-sm-6 {
+@media (max-width: 768px) {
+  .col-sm-6 {
     width: 48%;
-}
+  }
 }
 </style>
