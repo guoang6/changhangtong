@@ -22,16 +22,33 @@
                     <div style="margin-top:10px">原价：{{content.oldstuff_price}}</div>
                     <div style="margin-top:10px;font-size:10px">卖家信息———————————————</div>
                     <div class="show_unit fl">
-                      <a class="iconfont" style=" font-size: 30px">&#xe622;</a>{{content.nickname}}
+                      <a class="iconfont ic" >&#xe622;</a>
+                      {{content.nickname}}
                     </div>
                     <div class="show_unit fl">
-                      <a class="iconfont" style=" font-size: 30px">&#xe66a;</a>{{content.qq}}
+                      <a class="iconfont ic">&#xe66a;</a>
+                      {{content.qq}}
                     </div>
                     <div class="show_unit fl">
-                      <a class="iconfont" style=" font-size: 30px">&#xe62a;</a>{{content.phone}}
+                      <a class="iconfont ic" >&#xe62a;</a>
+                      {{content.phone}}
                     </div>
                   </div>
-                  <el-button type="primary">有意向购买</el-button>
+                  <el-button type="primary" @click="dialogFormVisible = true">有意向购买</el-button>
+                  <el-dialog title="欲购买信息" :visible.sync="dialogFormVisible" width="30%" >
+                    <el-form :model="form" size="medium ">
+                      <el-form-item label="联系方式" >
+                        <el-input autocomplete="off"></el-input>
+                      </el-form-item>
+                      <el-form-item label="欲购买价格" >
+                        <el-input autocomplete="off"></el-input>
+                      </el-form-item>
+                    </el-form>
+                    <div slot="footer" class="dialog-footer">
+                      <el-button @click="dialogFormVisible = false">取 消</el-button>
+                      <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                    </div>
+                  </el-dialog>
                 </div>
                 <div style="clear:both"></div>
               </div>
@@ -72,6 +89,7 @@ export default {
   },
   data() {
     return {
+      dialogFormVisible: false,//弹框相关
       content: {}
     };
   },
@@ -85,6 +103,7 @@ export default {
   },
   methods: {
     ...mapActions(["setcontentid"]),
+
     async getoldstuffcontent() {
       let data = {
         id: this.id
@@ -122,14 +141,15 @@ export default {
   color: #ff3e3e;
   padding-left: 20px;
 }
-.iconfont {
-  color: #409eff;
-  margin-right: 30px;
-}
 .show_unit {
   margin-bottom: 10px;
   height: 50px;
   line-height: 50px;
+}
+.ic{
+  color: #409eff;
+  margin-right: 30px;
+   font-size: 30px
 }
 @media (min-width: 700px) {
   .oldstuffcontent {

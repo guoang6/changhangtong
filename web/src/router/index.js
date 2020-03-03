@@ -12,6 +12,8 @@ import oldstuffcontent from "../views/content/oldstuffcontent.vue"
 import adminindex from "../views/webadmin/adminindex.vue"
 import adminhome from "../views/webadmin/adminhome.vue"
 import myself from "../views/webadmin/myself.vue"
+import list from "../views/webadmin/list.vue"
+
 import createhelp from "../views/webadmin/help/createhelp.vue"
 import createhelplist from "../views/webadmin/help/createhelplist.vue"
 import createactivity from "../views/webadmin/activity/createactivity.vue"
@@ -48,6 +50,8 @@ const routes = [
           { path: '', name: 'adminhome', component: adminhome },
           { path: 'myself', name: 'myself', component: myself },
           { path: 'createhelp', name: 'createhelp', component: createhelp },
+          { path: 'list', name: 'list', component: list },
+
           { path: 'updatehelp/:id', name: 'createhelp', component: createhelp ,props:true},
           { path: 'createhelplist', name: 'createhelplist', component: createhelplist },
           { path: 'updateactivity/:id', name: 'updateactivity', component: createactivity ,props:true},

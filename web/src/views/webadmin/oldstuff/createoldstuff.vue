@@ -1,5 +1,7 @@
 <template>
-  <div class="myself">
+  <div class="createoldstuff">
+    <h2>{{id?'编辑':'发布' }}二手信息</h2>
+
     <el-form ref="form" :model="form" label-width="150px" size="medium ">
       <el-form-item label="物品图片">
         <el-upload
@@ -36,7 +38,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">确定</el-button>
-        <el-button>取消</el-button>
+        <el-button  @click="$router.push('/admin/createoldstufflist') ">取消</el-button>
       </el-form-item>
     </el-form>
   </div>

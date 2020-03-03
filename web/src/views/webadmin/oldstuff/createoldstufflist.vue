@@ -1,5 +1,18 @@
 <template>
   <div class="createoldstufflist">
+              <div class="title">
+      <div style="float:left">
+        <h2>二手信息</h2>
+      </div>
+      <div style="float:left; margin-left:50px; padding :11px">
+        <el-button
+          plain
+          round
+          icon="el-icon-circle-plus-outline"
+          @click="$router.push('/admin/createoldstuff') "
+        >发布</el-button>
+      </div>
+    </div>
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column fixed prop="createtime" label="日期">
         <template slot-scope="scope">{{ scope.row.createtime | dataFormat }}</template>

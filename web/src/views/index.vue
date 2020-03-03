@@ -201,15 +201,15 @@ export default {
       const userReg = /^[1-9a-zA-Z]{1}[0-9a-zA-Z]{5,9}$/; //6-10位字母数字
       const pwdReg = /^[a-zA-Z]\w{5,17}$/; //6-18位字母数字下划线 字母开头
       if (!userReg.test(this.username)) {
-        this.$message("账号为6-10位字母数字");
+        this.$message.error("账号为6-10位字母数字");
         return;
       }
       if (!pwdReg.test(this.password)) {
-        this.$message("密码为6-18位字母数字下划线 字母开头");
+        this.$message.error("密码为6-18位字母数字下划线 字母开头");
         return;
       }
       if (this.password !== this.password1) {
-        this.$message("两次密码不相等");
+        this.$message.error("两次密码不相等");
         return;
       }
       let obj = {
@@ -229,13 +229,13 @@ export default {
           let data = res.data;
           if (data.state.type !== "SUCCESS") {
             if (data.state.type == "ERROR_PARAMS_EXIST") {
-              this.$message("用户名重复");
+              this.$message.error("用户名重复");
             } else {
-              this.$message("注册失败");
+              this.$message.error("注册失败");
             }
             return;
           }
-          this.$message("注册成功请登录");
+          this.$message.success("注册成功请登录");
           this.join();
         })
         .catch(e => {
