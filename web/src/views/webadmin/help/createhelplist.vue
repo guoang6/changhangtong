@@ -6,10 +6,11 @@
       </div>
       <div style="float:left; margin-left:50px; padding :11px">
         <el-button
+          type="primary"
           plain
           round
           icon="el-icon-circle-plus-outline"
-         @click="dialogVisible = true"
+          @click="$router.push('/admin/createhelp') "
         >发布</el-button>
       </div>
     </div>
@@ -39,29 +40,11 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="pagelistquery.total"
     ></el-pagination>
-
-
-
-    <el-dialog
-  :visible.sync="dialogVisible"
-  width="60%"
-  >
-  <div style="overflow:auto;height:80vh">
-  <createhelp/>
-
-  </div>
-  <span slot="footer" class="dialog-footer">
-  </span>
-</el-dialog>
   </div>
 </template>
 
 <script>
-import createhelp from "@/views/webadmin/help/createhelp.vue";
 export default {
-  components: {
-    createhelp
-  },
   data() {
     return {
       pagelistquery: {
@@ -69,8 +52,6 @@ export default {
         page: 1,
         pagesize: 10
       },
-              dialogVisible: false,
- 
       tableData: []
     };
   },
@@ -117,19 +98,4 @@ export default {
   }
 };
 </script>
-<style >
-.el-dialog{
-       display: flex;
-       flex-direction: column;
-       margin:0 !important;
-       position:absolute;
-       top:50%;
-       left:50%;
-       transform:translate(-50%,-50%);
-   }
- 
-   .el-dialog .el-dialog__body{
-       flex:1;
-       overflow: auto;
-   }
-</style>
+<style lang="stylus" scoped></style>
