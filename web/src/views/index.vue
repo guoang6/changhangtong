@@ -31,6 +31,7 @@
                 <router-link to="/news" tag="li" exact-active-class="current-menu-item">
                   <a>文章</a>
                 </router-link>
+         
                 <router-link
                   v-if="nickname"
                   to="/admin"
@@ -51,6 +52,12 @@
                 <li v-else>
                   <a @click="closein">登录/注册</a>
                 </li>
+                       <router-link to="/news" tag="li" exact-active-class="current-menu-item">
+                  <el-badge :value="12" class="item">
+  <el-button size="mini" type="info" icon="el-icon-bell" circle>
+  </el-button>
+</el-badge> 
+                </router-link>
               </ul>
             </div>
             <select

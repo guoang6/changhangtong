@@ -1,5 +1,19 @@
 <template>
   <div class="createactivitylist">
+        <div class="title">
+      <div style="float:left">
+        <h2>问答</h2>
+      </div>
+      <div style="float:left; margin-left:50px; padding :11px">
+        <el-button
+          type="primary"
+          plain
+          round
+          icon="el-icon-circle-plus-outline"
+          @click="$router.push('/admin/createactivity') "
+        >发布</el-button>
+      </div>
+    </div>
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column fixed prop="createtime" label="日期">
         <template slot-scope="scope">{{ scope.row.createtime | dataFormat }}</template>
@@ -32,7 +46,7 @@
 export default {
   data() {
     return {
-      pagelistquery: {
+      pagelistquery: { 
         total:0,
         page: 1,
         pagesize: 10,

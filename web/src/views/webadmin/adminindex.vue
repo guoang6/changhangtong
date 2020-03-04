@@ -18,14 +18,16 @@
                 <i class="el-icon-menu"></i>
                 <span>我发布的</span>
               </template>
-
               <el-menu-item index="/admin/createhelplist">问答</el-menu-item>
               <el-menu-item index="/admin/createactivitylist">活动</el-menu-item>
               <el-menu-item index="/admin/createoldstufflist">二手</el-menu-item>
               <el-menu-item index="/admin/company">招聘</el-menu-item>
               <el-menu-item index="/admin/createhelp">提问</el-menu-item>
             </el-submenu>
-
+ <el-menu-item index="/admin/notice">
+              <i class="el-icon-bell"></i>
+              <span slot="title">通知中心</span>
+            </el-menu-item>
             <!-- <el-submenu index="2">
               <template slot="title">
                 <i class="el-icon-menu"></i>
@@ -33,41 +35,9 @@
               </template>
               <el-menu-item index="/admin/createactivity">发布活动</el-menu-item>
               <el-menu-item index="/admin/createactivitylist">活动列表</el-menu-item>
-            </el-submenu>
-            <el-submenu index="4">
-              <template slot="title">
-                <i class="el-icon-menu"></i>
-                <span>招聘</span>
-              </template>
-              <el-menu-item index="/admin/company">公司信息</el-menu-item>
-              <el-menu-item index="/admin/job">发布工作</el-menu-item>
-            </el-submenu>
-
-            <el-submenu index="5">
-              <template slot="title">
-                <i class="el-icon-menu"></i>
-                <span>二手交易</span>
-              </template>
-              <el-menu-item index="/admin/createoldstuff">二手发布</el-menu-item>
-              <el-menu-item index="/admin/createoldstufflist">二手列表</el-menu-item>
-            </el-submenu>
-            <el-submenu index="6">
-              <template slot="title">
-                <i class="el-icon-menu"></i>
-                <span>文章与新闻</span>
-              </template>
-              <el-menu-item index="/admin/createarticle">发布文章</el-menu-item>
-              <el-menu-item index="1-4-1">文章列表</el-menu-item>
-            </el-submenu>
-
-            <el-submenu index="7">
-              <template slot="title">
-                <i class="el-icon-menu"></i>
-                <span>赏金</span>
-              </template>
-              <el-menu-item index="/admin/list">发布赏金</el-menu-item>
-              <el-menu-item index="1-4-1">赏金列表</el-menu-item>
             </el-submenu> -->
+           
+
           </el-menu>
         </el-aside>
 
