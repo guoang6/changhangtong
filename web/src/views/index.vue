@@ -31,7 +31,7 @@
                 <router-link to="/news" tag="li" exact-active-class="current-menu-item">
                   <a>文章</a>
                 </router-link>
-         
+
                 <router-link
                   v-if="nickname"
                   to="/admin"
@@ -52,11 +52,11 @@
                 <li v-else>
                   <a @click="closein">登录/注册</a>
                 </li>
-                       <router-link to="/news" tag="li" exact-active-class="current-menu-item">
-                  <el-badge :value="12" class="item">
-  <el-button size="mini" type="info" icon="el-icon-bell" circle>
-  </el-button>
-</el-badge> 
+                <router-link to="/admin/notice" tag="li" exact-active-class="current-menu-item">
+                  <el-button v-if="unread==0" size="mini" type="info" icon="el-icon-bell" circle></el-button>
+                  <el-badge v-else :value="unread" class="item">
+                    <el-button size="mini" type="info" icon="el-icon-bell" circle></el-button>
+                  </el-badge>
                 </router-link>
               </ul>
             </div>
@@ -153,7 +153,8 @@ export default {
       isclose: state => state.user.isclose,
       islogin: state => state.user.islogin,
       avatar: state => state.user.userinfo.avatar,
-      nickname: state => state.user.userinfo.nickname
+      nickname: state => state.user.userinfo.nickname,
+      unread: state => state.unread,
     })
   },
   methods: {

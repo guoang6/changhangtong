@@ -9,6 +9,7 @@ Vue.use(Vuex)
 const state = {
   commentnum: '',
   contentid: '',
+  unread:0
 }
 const getters = {}
 const mutations = {
