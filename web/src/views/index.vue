@@ -288,7 +288,7 @@ export default {
         });
     },
       async getnocitenmu(){
-      const res = await this.$axios.post("/web/getnocitenmu",this.qs.stringify({mun:1}));
+      const res = await this.$axios.post("/web/getnotice",this.qs.stringify({num:1}));
       console.log(res.data)
       this.setunread(res.data.data.count)
   }

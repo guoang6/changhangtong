@@ -19,7 +19,7 @@ router.post('/web/getoldstuffcontent', service.getoldstuffcontent)
 
 
 
-router.post('/web/getnocitenmu', service.getnocitenmu)
+router.post('/web/getnotice', service.getnotice)
 
 
 

@@ -132,7 +132,8 @@ export default {
   computed: {
     ...mapState({
       contentid: state => state.contentid,
-      commentnum: state => state.commentnum
+      commentnum: state => state.commentnum,
+      contentname: state => state.contentname
     })
   },
   data() {
@@ -174,6 +175,7 @@ export default {
         this.editorid = id;
         this.replyinputid = -1;
         this.comment_id = comment_id;
+
       }
     },
     // reply(){
@@ -221,7 +223,9 @@ export default {
           tousernickname: this.tousernickname,
           comment_id: this.comment_id,
           router: this.$route.name,
-          to_userid: this.touserid
+          to_userid: this.touserid,
+           content_id: this.contentid,
+           contentname:this.contentname
         };
         res = await this.$axios.post("/web/setreply", this.qs.stringify(data));
         this.replyinputid = -1; //添加完评论时关闭回复框
@@ -229,6 +233,7 @@ export default {
       } else {
         //评论
         let data = {
+           contentname:this.contentname,
           comment_content: this.comment_content,
           content_id: this.contentid,
           router: this.$router.name

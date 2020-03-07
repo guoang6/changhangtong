@@ -9,6 +9,7 @@ Vue.use(Vuex)
 const state = {
   commentnum: '',
   contentid: '',
+  contentname:'',
 }
 const getters = {}
 const mutations = {
@@ -18,6 +19,9 @@ const mutations = {
   SET_COMMENTNUM(state, num) {
     state.commentnum = num
   },
+  SET_CONTENTNAME(state, contentname) {
+    state.contentname = contentname
+  },
 
 }
 const actions = {
@@ -26,6 +30,9 @@ const actions = {
   },
   setcommentnum({ commit }, data) {
     commit('SET_COMMENTNUM', data)
+  },
+  setcontentname({ commit }, data) {
+    commit('SET_CONTENTNAME', data)
   },
 
 }

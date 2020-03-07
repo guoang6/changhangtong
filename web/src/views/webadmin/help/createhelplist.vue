@@ -20,7 +20,9 @@
       </el-table-column>
       <el-table-column prop="help_title" label="标题"></el-table-column>
       <el-table-column prop="help_lable" label="分类"></el-table-column>
-      <el-table-column prop="help_state" label="状态"></el-table-column>
+      <el-table-column fixed prop="help_state" label="状态">
+         <template slot-scope="scope">{{ scope.row.help_state |statefilter}}</template>
+      </el-table-column>
       <el-table-column fixed="right" label="操作" width="100">
         <template slot-scope="scope">
           <el-button
@@ -46,14 +48,27 @@
 <script>
 export default {
   data() {
-    return {
+     return {    
       pagelistquery: {
         total: 0,
         page: 1,
         pagesize: 10
       },
       tableData: []
-    };
+    }; 
+  },
+  filters:{
+      statefilter(state){
+        if(state==1){
+          return "审核通过"
+        }
+         if(state==0){
+          return "正在审核"
+        }
+         if(state==-1){
+          return "审核未通过"
+        }
+      }
   },
   methods: {
     async del(help_id) {
