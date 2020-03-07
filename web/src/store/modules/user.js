@@ -3,6 +3,8 @@ const state = {
     islogin: true,
     isclose: false,
     userinfo: JSON.parse(localStorage.getItem("userinfo")) || {},//先去localStorage中获取数据
+    unread: 0
+
 }
 const getters = {
 
@@ -17,7 +19,7 @@ const mutations = {
         state.islog = !state.islog
     },
     DELETE_USERINFO(state) {
-        state.userinfo ={}
+        state.userinfo = {}
     },
     SET_TOKEN(state, data) {
         state.token = data
@@ -28,6 +30,9 @@ const mutations = {
     },
     CLOSE() {
         state.isclose = !state.isclose;
+    },
+    SET_UNREAD(state, num) {
+        state.unread = num
     },
 }
 const actions = {
@@ -48,8 +53,10 @@ const actions = {
     },
     setToken({ commit }, data) {
         commit('SET_TOKEN', data)
-    }
-    
+    },
+    setunread({ commit }, data) {
+        commit('SET_UNREAD', data)
+    },
 }
 export default {
     namespaced: true,

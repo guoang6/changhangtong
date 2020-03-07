@@ -11,6 +11,23 @@ const e = {
     "type": 'ERROE',
     "msg": "操作失败"
 }
+//添加消息
+let setnotice = async function (user_from, user_to, from_name, content_id, action, router) {
+    let notice = {
+        notice_id: uuid.v1(),// 消息 id 
+        user_from: user_from,//发起者
+        user_to: user_to,//接受者
+        from_name: from_name,
+        action: action,//动作
+        content_id: content_id,//内容id
+        router: router,//路由
+        createtime: Date.now() - 8 * 60 * 60,//时间
+        state: 0//状态
+    }
+    let sql = 'insert notice set ?'
+    const result = await query(sql, notice)
+
+}
 //web获取求助列表
 exports.webgetwebhelplist = async (req, res) => {
     console.log(req.body)
@@ -23,15 +40,15 @@ exports.webgetwebhelplist = async (req, res) => {
     let page = (req.body.page - 1) * pagesize
     let info = [pagesize, page]
     let sql = 'select help.help_id,help.help_title,help.createtime,help.help_read_num, user.nickname from help,user where help.user_id=user.user_id'
-     if(req.body.lable!='') sql=`${sql} and help.help_lable='${req.body.lable}'`//有分类时
-     if(req.body.tag!='') sql=`${sql} and help.help_tag like '%${req.body.tag}%'`//标签时
-    sql=`${sql} limit ? offset ?`
+    if (req.body.lable != '') sql = `${sql} and help.help_lable='${req.body.lable}'`//有分类时
+    if (req.body.tag != '') sql = `${sql} and help.help_tag like '%${req.body.tag}%'`//标签时
+    sql = `${sql} limit ? offset ?`
     const result = await query(sql, info)
-        data = {
-            state: s,
-            data: result,
-            count: count
-        }
+    data = {
+        state: s,
+        data: result,
+        count: count
+    }
     // console.log(data)
     // console.log(result)
     res.send(data);
@@ -57,7 +74,6 @@ exports.gethelpcontent = async (req, res) => {
     res.send(data);
 }
 exports.setcomment = async (req, res) => {
-    // console.log(req)
     let time = Date.now() - 8 * 60 * 60
     let info = {
         comment_id: uuid.v1(),   //评论id 
@@ -97,7 +113,7 @@ exports.getcomment = async (req, res) => {
 }
 //回复
 exports.setreply = async (req, res) => {
-    // console.log(req)
+    setnotice(req.user.uid, req.body.to_userid, req.body.tousernickname, req.body.comment_id, '回复', req.body.router)
     let time = Date.now() - 8 * 60 * 60
     let info = {
         reply_id: uuid.v1(),//留言id
@@ -172,14 +188,14 @@ exports.webgetwebactivitylist = async (req, res) => {
     let page = (req.body.page - 1) * pagesize
     let info = [pagesize, page]
     let sql = 'select * from activity,user where activity.user_id=user.user_id'
-     if(req.body.lable!='') sql=`${sql} and activity.activity_lable='${req.body.lable}'`//有分类时
-    sql=`${sql} limit ? offset ?`
+    if (req.body.lable != '') sql = `${sql} and activity.activity_lable='${req.body.lable}'`//有分类时
+    sql = `${sql} limit ? offset ?`
     const result = await query(sql, info)
-        data = {
-            state: s,
-            data: result,
-            count: count
-        }
+    data = {
+        state: s,
+        data: result,
+        count: count
+    }
     // console.log(data)
     // console.log(result)
     res.send(data);
@@ -188,7 +204,7 @@ exports.webgetwebactivitylist = async (req, res) => {
 exports.webgetweboldstufflist = async (req, res) => {
     console.log(req.body.lable)
     let sql1 = ' select count(*) as count from oldstuff '
-    if(req.body.lable!='') sql1=`${sql1} where oldstuff_lable='${req.body.lable}'`//有分类时
+    if (req.body.lable != '') sql1 = `${sql1} where oldstuff_lable='${req.body.lable}'`//有分类时
     let info1 = []
     const counts = await query(sql1, info1)
     let count = counts[0].count
@@ -196,14 +212,14 @@ exports.webgetweboldstufflist = async (req, res) => {
     let page = (req.body.page - 1) * pagesize
     let info = [pagesize, page]
     let sql = 'select * from oldstuff,user where oldstuff.user_id=user.user_id'
-     if(req.body.lable!='') sql=`${sql} and oldstuff.oldstuff_lable='${req.body.lable}'`//有分类时
-    sql=`${sql} limit ? offset ?`
+    if (req.body.lable != '') sql = `${sql} and oldstuff.oldstuff_lable='${req.body.lable}'`//有分类时
+    sql = `${sql} limit ? offset ?`
     const result = await query(sql, info)
-        data = {
-            state: s,
-            data: result,
-            count: count
-        }
+    data = {
+        state: s,
+        data: result,
+        count: count
+    }
     // console.log(data)
     // console.log(result)
     res.send(data);
@@ -225,6 +241,27 @@ exports.getoldstuffcontent = async (req, res) => {
             data: result[0]
         }
     }
+    console.log(result)
+    res.send(data);
+}
+//求助消息
+exports.getnocitenmu = async (req, res) => {
+    let sqlnoticenum = ' select count(*) as count from notice where user_to=? and state=0'
+    let info = [req.user.uid]
+    const count = await query(sqlnoticenum, info)
+    let result = ''
+    if (req.body.mun == '') {
+        let sql = 'select * from nocite where user_to=?'
+         result = await query(sql, info)
+    }
+    data={
+        state: s,
+        data: {
+            list:result,
+            count:count[0].count
+        }
+    }
+
     console.log(result)
     res.send(data);
 }

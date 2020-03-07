@@ -19,6 +19,10 @@ router.post('/web/getoldstuffcontent', service.getoldstuffcontent)
 
 
 
+router.post('/web/getnocitenmu', service.getnocitenmu)
+
+
+
 
 
 

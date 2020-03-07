@@ -44,7 +44,7 @@
 
             <div class="comment-body" v-html="item.comment_content"></div>
             <div class="comment-footer">
-              <p @click="getreply(item.comment_id,id)">查看所有回复</p>
+              <p @click="getreplybutton(item.comment_id,id)">查看所有回复</p>
               <p @click="showinput(id,item.nickname,item.user_id,item.comment_id)">回复</p>
             </div>
             <div class="reply" v-if="id===editorid">
@@ -154,17 +154,27 @@ export default {
     ...mapActions(["setcommentnum"]),
     //回复回复按钮
     showreplyinput(index, tousernickname, touserid, comment_id) {
-      this.touserid = touserid;
-      this.tousernickname = tousernickname;
-      this.replyinputid = index;
-      this.comment_id = comment_id;
+      if (this.replyinputid == index) {
+        this.replyinputid = -1;
+      } else {
+        this.touserid = touserid;
+        this.tousernickname = tousernickname;
+        this.replyinputid = index;
+        this.editorid = -1;
+        this.comment_id = comment_id;
+      }
     },
     //回复按钮
     showinput(id, tousernickname, touserid, comment_id) {
-      this.touserid = touserid;
-      this.tousernickname = tousernickname;
-      this.editorid = id;
-      this.comment_id = comment_id;
+      if (this.editorid == id) {
+        this.editorid = -1;
+      } else {
+        this.touserid = touserid;
+        this.tousernickname = tousernickname;
+        this.editorid = id;
+        this.replyinputid = -1;
+        this.comment_id = comment_id;
+      }
     },
     // reply(){
     //   this.touserid='',
@@ -180,11 +190,15 @@ export default {
       Editor.insertEmbed(cursorLocation, "image", res.data.url);
       resetUploader();
     },
-    //获取回复
-    async getreply(comment_id, id) {
-      this.replylist=''
+    //获取回复按钮
+    getreplybutton(comment_id, id) {
+      this.replylist = "";
       this.replyid = id;
       this.commentid = comment_id;
+      this.getreply();
+    },
+    //获取回复
+    async getreply() {
       let data = {
         comment_id: this.commentid
       };
@@ -200,17 +214,24 @@ export default {
     async setcomment() {
       let res;
       if (this.touserid != "") {
+        //回复
         let data = {
           comment_content: this.comment_content,
           touserid: this.touserid,
           tousernickname: this.tousernickname,
-          comment_id: this.comment_id
+          comment_id: this.comment_id,
+          router: this.$route.name,
+          to_userid: this.touserid
         };
         res = await this.$axios.post("/web/setreply", this.qs.stringify(data));
+        this.replyinputid = -1; //添加完评论时关闭回复框
+        this.getreply(); //重新获取评论
       } else {
+        //评论
         let data = {
           comment_content: this.comment_content,
-          content_id: this.contentid
+          content_id: this.contentid,
+          router: this.$router.name
         };
         res = await this.$axios.post(
           "/web/setcomment",
@@ -237,20 +258,6 @@ export default {
         this.commentlist = res.data.data;
         console.log(this.commentlist);
         this.setcommentnum(res.data.count);
-      }
-    },
-    async helpcontent() {
-      let data = {
-        comment_content: this.comment_content
-      };
-      let res = await this.$axios.post(
-        "/webadmin/webgetwebhelplist",
-        this.qs.stringify(data)
-      );
-      if (res.data.state.type === "SUCCESS") {
-        this.tableData = res.data.data;
-        console.log(res.data);
-        this.pagelistquery.total = res.data.count;
       }
     }
   },

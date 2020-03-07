@@ -59,3 +59,14 @@ iscompany|是否公司
 qq|QQ
 mail|邮箱
 describe|描述
+###### notice表
+| 字段 | 含义      |
+|:--------:| -------------:|
+| notice_id | 消息 id |
+|user_from|发起者
+|user_to|接受者
+|action|动作
+|content_id|内容id
+|router|路由
+|createtime|时间
+|state|状态

@@ -154,7 +154,7 @@ export default {
       islogin: state => state.user.islogin,
       avatar: state => state.user.userinfo.avatar,
       nickname: state => state.user.userinfo.nickname,
-      unread: state => state.unread,
+      unread: state => state.user.unread,
     })
   },
   methods: {
@@ -163,7 +163,8 @@ export default {
       "changeislog",
       "setToken",
       "join",
-      "close"
+      "close",
+      'setunread'
     ]),
     changeHref(sortnum) {
       switch (sortnum) {
@@ -285,8 +286,18 @@ export default {
         .catch(e => {
           this.$message(e);
         });
-    }
+    },
+      async getnocitenmu(){
+      const res = await this.$axios.post("/web/getnocitenmu",this.qs.stringify({mun:1}));
+      console.log(res.data)
+      this.setunread(res.data.data.count)
   }
+  },
+   created() {
+    this.getnocitenmu();
+  }
+
+
 };
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
