@@ -9,10 +9,10 @@
       ></div>
       <span style="margin-left:20px">{{notice.createtime| dataFormat}}</span>
        <span style="margin-left:20px">{{notice.nickname}}</span>
-      <span style="margin-left:20px">{{notice.action}}了你</span>
+      <span style="margin-left:20px">{{notice.action}}</span>
       <span style="margin-left:20px">
-        来自
-        <a :href="`http://localhost:8080/#/${notice.router}/${notice.content_id}`"  target="_blank">{{notice.content_name}}</a>
+        来自      {{notice.router| platename}}
+        <a style="font-size:20px" :href="`http://localhost:8080/#/${notice.router}/${notice.content_id}`"  target="_blank">{{notice.content_name}}</a>
       </span>
       <i class="el-icon-delete del"></i>
       <el-divider></el-divider>
@@ -27,6 +27,16 @@ export default {
     return {
       tableData: ""
     };
+  },
+  filters:{
+      platename(router){
+        if(router=='helpcontent'){
+          return "问答"
+        }
+         if(router=='oldstuffcontent'){
+          return "二手交易"
+        }
+      }
   },
   computed: {
     ...mapState({

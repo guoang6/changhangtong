@@ -102,7 +102,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(["setcontentid"]),
+    ...mapActions(["setcontentid", "setcontentinfo"]),
 
     async getoldstuffcontent() {
       let data = {
@@ -114,6 +114,7 @@ export default {
       );
       if (res.data.state.type === "SUCCESS") {
         this.content = res.data.data;
+         this.setcontentinfo({contentname:res.data.data.oldstuff_name,contentuserid:res.data.data.user_id})
         // this.content.help_tag = res.data.data.help_tag.split(",");
       }
     }
