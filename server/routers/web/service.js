@@ -56,7 +56,7 @@ exports.webgetwebhelplist = async (req, res) => {
 //求助文章详情
 exports.gethelpcontent = async (req, res) => {
     let info = [req.body.id]
-    let sql = 'select * from help where help_id=?'
+    let sql = 'select * from help ,user where help.user_id =user.user_id and help_id=?'
     const result = await query(sql, info)
     if (result.length == 0) {
         data = {
@@ -73,8 +73,10 @@ exports.gethelpcontent = async (req, res) => {
     console.log(result)
     res.send(data);
 }
+//评论
 exports.setcomment = async (req, res) => {
     let time = Date.now() - 8 * 60 * 60
+    setnotice(req.user.uid, req.body.to_userid, req.body.content_id, req.body.contentname,'评论了你', req.body.router)
     let info = {
         comment_id: uuid.v1(),   //评论id 
         user_id: req.user.uid,//  用户di 
@@ -111,9 +113,9 @@ exports.getcomment = async (req, res) => {
     }
     res.send(data)
 }
-//回复
+//评论
 exports.setreply = async (req, res) => {
-    setnotice(req.user.uid, req.body.to_userid, req.body.content_id, req.body.contentname,'回复', req.body.router)
+    setnotice(req.user.uid, req.body.to_userid, req.body.content_id, req.body.contentname,'回复了你', req.body.router)
     let time = Date.now() - 8 * 60 * 60
     let info = {
         reply_id: uuid.v1(),//留言id
@@ -251,7 +253,7 @@ exports.getnotice = async (req, res) => {
     const count = await query(sqlnoticenum, info)
     let result = ''
     if (req.body.num == '') {
-        let sql = 'select * from notice where user_to=? ORDER BY  createtime DESC'
+        let sql = 'select * from notice,user where notice.user_from=user.user_id and notice.user_to=? ORDER BY  createtime DESC'
          result = await query(sql, info)
     }
     data={

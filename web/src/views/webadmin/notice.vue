@@ -8,6 +8,7 @@
         :class="`state${notice.state}`"
       ></div>
       <span style="margin-left:20px">{{notice.createtime| dataFormat}}</span>
+       <span style="margin-left:20px">{{notice.nickname}}</span>
       <span style="margin-left:20px">{{notice.action}}了你</span>
       <span style="margin-left:20px">
         来自

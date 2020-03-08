@@ -10,6 +10,7 @@ const state = {
   commentnum: '',
   contentid: '',
   contentname:'',
+  contentuserid:''
 }
 const getters = {}
 const mutations = {
@@ -19,8 +20,9 @@ const mutations = {
   SET_COMMENTNUM(state, num) {
     state.commentnum = num
   },
-  SET_CONTENTNAME(state, contentname) {
-    state.contentname = contentname
+  SET_CONTENTINFO(state, data) {
+    state.contentname = data.contentname
+    state.contentuserid =data. contentuserid
   },
 
 }
@@ -31,8 +33,8 @@ const actions = {
   setcommentnum({ commit }, data) {
     commit('SET_COMMENTNUM', data)
   },
-  setcontentname({ commit }, data) {
-    commit('SET_CONTENTNAME', data)
+  setcontentinfo({ commit }, data) {
+    commit('SET_CONTENTINFO', data)
   },
 
 }

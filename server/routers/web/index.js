@@ -1,7 +1,7 @@
 
 const express = require('express')
 const router = express.Router()
-const service = require('./service')//相关操作逻辑
+const service = require('./service')//相关操作逻辑s
 //求助
 router.post('/web/webgetwebhelplist', service.webgetwebhelplist)
 router.post('/web/gethelpcontent', service.gethelpcontent)

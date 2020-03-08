@@ -84,7 +84,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(["setcontentid", "setcontentname"]),
+    ...mapActions(["setcontentid", "setcontentinfo"]),
     async gethelpcontent() {
       let data = {
         id: this.id
@@ -96,7 +96,7 @@ export default {
       if (res.data.state.type === "SUCCESS") {
         this.content = res.data.data;
         console.log(res.data.data.help_title)
-        this.setcontentname(res.data.data.help_title)
+        this.setcontentinfo({contentname:res.data.data.help_title,contentuserid:res.data.data.user_id})
         this.content.help_tag = res.data.data.help_tag.split(",");
       }
     }

@@ -133,7 +133,9 @@ export default {
     ...mapState({
       contentid: state => state.contentid,
       commentnum: state => state.commentnum,
-      contentname: state => state.contentname
+      contentname: state => state.contentname,
+      contentuserid: state => state.contentuserid
+
     })
   },
   data() {
@@ -236,7 +238,8 @@ export default {
            contentname:this.contentname,
           comment_content: this.comment_content,
           content_id: this.contentid,
-          router: this.$router.name
+          router: this.$route.name,
+          to_userid:this.contentuserid,
         };
         res = await this.$axios.post(
           "/web/setcomment",
