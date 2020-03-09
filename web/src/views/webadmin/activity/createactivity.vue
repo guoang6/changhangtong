@@ -97,7 +97,7 @@
         </div>
       </el-tab-pane>
       <el-tab-pane v-else label="公告管理">请先添加活动，活动添加成功后才可以添加活动公告</el-tab-pane>
-      <el-tab-pane  label="活动人员管理"></el-tab-pane>
+      <el-tab-pane  label="活动人员管理"> </el-tab-pane>
     </el-tabs>
   </div>
 </template>

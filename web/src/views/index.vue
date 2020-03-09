@@ -31,33 +31,61 @@
                 <router-link to="/news" tag="li" exact-active-class="current-menu-item">
                   <a>文章</a>
                 </router-link>
-
-                <router-link
-                  v-if="nickname"
-                  to="/admin"
-                  tag="li"
-                  exact-active-class="current-menu-item"
-                >
-                  <a>
+                
+                <li v-if="nickname==''">
+                  <a @click="closein">登录/注册</a>
+                </li><el-dropdown v-else >
+                  <a style="color: #c1cad1;">
                     <img
-                      style="    height: 20px; "
+                    v-if="unread==0"
+                      style="     height: 20px; "
                       :src="avatar"
                       class="avatar touxiang avatar-60 photo"
                       height="20"
                       width="20"
                     />
+                     <el-badge v-else :value="unread" class="item">
+                     <img
+                      style="     height: 20px; "
+                      :src="avatar"
+                      class="avatar touxiang avatar-60 photo"
+                      height="20"
+                      width="20"
+                    />
+                  </el-badge>
                     {{nickname}}
                   </a>
-                </router-link>
-                <li v-else>
-                  <a @click="closein">登录/注册</a>
-                </li>
-                <router-link to="/admin/notice" tag="li" exact-active-class="current-menu-item">
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item>
+                      <router-link
+                        to="/admin"
+                        tag="a"
+                        exact-active-class="current-menu-item"
+                      >个人中心</router-link>
+                    </el-dropdown-item>
+                  
+                    <el-dropdown-item> 
+                      <router-link to="/admin/notice" tag="li" exact-active-class="current-menu-item">
+                      <a   v-if="unread==0">消息中心</a>
+                      <el-badge v-else :value="unread" class="item">
+                        <a>消息中心</a>
+                  </el-badge> </router-link>
+                    </el-dropdown-item>
+                      <el-dropdown-item> <a @click="logout">退出登录</a></el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+                <!-- <router-link to="/admin/notice" tag="li" exact-active-class="current-menu-item">
                   <el-button v-if="unread==0" size="mini" type="info" icon="el-icon-bell" circle></el-button>
                   <el-badge v-else :value="unread" class="item">
-                    <el-button size="mini" type="info" icon="el-icon-bell" circle></el-button>
+                     <img
+                      style="     height: 20px; "
+                      :src="avatar"
+                      class="avatar touxiang avatar-60 photo"
+                      height="20"
+                      width="20"
+                    />
                   </el-badge>
-                </router-link>
+                </router-link> -->
               </ul>
             </div>
             <select
@@ -145,7 +173,8 @@ export default {
       selected: 1,
       password: "",
       password1: "",
-      username: ""
+      username: "",
+      hover: false
     };
   },
   computed: {
@@ -154,7 +183,7 @@ export default {
       islogin: state => state.user.islogin,
       avatar: state => state.user.userinfo.avatar,
       nickname: state => state.user.userinfo.nickname,
-      unread: state => state.user.unread,
+      unread: state => state.user.unread
     })
   },
   methods: {
@@ -164,8 +193,12 @@ export default {
       "setToken",
       "join",
       "close",
-      'setunread'
+      "setunread"
     ]),
+    //个人hover弹窗
+    overShow() {
+      this.hover = !this.hover;
+    },
     changeHref(sortnum) {
       switch (sortnum) {
         case 1:
@@ -193,6 +226,12 @@ export default {
           this.close();
           break;
       }
+    },
+    //退出登录
+    logout(){
+      console.log('退出')
+ this.setUserInfo({nickname:''});
+   this.$message.success("退出成功");
     },
     joinin() {
       this.join();
@@ -287,17 +326,18 @@ export default {
           this.$message(e);
         });
     },
-      async getnocitenmu(){
-      const res = await this.$axios.post("/web/getnotice",this.qs.stringify({num:1}));
-      console.log(res.data)
-      this.setunread(res.data.data.count)
-  }
+    async getnocitenmu() {
+      const res = await this.$axios.post(
+        "/web/getnotice",
+        this.qs.stringify({ num: 1 })
+      );
+      console.log(res.data);
+      this.setunread(res.data.data.count);
+    }
   },
-   created() {
+  created() {
     this.getnocitenmu();
   }
-
-
 };
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->

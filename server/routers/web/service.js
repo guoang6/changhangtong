@@ -12,7 +12,7 @@ const e = {
     "msg": "操作失败"
 }
 //添加消息
-let setnotice = async function (user_from, user_to, content_id,content_name, action, router) {
+let setnotice = async function (user_from, user_to, content_id, content_name, action, router) {
     let notice = {
         notice_id: uuid.v1(),// 消息 id 
         user_from: user_from,//发起者
@@ -76,7 +76,7 @@ exports.gethelpcontent = async (req, res) => {
 //评论
 exports.setcomment = async (req, res) => {
     let time = Date.now() - 8 * 60 * 60
-    setnotice(req.user.uid, req.body.to_userid, req.body.content_id, req.body.contentname,'评论了你', req.body.router)
+    setnotice(req.user.uid, req.body.to_userid, req.body.content_id, req.body.contentname, '评论了你', req.body.router)
     let info = {
         comment_id: uuid.v1(),   //评论id 
         user_id: req.user.uid,//  用户di 
@@ -115,7 +115,7 @@ exports.getcomment = async (req, res) => {
 }
 //评论
 exports.setreply = async (req, res) => {
-    setnotice(req.user.uid, req.body.to_userid, req.body.content_id, req.body.contentname,'回复了你', req.body.router)
+    setnotice(req.user.uid, req.body.to_userid, req.body.content_id, req.body.contentname, '回复了你', req.body.router)
     let time = Date.now() - 8 * 60 * 60
     let info = {
         reply_id: uuid.v1(),//留言id
@@ -246,21 +246,56 @@ exports.getoldstuffcontent = async (req, res) => {
     console.log(result)
     res.send(data);
 }
-//求助消息
+//获取消息
 exports.getnotice = async (req, res) => {
     let sqlnoticenum = ' select count(*) as count from notice where user_to=? and state=0'
     let info = [req.user.uid]
     const count = await query(sqlnoticenum, info)
-    let result = ''
+
+    let sqlnotice= ' select count(*) as count from notice where user_to=?'
+    const num = await query(sqlnotice, info)
+    let mun = ''
     if (req.body.num == '') {
         let sql = 'select * from notice,user where notice.user_from=user.user_id and notice.user_to=? ORDER BY  createtime DESC'
-         result = await query(sql, info)
+        result = await query(sql, info)
     }
-    data={
+    data = {
         state: s,
         data: {
-            list:result,
-            count:count[0].count
+            list: result,
+            count: count[0].count,
+            num:num[0].count
+        }
+    }
+
+    console.log(result)
+    res.send(data);
+}
+//修改消息
+exports.changenotice = async (req, res) => {
+    console.log(req.body)
+    let info = []
+    let sql = ''
+    if (req.body.change == 'change') {
+        sql = 'update notice set state =? where user_to =?and notice_id=?'
+        info = [1, req.user.uid, req.body.notice_id]
+    }
+    if (req.body.change == 'delete') {
+        sql = 'delete from notice where user_to=? and notice_id=?',
+            info = [req.user.uid, req.body.notice_id]
+    }
+    if (req.body.change == 'changeall') {
+        sql = 'update notice set state =? where user_to =?',
+            info = [1,req.user.uid]
+    }
+    if (req.body.change == 'deleteall') {
+        sql = 'delete from notice where user_to=?',
+            info = [req.user.uid]
+    }
+    result = await query(sql, info)
+    data = {
+        state: s,
+        data: {
         }
     }
 

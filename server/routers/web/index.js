@@ -20,6 +20,8 @@ router.post('/web/getoldstuffcontent', service.getoldstuffcontent)
 
 
 router.post('/web/getnotice', service.getnotice)
+router.post('/web/changenotice', service.changenotice)
+
 
 
 

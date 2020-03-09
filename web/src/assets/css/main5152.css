@@ -115,7 +115,6 @@ span.tag-line {
   left: 0px;
   list-style: none;
   margin: 0;
-  display: none;
 }
 .main-nav .sub-menu li {
   position: relative;
@@ -130,7 +129,7 @@ span.tag-line {
 .main-nav .sub-menu li:hover > a {
   color: #fff;
 }
-.main-nav .sub-menu .sub-menu {
+.main-nav .sub-menu . {
   top: 0px;
   right: 170px;
   left: auto;
@@ -473,9 +472,6 @@ li.comment > article .avatar {
   float: left;
   width: 35%;
   margin-right: 5%;
-}
-.quick-links-widget .sub-menu {
-  display: none;
 }
 
 /* Home --------------------------------------------------------------------------------------------------------------*/
@@ -1301,7 +1297,7 @@ a#scroll-top:hover {
     top: 55px;
   }
   .main-nav > div > ul > li .sub-menu li {
-    width: 130px;
+    width: 500px;
   }
   .main-nav > div > ul > li .sub-menu .sub-menu {
     right: auto;
