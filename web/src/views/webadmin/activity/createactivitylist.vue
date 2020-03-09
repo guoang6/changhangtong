@@ -2,16 +2,14 @@
   <div class="createactivitylist">
         <div class="title">
       <div style="float:left">
-        <h2>问答</h2>
+        <h2>活动管理</h2>
       </div>
       <div style="float:left; margin-left:50px; padding :11px">
         <el-button
-          type="primary"
-          plain
-          round
-          icon="el-icon-circle-plus-outline"
+          type="text"
+          icon="el-icon-plus"
           @click="$router.push('/admin/createactivity') "
-        >发布</el-button>
+        >发布新的活动</el-button>
       </div>
     </div>
     <el-table :data="tableData" border style="width: 100%">

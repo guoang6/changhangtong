@@ -2,7 +2,7 @@
   <div class="createhelplist">
     <div class="title">
       <div style="float:left">
-        <h2>问答</h2>
+        <h2>活动</h2>
       </div>
       <div style="float:left; margin-left:50px; padding :11px">
         <el-button
