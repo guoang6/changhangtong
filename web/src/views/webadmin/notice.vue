@@ -2,11 +2,15 @@
   <div class="notice">
     <h3>未读消息：{{unread}}/{{num}}</h3>
     <div style="position:relative ;height:30px">
-
-    <div class="del">
-      <el-button type="text"  v-if="unread!==0" @click="changenotice('changeall','a') ">全部已读</el-button>
-      <el-button type="text" v-if="num!==0" icon="el-icon-delete" @click="changenotice('deleteall','a')">全部删除</el-button>
-    </div>
+      <div class="del">
+        <el-button type="text" icon="el-icon-view" v-if="unread!==0" @click="changenotice('changeall','a') ">全部已读</el-button>
+        <el-button
+          type="text"
+          v-if="num!==0"
+          icon="el-icon-delete"
+          @click="changenotice('deleteall','a')"
+        >全部删除</el-button>
+      </div>
     </div>
 
     <el-divider></el-divider>
@@ -40,7 +44,7 @@ export default {
   data() {
     return {
       tableData: "",
-      num:0
+      num: 0
     };
   },
   filters: {
@@ -68,7 +72,7 @@ export default {
       if (res.data.state.type === "SUCCESS") {
         this.setunread(res.data.data.count);
         this.tableData = res.data.data.list;
-        this.num=res.data.data.num
+        this.num = res.data.data.num;
         console.log(res.data);
         // this.pagelistquery.total = res.data.count;
       }

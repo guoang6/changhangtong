@@ -1,17 +1,12 @@
 <template>
   <div class="createactivitylist">
-        <div class="title">
-      <div style="float:left">
         <h2>活动管理</h2>
-      </div>
-      <div style="float:left; margin-left:50px; padding :11px">
+
         <el-button
           type="text"
           icon="el-icon-plus"
           @click="$router.push('/admin/createactivity') "
         >发布新的活动</el-button>
-      </div>
-    </div>
     <el-table :data="tableData" border style="width: 100%">
       <el-table-column fixed prop="createtime" label="日期">
         <template slot-scope="scope">{{ scope.row.createtime | dataFormat }}</template>

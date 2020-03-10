@@ -1,17 +1,15 @@
 <template>
   <div class="createhelplist">
     <div class="title">
-      <div style="float:left">
-        <h2>活动</h2>
+      <div >
+        <h2>交流信息</h2>
       </div>
-      <div style="float:left; margin-left:50px; padding :11px">
+      <div >
         <el-button
-          type="primary"
-          plain
-          round
-          icon="el-icon-circle-plus-outline"
+          type="text"
+          icon="el-icon-plus"
           @click="$router.push('/admin/createhelp') "
-        >发布</el-button>
+        >发布交流信息</el-button>
       </div>
     </div>
     <el-table :data="tableData" border style="width: 100%">
@@ -21,7 +19,7 @@
       <el-table-column prop="help_title" label="标题"></el-table-column>
       <el-table-column prop="help_lable" label="分类"></el-table-column>
       <el-table-column fixed prop="help_state" label="状态">
-         <template slot-scope="scope">{{ scope.row.help_state |statefilter}}</template>
+        <template slot-scope="scope">{{ scope.row.help_state |statefilter}}</template>
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="100">
         <template slot-scope="scope">
@@ -48,27 +46,27 @@
 <script>
 export default {
   data() {
-     return {    
+    return {
       pagelistquery: {
         total: 0,
         page: 1,
         pagesize: 10
       },
       tableData: []
-    }; 
+    };
   },
-  filters:{
-      statefilter(state){
-        if(state==1){
-          return "审核通过"
-        }
-         if(state==0){
-          return "正在审核"
-        }
-         if(state==-1){
-          return "审核未通过"
-        }
+  filters: {
+    statefilter(state) {
+      if (state == 1) {
+        return "审核通过";
       }
+      if (state == 0) {
+        return "正在审核";
+      }
+      if (state == -1) {
+        return "审核未通过";
+      }
+    }
   },
   methods: {
     async del(help_id) {

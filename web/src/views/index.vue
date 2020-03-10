@@ -31,47 +31,51 @@
                 <router-link to="/news" tag="li" exact-active-class="current-menu-item">
                   <a>文章</a>
                 </router-link>
-                
+
                 <li v-if="nickname==''">
                   <a @click="closein">登录/注册</a>
-                </li><el-dropdown v-else >
+                </li>
+                <el-dropdown v-else>
                   <a style="color: #c1cad1;">
                     <img
-                    v-if="unread==0"
+                      v-if="unread==0"
                       style="     height: 20px; "
                       :src="avatar"
                       class="avatar touxiang avatar-60 photo"
                       height="20"
                       width="20"
                     />
-                     <el-badge v-else :value="unread" class="item">
-                     <img
-                      style="     height: 20px; "
-                      :src="avatar"
-                      class="avatar touxiang avatar-60 photo"
-                      height="20"
-                      width="20"
-                    />
-                  </el-badge>
+                    <el-badge v-else :value="unread" class="item">
+                      <img
+                        style="     height: 20px; "
+                        :src="avatar"
+                        class="avatar touxiang avatar-60 photo"
+                        height="20"
+                        width="20"
+                      />
+                    </el-badge>
                     {{nickname}}
                   </a>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item>
+                      <router-link to="/admin" tag="a" exact-active-class="current-menu-item">个人中心</router-link>
+                    </el-dropdown-item>
+
+                    <el-dropdown-item>
                       <router-link
-                        to="/admin"
-                        tag="a"
+                        to="/admin/notice"
+                        tag="li"
                         exact-active-class="current-menu-item"
-                      >个人中心</router-link>
+                      >
+                        <a v-if="unread==0">消息中心</a>
+                        <el-badge v-else :value="unread" class="item">
+                          <a>消息中心</a>
+                        </el-badge>
+                      </router-link>
                     </el-dropdown-item>
-                  
-                    <el-dropdown-item> 
-                      <router-link to="/admin/notice" tag="li" exact-active-class="current-menu-item">
-                      <a   v-if="unread==0">消息中心</a>
-                      <el-badge v-else :value="unread" class="item">
-                        <a>消息中心</a>
-                  </el-badge> </router-link>
+                    <el-dropdown-item>
+                      <a @click="logout">退出登录</a>
                     </el-dropdown-item>
-                      <el-dropdown-item> <a @click="logout">退出登录</a></el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
                 <!-- <router-link to="/admin/notice" tag="li" exact-active-class="current-menu-item">
@@ -85,7 +89,7 @@
                       width="20"
                     />
                   </el-badge>
-                </router-link> -->
+                </router-link>-->
               </ul>
             </div>
             <select
@@ -228,10 +232,10 @@ export default {
       }
     },
     //退出登录
-    logout(){
-      console.log('退出')
- this.setUserInfo({nickname:''});
-   this.$message.success("退出成功");
+    logout() {
+      console.log("退出");
+      this.setUserInfo({ nickname: "" });
+      this.$message.success("退出成功");
     },
     joinin() {
       this.join();
