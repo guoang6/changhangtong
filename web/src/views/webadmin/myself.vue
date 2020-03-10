@@ -55,12 +55,17 @@
               list-type="picture-card"
               :on-success="studentuploadsuccess"
               :on-remove="studenthandleRemove"
+               :file-list="this.student.studentcard"
             >
               <i class="el-icon-plus"></i>
             </el-upload>
-            <el-dialog >
+            <el-dialog>
               <img width="100%" :src="student.studentcard" alt />
             </el-dialog>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onSubmitstudent">确定</el-button>
+            <el-button>取消</el-button>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -74,7 +79,7 @@
           <el-form-item label="公司名称">
             <el-input v-model="company.companyname"></el-input>
           </el-form-item>
-                   <el-form-item label="公司信息">
+          <el-form-item label="公司信息">
             <el-upload
               :action="$axios.defaults.baseURL+'/uplod'"
               list-type="picture-card"
@@ -83,9 +88,13 @@
             >
               <i class="el-icon-plus"></i>
             </el-upload>
-            <el-dialog >
+            <el-dialog>
               <img width="100%" :src="company.companyimg" alt />
             </el-dialog>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onSubmitcompany">确定</el-button>
+            <el-button>取消</el-button>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -98,22 +107,26 @@ export default {
   data() {
     return {
       student: {
+        m: "student",
         realname: "",
         studentid: "",
-        studentcard:[]
+        studentcard: []
       },
       company: {
+        m: "company",
         companyname: "",
         companyimg: []
       },
       form: {
+        m: "user",
         avatar: "",
         nickname: "",
         qq: "",
         mail: "",
         phone: "",
         synopsis: ""
-      }
+      },
+      dataform: {}
     };
   },
   methods: {
@@ -121,7 +134,7 @@ export default {
     //文件上传成功时的钩子
     uplogsuccess(res) {
       this.form.avatar = res.url;
-    }, 
+    },
     //
     studentuploadsuccess(res) {
       this.student.studentcard.push({ url: res.url });
@@ -135,7 +148,7 @@ export default {
       this.student.studentcard.splice(b, 1);
       console.log(this.student.studentcard);
     },
-        //
+    //
     companyuploadsuccess(res) {
       this.company.companyimg.push({ url: res.url });
       console.log(this.company.companyimg);
@@ -148,6 +161,33 @@ export default {
       this.company.companyimg.splice(b, 1);
       console.log(this.company.companyimg);
     },
+    //学生认证
+    onSubmitstudent() {
+      this.dataform = this.student;
+      console.log(this.dataform.studentcard.length);
+      let img = [];
+      for (let i = 0; i < this.dataform.studentcard.length; i++) {
+        img.push(this.dataform.studentcard[i].url);
+      }
+      this.dataform.studentcard = String(img);
+      console.log(String(img));
+      this.studentandcompany();
+    },
+    //公司认证
+    onSubmitcompany() {
+      this.dataform = this.company;
+      this.studentandcompany();
+    },
+    //信息认证
+    async studentandcompany() {
+      const res = await this.$axios.post(
+        "/webadmin/updatauser",
+        this.qs.stringify(this.dataform)
+      );
+      if (res.data.state.type === "SUCCESS") {
+        this.$message.success("信息提交成功等待审核");
+      }
+    },
     //用户信息修改
     async onSubmit() {
       const res = await this.$axios.post(
@@ -156,7 +196,7 @@ export default {
       );
       let data = res.data.data;
       if (res.data.state.type === "SUCCESS") {
-        this.$message("成功");
+        this.$message.success("成功");
         this.setUserInfo(data.userinfo);
       }
     },
@@ -164,8 +204,22 @@ export default {
     async getuser() {
       let res = await this.$axios.post("/webadmin/getuser");
       this.form = res.data.data;
-      console.log(this.form);
-      console.log(res);
+      let ImageUrl = [];
+      if (this.form.studentcard != null) {
+        let img = this.form.studentcard.split(",");
+
+        for (let i = 0; i < img.length; i++) {
+          ImageUrl.push({ url: img[i] });
+        }
+      }
+      this.student = {
+        m: "student",
+        realname: this.form.realname,
+        studentid: this.form.studentid,
+        studentcard: ImageUrl
+      };
+      // console.log(this.form);
+      console.log(this.student);
     }
   },
   created() {

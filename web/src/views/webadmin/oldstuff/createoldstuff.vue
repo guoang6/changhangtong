@@ -87,7 +87,7 @@ export default {
       );
       let data = res.data.data;
       if (res.data.state.type === "SUCCESS") {
-        this.$message("成功");
+        this.$message.success("成功");
         this.setUserInfo(data.userinfo);
       }
     },

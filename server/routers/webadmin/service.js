@@ -97,37 +97,69 @@ exports.getuser = async (req, res) => {
 }
 //修改用户信息
 exports.updatauser = async (req, res) => {
-    let info = [
-        req.body.avatar,
-        req.body.nickname,
-        req.body.synopsis,
-        req.body.mail,
-        req.body.qq,
-        req.body.phone,
-        req.user.uid]
-    console.log(info)
-    let sql = 'update user set avatar =?,nickname=?,synopsis=?,mail=?,qq=?,phone=? where user_id =?'
-    const result = await query(sql, info)
-    if(result.affectedRows===1){
-        let info = [req.user.uid]
-        let sql = 'select * from user where user_id =?'
+    // console.log(req)
+    if (req.body.m == "student") { 
+        let info = [
+            req.body.realname,
+            req.body.studentid,
+            req.body.studentcard,
+            1,
+            req.user.uid]
+        console.log(info)
+        let sql = 'update user set realname =?,studentid=?,studentcard=?,realstate=? where user_id =?'
         const result = await query(sql, info)
-         data = {
-        state: s,
-        data: {
-            userinfo: {
-                uid: result[0].id,
-                nickname: result[0].nickname,
-                avatar: result[0].avatar
-            }
-        }
-    }
-    }else{
         data = {
-            state: e,
+            state: s,
             data: {}
         }
     }
+
+    if (req.body.m == "company") {
+        let info = [
+            req.body.realname,
+            req.body.studentid,
+            req.body.studentcard,
+            1,
+            req.user.uid]
+        console.log(info)
+        let sql = 'update user set realname =?,studentid=?,studentcard=?,realstate=? where user_id =?'
+        const result = await query(sql, info)
+
+    }
+    if (req.body.m == "user") {
+        let info = [
+            req.body.avatar,
+            req.body.nickname,
+            req.body.synopsis,
+            req.body.mail,
+            req.body.qq,
+            req.body.phone,
+            req.user.uid]
+        console.log(info)
+        let sql = 'update user set avatar =?,nickname=?,synopsis=?,mail=?,qq=?,phone=? where user_id =?'
+        const result = await query(sql, info)
+        if (result.affectedRows === 1) {
+            let info = [req.user.uid]
+            let sql = 'select * from user where user_id =?'
+            const result = await query(sql, info)
+            data = {
+                state: s,
+                data: {
+                    userinfo: {
+                        uid: result[0].id,
+                        nickname: result[0].nickname,
+                        avatar: result[0].avatar
+                    }
+                }
+            }
+        } else {
+            data = {
+                state: e,
+                data: {}
+            }
+        }
+    }
+
     res.send(data)
 }
 //图片上传  
@@ -374,8 +406,8 @@ exports.updateactivity = async (req, res) => {
         updatetime,
         req.user.uid,
         req.body.id]
-    let sql = 'update activity set activity_title =?, activity_lable=?,activity_content=?,activity_locale=?,'+
-    ' activity_type=?,activity_impose=?,activity_num=?,activity_statetime=?,activity_endtime=?,updatetime=? where user_id =?and activity_id=?'
+    let sql = 'update activity set activity_title =?, activity_lable=?,activity_content=?,activity_locale=?,' +
+        ' activity_type=?,activity_impose=?,activity_num=?,activity_statetime=?,activity_endtime=?,updatetime=? where user_id =?and activity_id=?'
     // let sql = `update help set help_title ='${req.body.help_title}', help_lable='${req.body.help_lable}' ,help_content='${req.body.help_content}',help_img='${req.body.help_img}',where user_id = '${req.user.uid}'and help_id='${req.body.id}'`
     const result = await query(sql, info)
     if (result.length == 0) {
@@ -416,33 +448,33 @@ exports.deleteactivity = async (req, res) => {
     res.send(data);
 }
 //添加二手
-exports.createoldstuff =async  (req, res) => {
- // console.log(req)
- let time = Date.now() - 8 * 60 * 60
- let info = {
-    oldstuff_id: uuid.v1(),   //二手id 
-     user_id: req.user.uid,//  用户di 
-     oldstuff_img: req.body.oldstuff_img,// 标题   
-     oldstuff_name: req.body.oldstuff_name,// 标签
-     oldstuff_lable: req.body.oldstuff_lable,// 类型
-     oldstuff_price: req.body.oldstuff_price,//内容  
+exports.createoldstuff = async (req, res) => {
+    // console.log(req)
+    let time = Date.now() - 8 * 60 * 60
+    let info = {
+        oldstuff_id: uuid.v1(),   //二手id 
+        user_id: req.user.uid,//  用户di 
+        oldstuff_img: req.body.oldstuff_img,// 标题   
+        oldstuff_name: req.body.oldstuff_name,// 标签
+        oldstuff_lable: req.body.oldstuff_lable,// 类型
+        oldstuff_price: req.body.oldstuff_price,//内容  
 
-     oldstuff_content: req.body.oldstuff_content,//内容  
-     createtime: time,//创建时间
-     updatetime: time,//更新时间
-     oldstuff_favour_num: 0,//点赞数    
-     oldstuff_read_num: 0,//浏览量
-     oldstuff_state: 0, //状态  
-     oldstuff_istop: 0,//是否置顶
-     oldstuff_ispublic: 0,//是否显示
- }
- let sql = 'insert into oldstuff set ?'
- const result = await query(sql, info)
- data = {
-     state: s,
-     data: {}
- }
- res.send(data)
+        oldstuff_content: req.body.oldstuff_content,//内容  
+        createtime: time,//创建时间
+        updatetime: time,//更新时间
+        oldstuff_favour_num: 0,//点赞数    
+        oldstuff_read_num: 0,//浏览量
+        oldstuff_state: 0, //状态  
+        oldstuff_istop: 0,//是否置顶
+        oldstuff_ispublic: 0,//是否显示
+    }
+    let sql = 'insert into oldstuff set ?'
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: {}
+    }
+    res.send(data)
 }
 //获取二手列表
 exports.getweboldstufflist = async (req, res) => {

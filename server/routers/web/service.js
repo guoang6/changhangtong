@@ -254,7 +254,7 @@ exports.getnotice = async (req, res) => {
 
     let sqlnotice= ' select count(*) as count from notice where user_to=?'
     const num = await query(sqlnotice, info)
-    let mun = ''
+    let result
     if (req.body.num == '') {
         let sql = 'select * from notice,user where notice.user_from=user.user_id and notice.user_to=? ORDER BY  createtime DESC'
         result = await query(sql, info)
@@ -268,7 +268,7 @@ exports.getnotice = async (req, res) => {
         }
     }
 
-    console.log(result)
+    // console.log(result)
     res.send(data);
 }
 //修改消息

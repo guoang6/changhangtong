@@ -291,13 +291,13 @@ export default {
           this.join();
         })
         .catch(e => {
-          this.$message(e);
+          this.$message.error(e);
         });
     },
     //登录
     login() {
       if (this.password == "" || this.password == "") {
-        this.$message("账号或者密码为空");
+        this.$message.error("账号或者密码为空");
         return;
       }
       // this.pwdhash = crypto
@@ -317,7 +317,7 @@ export default {
         .then(res => {
           let data = res.data.data;
           if (res.data.state.type === "SUCCESS") {
-            this.$message("登录成功");
+            this.$message.success("登录成功");
             // this.$store.user.dispatch("setUserInfo", data)
             this.setUserInfo(data.userinfo);
             this.setToken(data.token);

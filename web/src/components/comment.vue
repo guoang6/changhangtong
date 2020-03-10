@@ -247,7 +247,7 @@ export default {
         );
       }
       if (res.data.state.type === "SUCCESS") {
-        this.$message("评论成功");
+        this.$message.success("评论成功");
         this.comment_content = "";
         this.touserid != "";
         this.getcomment();

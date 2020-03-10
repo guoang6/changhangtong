@@ -55,7 +55,7 @@ export default {
         this.qs.stringify({activity_id:activity_id})
       );
       if (res.data.state.type === "SUCCESS") {
-          this.$message("删除成功");
+          this.$message.success("删除成功");
           this.getactivitylist()
       }
     },
