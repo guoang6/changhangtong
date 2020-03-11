@@ -99,11 +99,12 @@ exports.getuser = async (req, res) => {
 exports.updatauser = async (req, res) => {
     // console.log(req)
     if (req.body.m == "student") { 
+        
         let info = [
             req.body.realname,
             req.body.studentid,
             req.body.studentcard,
-            1,
+            2,
             req.user.uid]
         console.log(info)
         let sql = 'update user set realname =?,studentid=?,studentcard=?,realstate=? where user_id =?'
@@ -116,13 +117,12 @@ exports.updatauser = async (req, res) => {
 
     if (req.body.m == "company") {
         let info = [
-            req.body.realname,
-            req.body.studentid,
-            req.body.studentcard,
-            1,
+            req.body.companyname,
+            req.body.companyimg,
+            2,
             req.user.uid]
         console.log(info)
-        let sql = 'update user set realname =?,studentid=?,studentcard=?,realstate=? where user_id =?'
+        let sql = 'update user set companyname =?,companyimg=?,companystate=? where user_id =?'
         const result = await query(sql, info)
 
     }

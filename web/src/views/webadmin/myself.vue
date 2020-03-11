@@ -37,17 +37,23 @@
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="实名认证">
-        <el-steps :active="2" align-center>
+        <el-steps :active="form.realstate" align-center>
           <el-step title="填写个人信息" description></el-step>
           <el-step title="审核中" description></el-step>
           <el-step title="认证通过" description></el-step>
         </el-steps>
         <el-form ref="form" :model="form" label-width="150px" size="medium ">
           <el-form-item label="姓名">
-            <el-input v-model="student.realname"></el-input>
+            <el-input
+              v-model="student.realname"
+              :disabled="form.realstate ===2|| form.realstate === 3"
+            ></el-input>
           </el-form-item>
           <el-form-item label="学号">
-            <el-input v-model="student.studentid"></el-input>
+            <el-input
+              v-model="student.studentid"
+              :disabled="form.realstate ===2|| form.realstate === 3"
+            ></el-input>
           </el-form-item>
           <el-form-item label="学生证">
             <el-upload
@@ -55,45 +61,52 @@
               list-type="picture-card"
               :on-success="studentuploadsuccess"
               :on-remove="studenthandleRemove"
-               :file-list="this.student.studentcard"
+              :file-list="this.student.studentcard"
+              :disabled="form.realstate ===2|| form.realstate === 3"
             >
-              <i class="el-icon-plus"></i>
+              <i class="el-icon-plus" ></i>
             </el-upload>
             <el-dialog>
               <img width="100%" :src="student.studentcard" alt />
             </el-dialog>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmitstudent">确定</el-button>
+            <el-button
+              type="primary"
+              @click="onSubmitstudent"
+              :disabled="form.realstate ===2|| form.realstate === 3"
+            >确定</el-button>
             <el-button>取消</el-button>
           </el-form-item>
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="公司认证">
-        <el-steps :active="2" align-center>
+        <el-steps :active="form.companystate" align-center>
           <el-step title="填写公司信息信息" description></el-step>
           <el-step title="等待审核" description></el-step>
           <el-step title="认证通过" description></el-step>
         </el-steps>
-        <el-form ref="form" :model="form" label-width="150px" size="medium ">
+        <el-form ref="form" :model="company" label-width="150px" size="medium ">
           <el-form-item label="公司名称">
-            <el-input v-model="company.companyname"></el-input>
+            <el-input v-model="company.companyname" :disabled="form.companystate ===2|| form.companystate === 3"></el-input>
           </el-form-item>
           <el-form-item label="公司信息">
             <el-upload
+            :disabled="form.companystate ===2|| form.companystate === 3"
               :action="$axios.defaults.baseURL+'/uplod'"
               list-type="picture-card"
               :on-success="companyuploadsuccess"
               :on-remove="companyhandleRemove"
+              :file-list=" this.company.companyimg"
             >
-              <i class="el-icon-plus"></i>
+              <i class="el-icon-plus" ></i>
             </el-upload>
             <el-dialog>
               <img width="100%" :src="company.companyimg" alt />
             </el-dialog>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmitcompany">确定</el-button>
+            <el-button type="primary" :disabled="form.companystate ===2|| form.companystate === 3" @click="onSubmitcompany">确定</el-button>
             <el-button>取消</el-button>
           </el-form-item>
         </el-form>
@@ -164,19 +177,19 @@ export default {
     //学生认证
     onSubmitstudent() {
       this.dataform = this.student;
-      console.log(this.dataform.studentcard.length);
-      let img = [];
-      for (let i = 0; i < this.dataform.studentcard.length; i++) {
-        img.push(this.dataform.studentcard[i].url);
-      }
-      this.dataform.studentcard = String(img);
-      console.log(String(img));
+      let img = this.student.studentcard;
+      this.dataform.studentcard = JSON.stringify(this.dataform.studentcard);
+      this.student.studentcard = img;
       this.studentandcompany();
     },
     //公司认证
     onSubmitcompany() {
       this.dataform = this.company;
+      let img = this.company.companyimg;
+      this.dataform.companyimg = JSON.stringify(this.dataform.companyimg);
       this.studentandcompany();
+      this.company.companyimg = img;
+
     },
     //信息认证
     async studentandcompany() {
@@ -204,20 +217,20 @@ export default {
     async getuser() {
       let res = await this.$axios.post("/webadmin/getuser");
       this.form = res.data.data;
-      let ImageUrl = [];
-      if (this.form.studentcard != null) {
-        let img = this.form.studentcard.split(",");
-
-        for (let i = 0; i < img.length; i++) {
-          ImageUrl.push({ url: img[i] });
-        }
-      }
+      this.form.realstate = this.form.realstate * 1;
       this.student = {
         m: "student",
         realname: this.form.realname,
         studentid: this.form.studentid,
-        studentcard: ImageUrl
+        studentcard: JSON.parse(this.form.studentcard)
       };
+      if (this.form.studentcard == null) this.student.studentcard = [];
+      this.company = {
+        m: "company",
+        companyname: this.form.companyname,
+        companyimg: JSON.parse(this.form.companyimg)
+      };
+      if (this.form.companyimg == null) this.company.companyimg = [];
       // console.log(this.form);
       console.log(this.student);
     }
