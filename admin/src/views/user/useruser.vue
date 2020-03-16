@@ -1,12 +1,12 @@
 <template>
-  <div class="contentexamine"> 
+  <div class="useruser"> 
        <el-main>
          <div class="top">
           <el-breadcrumb  separator="/">
 
   <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-  <el-breadcrumb-item>审核中心</el-breadcrumb-item>
-  <el-breadcrumb-item>内容审核</el-breadcrumb-item>
+  <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+  <el-breadcrumb-item>普通用户管理</el-breadcrumb-item>
 </el-breadcrumb>
 
          </div>
@@ -16,24 +16,24 @@
     <div class="search">
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
   <el-form-item >
-    <el-input v-model="formInline.user" placeholder="审批人"></el-input>
+    <el-input v-model="formInline.user" placeholder="账号查找"></el-input>
   </el-form-item>
   <el-form-item >
-    <el-select v-model="formInline.region" placeholder="状态">
-      <el-option label="待审核" value="shanghai"></el-option>
-      <el-option label="审核未通过" value="beijing"></el-option>
-
-      <el-option label="审核通过" value="beijing"></el-option>
+    <el-select v-model="formInline.region" placeholder="实名认证状态">
+      <el-option label="全部" value="beijing"></el-option>
+      <el-option label="未认证" value="beijing"></el-option>
+      <el-option label="待认证" value="beijing"></el-option>
+      <el-option label="认证通过" value="shanghai"></el-option>
+      <el-option label="认证未通过" value="beijing"></el-option>
     </el-select>
   </el-form-item>
   <el-form-item >
-    <el-select v-model="formInline.region" placeholder="模块">
-      <el-option label="问答" value="shanghai"></el-option>
-      <el-option label="活动" value="beijing"></el-option>
-      <el-option label="二手信心" value="beijing"></el-option>
-      <el-option label="招聘信息" value="beijing"></el-option>
-      <el-option label="文章/新闻" value="beijing"></el-option>
-
+    <el-select v-model="formInline.region" placeholder="公司认证状态">
+      <el-option label="全部" value="beijing"></el-option>
+      <el-option label="未认证" value="beijing"></el-option>
+      <el-option label="待认证" value="beijing"></el-option>
+      <el-option label="认证通过" value="shanghai"></el-option>
+      <el-option label="认证未通过" value="beijing"></el-option>
     </el-select>
   </el-form-item>
   <el-form-item>
@@ -48,10 +48,10 @@
       <el-table-column fixed prop="createtime" label="修改日期" >
         <template slot-scope="scope">{{ scope.row.updatetime | dataFormat }}</template>
       </el-table-column>
-       <el-table-column prop="nickname" label="作者" ></el-table-column>
-      <el-table-column prop="help_title" label="标题" ></el-table-column>
-      <el-table-column prop="help_lable" label="分类" ></el-table-column>
-       <el-table-column prop="help_state" label="状态" ></el-table-column>
+       <el-table-column prop="username" label="账号" ></el-table-column>
+      <el-table-column prop="nickname" label="昵称" ></el-table-column>
+      <el-table-column prop="realstate" label="实名认证状态" ></el-table-column>
+       <el-table-column prop="companystate" label="公司认证状态" ></el-table-column>
       <el-table-column fixed="right" label="操作" width="170">
         <template slot-scope="scope">
           <el-button
@@ -80,7 +80,7 @@
 
 <script>
 export default {
-    name:'contentexamine',
+    name:'useruser',
   data() {
     return {
       formInline: {
@@ -117,13 +117,13 @@ export default {
       this.gethelplist();
       console.log(`当前页: ${val}`);
     },
-    async gethelplist() {
+    async getuserlist() {
       let data = {
         page: this.pagelistquery.page,
         pagesize: this.pagelistquery.pagesize
       };
       let res = await this.$axios.post(
-        "/admin/contentexamine",
+        "/admin/getuserlist",
         this.qs.stringify(data)
       );
       if (res.data.state.type === "SUCCESS") {
@@ -134,7 +134,7 @@ export default {
     }
   },
   created() {
-    this.gethelplist();
+    this.getuserlist();
   }
   
 };
@@ -148,7 +148,7 @@ export default {
     padding: 12px 16px;
     background-color: #fff;
 }
-.contentexamine{
+.useruser{
   position:relative ;
   width: 100%;
 }

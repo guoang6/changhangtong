@@ -94,3 +94,19 @@ exports.webgetwebactivitylist = async (req, res) => {
     // console.log(result)
     res.send(data);
 }
+//获取用户信息
+exports.getuserlist = async (req, res) => {
+    let sqlcounts = ' select count(*) as count from user where 1=1 '
+    let infocounts = []
+    const counts = await query(sqlcounts, infocounts)
+    let count = counts[0].count
+    let info = [req.user.uid]
+    let sql = 'select * from user where 1=1'
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: result,
+        count: count
+    }
+    res.send(data)
+}
