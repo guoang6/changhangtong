@@ -1,6 +1,35 @@
 <template>
-  <div class="contentexamine">
-    <el-table :data="tableData" border style="width: 100%">
+  <div class="contentexamine"> 
+       <el-main>
+         <div class="top">
+          <el-breadcrumb  separator="/">
+
+  <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+  <el-breadcrumb-item>审核中心</el-breadcrumb-item>
+  <el-breadcrumb-item>内容审核</el-breadcrumb-item>
+</el-breadcrumb>
+
+         </div>
+    
+
+     <div class="main">
+    <div class="search">
+      <el-form :inline="true" :model="formInline" class="demo-form-inline">
+  <el-form-item label="审批人">
+    <el-input v-model="formInline.user" placeholder="审批人"></el-input>
+  </el-form-item>
+  <el-form-item >
+    <el-select v-model="formInline.region" placeholder="状态">
+      <el-option label="区域一" value="shanghai"></el-option>
+      <el-option label="区域二" value="beijing"></el-option>
+    </el-select>
+  </el-form-item>
+  <el-form-item>
+    <el-button type="primary">查询</el-button>
+  </el-form-item>
+</el-form>
+    </div>
+    <el-table  :data="tableData" border style="width: 100%">
       <el-table-column fixed prop="createtime" label="创建日期" >
         <template slot-scope="scope">{{ scope.row.createtime | dataFormat }}</template>
       </el-table-column>
@@ -30,7 +59,10 @@
       :page-size="pagelistquery.pagesize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="pagelistquery.total"
-    ></el-pagination>
+      style="margin-top: 20px;"
+    ></el-pagination>   
+     </div>
+    </el-main>
   </div>
 </template>
 
@@ -39,6 +71,10 @@ export default {
     name:'contentexamine',
   data() {
     return {
+      formInline: {
+          user: '',
+          region: ''
+        },
       pagelistquery: {
         total:0,
         page: 1,
@@ -88,5 +124,27 @@ export default {
   created() {
     this.gethelplist();
   }
+  
 };
 </script>
+<style  scoped>
+.top{
+  position: absolute;
+    top: 0;
+    left: 0;
+    width: calc(100% - 35px);
+    padding: 12px 16px;
+    background-color: #fff;
+}
+.contentexamine{
+  position:relative ;
+  width: 100%;
+}
+.main{
+  margin-top: 40px;
+  padding: 20px;
+    background-color: #fff;
+  
+}
+
+</style>

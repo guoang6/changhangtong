@@ -9,5 +9,8 @@
 html ,body{
   padding: 0;
   margin: 0;
+ background-color: #f7f7f7;
+  
 }
+ li{ list-style: none;}
 </style>

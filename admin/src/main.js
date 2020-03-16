@@ -3,6 +3,9 @@ import App from './App.vue'
 import './plugins/element.js'
 import router from './router'
 import ElementUI from 'element-ui';
+
+import './assets/css/ali.css'
+
 //vuex
 import Vuex from 'vuex'
 import store from './store'
