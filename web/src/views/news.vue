@@ -1,5 +1,7 @@
 <template>
   <div class="news">
+<div v-title data-title="昌航通 | 新闻/新闻"></div>
+  
        <!-- Start of Page Container -->
     <div class="page-container">
       <div class="container">

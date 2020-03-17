@@ -1,5 +1,7 @@
  <template>
   <div class="adminhome">
+<div v-title data-title="昌航通 | 个人中心 "></div>
+
     <div class="min">
       <el-container style="min-height: 700px; border: 1px solid #eee">
         <el-aside width="200px" style="background-color: rgb(238, 241, 246)">

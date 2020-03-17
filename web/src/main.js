@@ -16,6 +16,12 @@ import store from './store'
 Vue.use(Vuex)
 //导入时间插件
 import moment from 'moment';
+//在main.js 页面里添加自定义指令//
+Vue.directive('title', {//单个修改标题
+  inserted: function (el, binding) {
+    document.title = el.dataset.title
+  }
+})
 //定义全局时间过滤器
 Vue.filter('dataFormat', function (datastr, pattern = "YYYY-MM-DD HH:mm") {
   return moment(datastr).format(pattern)

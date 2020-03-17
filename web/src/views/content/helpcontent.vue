@@ -1,5 +1,7 @@
 <template>
   <div class="help">
+<div v-title data-title="问答详情"></div>
+
     <!-- Start of Page Container -->
     <div class="page-container">
       <div class="container">
