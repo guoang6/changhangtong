@@ -4,12 +4,23 @@
       <h3 id="comments-title">({{commentnum}}) 留言</h3>
 
       <article id="comment-4">
-        <img :src="circleUrl" class="avatar touxiang avatar-60 photo" height="40" width="40" />
-        <h4 class="author" style=" display: inline;">guoang</h4>
+        <img
+          :src="avatar"
+          class="avatar touxiang avatar-60 photo"
+          style=" width: 50px;height: 50px"
+        />
+        <h4 class="author" style=" display: inline;">{{nickname}}</h4>
       </article>
-      <vue-editor useCustomImageHandler @image-added="handleImageAdded" v-model="comment_content"></vue-editor>
+      <div v-if="editorid!==-1" @click="usercomment" class="commenttop">添加评论</div>
+      <vue-editor
+        v-if="editorid===-1"
+        style="margin-top:40px"
+        useCustomImageHandler
+        @image-added="handleImageAdded"
+        v-model="comment_content"
+      ></vue-editor>
       <div class="comment">
-        <el-button type="info" @click="setcomment">评论</el-button>
+        <el-button type="info" v-if="editorid===-1" @click="setcomment">评论</el-button>
       </div>
       <ol class="commentlist">
         <li
@@ -131,53 +142,58 @@ export default {
   },
   computed: {
     ...mapState({
+      avatar: state => state.user.userinfo.avatar,
+      nickname: state => state.user.userinfo.nickname,
       contentid: state => state.contentid,
       commentnum: state => state.commentnum,
       contentname: state => state.contentname,
       contentuserid: state => state.contentuserid
-
     })
   },
   data() {
     return {
       replyinputid: -1,
       replyid: -1,
+      editorid: -2,
       replylist: "",
       commentid: "",
       comment_id: "",
       touserid: "",
       tousernickname: "",
-      editorid: -1,
+
       commentlist: {},
-      comment_content: "",
-      circleUrl: "http://127.0.0.1:3000/uplodes/moren"
+      comment_content: ""
     };
   },
   methods: {
     ...mapActions(["setcommentnum"]),
+    //
+    usercomment() {
+      this.editorid = -1;
+        this.replyinputid = -2;
+    },
     //回复回复按钮
     showreplyinput(index, tousernickname, touserid, comment_id) {
       if (this.replyinputid == index) {
-        this.replyinputid = -1;
+        this.replyinputid = -2;
       } else {
         this.touserid = touserid;
         this.tousernickname = tousernickname;
         this.replyinputid = index;
-        this.editorid = -1;
+        this.editorid = -2;
         this.comment_id = comment_id;
       }
     },
     //回复按钮
     showinput(id, tousernickname, touserid, comment_id) {
       if (this.editorid == id) {
-        this.editorid = -1;
+        this.editorid = -2;
       } else {
         this.touserid = touserid;
         this.tousernickname = tousernickname;
         this.editorid = id;
-        this.replyinputid = -1;
+        this.replyinputid = -2;
         this.comment_id = comment_id;
-
       }
     },
     // reply(){
@@ -226,8 +242,8 @@ export default {
           comment_id: this.comment_id,
           router: this.$route.name,
           to_userid: this.touserid,
-           content_id: this.contentid,
-           contentname:this.contentname
+          content_id: this.contentid,
+          contentname: this.contentname
         };
         res = await this.$axios.post("/web/setreply", this.qs.stringify(data));
         this.replyinputid = -1; //添加完评论时关闭回复框
@@ -235,11 +251,11 @@ export default {
       } else {
         //评论
         let data = {
-           contentname:this.contentname,
+          contentname: this.contentname,
           comment_content: this.comment_content,
           content_id: this.contentid,
           router: this.$route.name,
-          to_userid:this.contentuserid,
+          to_userid: this.contentuserid
         };
         res = await this.$axios.post(
           "/web/setcomment",
@@ -251,6 +267,9 @@ export default {
         this.comment_content = "";
         this.touserid != "";
         this.getcomment();
+        this.replyinputid = -1;
+        this.replyid = -1;
+        this.editorid = -2;
       }
     },
     //获取评论
@@ -291,9 +310,15 @@ export default {
   margin-left: 20%;
   font-size: 15px;
 }
-/* .reply {
-  padding-left: 20px;
-} */
+.commenttop {
+  margin-top: 20px;
+  font-size: 20px;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  background-color: rgb(250, 244, 244);
+}
+
 .touser {
   color: blue;
 }

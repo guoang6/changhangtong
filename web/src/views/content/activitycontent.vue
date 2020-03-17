@@ -10,7 +10,7 @@
           <div class="span8 page-content">
             <el-page-header @back="$router.back(-1)" content="活动详情"></el-page-header>
             <article class="type-post format-standard hentry clearfix">
-              <h3>活动详情</h3>
+              <h3>{{content.activity_title}}</h3>
               <div>
                 <div class="show_unit fl ativity">
                   <a class="iconfont ic">&#xe622;</a>
@@ -44,7 +44,7 @@
               <h3>活动描述</h3>
               <blockquote v-html="content.activity_content"></blockquote>
             </article>
-                  <el-button type="primary"  style="width:80px;margin:0 auto;display:block;">参加</el-button>
+            <el-button type="primary" style="width:80px;margin:0 auto;display:block;">参加</el-button>
 
             <div class="like-btn">
               <form id="like-it-form" action="#" method="post">
@@ -53,7 +53,7 @@
                 <input type="hidden" name="action" value="like_it" />
               </form>
             </div>
-             
+
             <comment />
             <!-- end of comments -->
             <!-- end of page content -->
@@ -125,7 +125,7 @@ export default {
   min-height: 200px;
 }
 .tagname {
-  margin-right: 20px;
+  margin-right: 16px;
   font-size: 18px;
 }
 </style>
