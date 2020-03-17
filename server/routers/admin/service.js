@@ -110,3 +110,16 @@ exports.getuserlist = async (req, res) => {
     }
     res.send(data)
 }
+exports.changeuserstate = async (req,res)=>{
+   let info=[
+    req.body.state,
+    req.body.user_id
+   ]
+   let sql  = `update user set ${req.body.type}=? where user_id=?`
+   const result = await query(sql, info)
+   data = {
+       state: s,
+       data:{}
+   }
+   res.send(data)
+}

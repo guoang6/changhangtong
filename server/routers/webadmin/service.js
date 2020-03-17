@@ -33,7 +33,8 @@ exports.registered = async (req, res) => {
             password: req.body.password,//密码
             nickname: '该用户还没没有设置昵称',//昵称
             avatar: 'http://127.0.0.1:3000/uplodes/moren',
-            realstate: '0'
+            realstate: 1,
+            companystate:1
         }
         info.password = md5(`${info.password}${PED_SALT}`)
         let sql = 'insert into user set ?'

@@ -176,20 +176,18 @@ export default {
     },
     //学生认证
     onSubmitstudent() {
-      this.dataform = this.student;
-      let img = this.student.studentcard;
+      this.dataform = JSON.stringify(this.student);
+      this.dataform = JSON.parse(this.dataform);
       this.dataform.studentcard = JSON.stringify(this.dataform.studentcard);
-      this.student.studentcard = img;
-      this.studentandcompany();
+      console.log()
+      this.studentandcompany( this.dataform.studentcard);
     },
     //公司认证
     onSubmitcompany() {
-      this.dataform = this.company;
-      let img = this.company.companyimg;
+       this.dataform = JSON.stringify(this.company);
+      this.dataform = JSON.parse(this.dataform);
       this.dataform.companyimg = JSON.stringify(this.dataform.companyimg);
       this.studentandcompany();
-      this.company.companyimg = img;
-
     },
     //信息认证
     async studentandcompany() {
