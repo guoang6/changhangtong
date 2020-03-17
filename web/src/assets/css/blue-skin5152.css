@@ -102,3 +102,13 @@ a#scroll-top {
 a#scroll-top:hover {
   background-color: #5085bf;
 }
+@media (min-width: 700px) {
+  .ativity {
+    width: 50%;
+    float: left;
+  }
+  .oldstuffcontent {
+    width: 40%;
+    float: left;
+  }
+}

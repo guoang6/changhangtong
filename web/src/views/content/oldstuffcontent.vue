@@ -115,7 +115,7 @@ export default {
       if (res.data.state.type === "SUCCESS") {
         this.content = res.data.data;
          this.setcontentinfo({contentname:res.data.data.oldstuff_name,contentuserid:res.data.data.user_id})
-        // this.content.help_tag = res.data.data.help_tag.split(",");
+        this.content.help_tag = res.data.data.help_tag.split(",");
       }
     }
   },
@@ -125,7 +125,7 @@ export default {
   }
 };
 </script>
-<style>
+<style >
 .help {
   min-height: 200px;
 }
@@ -152,10 +152,5 @@ export default {
   margin-right: 30px;
    font-size: 30px
 }
-@media (min-width: 700px) {
-  .oldstuffcontent {
-    width: 40%;
-    float: left;
-  }
-}
+
 </style>

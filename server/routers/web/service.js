@@ -179,6 +179,26 @@ exports.webgetwebactivitylist = async (req, res) => {
     // console.log(result)
     res.send(data);
 }
+//求助和活动详情
+exports.getactivitycontent = async (req, res) => {
+    let info = [req.body.id]
+    let sql = 'select * from activity,user where user.user_id=activity.user_id and activity.activity_id=?'
+    const result = await query(sql, info)
+    if (result.length == 0) {
+        data = {
+            state: e,
+            data: {
+            }
+        }
+    } else {
+        data = {
+            state: s,
+            data: result[0]
+        }
+    }
+    console.log(result)
+    res.send(data);
+}
 //web获取求助列表
 exports.webgetwebactivitylist = async (req, res) => {
     console.log(req.body.lable)
@@ -246,6 +266,8 @@ exports.getoldstuffcontent = async (req, res) => {
     console.log(result)
     res.send(data);
 }
+
+
 //获取消息
 exports.getnotice = async (req, res) => {
     let sqlnoticenum = ' select count(*) as count from notice where user_to=? and state=0'

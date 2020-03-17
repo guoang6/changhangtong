@@ -29,7 +29,7 @@
         <ul class="articles">
           <li class="article-entry standard" v-for="(activity,id) in tableData" :key="id">
             <h4>
-              <a >{{activity.activity_title}}</a>
+              <router-link :to="'/activitycontent/'+activity.activity_id">{{activity.activity_title}}</router-link>
             </h4>
             <span class="article-meta">
              <a class="iconfont">&#xe619;</a> {{activity.createtime|dataFormat}}
