@@ -57,29 +57,31 @@
               >{{ scope.row.companystate |userstatefilter}}</el-button>
             </template>
           </el-table-column>
-          <el-table-column prop="companystate" label="账号状态">
-            <template slot-scope="scope">
-              <el-button
-                type="text"
-                @click="changecompanystatedialog(scope.row)"
-              >{{ scope.row.companystate |userstatefilter}}</el-button>
-            </template>
+          <el-table-column prop="state" label="账号状态">
+            <template slot-scope="scope">{{ scope.row.state |statefilter}}</template>
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="170">
             <template slot-scope="scope">
-              <el-button type="text" size="small" @click="del(scope.row.help_id)">解封</el-button>
-              <el-button type="text" size="small" @click="del(scope.row.help_id)">封禁</el-button>
+              <el-button
+                type="text"
+                size="small"
+              >{{ scope.row.state |buttonfilter}}</el-button>
+              <el-button
+                type="text"
+                size="small"
+              >修改密码</el-button>
             </template>
+            
           </el-table-column>
         </el-table>
-               <!--公司信息认证-->
+        <!--公司信息认证-->
         <el-dialog title="公司信息认证" :visible.sync="dialogcompany">
-          <div v-if="changecompanystateuser.realstate===1">
-             <img src="../../assets/img/noinfo.png" width="100%" alt="">
-             <div style="width:100%;text-align:center" >该用户还没有添加认证信息</div>
+          <div v-if="changecompanystateuser.companystate===1">
+            <img src="../../assets/img/noinfo.png" width="100%" alt />
+            <div style="width:100%;text-align:center">该用户还没有添加公司认证信息</div>
           </div>
           <el-form v-else>
-            <el-form-item label="公司名称"> {{changecompanystateuser.realname}}</el-form-item>
+            <el-form-item label="公司名称">{{changecompanystateuser.companyname}}</el-form-item>
             <el-form-item label="相关信息图片">
               <img
                 v-for="(img,id) in changecompanystateuser.companyimg"
@@ -94,7 +96,11 @@
             <el-button @click="dialogcompany = false">取消</el-button>
           </div>
           <div slot="footer" v-else class="dialog-footer">
-            <el-button type="primary" v-if="changecompanystateuser.companystate!==3" @click="changestate('companystate',3)">通过认证</el-button>
+            <el-button
+              type="primary"
+              v-if="changecompanystateuser.companystate!==3"
+              @click="changestate('companystate',3)"
+            >通过认证</el-button>
             <el-button type="danger" @click="changestate('companystate',0)">不通过认证</el-button>
             <el-button @click="dialogcompany = false">取消</el-button>
           </div>
@@ -102,11 +108,11 @@
         <!--用户信息认证-->
         <el-dialog title="用户认证信息" :visible.sync="dialogstudent">
           <div v-if="changerealstateuser.realstate===1">
-             <img src="../../assets/img/noinfo.png" width="100%" alt="">
-             <div style="width:100%;text-align:center" >该用户还没有添加认证信息</div>
+            <img src="../../assets/img/noinfo.png" width="100%" alt />
+            <div style="width:100%;text-align:center">该用户还没有添加认证信息</div>
           </div>
           <el-form v-else>
-            <el-form-item label="学号"> {{changerealstateuser.realname}}</el-form-item>
+            <el-form-item label="学号">{{changerealstateuser.realname}}</el-form-item>
             <el-form-item label="姓名">{{changerealstateuser.studentid}}</el-form-item>
             <el-form-item label="学生证">
               <img
@@ -122,7 +128,11 @@
             <el-button @click="dialogstudent = false">取消</el-button>
           </div>
           <div slot="footer" v-else class="dialog-footer">
-            <el-button type="primary" v-if="changerealstateuser.realstate!==3" @click="changestate('realstate',3)">通过认证</el-button>
+            <el-button
+              type="primary"
+              v-if="changerealstateuser.realstate!==3"
+              @click="changestate('realstate',3)"
+            >通过认证</el-button>
             <el-button type="danger" @click="changestate('realstate',0)">不通过认证</el-button>
             <el-button @click="dialogstudent = false">取消</el-button>
           </div>
@@ -148,9 +158,9 @@ export default {
   data() {
     return {
       changerealstateuser: {}, //正在审核的用户信息
-      changecompanystateuser:{},//公司认证信息
+      changecompanystateuser: {}, //公司认证信息
       dialogstudent: false,
-       dialogcompany: false,
+      dialogcompany: false,
       formInline: {
         user: "",
         region: ""
@@ -177,24 +187,40 @@ export default {
       if (state == 0) {
         return "认证失败";
       }
+    },
+    buttonfilter(state) {
+      if (state == 1) {
+        return "封禁";
+      }
+      if (state == 0) {
+        return "启用";
+      }
+    },
+    statefilter(state) {
+      if (state == 1) {
+        return "启用状态";
+      }
+      if (state == 0) {
+        return "停用状态";
+      }
     }
   },
   methods: {
-    async changestate(type,state){
-     let data={
-         type:type,
-         state:state,
-         user_id:this.changerealstateuser.user_id
-      }
-       let res = await this.$axios.post(
+    async changestate(type, state) {
+      let data = {
+        type: type,
+        state: state,
+        user_id: this.changerealstateuser.user_id
+      };
+      let res = await this.$axios.post(
         "/admin/changeuserstate",
         this.qs.stringify(data)
       );
       if (res.data.state.type === "SUCCESS") {
         this.$message.success("操作成功成功");
         this.getuserlist();
-      this.dialogstudent = false;
-      this.dialogcompany = false;
+        this.dialogstudent = false;
+        this.dialogcompany = false;
       }
     },
     //公司认证信息
