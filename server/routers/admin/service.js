@@ -123,3 +123,29 @@ exports.changeuserstate = async (req,res)=>{
    }
    res.send(data)
 }
+//分类列表
+exports.lablelist = async (req,res)=>{
+    let info=[]
+    let sql  = `select * from lable`
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: result,
+        
+    }
+    res.send(data)
+ }
+ //修改分类
+ exports.changelable = async (req,res)=>{
+   let info=[
+    req.body.lable,
+    req.body.lable_id
+   ]
+   let sql  = `update lable set lable=? where lable_id =?`
+   const result = await query(sql, info)
+   data = {
+       state: s,
+       data:{}
+   }
+   res.send(data)
+}

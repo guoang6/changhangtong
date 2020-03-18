@@ -9,134 +9,29 @@
         </el-breadcrumb>
       </div>
 
-      <div class="main">
-        <h3>问答分类</h3>
+      <div class="main" v-for="(lable,id) in lable" :key="id">
+        <h3>{{lable.lable_name}}</h3>
         <div>
-                  <el-tag
-          :key="tag"
-          v-for="tag in dynamicTags"
-          closable
-          :disable-transitions="false"
-          @close="handleClose(tag)"
-          effect="dark"
-          size="medium"
-        >{{tag}}</el-tag>
-        <el-input
-          class="input-new-tag"
-          v-if="inputVisible"
-          v-model="inputValue"
-          ref="saveTagInput"
-          effect="dark"
-              type="success"
-          size="medium"
-          @keyup.enter.native="handleInputConfirm"
-          @blur="handleInputConfirm"
-        ></el-input>
-        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+          <el-tag
+            :key="tag"
+             effect="dark"
+             type="success"
+            v-for="tag in lable.lable"
+            closable
+            :disable-transitions="false"
+            @close="handleClose(tag,id)"
+          >{{tag}}</el-tag>
+          <el-input
+            class="input-new-tag"
+            v-if="lable.inputshow===1"
+            v-model="inputValue"
+            size="small"
+            @keyup.enter.native="handleInputConfirm(id)"
+            @blur="handleInputConfirm(id)"
+          ></el-input>
+          <el-button v-else class="button-new-tag" size="small" @click="showInput(id)">+ New Tag</el-button>
         </div>
-
       </div>
-       <div class="main">
-        <h3>活动分类</h3>
-        <div>
-                  <el-tag
-          :key="tag"
-          v-for="tag in dynamicTags"
-          closable
-           effect="dark"
-              type="success"
-          :disable-transitions="false"
-          @close="handleClose(tag)"
-        >{{tag}}</el-tag>
-        <el-input
-          class="input-new-tag"
-          v-if="inputVisible"
-          v-model="inputValue"
-          ref="saveTagInput"
-          size="medium"
-          @keyup.enter.native="handleInputConfirm"
-          @blur="handleInputConfirm"
-        ></el-input>
-        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
-        </div>
-
-      </div>
-       <div class="main">
-        <h3>二手分类</h3>
-        <div>
-                  <el-tag
-          :key="tag"
-          v-for="tag in dynamicTags"
-          closable
-           effect="dark"
-              type="info"
-          :disable-transitions="false"
-          @close="handleClose(tag)"
-        >{{tag}}</el-tag>
-        <el-input
-          class="input-new-tag"
-          v-if="inputVisible"
-          v-model="inputValue"
-          ref="saveTagInput"
-          size="small"
-          @keyup.enter.native="handleInputConfirm"
-          @blur="handleInputConfirm"
-        ></el-input>
-        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
-        </div>
-
-      </div>
-        <div class="main">
-        <h3>招聘分类</h3>
-        <div>
-                  <el-tag
-          :key="tag"
-          v-for="tag in dynamicTags"
-          closable
-           effect="dark"
-              type="danger"
-          :disable-transitions="false"
-          @close="handleClose(tag)"
-        >{{tag}}</el-tag>
-        <el-input
-          class="input-new-tag"
-          v-if="inputVisible"
-          v-model="inputValue"
-          ref="saveTagInput"
-          size="medium"
-          @keyup.enter.native="handleInputConfirm"
-          @blur="handleInputConfirm"
-        ></el-input>
-        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
-        </div>
-
-      </div>
-        <div class="main">
-        <h3>文章/新闻分类</h3>
-        <div>
-                  <el-tag
-          :key="tag"
-          v-for="tag in dynamicTags"
-          closable
-           effect="dark"
-              type="warning"
-          :disable-transitions="false"
-          @close="handleClose(tag)"
-        >{{tag}}</el-tag>
-        <el-input
-          class="input-new-tag"
-          v-if="inputVisible"
-          v-model="inputValue"
-          ref="saveTagInput"
-          size="medium"
-          @keyup.enter.native="handleInputConfirm"
-          @blur="handleInputConfirm"
-        ></el-input>
-        <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
-        </div>
-
-      </div>
-      
     </el-main>
   </div>
 </template>
@@ -146,74 +41,64 @@ export default {
   name: "contentexamine",
   data() {
     return {
-
-      dynamicTags: ["标签一", "标签二", "标签三"],
-      typecolor:{1:'',2:'success',3:'info',4:'danger',5:'warning'},
-      inputVisible: false,
+      lable: {},
+      changelable: {},
       inputValue: ""
     };
   },
   methods: {
     /**
      *
-     * 标签相关
+     * 分类标签相关
      */
-    handleClose(tag) {
-      this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+    handleClose(tag, id) {
+      this.lable[id].lable.splice(this.lable[id].lable.indexOf(tag), 1);
+      this.change(id);
     },
-    showInput() {
-      this.inputVisible = true;
-      this.$nextTick(_ => {
-        this.$refs.saveTagInput.$refs.input.focus();
-      });
+
+    showInput(id) {
+      console.log(id);
+      this.lable[id].inputshow = 1;
     },
-    handleInputConfirm() {
+
+    handleInputConfirm(id) {
       let inputValue = this.inputValue;
       if (inputValue) {
-        this.dynamicTags.push(inputValue);
+        this.lable[id].lable.push(inputValue);
+        this.change(id);
       }
-      this.inputVisible = false;
+      this.lable[id].inputshow = 0;
       this.inputValue = "";
     },
-    async del(help_id) {
-      console.log(help_id);
+    async change(id) {
+      this.changelable = JSON.stringify(this.lable[id]);
+      this.changelable = JSON.parse(this.changelable); //通过JSON.stringify和JSON.parse完成深拷贝
+      this.changelable.lable = JSON.stringify(this.changelable.lable);
       let res = await this.$axios.post(
-        "/webadmin/deletehelp",
-        this.qs.stringify({ help_id: help_id })
+        "/admin/changelable",
+        this.qs.stringify(this.changelable)
       );
       if (res.data.state.type === "SUCCESS") {
-        this.$message.success("删除成功");
-        this.gethelplist();
+        this.$message.success("修改成功");
+        this.lablelist();
       }
     },
-    handleSizeChange(val) {
-      this.pagelistquery.pagesize = val;
-      this.gethelplist();
-      console.log(`每页 ${val} 条`);
-    },
-    handleCurrentChange(val) {
-      this.pagelistquery.page = val;
-      this.gethelplist();
-      console.log(`当前页: ${val}`);
-    },
-    async gethelplist() {
-      let data = {
-        page: this.pagelistquery.page,
-        pagesize: this.pagelistquery.pagesize
-      };
-      let res = await this.$axios.post(
-        "/admin/contentexamine",
-        this.qs.stringify(data)
-      );
+
+    async lablelist() {
+      let res = await this.$axios.post("/admin/lablelist");
       if (res.data.state.type === "SUCCESS") {
-        this.tableData = res.data.data;
+        this.lable = res.data.data;
         console.log(res.data);
-        this.pagelistquery.total = res.data.count;
+        for (let i = 0; i < this.lable.length; i++) {
+          this.lable[i].lable = JSON.parse(this.lable[i].lable);
+        }
+        console.log('分类列表')
+        console.log(this.lable);
       }
     }
   },
   created() {
-    // this.gethelplist();
+    this.lablelist();
   }
 };
 </script>

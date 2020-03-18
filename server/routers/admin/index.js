@@ -6,6 +6,12 @@ router.post('/admin/contentexamine', service.contentexamine)
 router.post('/admin/getuserlist', service.getuserlist)
 router.post('/admin/changeuserstate', service.changeuserstate)
 
+//分类管理
+router.post('/admin/lablelist', service.lablelist)
+router.post('/admin/changelable', service.changelable)
+
+
+
 
 
 
