@@ -29,7 +29,7 @@
             @keyup.enter.native="handleInputConfirm(id)"
             @blur="handleInputConfirm(id)"
           ></el-input>
-          <el-button v-else class="button-new-tag" size="small" @click="showInput(id)">+ New Tag</el-button>
+          <el-button v-else class="button-new-tag" size="small" @click="showInput(id)">+ 添加新的分类</el-button>
         </div>
       </div>
     </el-main>

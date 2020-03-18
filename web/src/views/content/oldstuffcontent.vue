@@ -22,7 +22,7 @@
                     <div style="margin-top:10px">原价：{{content.oldstuff_price}}</div>
                     <div style="margin-top:10px;font-size:10px">卖家信息———————————————</div>
                     <div class="show_unit fl">
-                      <a class="iconfont ic" >&#xe622;</a>
+                      <a class="iconfont ic">&#xe622;</a>
                       {{content.nickname}}
                     </div>
                     <div class="show_unit fl">
@@ -30,23 +30,23 @@
                       {{content.qq}}
                     </div>
                     <div class="show_unit fl">
-                      <a class="iconfont ic" >&#xe62a;</a>
+                      <a class="iconfont ic">&#xe62a;</a>
                       {{content.phone}}
                     </div>
                   </div>
                   <el-button type="primary" @click="dialogFormVisible = true">有意向购买</el-button>
-                  <el-dialog title="欲购买信息" :visible.sync="dialogFormVisible" width="30%" >
-                    <el-form :model="form" size="medium ">
-                      <el-form-item label="联系方式" >
-                        <el-input autocomplete="off"></el-input>
+                  <el-dialog title="欲购买信息" :visible.sync="dialogFormVisible" width="30%">
+                    <el-form :model="data" size="medium ">
+                      <el-form-item label="联系方式">
+                        <el-input autocomplete="off" v-model="data.describe"></el-input>
                       </el-form-item>
-                      <el-form-item label="欲购买价格" >
-                        <el-input autocomplete="off"></el-input>
+                      <el-form-item label="欲购买价格">
+                        <el-input autocomplete="off" v-model="data.name"></el-input>
                       </el-form-item>
                     </el-form>
                     <div slot="footer" class="dialog-footer">
                       <el-button @click="dialogFormVisible = false">取 消</el-button>
-                      <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                      <el-button type="primary" @click="setjoin">确 定</el-button>
                     </div>
                   </el-dialog>
                 </div>
@@ -89,7 +89,13 @@ export default {
   },
   data() {
     return {
-      dialogFormVisible: false,//弹框相关
+      data: {
+        type: "", //类型
+        name: "", //  名称
+        describe: "", //  描述
+        content_id: ""
+      },
+      dialogFormVisible: false, //弹框相关
       content: {}
     };
   },
@@ -114,11 +120,29 @@ export default {
       );
       if (res.data.state.type === "SUCCESS") {
         this.content = res.data.data;
-         this.setcontentinfo({contentname:res.data.data.oldstuff_name,contentuserid:res.data.data.user_id})
-        this.content.help_tag = res.data.data.help_tag.split(",");
+        this.setcontentinfo({
+          contentname: res.data.data.oldstuff_name,
+          contentuserid: res.data.data.user_id
+        });
       }
+    },
+    async setjoin() {
+      this.data.type = this.$route.name; //类型
+
+      this.data.content_id = this.content.oldstuff_id;
+      let res = await this.$axios.post(
+        "/web/setjoin",
+        this.qs.stringify(this.data)
+      );
+      if (res.data.state.type === "SUCCESS") {
+        this.$message.success("添加意向成功");
+      } else {
+        this.$message.error("你已经添加了意向");
+      }
+      this.dialogFormVisible = false;
     }
   },
+
   created() {
     this.getoldstuffcontent();
     this.setcontentid(this.id);
@@ -147,10 +171,9 @@ export default {
   height: 50px;
   line-height: 50px;
 }
-.ic{
+.ic {
   color: #409eff;
   margin-right: 30px;
-   font-size: 30px
+  font-size: 30px;
 }
-
 </style>

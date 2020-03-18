@@ -44,7 +44,11 @@
               <h3>活动描述</h3>
               <blockquote v-html="content.activity_content"></blockquote>
             </article>
-            <el-button type="primary" style="width:80px;margin:0 auto;display:block;">参加</el-button>
+            <el-button
+              type="primary"
+              @click="setjoin"
+              style="width:80px;margin:0 auto;display:block;"
+            >参加</el-button>
 
             <div class="like-btn">
               <form id="like-it-form" action="#" method="post">
@@ -80,6 +84,12 @@ export default {
   },
   data() {
     return {
+      data: {
+        type: "", //类型
+        name: "", //  名称
+        describe: "", //  描述
+        content_id: ""
+      },
       dialogFormVisible: false, //弹框相关
       content: {}
     };
@@ -111,6 +121,21 @@ export default {
           contentname: res.data.data.activity_title,
           contentuserid: res.data.data.user_id
         });
+      }
+    },
+    async setjoin() {
+      this.data.type = this.$route.name; //类型
+
+      this.data.content_id = this.content.activity_id;
+      let res = await this.$axios.post(
+        "/web/setjoin",
+        this.qs.stringify(this.data)
+      );
+      if (res.data.state.type === "SUCCESS") {
+        this.$message.success("参加成功");
+      }else{
+        this.$message.error("你已经报名参加了本项目");
+
       }
     }
   },

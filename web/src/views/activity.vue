@@ -66,6 +66,8 @@ export default {
   },
 data() {
     return {
+
+     
       smallttle:'',
       lables: ["学习", "生活", "娱乐", "其他"],
       pagelistquery: {
@@ -98,7 +100,8 @@ data() {
         console.log(res.data);
         this.pagelistquery.total = res.data.count;
       }
-    }
+    },
+
   },
   created() {
     this.getactivitylist();
