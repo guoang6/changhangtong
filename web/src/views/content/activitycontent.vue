@@ -88,7 +88,8 @@ export default {
         type: "", //类型
         name: "", //  名称
         describe: "", //  描述
-        content_id: ""
+        content_id: "",
+        activity_title:''
       },
       dialogFormVisible: false, //弹框相关
       content: {}
@@ -125,7 +126,8 @@ export default {
     },
     async setjoin() {
       this.data.type = this.$route.name; //类型
-
+    this.data.contentname=this.content.activity_title
+       
       this.data.content_id = this.content.activity_id;
       let res = await this.$axios.post(
         "/web/setjoin",

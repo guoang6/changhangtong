@@ -3,7 +3,12 @@
     <h3>未读消息：{{unread}}/{{num}}</h3>
     <div style="position:relative ;height:30px">
       <div class="del">
-        <el-button type="text" icon="el-icon-view" v-if="unread!==0" @click="changenotice('changeall','a') ">全部已读</el-button>
+        <el-button
+          type="text"
+          icon="el-icon-view"
+          v-if="unread!==0"
+          @click="changenotice('changeall','a') "
+        >全部已读</el-button>
         <el-button
           type="text"
           v-if="num!==0"
@@ -14,7 +19,10 @@
     </div>
 
     <el-divider></el-divider>
-    <div v-if="unread==0" style="text-align:center;width:100%">暂无消息通知</div>
+    <div v-if="num==0">
+      <img src="../../assets/images/noinfo.png" width="100%" alt />
+      <div style="width:100%;text-align:center">暂无消息通知</div>
+    </div>
     <div style="position:relative" v-for="(notice,id) in tableData" :key="id">
       <div
         style="width:10px;height:10px;border-radius:50%;display:inline-block"
@@ -73,7 +81,8 @@ export default {
         this.setunread(res.data.data.count);
         this.tableData = res.data.data.list;
         this.num = res.data.data.num;
-        console.log(res.data);
+        console.log("消息列表");
+        console.log((this.tableData = res.data.data.list));
         // this.pagelistquery.total = res.data.count;
       }
     },

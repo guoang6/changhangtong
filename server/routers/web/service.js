@@ -12,10 +12,11 @@ const e = {
     "msg": "操作失败"
 }
 //添加消息
-let setnotice = async function (user_from, user_to, content_id, content_name, action, router) {
+let setnotice = async function (user_from, user_to, nickname,content_id, content_name, action, router) {
     let notice = {
         notice_id: uuid.v1(),// 消息 id 
         user_from: user_from,//发起者
+        nickname:nickname,
         user_to: user_to,//接受者
         content_name: content_name,
         action: action,//动作
@@ -76,7 +77,7 @@ exports.gethelpcontent = async (req, res) => {
 //评论
 exports.setcomment = async (req, res) => {
     let time = Date.now() - 8 * 60 * 60
-    setnotice(req.user.uid, req.body.to_userid, req.body.content_id, req.body.contentname, '评论了你', req.body.router)
+    setnotice(req.user.uid, req.body.to_userid, req.user.nickname,req.body.content_id, req.body.contentname, '评论了你', req.body.router)
     let info = {
         comment_id: uuid.v1(),   //评论id 
         user_id: req.user.uid,//  用户di 
@@ -115,7 +116,7 @@ exports.getcomment = async (req, res) => {
 }
 //评论
 exports.setreply = async (req, res) => {
-    setnotice(req.user.uid, req.body.to_userid, req.body.content_id, req.body.contentname, '回复了你', req.body.router)
+    setnotice(req.user.uid, req.body.to_userid,req.user.nickname, req.body.content_id, req.body.contentname, '回复了你', req.body.router)
     let time = Date.now() - 8 * 60 * 60
     let info = {
         reply_id: uuid.v1(),//留言id
@@ -278,7 +279,7 @@ exports.getnotice = async (req, res) => {
     const num = await query(sqlnotice, info)
     let result
     if (req.body.num == '') {
-        let sql = 'select * from notice,user where notice.user_from=user.user_id and notice.user_to=? ORDER BY  createtime DESC'
+        let sql = 'select * from notice where user_to=? ORDER BY  createtime DESC'
         result = await query(sql, info)
     }
     data = {
@@ -330,10 +331,11 @@ exports.setjoin = async (req, res) => {
     let onlyonesql = 'select * from joins where content_id=? and user_id=?'
     const resultonlyone = await query(onlyonesql,onlyone)
     if (resultonlyone.length == 0) {
-        // setnotice(req.user.uid, req.body.to_userid, req.body.content_id, req.body.contentname, '通知', req.body.router)
+        setnotice('', req.user.uid,'系统通知', req.body.content_id, req.body.contentname, '你已经成功参与', req.body.type)
         let info = {
             join_id: uuid.v1(),//id
             user_id: req.user.uid,//  用户di 
+            type:req.body.type,
             name: req.body.name,//  名称 
             describe: req.body.describe,//  描述
             content_id: req.body.content_id

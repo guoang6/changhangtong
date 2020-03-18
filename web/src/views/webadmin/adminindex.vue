@@ -4,7 +4,7 @@
 
     <div class="min">
       <el-container style="min-height: 700px; border: 1px solid #eee">
-        <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
+        <el-aside width="200px" style="    background-color: #fff;">
           <el-menu router default-active="2" class="el-menu-vertical-demo">
             <el-menu-item index="/admin">
               <i class="el-icon-user-solid"></i>
