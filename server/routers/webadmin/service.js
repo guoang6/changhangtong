@@ -1,7 +1,7 @@
 const { query } = require('../../plugins/db.js')
 const { md5 } = require('../../plugins/md5.js')
 var uuid = require('node-uuid');//npm install node-uuid
-const { PED_SALT, EXPIRE_SIN, PEIVATE_KEY } = require('../../plugins/config.js')
+const { PED_SALT, EXPIRE_SIN, PEIVATE_KEY ,url} = require('../../plugins/config.js')
 var jwt = require('jsonwebtoken');
 let data
 const s = {
@@ -32,7 +32,7 @@ exports.registered = async (req, res) => {
             username: req.body.username,//用户名
             password: req.body.password,//密码
             nickname: '该用户还没没有设置昵称',//昵称
-            avatar: 'http://127.0.0.1:3000/uplodes/moren',
+            avatar: `${url}/uplodes/moren`,
             realstate: 1,
             user_state: 2,
             companystate: 1
@@ -126,7 +126,10 @@ exports.updatauser = async (req, res) => {
         console.log(info)
         let sql = 'update user set companyname =?,companyimg=?,companystate=? where user_id =?'
         const result = await query(sql, info)
-
+        data = {
+            state: s,
+            data: {}
+        }
     }
     if (req.body.m == "user") {
         let info = [
@@ -167,7 +170,8 @@ exports.updatauser = async (req, res) => {
 //图片上传  
 exports.uplod = (req, res) => {
     const file = req.file
-    file.url = `http://127.0.0.1:3000/uplodes/${file.filename}`
+    file.url = `${url}/uplodes/${file.filename}`
+    console.log(file.url)
     res.send(file)
 }
 /**
@@ -449,7 +453,6 @@ exports.deleteactivity = async (req, res) => {
     console.log(result)
     res.send(data);
 }
-//获取被jion列表
 //获取被jion列表
 exports.joinslist = async (req, res) => {
     let info = [req.user.uid]

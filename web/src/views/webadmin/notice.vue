@@ -36,7 +36,7 @@
         <a
           style="font-size:20px"
           @click="changenotice('change',notice.notice_id)"
-          :href="`http://localhost:8080/#/${notice.router}/${notice.content_id}`"
+          :href="`${url}/#/${notice.router}/${notice.content_id}`"
           target="_blank"
         >{{notice.content_name}}</a>
       </span>
@@ -67,7 +67,8 @@ export default {
   },
   computed: {
     ...mapState({
-      unread: state => state.user.unread
+      unread: state => state.user.unread,
+      url: state => state.url
     })
   },
   methods: {

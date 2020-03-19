@@ -208,6 +208,7 @@ export default {
       let data = res.data.data;
       if (res.data.state.type === "SUCCESS") {
         this.$message.success("成功");
+        console.log(data.userinfo)
         this.setUserInfo(data.userinfo);
       }
     },
@@ -230,6 +231,7 @@ export default {
       };
       if (this.form.companyimg == null) this.company.companyimg = [];
       // console.log(this.form);
+      this.form. m= "user",
       console.log(this.student);
     }
   },
