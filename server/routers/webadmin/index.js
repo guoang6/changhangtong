@@ -70,6 +70,9 @@ router.post('/webadmin/deleteactivity', service.deleteactivity)
 router.post('/webadmin/getwebjoinslist', service.getwebjoinslist)
 //joins列表
 router.post('/webadmin/joinslist', service.joinslist)
+
+
+
 //添加二手信息
 router.post('/webadmin/createoldstuff', service.createoldstuff)
 //获取二手信息

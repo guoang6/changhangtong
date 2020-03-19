@@ -68,47 +68,53 @@
         </el-form>
       </el-tab-pane>
       <el-tab-pane v-if="id" label="公告管理">
-        <el-button
-          type="text"
-          icon="el-icon-plus"
-          @click="$router.push('/admin/createactivity') "
-        >添加新的活动公告</el-button>
+        <el-button type="text" icon="el-icon-plus" @click="dialogFormVisible = true">添加新的活动公告</el-button>
+        <el-dialog title="发布公告 " :visible.sync="dialogFormVisible" width="30%">
+          <el-form :model="announcement" size="medium ">
+            <el-form-item label="公告名称">
+              <el-input autocomplete="off" v-model="announcement.announcement_name"></el-input>
+            </el-form-item>
+            <el-form-item label="公告类容">
+              <el-input
+                type="textarea"
+                autocomplete="off"
+                v-model="announcement.announcement_content"
+              ></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="setannouncement">确 定</el-button>
+          </div>
+        </el-dialog>
         <div class="block">
           <el-timeline>
-            <el-timeline-item timestamp="2018/4/12" placement="top">
+            <el-timeline-item
+              v-for="(item,id) in announcementlist"
+              :key="id"
+              :timestamp="item.announcement_createtime | dataFormat"
+              placement="top"
+            >
               <el-card>
-                <h4>关于活动取消的通知</h4>
-                <p>由于近几天天气问题，所以决定取消本次活动</p>
-              </el-card>
-            </el-timeline-item>
-            <el-timeline-item timestamp="2018/4/3" placement="top">
-              <el-card>
-                <h4>更新 Github 模板</h4>
-                <p>王小虎 提交于 2018/4/3 20:46</p>
-              </el-card>
-            </el-timeline-item>
-            <el-timeline-item timestamp="2018/4/2" placement="top">
-              <el-card>
-                <h4>更新 Github 模板</h4>
-                <p>王小虎 提交于 2018/4/2 20:46</p>
+                <h4>{{item.announcement_name}}</h4>
+                <p>{{item.announcement_content}}</p>
               </el-card>
             </el-timeline-item>
           </el-timeline>
         </div>
       </el-tab-pane>
       <el-tab-pane v-else label="公告管理">请先添加活动，活动添加成功后才可以添加活动公告</el-tab-pane>
-      <el-tab-pane  label="活动人员管理">
-           <el-table :data="tableData" border style="width: 100%">
-      <el-table-column fixed prop="createtime" label="报名日期">
-        <template slot-scope="scope">{{ scope.row.joins_createtime | dataFormat }}</template>
-      </el-table-column>
-      <el-table-column prop="username" label="账号"></el-table-column>
-      <el-table-column prop="nickname" label="昵称"></el-table-column>
-      <el-table-column prop="qq" label="qq"></el-table-column>
-      <el-table-column prop="phone" label="手机号"></el-table-column>
-    </el-table>
-        
-         </el-tab-pane>
+      <el-tab-pane label="活动人员管理">
+        <el-table :data="tableData" border style="width: 100%">
+          <el-table-column fixed prop="createtime" label="报名日期">
+            <template slot-scope="scope">{{ scope.row.joins_createtime | dataFormat }}</template>
+          </el-table-column>
+          <el-table-column prop="username" label="账号"></el-table-column>
+          <el-table-column prop="nickname" label="昵称"></el-table-column>
+          <el-table-column prop="qq" label="qq"></el-table-column>
+          <el-table-column prop="phone" label="手机号"></el-table-column>
+        </el-table>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -118,8 +124,17 @@ import { VueEditor } from "vue2-editor";
 export default {
   data() {
     return {
+      announcementlist: [],
+      dialogFormVisible: false,
+      tableData: [], //报名列表
       dialogImageUrl: [],
       dialogVisible: false,
+      announcement: {
+        content_id: "",
+        type: "activity",
+        announcement_content: "",
+        announcement_name: ""
+      },
       form: {
         activity_title: "",
         activity_impose: false,
@@ -175,6 +190,31 @@ export default {
         this.$router.push("/admin/createactivitylist");
       }
     },
+    //发布活动公告
+    async setannouncement() {
+     this.announcement. contentname=this.form.activity_title
+      this.announcement.content_id = this.id;
+      let res = await this.$axios.post(
+        "/admin/setannouncement",
+        this.qs.stringify(this.announcement)
+      );
+      if (res.data.state.type === "SUCCESS") {
+        this.$message.success("公告发布成功成功");
+        this.getannouncementlist();
+        this.dialogFormVisible = false;
+      }
+    },
+    //获取公告列表
+    async getannouncementlist() {
+      let res = await this.$axios.post(
+        "/admin/announcementlist",
+        this.qs.stringify({ content_id: this.id })
+      );
+
+      if (res.data.state.type === "SUCCESS") {
+        this.announcementlist = res.data.data;
+      }
+    },
 
     async getactivitydetails() {
       const res = await this.$axios.post(
@@ -184,8 +224,8 @@ export default {
       this.form = res.data.data;
       this.form.activity_impose = res.data.data.activity_impose === "true";
     },
-  async  getjoinslist(){
-         const res = await this.$axios.post(
+    async getjoinslist() {
+      const res = await this.$axios.post(
         "/webadmin/getwebjoinslist",
         this.qs.stringify({ id: this.id })
       );
@@ -194,7 +234,8 @@ export default {
   },
   created() {
     this.id && this.getactivitydetails();
-    this.id && this.getjoinslist()
+    this.id && this.getjoinslist();
+    this.id && this.getannouncementlist();
   }
 };
 </script>

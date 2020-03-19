@@ -50,6 +50,23 @@
               style="width:80px;margin:0 auto;display:block;"
             >参加</el-button>
 
+            <div class="block">
+              <h3>活动公告</h3>
+              <el-timeline>
+                <el-timeline-item
+                  v-for="(item,id) in announcementlist"
+                  :key="id"
+                  :timestamp="item.announcement_createtime | dataFormat"
+                  placement="top"
+                >
+                  <el-card>
+                    <h4>{{item.announcement_name}}</h4>
+                    <p>{{item.announcement_content}}</p>
+                  </el-card>
+                </el-timeline-item>
+              </el-timeline>
+            </div>
+
             <div class="like-btn">
               <form id="like-it-form" action="#" method="post">
                 <span class="like-it">66</span>
@@ -84,7 +101,7 @@ export default {
   },
   computed: {
     ...mapState({
-       contentuserid: state => state.contentuserid,
+      contentuserid: state => state.contentuserid,
       commentnum: state => state.commentnum
     })
   },
@@ -99,7 +116,8 @@ export default {
         to_userid: ""
       },
       dialogFormVisible: false, //弹框相关
-      content: {}
+      content: {},
+      announcementlist: {}
     };
   },
   props: {
@@ -140,10 +158,22 @@ export default {
       } else {
         this.$message.error("你已经报名参加了本项目");
       }
+    },
+    //获取公告列表
+    async getannouncementlist() {
+      let res = await this.$axios.post(
+        "/admin/announcementlist",
+        this.qs.stringify({ content_id: this.id })
+      );
+
+      if (res.data.state.type === "SUCCESS") {
+        this.announcementlist = res.data.data;
+      }
     }
   },
   created() {
     this.getactivitycontent();
+    this.getannouncementlist();
     this.setcontentid(this.id);
   }
 };

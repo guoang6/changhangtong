@@ -11,6 +11,25 @@ const e = {
     "type": 'ERROE',
     "msg": "操作失败"
 }
+//添加消息
+let setnotice = async function (user_from, user_to, nickname,content_id, content_name, action, router) {
+    let notice = {
+        notice_id: uuid.v1(),// 消息 id 
+        user_from: user_from,//发起者
+        nickname:nickname,
+        user_to: user_to,//接受者
+        content_name: content_name,
+        action: action,//动作
+        content_id: content_id,//内容id
+        router: router,//路由
+        createtime: Date.now() - 8 * 60 * 60,//时间
+        state: 0//状态
+    }
+    let sql = 'insert notice set ?'
+    const result = await query(sql, notice)
+    
+
+}
 //web获取求助列表
 exports.contentexamine = async (req, res) => {
     console.log(req.body)
@@ -149,3 +168,50 @@ exports.lablelist = async (req,res)=>{
    }
    res.send(data)
 }
+
+ //发布公告
+ exports.setannouncement = async (req,res)=>{
+    let time = Date.now() - 8 * 60 * 60
+
+    let info={
+        announcement_id:uuid.v1(),
+        announcement_name:req.body.announcement_name,
+        announcement_content:req.body.announcement_content,
+        announcement_type:req.body.type,
+        content_id:req.body.content_id,
+        announcement_createtime: time,
+    }
+    console.log(req.body)
+    let sql  = 'insert into announcement set ?'
+    const result = await query(sql, info)
+    let userlist,user_from="",action,router,nickname
+    if(req.body.type==='activity'){
+     userlist = await query('select user_id from joins where content_id=?', [req.body.content_id])
+     router='activitycontent'
+     user_from=req.user.user_id
+     nickname= req.user.nickname
+     action='发布新的活动通知'
+    }
+    for(let i=0;i<userlist.length;i++){
+        setnotice(user_from, userlist[i].user_id, nickname,req.body.content_id, req.body.contentname, action, router)
+    }
+      
+    data = {
+        state: s,
+        data:{}
+    }
+    res.send(data)
+ }
+ //获取公告
+ exports.announcementlist = async (req,res)=>{
+    let info=[req.body.content_id]
+    let sql  = `select * from announcement where content_id=? ORDER BY announcement_createtime DESC`
+    const result = await query(sql, info)
+    
+    data = {
+        state: s,
+        data: result,
+        
+    }
+    res.send(data)
+ }

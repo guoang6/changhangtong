@@ -24,7 +24,7 @@
           <el-form-item label="qq">
             <el-input v-model="form.qq"></el-input>
           </el-form-item>
-          <el-form-item label="邮箱">
+          <el-form-item label="电话">
             <el-input v-model="form.phone"></el-input>
           </el-form-item>
           <el-form-item label="个人简介">
