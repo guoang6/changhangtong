@@ -56,17 +56,20 @@ router.post('/webadmin/updateehelp', service.updateehelp)
 router.post('/webadmin/deletehelp', service.deletehelp)
 //创建活动
 router.post('/webadmin/createactivity', service.createactivity)
-//用户u获取求助列表
+//用户获取求助列表
 router.post('/webadmin/getwebactivitylist', service.getwebactivitylist)
+
 //活动详情
 router.post('/webadmin/getactivitydetails', service.getactivitydetails)
+
 //修改活动
 router.post('/webadmin/updateactivity', service.updateactivity)
 //删除活动
 router.post('/webadmin/deleteactivity', service.deleteactivity)
-//joins列表
+//被joins列表
 router.post('/webadmin/getwebjoinslist', service.getwebjoinslist)
-
+//joins列表
+router.post('/webadmin/joinslist', service.joinslist)
 //添加二手信息
 router.post('/webadmin/createoldstuff', service.createoldstuff)
 //获取二手信息

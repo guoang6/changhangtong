@@ -10,7 +10,8 @@ const state = {
   commentnum: '',
   contentid: '',
   contentname:'',
-  contentuserid:''
+  contentuserid:'',
+  url:'http://localhost:8080'
 }
 const getters = {}
 const mutations = {

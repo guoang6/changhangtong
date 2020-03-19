@@ -18,7 +18,7 @@
             <el-submenu index="1">
               <template slot="title">
                 <i class="el-icon-menu"></i>
-                <span>我发布的</span>
+                <span>内容管理</span>
               </template>
               <el-menu-item index="/admin/createhelplist">问答</el-menu-item>
               <el-menu-item index="/admin/createactivitylist">活动</el-menu-item>
