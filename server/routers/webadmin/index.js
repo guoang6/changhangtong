@@ -64,6 +64,9 @@ router.post('/webadmin/getactivitydetails', service.getactivitydetails)
 router.post('/webadmin/updateactivity', service.updateactivity)
 //删除活动
 router.post('/webadmin/deleteactivity', service.deleteactivity)
+//joins列表
+router.post('/webadmin/getwebjoinslist', service.getwebjoinslist)
+
 //添加二手信息
 router.post('/webadmin/createoldstuff', service.createoldstuff)
 //获取二手信息

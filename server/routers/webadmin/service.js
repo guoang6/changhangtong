@@ -34,6 +34,7 @@ exports.registered = async (req, res) => {
             nickname: '该用户还没没有设置昵称',//昵称
             avatar: 'http://127.0.0.1:3000/uplodes/moren',
             realstate: 1,
+            user_state:2,
             companystate:1
         }
         info.password = md5(`${info.password}${PED_SALT}`)
@@ -446,6 +447,29 @@ exports.deleteactivity = async (req, res) => {
         }
     }
     console.log(result)
+    res.send(data);
+}
+//获取jion列表
+exports.getwebjoinslist = async (req, res) => {
+    // console.log(req)
+   
+    let info = [req.body.id]
+    let sql = 'select * from joins,user where user.user_id=joins.user_id and joins.content_id=?'
+    const result = await query(sql, info)
+    if (result.length == 0) {
+        data = {
+            state: e,
+            data: {
+            }
+        }   //    数据库里面没找到配对的内容返回参数
+    } else {
+        data = {
+            state: s,
+            data: result,
+        }
+    }
+    console.log(data)
+    // console.log(result)
     res.send(data);
 }
 //添加二手

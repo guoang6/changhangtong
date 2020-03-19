@@ -69,6 +69,7 @@ const routes = [
           { path: 'updatehelp/:id', name: 'createhelp', component: createhelp ,props:true},
           { path: 'createhelplist', name: 'createhelplist', component: createhelplist },
           { path: 'updateactivity/:id', name: 'updateactivity', component: createactivity ,props:true},
+
           { path: 'createactivitylist', name: 'createactivitylist', component: createactivitylist },
           { path: 'createactivity', name: 'createactivity', component: createactivity },
           { path: 'createarticle', name: 'createarticle', component: createarticle },

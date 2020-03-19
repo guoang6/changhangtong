@@ -331,11 +331,14 @@ exports.setjoin = async (req, res) => {
     let onlyonesql = 'select * from joins where content_id=? and user_id=?'
     const resultonlyone = await query(onlyonesql,onlyone)
     if (resultonlyone.length == 0) {
+        let time = Date.now() - 8 * 60 * 60
         setnotice('', req.user.uid,'系统通知', req.body.content_id, req.body.contentname, '你已经成功参与', req.body.type)
+        setnotice('', req.body.to_userid,'系统通知', req.body.content_id, req.body.contentname, '有一位用户参加了你发布的内容', req.body.type)
         let info = {
             join_id: uuid.v1(),//id
             user_id: req.user.uid,//  用户di 
             type:req.body.type,
+            jions_createtime:time,
             name: req.body.name,//  名称 
             describe: req.body.describe,//  描述
             content_id: req.body.content_id

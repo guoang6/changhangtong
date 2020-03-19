@@ -82,6 +82,12 @@ export default {
     sidebar,
     comment
   },
+  computed: {
+    ...mapState({
+       contentuserid: state => state.contentuserid,
+      commentnum: state => state.commentnum
+    })
+  },
   data() {
     return {
       data: {
@@ -89,7 +95,8 @@ export default {
         name: "", //  名称
         describe: "", //  描述
         content_id: "",
-        activity_title:''
+        activity_title: "",
+        to_userid: ""
       },
       dialogFormVisible: false, //弹框相关
       content: {}
@@ -97,11 +104,6 @@ export default {
   },
   props: {
     id: {}
-  },
-  computed: {
-    ...mapState({
-      commentnum: state => state.commentnum
-    })
   },
   methods: {
     ...mapActions(["setcontentid", "setcontentinfo"]),
@@ -126,8 +128,8 @@ export default {
     },
     async setjoin() {
       this.data.type = this.$route.name; //类型
-    this.data.contentname=this.content.activity_title
-       
+      this.data.contentname = this.content.activity_title;
+      this.data.to_userid = this.contentuserid;
       this.data.content_id = this.content.activity_id;
       let res = await this.$axios.post(
         "/web/setjoin",
@@ -135,9 +137,8 @@ export default {
       );
       if (res.data.state.type === "SUCCESS") {
         this.$message.success("参加成功");
-      }else{
+      } else {
         this.$message.error("你已经报名参加了本项目");
-
       }
     }
   },

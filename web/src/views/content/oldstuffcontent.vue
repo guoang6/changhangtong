@@ -94,7 +94,8 @@ export default {
         name: "", //  名称
         describe: "", //  描述
         content_id: "",
-        contentname:''
+        contentname: "",
+        to_userid: ""
       },
       dialogFormVisible: false, //弹框相关
       content: {}
@@ -105,7 +106,8 @@ export default {
   },
   computed: {
     ...mapState({
-      commentnum: state => state.commentnum
+      commentnum: state => state.commentnum,
+      contentuserid: state => state.contentuserid
     })
   },
   methods: {
@@ -129,7 +131,9 @@ export default {
     },
     async setjoin() {
       this.data.type = this.$route.name; //类型
-    this.data.contentname=this.content.oldstuff_name
+      this.data.contentname = this.content.oldstuff_name;
+      this.data.to_userid = this.contentuserid;
+
       this.data.content_id = this.content.oldstuff_id;
       let res = await this.$axios.post(
         "/web/setjoin",

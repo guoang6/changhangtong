@@ -57,7 +57,7 @@
               >{{ scope.row.companystate |userstatefilter}}</el-button>
             </template>
           </el-table-column>
-          <el-table-column prop="state" label="账号状态">
+          <el-table-column prop="user_state" label="账号状态">
             <template slot-scope="scope">{{ scope.row.state |statefilter}}</template>
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="170">

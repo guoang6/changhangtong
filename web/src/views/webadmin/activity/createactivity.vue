@@ -97,7 +97,18 @@
         </div>
       </el-tab-pane>
       <el-tab-pane v-else label="公告管理">请先添加活动，活动添加成功后才可以添加活动公告</el-tab-pane>
-      <el-tab-pane  label="活动人员管理"> </el-tab-pane>
+      <el-tab-pane  label="活动人员管理">
+           <el-table :data="tableData" border style="width: 100%">
+      <el-table-column fixed prop="createtime" label="报名日期">
+        <template slot-scope="scope">{{ scope.row.joins_createtime | dataFormat }}</template>
+      </el-table-column>
+      <el-table-column prop="username" label="账号"></el-table-column>
+      <el-table-column prop="nickname" label="昵称"></el-table-column>
+      <el-table-column prop="qq" label="qq"></el-table-column>
+      <el-table-column prop="phone" label="手机号"></el-table-column>
+    </el-table>
+        
+         </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -172,10 +183,18 @@ export default {
       );
       this.form = res.data.data;
       this.form.activity_impose = res.data.data.activity_impose === "true";
+    },
+  async  getjoinslist(){
+         const res = await this.$axios.post(
+        "/webadmin/getwebjoinslist",
+        this.qs.stringify({ id: this.id })
+      );
+      this.tableData = res.data.data;
     }
   },
   created() {
     this.id && this.getactivitydetails();
+    this.id && this.getjoinslist()
   }
 };
 </script>
