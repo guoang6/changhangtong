@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import main from '../views/main.vue'
+import login from '../views/login.vue'
 import contentexamine from '../views/examine/contentexamine.vue'
 import useruser from '../views/user/useruser.vue'
 import managementlable from '../views/management/managementlable.vue'
@@ -12,6 +13,7 @@ import managementlable from '../views/management/managementlable.vue'
 Vue.use(VueRouter)
 
 const routes = [
+  {path: '/login',name: 'login',component: login },
   {path: '/',name: 'main',component: main ,children: [
     { path: '/contentexamine', name: 'contentexamine', component: contentexamine, },
     { path: '/useruser', name: 'useruser', component: useruser, },

@@ -5,7 +5,9 @@ import router from './router'
 import ElementUI from 'element-ui';
 
 import './assets/css/ali.css'
-
+//粒子特效   npm install vue-particles --save-dev 
+import VueParticles from 'vue-particles'  
+Vue.use(VueParticles)  
 //vuex
 import Vuex from 'vuex'
 import store from './store'

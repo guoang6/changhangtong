@@ -46,7 +46,6 @@
       "no-console": "off",
       "no-irregular-whitespace": "off",
       "no-debugger": "off"
-
     }
   },
   "browserslist": [
