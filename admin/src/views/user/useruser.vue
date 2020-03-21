@@ -99,9 +99,9 @@
             <el-button
               type="primary"
               v-if="changecompanystateuser.companystate!==3"
-              @click="changestate('companystate',3)"
+              @click="changestate('companystate',3,changecompanystateuser.user_id,changecompanystateuser.companyname)"
             >通过认证</el-button>
-            <el-button type="danger" @click="changestate('companystate',0)">不通过认证</el-button>
+            <el-button type="danger" @click="changestate('companystate',0,changecompanystateuser.user_id)">不通过认证</el-button>
             <el-button @click="dialogcompany = false">取消</el-button>
           </div>
         </el-dialog>
@@ -131,9 +131,9 @@
             <el-button
               type="primary"
               v-if="changerealstateuser.realstate!==3"
-              @click="changestate('realstate',3)"
+              @click="changestate('realstate',3,changerealstateuser.user_id)"
             >通过认证</el-button>
-            <el-button type="danger" @click="changestate('realstate',0)">不通过认证</el-button>
+            <el-button type="danger" @click="changestate('realstate',0,changerealstateuser.user_id)">不通过认证</el-button>
             <el-button @click="dialogstudent = false">取消</el-button>
           </div>
         </el-dialog>
@@ -206,11 +206,12 @@ export default {
     }
   },
   methods: {
-    async changestate(type, state) {
+    async changestate(type, state,userid,companyname) {
       let data = {
         type: type,
         state: state,
-        user_id: this.changerealstateuser.user_id
+        user_id: userid,
+        company_name:companyname
       };
       let res = await this.$axios.post(
         "/admin/changeuserstate",

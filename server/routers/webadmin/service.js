@@ -1,7 +1,7 @@
 const { query } = require('../../plugins/db.js')
 const { md5 } = require('../../plugins/md5.js')
 var uuid = require('node-uuid');//npm install node-uuid
-const { PED_SALT, EXPIRE_SIN, PEIVATE_KEY ,url} = require('../../plugins/config.js')
+const { PED_SALT, EXPIRE_SIN, PEIVATE_KEY, url } = require('../../plugins/config.js')
 var jwt = require('jsonwebtoken');
 let data
 const s = {
@@ -492,7 +492,6 @@ exports.getwebjoinslist = async (req, res) => {
 }
 //添加二手
 exports.createoldstuff = async (req, res) => {
-    // console.log(req)
     let time = Date.now() - 8 * 60 * 60
     let info = {
         oldstuff_id: uuid.v1(),   //二手id 
@@ -567,5 +566,34 @@ exports.getoldstuffdetails = async (req, res) => {
         }
     }
     console.log(result)
+    res.send(data);
+}
+//获取个人公司
+exports.getwebcompany = async (req, res) => {
+    // console.log(req)
+    let info = [req.user.uid,]
+    let company
+    let sql = 'select * from company where user_id=? '
+    const result = await query(sql, info)
+    if (result.length !== 0) company=result[0]
+        data = {
+            state: s,
+            data: company,
+        }
+    
+
+    console.log(data)
+    // console.log(result)
+    res.send(data);
+}
+//公司信息修改
+exports.changewebcompany = async (req, res) => {
+    let info = [req.body.company_name, req.body.company_scale,req.body.company_content,req.body.company_id, req.user.uid,]
+    let sql = 'update company set  company_name=?,company_scale=? ,company_content=? where company_id=? and user_id=? '
+    const result = await query(sql, info)
+        data = {
+            state: s,
+            data: {},
+        }
     res.send(data);
 }

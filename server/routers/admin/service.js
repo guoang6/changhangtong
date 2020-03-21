@@ -12,11 +12,11 @@ const e = {
     "msg": "操作失败"
 }
 //添加消息
-let setnotice = async function (user_from, user_to, nickname,content_id, content_name, action, router) {
+let setnotice = async function (user_from, user_to, nickname, content_id, content_name, action, router) {
     let notice = {
         notice_id: uuid.v1(),// 消息 id 
         user_from: user_from,//发起者
-        nickname:nickname,
+        nickname: nickname,
         user_to: user_to,//接受者
         content_name: content_name,
         action: action,//动作
@@ -27,7 +27,7 @@ let setnotice = async function (user_from, user_to, nickname,content_id, content
     }
     let sql = 'insert notice set ?'
     const result = await query(sql, notice)
-    
+
 
 }
 //web获取求助列表
@@ -42,11 +42,11 @@ exports.contentexamine = async (req, res) => {
     let info = [pagesize, page]
     let sql = 'select * from help,user where help.user_id=user.user_id limit ? offset ?'
     const result = await query(sql, info)
-        data = {
-            state: s,
-            data: result,
-            count: count
-        }
+    data = {
+        state: s,
+        data: result,
+        count: count
+    }
     // console.log(data)
     // console.log(result)
     res.send(data);
@@ -129,89 +129,111 @@ exports.getuserlist = async (req, res) => {
     }
     res.send(data)
 }
-exports.changeuserstate = async (req,res)=>{
-   let info=[
-    req.body.state,
-    req.body.user_id
-   ]
-   let sql  = `update user set ${req.body.type}=? where user_id=?`
-   const result = await query(sql, info)
-   data = {
-       state: s,
-       data:{}
-   }
-   res.send(data)
+exports.changeuserstate = async (req, res) => {
+    console.log(req.body)
+
+    let info = [
+        req.body.state,
+        req.body.user_id
+    ]
+    let sql = `update user set ${req.body.type}=? where user_id=?`
+    const result = await query(sql, info)
+    if (req.body.type === 'companystate' && req.body.state == 3) {
+        const resultonly = await query('select * from company where user_id=?', [req.body.user_id])
+        if (resultonly.length == 0) {
+            let time = Date.now() - 8 * 60 * 60
+            let info = {
+                company_id: uuid.v1(),   //公司idid 
+                user_id: req.body.user_id,//  用户di 
+                company_name: req.body.company_name,// 公司名称 
+                company_createtime: time,//创建时间
+                company_updatetime: time,//更新时间
+                company_favour_num: 0,//点赞数    
+                company_read_num: 0,//浏览量
+                company_state: 0, //状态  
+                company_istop: 0,//是否置顶
+                company_ispublic: 0,//是否显示
+            }
+            let sql = 'insert into company set ?'
+            const result = await query(sql, info)
+        }
+    }
+    data = {
+        state: s,
+        data: {}
+    }
+    res.send(data)
 }
 //分类列表
-exports.lablelist = async (req,res)=>{
-    let info=[]
-    let sql  = `select * from lable`
+exports.lablelist = async (req, res) => {
+    let info = []
+    let sql = `select * from lable`
     const result = await query(sql, info)
     data = {
         state: s,
         data: result,
-        
+
     }
     res.send(data)
- }
- //修改分类
- exports.changelable = async (req,res)=>{
-   let info=[
-    req.body.lable,
-    req.body.lable_id
-   ]
-   let sql  = `update lable set lable=? where lable_id =?`
-   const result = await query(sql, info)
-   data = {
-       state: s,
-       data:{}
-   }
-   res.send(data)
+}
+//修改分类
+exports.changelable = async (req, res) => {
+    let info = [
+        req.body.lable,
+        req.body.lable_id
+    ]
+    let sql = `update lable set lable=? where lable_id =?`
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: {}
+    }
+    res.send(data)
 }
 
- //发布公告
- exports.setannouncement = async (req,res)=>{
+//发布公告
+exports.setannouncement = async (req, res) => {
     let time = Date.now() - 8 * 60 * 60
 
-    let info={
-        announcement_id:uuid.v1(),
-        announcement_name:req.body.announcement_name,
-        announcement_content:req.body.announcement_content,
-        announcement_type:req.body.type,
-        content_id:req.body.content_id,
+    let info = {
+        announcement_id: uuid.v1(),
+        announcement_name: req.body.announcement_name,
+        announcement_content: req.body.announcement_content,
+        announcement_type: req.body.type,
+        content_id: req.body.content_id,
         announcement_createtime: time,
     }
     console.log(req.body)
-    let sql  = 'insert into announcement set ?'
+    let sql = 'insert into announcement set ?'
     const result = await query(sql, info)
-    let userlist,user_from="",action,router,nickname
-    if(req.body.type==='activity'){
-     userlist = await query('select user_id from joins where content_id=?', [req.body.content_id])
-     router='activitycontent'
-     user_from=req.user.user_id
-     nickname= req.user.nickname
-     action='发布新的活动通知'
+    let userlist, user_from = "", action, router, nickname
+    if (req.body.type === 'activity') {
+        userlist = await query('select user_id from joins where content_id=?', [req.body.content_id])
+        router = 'activitycontent'
+        user_from = req.user.user_id
+        nickname = req.user.nickname
+        action = '发布新的活动通知'
     }
-    for(let i=0;i<userlist.length;i++){
-        setnotice(user_from, userlist[i].user_id, nickname,req.body.content_id, req.body.contentname, action, router)
+    for (let i = 0; i < userlist.length; i++) {
+        setnotice(user_from, userlist[i].user_id, nickname, req.body.content_id, req.body.contentname, action, router)
     }
-      
+
     data = {
         state: s,
-        data:{}
+        data: {}
     }
     res.send(data)
- }
- //获取公告
- exports.announcementlist = async (req,res)=>{
-    let info=[req.body.content_id]
-    let sql  = `select * from announcement where content_id=? ORDER BY announcement_createtime DESC`
+}
+//获取公告
+exports.announcementlist = async (req, res) => {
+    let info = [req.body.content_id]
+    let sql = `select * from announcement where content_id=? ORDER BY announcement_createtime DESC`
     const result = await query(sql, info)
-    
+
     data = {
         state: s,
         data: result,
-        
+
     }
     res.send(data)
- }
+}

@@ -77,6 +77,13 @@ router.post('/webadmin/joinslist', service.joinslist)
 router.post('/webadmin/createoldstuff', service.createoldstuff)
 //获取二手信息
 router.post('/webadmin/getweboldstufflist', service.getweboldstufflist)
+//获取个人公司详情
+router.post('/webadmin/getwebcompany', service.getwebcompany)
+//修改公司信息
+router.post('/webadmin/changewebcompany', service.changewebcompany)
+
+
+
 
 
 

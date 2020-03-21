@@ -6,22 +6,22 @@
       <el-tab-pane label="公司信息">
         <el-form ref="form" :model="form" label-width="80px" size="medium ">
           <el-form-item label="公司名称">
-            <el-input v-model="form.name"></el-input>
+            <el-input v-model="form.company_name" disabled></el-input>
           </el-form-item>
 
           <el-form-item label="公司规模">
-            <el-input v-model="form.num"></el-input>
+            <el-input v-model="form.company_scale"></el-input>
           </el-form-item>
 
           <el-form-item label="公司简介">
             <vue-editor
               useCustomImageHandler
               @image-added="handleImageAdded"
-              v-model="form.content"
+              v-model="form.company_content"
             ></vue-editor>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">确定</el-button>
+            <el-button type="primary" @click="changewebcompany">确定</el-button>
           </el-form-item>
         </el-form>
       </el-tab-pane>
@@ -43,9 +43,9 @@ export default {
   data() {
     return {
       form: {
-        name: "",
-        num: 0,
-        content: ""
+       company_name: "",
+        company_scale: 0,
+        company_content: ""
       }
     };
   },
@@ -53,9 +53,29 @@ export default {
     VueEditor
   },
   methods: {
-    onSubmit() {
-      console.log("submit!");
-    }
+   async getwebcompany(){
+        let res = await this.$axios.post(
+        "/webadmin/getwebcompany",
+      );
+
+      if (res.data.state.type === "SUCCESS") {
+        this.form = res.data.data;
+      }
+    },
+   async changewebcompany() {
+      let res = await this.$axios.post(
+        "/webadmin/changewebcompany",
+        this.qs.stringify(this.form)
+      );
+
+      if (res.data.state.type === "SUCCESS") {
+        this.$message.success("公司信息修改成功");
+        
+      }
+    },
+  },
+  created(){
+     this.getwebcompany()
   }
 };
 </script>
