@@ -652,3 +652,29 @@ exports.deletejob = async (req, res) => {
     console.log(result)
     res.send(data)
 }
+//添加文章
+exports.createarticle = async (req, res) => {
+    let time = Date.now() - 8 * 60 * 60
+    let info = {
+        article_id: uuid.v1(),   //id 
+        user_id: req.user.uid,//  用户di 
+        article_title: req.body.article_title,// 标题 
+        article_introduction: req.body.article_introduction,// 简介
+        article_lable:req.body.article_lable,//类型
+        article_content: req.body.article_content,//内容
+        article_createtime: time,//创建时间
+        article_updatetime: time,//更新时间
+        article_favour_num: 0,//点赞数    
+        article_read_num: 0,//浏览量
+        article_state: 0, //状态  
+        article_istop: 0,//是否置顶
+        article_ispublic: 0,//是否显示
+    }
+    let sql = 'insert article  set ?'
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: {}
+    }
+    res.send(data)
+}

@@ -88,7 +88,8 @@ router.post('/webadmin/changewebcompany', service.changewebcompany)
 router.post('/webadmin/createjob', service.createjob)
 //删除工作
 router.post('/webadmin/deletejob', service.deletejob)
-
+//添加文章
+router.post('/webadmin/createarticle', service.createarticle)
 
 
 

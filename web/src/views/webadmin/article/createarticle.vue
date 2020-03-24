@@ -1,19 +1,19 @@
 <template>
   <div class="crestehelp">
-    <h2>{{id?'编辑':'创建' }}信息</h2>
-    <el-form ref="form" :model="form" label-width="80px" size="medium ">
+    <h2>{{id?'编辑':'创建' }}文章/新闻</h2>
+    <el-form ref="form" :model="article" label-width="80px" size="medium ">
       <el-form-item label="标题">
-        <el-input v-model="form.help_title" useCustomImageHandler @image-added="handleImageAdded"></el-input>
+        <el-input v-model="article.article_title" useCustomImageHandler @image-added="handleImageAdded"></el-input>
       </el-form-item>
       <el-form-item label="简介">
-        <el-input type="textarea" :rows="2" placeholder="请输入文章简介" v-model="textarea"></el-input>
+        <el-input type="textarea" :rows="2" placeholder="请输入文章简介" v-model="article.article_introduction"></el-input>
       </el-form-item>
-      <el-form-item label="标签">
+      <el-form-item label="分类">
         <el-radio
           v-for="(item,id) in lable"
           :key="id"
           :class="'page_span_'+id "
-          v-model="form.help_lable"
+          v-model="article.article_lable"
           :label="item"
         >{{item}}</el-radio>
       </el-form-item>
@@ -21,7 +21,7 @@
         <vue-editor
           useCustomImageHandler
           @image-added="handleImageAdded"
-          v-model="form.help_content"
+          v-model="article.article_content"
         ></vue-editor>
       </el-form-item>
       <el-form-item>
@@ -39,11 +39,7 @@ export default {
     return {
       lable: ["学习", "生活", "娱乐", "其他"],
       dialogVisible: false,
-      form: {
-        help_title: "",
-        help_lable: "",
-        help_content: ""
-      }
+      article: []
     };
   },
   props: {
@@ -68,24 +64,24 @@ export default {
       if (this.id) {
         this.form.id = this.id;
         res = await this.$axios.post(
-          "/webadmin/updateehelp",
+          "/webadmin/updatearticle",
           this.qs.stringify(this.form)
         );
       } else {
         res = await this.$axios.post(
-          "/webadmin/createhelp",
-          this.qs.stringify(this.form)
+          "/webadmin/createarticle",
+          this.qs.stringify(this.article)
         );
       }
       let data = res.data.data;
       if (res.data.state.type === "SUCCESS") {
         this.$message.success("成功");
-        this.$router.push("/admin/createhelplist");
+        this.$router.push("/admin/articlelist");
       }
     },
-    async gethelpdetails() {
+    async getarticledetails() {
       const res = await this.$axios.post(
-        "/webadmin/gethelpdetails",
+        "/webadmin/getarticledetails",
         this.qs.stringify({ id: this.id })
       );
       let data = res.data.data;
@@ -96,7 +92,7 @@ export default {
     }
   },
   created() {
-    this.id && this.gethelpdetails();
+    this.id && this.getarticledetails();
   }
 };
 </script>
