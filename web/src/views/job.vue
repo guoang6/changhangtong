@@ -1,6 +1,6 @@
 <template>
   <div class="help">
-<div v-title data-title="昌航通 |  工作"></div>
+    <div v-title data-title="昌航通 | 问答"></div>
 
     <!-- Start of Page Container -->
     <div class="page-container">
@@ -8,36 +8,72 @@
         <div class="row">
           <!-- start of page content -->
           <div class="span8 page-content">
+            <div class="page-header">
+              <h3>
+                岗位
+                <small>{{smallttle}}</small>
+              </h3>
+            </div>
             <!-- Basic Home Page Template -->
+            <ul class="tabs-nav">
+              <li
+                :class="pagelistquery.lable===''&&pagelistquery.tag===''?'active':''"
+                @click="changelable('')"
+              >
+                <a>全部</a>
+              </li>
+              <li
+                v-for="(lable,id) in lables"
+                :key="id"
+                :class="pagelistquery.lable===lable?'active':''"
+                @click="changelable(lable)"
+              >
+                <a>{{lable}}</a>
+              </li>
+              <li v-if="pagelistquery.tag!=''" class="active" @click="changelable('')">
+                <a>{{this.pagelistquery.tag}}</a>
+              </li>
+            </ul>
             <section class="widget">
-              <h3 class="title">问答区</h3>
               <ul class="articles">
-                <li class="article-entry standard" 
-                v-for="(item,id) in tableData"
-            :key="id">
+                <li
+                  class="article-entry standard"
+                  v-for="(item,id) in tableData"
+                  :key="id"
+                  style="position:relative"
+                >
                   <h4>
-                    <a>{{item.help_title}}</a>
+                    <router-link :to="'/helpcontent/'+item.help_id">{{item.job_name}}</router-link>
                   </h4>
+                  <h4
+                    style="  position: absolute;right: 40px; top: 2px; color:red"
+                  >{{item.job_salary}}</h4>
                   <span class="article-meta">
-                    {{item.createtime}}
+                    <a class="iconfont">&#xe619;</a>
+                    {{item.job_createtime| dataFormat}}
                     <a
-                      href="#"
-                      title="View all posts in Server &amp; Database"
-                    >Server &amp; Database</a>
+                      class="iconfont"
+                      style="margin-left:50px"
+                    >&#xe688;</a>
+                    {{item.company_name}}
                   </span>
-                  <span class="like-count">66</span>
                 </li>
               </ul>
             </section>
             <el-pagination
               @current-change="handleCurrentChange"
-    layout="prev, pager, next"
-    :total="pagelistquery.total">
-  </el-pagination>
+              layout="prev, pager, next"
+              :total="pagelistquery.total"
+            ></el-pagination>
           </div>
           <!-- end of page content -->
           <!-- start of sidebar -->
-          <sidebar />
+          <aside class="span4 page-sidebar">
+            <section class="widget">
+              <company />
+            </section>
+          </aside>
+
           <!-- end of sidebar -->
         </div>
       </div>
@@ -48,33 +84,49 @@
 
 
 <script>
-import sidebar from "@/components/sidebar.vue";
+import company from "@/components/company.vue";
 export default {
+  name: "help",
   components: {
-    sidebar
+    company
   },
   data() {
     return {
-      pagelistquery:{
-        total:100,
-        page:1
-    },
+      smallttle: "",
+      lables: ["学习", "生活", "娱乐", "其他"],
+      pagelistquery: {
+        lable: "",
+        tag: "",
+        total: 0,
+        pagesize: 10,
+        page: 1
+      },
       tableData: {}
     };
   },
+  props: {
+    tag: {}
+  },
   methods: {
-      handleCurrentChange(val) {
+    changelable(lable) {
+      this.pagelistquery.lable = lable;
+      this.smallttle = this.pagelistquery.lable;
+      this.pagelistquery.tag = "";
+      this.getjoblist();
+    },
+    changetag() {
+      this.pagelistquery.tag = this.tag;
+      this.smallttle = this.tag;
+    },
+    handleCurrentChange(val) {
       this.pagelistquery.page = val;
-      // this.gethelplist();
+      this.getjoblist();
       console.log(`当前页: ${val}`);
     },
-    async gethelplist() {
-      let data = {
-        page: this.pagelistquery.page,
-      };
+    async getjoblist() {
       let res = await this.$axios.post(
-        "/webadmin/webgetwebhelplist",
-        this.qs.stringify(data)
+        "/web/webgetjoblist",
+        this.qs.stringify(this.pagelistquery)
       );
       if (res.data.state.type === "SUCCESS") {
         this.tableData = res.data.data;
@@ -84,7 +136,8 @@ export default {
     }
   },
   created() {
-    this.gethelplist();
+    this.tag && this.changetag();
+    this.getjoblist();
   }
 };
 </script>

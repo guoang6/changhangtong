@@ -576,9 +576,13 @@ exports.getwebcompany = async (req, res) => {
     let sql = 'select * from company where user_id=? '
     const result = await query(sql, info)
     if (result.length !== 0) company=result[0]
+    let sqljob = 'select * from job where user_id=? '
+    const resultjob = await query(sqljob, info)
         data = {
             state: s,
-            data: company,
+            data:{company:company,
+                   joblist:resultjob,
+            } ,
         }
     
 
@@ -593,7 +597,58 @@ exports.changewebcompany = async (req, res) => {
     const result = await query(sql, info)
         data = {
             state: s,
-            data: {},
+            data: {
+                
+            },
         }
     res.send(data);
+}
+//添加工作
+exports.createjob = async (req, res) => {
+    let time = Date.now() - 8 * 60 * 60
+    let info = {
+        job_id: uuid.v1(),   //id 
+        user_id: req.user.uid,//  用户di 
+        company_id:req.body.company_id,
+        job_name: req.body.job_name,// 岗位铭恒   
+        job_salary: req.body.job_salary,// 薪资
+        job_num: req.body.job_num,//人数 
+        job_lable:req.body.job_lable,//类型
+        job_content: req.body.job_content,//内容  
+        job_createtime: time,//创建时间
+        job_updatetime: time,//更新时间
+        job_favour_num: 0,//点赞数    
+        job_read_num: 0,//浏览量
+        job_state: 0, //状态  
+        job_istop: 0,//是否置顶
+        job_ispublic: 0,//是否显示
+    }
+    let sql = 'insert job  set ?'
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: {}
+    }
+    res.send(data)
+}
+//删除工作
+exports.deletejob = async (req, res) => {
+    let info = [req.body.job_id, req.user.uid]
+    let sql = 'delete  from job where job_id=? and user_id=?'
+    const result = await query(sql, info)
+    if (result.length == 0) {
+        data = {
+            state: e,
+            data: {
+            }
+        }
+    } else {
+        data = {
+            state: s,
+            data: {
+            }
+        }
+    }
+    console.log(result)
+    res.send(data)
 }

@@ -33,7 +33,9 @@ let setnotice = async function (user_from, user_to, nickname,content_id, content
 exports.webgetwebhelplist = async (req, res) => {
     console.log(req.body)
 
-    let sql1 = ' select count(*) as count from help '
+    let sql1 = ' select count(*) as count from help where 1=1 '
+    if (req.body.lable != '') sql1 = `${sql1} and help_lable='${req.body.lable}'`//有分类时
+    if (req.body.tag != '') sql1 = `${sql1} and help_tag like '%${req.body.tag}%'`//标签时
     let info1 = []
     const counts = await query(sql1, info1)
     let count = counts[0].count
@@ -180,7 +182,7 @@ exports.webgetwebactivitylist = async (req, res) => {
     // console.log(result)
     res.send(data);
 }
-//求助和活动详情
+//活动详情
 exports.getactivitycontent = async (req, res) => {
     let info = [req.body.id]
     let sql = 'select * from activity,user where user.user_id=activity.user_id and activity.activity_id=?'
@@ -267,8 +269,53 @@ exports.getoldstuffcontent = async (req, res) => {
     console.log(result)
     res.send(data);
 }
+//web获取公司列表
+exports.webgetcompanylist = async (req, res) => {
+    console.log(req.body.lable)
+    let sql1 = ' select count(*) as count from company '
+    let info1 = []
+    const counts = await query(sql1, info1)
+    let count = counts[0].count
+    let pagesize = req.body.pagesize * 1
+    let page = (req.body.page - 1) * pagesize
+    let info = [pagesize, page]
+    let sql = 'select company_id,company_name from company  limit ? offset ?'
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: result,
+        count: count
+    }
+    // console.log(data)
+    // console.log(result)
+    res.send(data);
+}
+//web获取工作列表
+exports.webgetjoblist = async (req, res) => {
+    let sql1 = ' select count(*) as count from job where 1=1'
+    if (req.body.lable != '') sql1 = `${sql1} and job_lable='${req.body.lable}'`//有分类时
 
+    let info1 = []
+    const counts = await query(sql1, info1)
+    let count = counts[0].count
+    let pagesize = req.body.pagesize * 1
+    let page = (req.body.page - 1) * pagesize
+    let info = [pagesize, page]
+    let sql = 'select job.job_id,job.job_name,job.job_createtime,job.job_salary,company.company_name'+
+    ' from job,company where job.company_id=company.company_id '
+    if (req.body.lable != '') sql = `${sql} and job.job_lable='${req.body.lable}'`//有分类时
+    sql = `${sql} limit ? offset ?`
+    const result = await query(sql, info)
 
+        data = {
+            state: s,
+            data: result,
+            count: count
+        }
+    console.log(data)
+    // console.log(result)
+    res.send(data);
+}
 //获取消息
 exports.getnotice = async (req, res) => {
     let sqlnoticenum = ' select count(*) as count from notice where user_to=? and state=0'

@@ -14,6 +14,11 @@ router.post('/web/getreply', service.getreply)
 router.post('/web/webgetwebactivitylist', service.webgetwebactivitylist)
 
 router.post('/web/webgetweboldstufflist', service.webgetweboldstufflist)
+//岗位列表
+router.post('/web/webgetjoblist', service.webgetjoblist)
+//公司列表
+
+router.post('/web/webgetcompanylist', service.webgetcompanylist)
 
 router.post('/web/getoldstuffcontent', service.getoldstuffcontent)
 router.post('/web/getactivitycontent', service.getactivitycontent)

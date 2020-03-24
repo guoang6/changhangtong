@@ -34,5 +34,7 @@ app.use(webrouter)
 app.use(adminrouter)
 
 app.listen(localPort, () => {
-    console.log('启动成功')
+  let fs =require("fs");
+  let data = fs.readFileSync('console.txt');
+console.log(data.toString());
 })
