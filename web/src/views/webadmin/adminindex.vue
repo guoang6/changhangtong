@@ -24,7 +24,7 @@
               <el-menu-item index="/admin/createactivitylist">活动</el-menu-item>
               <el-menu-item index="/admin/createoldstufflist">二手</el-menu-item>
               <el-menu-item index="/admin/company">招聘</el-menu-item>
-              <el-menu-item index="/admin/createarticle">文章/新闻</el-menu-item>
+              <el-menu-item index="/admin/articlelist">文章/新闻</el-menu-item>
             </el-submenu>
  <el-menu-item index="/admin/notice">
               <i class="el-icon-bell"></i>

@@ -90,6 +90,10 @@ router.post('/webadmin/createjob', service.createjob)
 router.post('/webadmin/deletejob', service.deletejob)
 //添加文章
 router.post('/webadmin/createarticle', service.createarticle)
+//文章列表
+router.post('/webadmin/articlelist', service.articlelist)
+
+
 
 
 

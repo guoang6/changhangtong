@@ -28,6 +28,8 @@ import createactivity from "../views/webadmin/activity/createactivity.vue"
 import createactivitylist from "../views/webadmin/activity/createactivitylist.vue"
 import company from "../views/webadmin/job/company.vue"
 import createarticle from "../views/webadmin/article/createarticle.vue"
+import articlelist from "../views/webadmin/article/articlelist.vue"
+
 import createoldstuff from "../views/webadmin/oldstuff/createoldstuff.vue"
 import createoldstufflist from "../views/webadmin/oldstuff/createoldstufflist.vue"
 
@@ -43,19 +45,12 @@ const routes = [
       { path: '', name: 'home', component: home, meta:{ispublic:true} },
       { path: 'help', name: 'help', component: help, meta:{ispublic:true}},
       { path: 'help/:tag', name: 'help', component: help,props:true ,meta:{ispublic:true }},
-
-
       { path: 'helpcontent/:id', name: 'helpcontent', component: helpcontent,props:true, meta:{ispublic:true}},
       { path: 'oldstuffcontent/:id', name: 'oldstuffcontent', component: oldstuffcontent,props:true, meta:{ispublic:true}},
-      
       { path: 'activitycontent/:id', name: 'activitycontent', component: activitycontent,props:true, meta:{ispublic:true}},
-
-
       { path: 'news', name: 'news', component: news, meta:{ispublic:true}},
       { path: 'job', name: 'job', component: job, meta:{ispublic:true}},
       { path: 'oldstuff', name: 'oldstuff', component: oldstuff, meta:{ispublic:true}},
-          
-      
       { path: 'activity', name: 'activity', component: activity, meta:{ispublic:true}},
       {
         path: 'admin', name: 'adminindex',  component: adminindex, children: [
@@ -65,17 +60,16 @@ const routes = [
           { path: 'createhelp', name: 'createhelp', component: createhelp },
           // { path: 'list', name: 'list', component: list },
           { path: 'notice', name: 'notice', component: notice },
-          
           { path: 'updatehelp/:id', name: 'createhelp', component: createhelp ,props:true},
           { path: 'createhelplist', name: 'createhelplist', component: createhelplist },
           { path: 'updateactivity/:id', name: 'updateactivity', component: createactivity ,props:true},
-
           { path: 'createactivitylist', name: 'createactivitylist', component: createactivitylist },
           { path: 'createactivity', name: 'createactivity', component: createactivity },
           { path: 'createarticle', name: 'createarticle', component: createarticle },
+          { path: 'updataarticle/:id', name: 'updataarticle', component: createarticle ,props:true},
+          { path: 'articlelist', name: 'articlelist', component: articlelist },
           { path: 'createoldstuff', name: 'createoldstuff', component: createoldstuff },
           { path: 'createoldstufflist', name: 'createoldstufflist', component: createoldstufflist },
-          
           { path: 'company', name: 'company', component: company },
         ]
       }

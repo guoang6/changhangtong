@@ -662,6 +662,7 @@ exports.createarticle = async (req, res) => {
         article_introduction: req.body.article_introduction,// 简介
         article_lable:req.body.article_lable,//类型
         article_content: req.body.article_content,//内容
+
         article_createtime: time,//创建时间
         article_updatetime: time,//更新时间
         article_favour_num: 0,//点赞数    
@@ -677,4 +678,25 @@ exports.createarticle = async (req, res) => {
         data: {}
     }
     res.send(data)
+}
+//获取文章列表
+exports.articlelist = async (req, res) => {
+    // console.log(req)
+    let sql1 = ' select count(*) as count from article where user_id=?'
+    let info1 = [req.user.uid]
+    const counts = await query(sql1, info1)
+    let count = counts[0].count
+    let page = (req.body.page - 1) * req.body.pagesize
+    let pagesize = req.body.pagesize * 1
+    let info = [req.user.uid, pagesize, page]
+    let sql = 'select * from article where user_id=? limit ? offset ?'
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: result,
+        count: count
+    }
+    console.log(data)
+    // console.log(result)
+    res.send(data);
 }
