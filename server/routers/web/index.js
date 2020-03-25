@@ -19,10 +19,8 @@ router.post('/web/webgetjoblist', service.webgetjoblist)
 
 //文章列表
 router.post('/web/getarticlelist', service.getarticlelist)
-
 //公司列表
 router.post('/web/webgetcompanylist', service.webgetcompanylist)
-
 router.post('/web/getoldstuffcontent', service.getoldstuffcontent)
 router.post('/web/getactivitycontent', service.getactivitycontent)
 router.post('/web/setjoin', service.setjoin)

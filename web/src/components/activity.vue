@@ -1,35 +1,76 @@
 <template>
   <div class="activity">
-            <div class="row-fluid top-cats">
-        <section class="widget">
-          <h3 class="title">活动</h3>
+    <div class="row-fluid top-cats">
+      <section class="widget">
+        <router-link
+          to="/activity"
+          tag="div"
+          class="page-header"
+          style="position:relative;cursor:pointer"
+        >
+          <h3>校内活动</h3>
+          <h4 style="  position: absolute;right: 10px;top: 4px;">更多></h4>
+        </router-link>
         <ul class="articles">
-          <li class="article-entry standard">
-            <h4>
-              <a >打球</a>
-            </h4>
-            <span class="article-meta">
-             <a class="iconfont">&#xe619;</a> 2020-2-5 20：20
-              <a class="iconfont" style="margin-left:50px">&#xe609;</a>体育馆
-            </span>
-         <span class="like-count">  <a class="iconfont" style="color:red">&#xe647;</a>15</span>
-          </li>
-         
+          <ul class="articles">
+            <li class="article-entry standard" v-for="(activity,id) in tableData" :key="id">
+              <h4>
+                <router-link
+                  :to="'/activitycontent/'+activity.activity_id"
+                >{{activity.activity_title}}</router-link>
+              </h4>
+              <span class="article-meta">
+                <a class="iconfont">&#xe619;</a>
+                {{activity.createtime|dataFormat}}
+                <a
+                  class="iconfont"
+                  style="margin-left:50px"
+                >&#xe609;</a>
+                {{activity.activity_locale}}
+              </span>
+              <span class="like-count">
+                <a class="iconfont" style="color:red">&#xe647;</a>
+                {{activity.activity_num}}
+              </span>
+            </li>
+          </ul>
         </ul>
       </section>
-            </div>
+    </div>
   </div>
 </template>
-
 <script>
 export default {
-  name: "activity",
-  props: {
-    msg: String
+  data() {
+    return {
+      smallttle: "",
+      pagelistquery: {
+        lable: "",
+        total: 0,
+        pagesize: 5,
+        page: 1
+      },
+      tableData: {}
+    };
+  },
+  methods: {
+    async getactivitylist() {
+      let res = await this.$axios.post(
+        "/web/webgetwebactivitylist",
+        this.qs.stringify(this.pagelistquery)
+      );
+      if (res.data.state.type === "SUCCESS") {
+        this.tableData = res.data.data;
+        console.log(res.data);
+        this.pagelistquery.total = res.data.count;
+      }
+    }
+  },
+  created() {
+    this.getactivitylist();
   }
 };
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 </style>

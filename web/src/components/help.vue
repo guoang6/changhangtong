@@ -1,7 +1,11 @@
 <template>
   <div class="hoothelp">
+    <div class="row">
     <section class="widget">
-        <h3 class="title">问答</h3>
+      <router-link to="/help" tag="div"  class="page-header" style="position:relative;cursor:pointer">
+          <h3 >讨论/问答</h3>
+          <h4 style="  position: absolute;right: 100px;top: 4px;">更多></h4>
+        </router-link>
  <ul class="articles">
                 <li class="article-entry standard" v-for="(item,id) in tableData" :key="id">
                   <h4>
@@ -23,6 +27,7 @@
                 </li>
               </ul>
       </section>
+  </div>
   </div>
 </template>
 
