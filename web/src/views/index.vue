@@ -1,5 +1,6 @@
 <template>
   <div class="index">
+
     <!-- Start of Header -->
     <div class="header-wrapper">
       <header>
@@ -135,6 +136,10 @@
     <foot />
     <!-- end of foot -->
     <!-- 弹窗组件 -->
+
+
+
+
     <div class="login" v-if="isclose">
       <div id="mask"></div>
       <div id="loginBox">
@@ -443,5 +448,6 @@ export default {
   top: 10px;
   cursor: pointer;
 }
+
 </style>
 

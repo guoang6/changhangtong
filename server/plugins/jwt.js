@@ -15,5 +15,6 @@ module.exports = jwt({
         '/web/getcomment',
         '/web/getreply',
         '/admin/contentexamine',
+        '/web/getarticlelist'
     ]
 })

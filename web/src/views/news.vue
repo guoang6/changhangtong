@@ -1,32 +1,52 @@
+ 
 <template>
-  <div class="news">
-<div v-title data-title="昌航通 | 新闻/新闻"></div>
-  
-       <!-- Start of Page Container -->
+  <div  class="help">
+<div v-title data-title="昌航通 | 问答"></div>
+
+    <!-- Start of Page Container -->
     <div class="page-container">
       <div class="container">
         <div class="row">
           <!-- start of page content -->
           <div class="span8 page-content">
-            <!-- Basic Home Page Template -->              
-<div class="row home-category-list-area">
-              <div class="span8">
-                <h2>文章与新闻</h2>
-              </div>
+            <div class="page-header">
+              <h3>
+                文章/新闻
+                <small>{{smallttle}}</small>
+              </h3>
             </div>
-        <article class="format-standard type-post hentry clearfix">
+            <!-- Basic Home Page Template -->
+            <ul class="tabs-nav">
+              <li :class="pagelistquery.lable===''&&pagelistquery.tag===''?'active':''" @click="changelable('')">
+                <a>全部</a>
+              </li>
+              <li
+                v-for="(lable,id) in lables"
+                :key="id"
+                :class="pagelistquery.lable===lable?'active':''"
+                @click="changelable(lable)"
+              >
+                <a>{{lable}}</a>
+              </li>
+               <li v-if="pagelistquery.tag!=''"  class="active" @click="changelable('')">
+                <a>{{this.pagelistquery.tag}}</a>
+              </li>
+            </ul>
+
+
+ <article class="format-standard type-post hentry clearfix"  v-for="(item,id) in tableData" :key="id">
               <header class="clearfix">
                 <h3 class="post-title">
-                  <a href="single.html">Integrating WordPress with Your Website</a>
+                  <a href="single.html">{{item.article_title}}</a>
                 </h3>
 
                 <div class="post-meta clearfix">
-                  <span class="date">25 Feb, 2013</span>
+                  <span class="date">{{ item.article_createtime| dataFormat}}</span>
                   <span class="category">
                     <a
                       href="#"
                       title="View all posts in Server &amp; Database"
-                    >Server &amp; Database</a>
+                    >{{item.nickname}}</a>
                   </span>
                   <span class="comments">
                     <a
@@ -40,51 +60,25 @@
               </header>
 
               <p>
-                 meetings, rushing from one thing to another, never pausing and never ending.&nbsp;Then the day is over, and we are exhausted, and we often have very little to show for it. And we start the next . . .
+                {{item.article_introduction}}
                 <a
                   class="readmore-link"
                   href="http://knowledgebase.inspirythemes.com/integrating-wordpress-with-your-website/"
-                >Read more</a>
+                >...查看更多</a>
               </p>
             </article>
-             <article class="format-standard type-post hentry clearfix">
-              <header class="clearfix">
-                <h3 class="post-title">
-                  <a href="single.html">Integrating WordPress with Your Website</a>
-                </h3>
+            
 
-                <div class="post-meta clearfix">
-                  <span class="date">25 Feb, 2013</span>
-                  <span class="category">
-                    <a
-                      href="#"
-                      title="View all posts in Server &amp; Database"
-                    >Server &amp; Database</a>
-                  </span>
-                  <span class="comments">
-                    <a
-                      href="#"
-                      title="Comment on Integrating WordPress with Your Website"
-                    >3 Comments</a>
-                  </span>
-                  <span class="like-count">66</span>
-                </div>
-                <!-- end of post meta -->
-              </header>
 
-              <p>
-                meetings, rushing ssdsssssssssssssssssssssss古古怪怪古古怪怪古古怪怪古古怪顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶  meetings, rushing ssdsssssssssssssssssssssss古古怪怪古古怪怪古古怪怪古古怪顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的         怪古古怪怪灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌灌from one thing to another, never pausing and never ending.&nbsp;Then the day is over, and we are exhausted, and we often have very little to show for it. And we start the next . . .
-                <a
-                  class="readmore-link"
-                  href="http://knowledgebase.inspirythemes.com/integrating-wordpress-with-your-website/"
-                >Read more</a>
-              </p>
-            </article>
-             
+            <el-pagination
+              @current-change="handleCurrentChange"
+              layout="prev, pager, next"
+              :total="pagelistquery.total"
+            ></el-pagination>
           </div>
           <!-- end of page content -->
           <!-- start of sidebar -->
-         <sidebar />
+          <sidebar />
           <!-- end of sidebar -->
         </div>
       </div>
@@ -97,15 +91,59 @@
 <script>
 import sidebar from "@/components/sidebar.vue";
 export default {
+  name:'help',
   components: {
     sidebar
   },
   data() {
     return {
-      imageUrl: ""
+      smallttle:'',
+      lables: ["学习", "生活", "娱乐", "其他"],
+      pagelistquery: {
+        lable: "",
+        tag: "",
+        total: 0,
+        pagesize: 10,
+        page: 1
+      },
+      tableData: {}
     };
   },
-  methods: {}
+  props: {
+    tag:{}
+  },
+  methods: {
+    changelable(lable) {
+      this.pagelistquery.lable = lable;
+      this.smallttle=this.pagelistquery.lable
+      this.pagelistquery.tag = "";
+      this.getarticlelist();
+    },
+    changetag() {
+      this.pagelistquery.tag = this.tag;
+      this.smallttle=this.tag
+    },
+    handleCurrentChange(val) {
+      this.pagelistquery.page = val;
+      this.getarticlelist();
+      console.log(`当前页: ${val}`);
+    },
+    async getarticlelist() {
+      let res = await this.$axios.post(
+        "/web/getarticlelist",
+        this.qs.stringify(this.pagelistquery)
+      );
+      if (res.data.state.type === "SUCCESS") {
+        this.tableData = res.data.data;
+        console.log(res.data);
+        this.pagelistquery.total = res.data.count;
+      }
+    }
+  },
+  created() {
+    this.tag && this.changetag();
+    this.getarticlelist();
+  }
 };
 </script>
 <style>

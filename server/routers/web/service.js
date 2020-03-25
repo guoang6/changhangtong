@@ -316,6 +316,33 @@ exports.webgetjoblist = async (req, res) => {
     // console.log(result)
     res.send(data);
 }
+//获取消息列表
+
+exports.getarticlelist = async (req, res) => {
+    let sql1 = ' select count(*) as count from article where 1=1'
+    if (req.body.lable != '') sql1 = `${sql1} and article_lable='${req.body.lable}'`//有分类时
+
+    let info1 = []
+    const counts = await query(sql1, info1)
+    let count = counts[0].count
+    let pagesize = req.body.pagesize * 1
+    let page = (req.body.page - 1) * pagesize
+    let info = [pagesize, page]
+    let sql = 'select article.article_id,article.article_title,article.article_introduction,'+
+    'article.article_createtime,user.nickname from article,user where article.user_id=user.user_id '
+    if (req.body.lable != '') sql = `${sql} and article.article_lable='${req.body.lable}'`//有分类时
+    sql = `${sql} limit ? offset ?`
+    const result = await query(sql, info)
+
+        data = {
+            state: s,
+            data: result,
+            count: count
+        }
+    console.log(data)
+    // console.log(result)
+    res.send(data);
+}
 //获取消息
 exports.getnotice = async (req, res) => {
     let sqlnoticenum = ' select count(*) as count from notice where user_to=? and state=0'
