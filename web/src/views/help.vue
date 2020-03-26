@@ -8,7 +8,7 @@
         <div class="row">
           <!-- start of page content -->
           <div class="span8 page-content">
-            <div class="page-header">
+            <div >
               <h1>
                 问答区
                 <small>{{smallttle}}</small>

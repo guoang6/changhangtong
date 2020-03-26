@@ -12,11 +12,11 @@ const e = {
     "msg": "操作失败"
 }
 //添加消息
-let setnotice = async function (user_from, user_to, nickname,content_id, content_name, action, router) {
+let setnotice = async function (user_from, user_to, nickname, content_id, content_name, action, router) {
     let notice = {
         notice_id: uuid.v1(),// 消息 id 
         user_from: user_from,//发起者
-        nickname:nickname,
+        nickname: nickname,
         user_to: user_to,//接受者
         content_name: content_name,
         action: action,//动作
@@ -79,7 +79,7 @@ exports.gethelpcontent = async (req, res) => {
 //评论
 exports.setcomment = async (req, res) => {
     let time = Date.now() - 8 * 60 * 60
-    setnotice(req.user.uid, req.body.to_userid, req.user.nickname,req.body.content_id, req.body.contentname, '评论了你', req.body.router)
+    setnotice(req.user.uid, req.body.to_userid, req.user.nickname, req.body.content_id, req.body.contentname, '评论了你', req.body.router)
     let info = {
         comment_id: uuid.v1(),   //评论id 
         user_id: req.user.uid,//  用户di 
@@ -118,7 +118,7 @@ exports.getcomment = async (req, res) => {
 }
 //评论
 exports.setreply = async (req, res) => {
-    setnotice(req.user.uid, req.body.to_userid,req.user.nickname, req.body.content_id, req.body.contentname, '回复了你', req.body.router)
+    setnotice(req.user.uid, req.body.to_userid, req.user.nickname, req.body.content_id, req.body.contentname, '回复了你', req.body.router)
     let time = Date.now() - 8 * 60 * 60
     let info = {
         reply_id: uuid.v1(),//留言id
@@ -301,17 +301,17 @@ exports.webgetjoblist = async (req, res) => {
     let pagesize = req.body.pagesize * 1
     let page = (req.body.page - 1) * pagesize
     let info = [pagesize, page]
-    let sql = 'select job.job_id,job.job_name,job.job_createtime,job.job_salary,company.company_name'+
-    ' from job,company where job.company_id=company.company_id '
+    let sql = 'select job.job_id,job.job_name,job.job_createtime,job.job_salary,company.company_name' +
+        ' from job,company where job.company_id=company.company_id '
     if (req.body.lable != '') sql = `${sql} and job.job_lable='${req.body.lable}'`//有分类时
     sql = `${sql} limit ? offset ?`
     const result = await query(sql, info)
 
-        data = {
-            state: s,
-            data: result,
-            count: count
-        }
+    data = {
+        state: s,
+        data: result,
+        count: count
+    }
     console.log(data)
     // console.log(result)
     res.send(data);
@@ -328,17 +328,17 @@ exports.getarticlelist = async (req, res) => {
     let pagesize = req.body.pagesize * 1
     let page = (req.body.page - 1) * pagesize
     let info = [pagesize, page]
-    let sql = 'select article.article_id,article.article_title,article.article_introduction,'+
-    'article.article_createtime,user.nickname from article,user where article.user_id=user.user_id '
+    let sql = 'select article.article_id,article.article_title,article.article_introduction,' +
+        'article.article_createtime,user.nickname from article,user where article.user_id=user.user_id '
     if (req.body.lable != '') sql = `${sql} and article.article_lable='${req.body.lable}'`//有分类时
     sql = `${sql} limit ? offset ?`
     const result = await query(sql, info)
 
-        data = {
-            state: s,
-            data: result,
-            count: count
-        }
+    data = {
+        state: s,
+        data: result,
+        count: count
+    }
     console.log(data)
     // console.log(result)
     res.send(data);
@@ -403,16 +403,16 @@ exports.changenotice = async (req, res) => {
 exports.setjoin = async (req, res) => {
     let onlyone = [req.body.content_id, req.user.uid,]
     let onlyonesql = 'select * from joins where content_id=? and user_id=?'
-    const resultonlyone = await query(onlyonesql,onlyone)
+    const resultonlyone = await query(onlyonesql, onlyone)
     if (resultonlyone.length == 0) {
         let time = Date.now() - 8 * 60 * 60
-        setnotice('', req.user.uid,'系统通知', req.body.content_id, req.body.contentname, '你已经成功参与', req.body.type)
-        setnotice('', req.body.to_userid,'系统通知', req.body.content_id, req.body.contentname, '有一位用户参加了你发布的内容', req.body.type)
+        setnotice('', req.user.uid, '系统通知', req.body.content_id, req.body.contentname, '你已经成功参与', req.body.type)
+        setnotice('', req.body.to_userid, '系统通知', req.body.content_id, req.body.contentname, '有一位用户参加了你发布的内容', req.body.type)
         let info = {
             join_id: uuid.v1(),//id
             user_id: req.user.uid,//  用户di 
-            type:req.body.type,
-            jions_createtime:time,
+            type: req.body.type,
+            jions_createtime: time,
             name: req.body.name,//  名称 
             describe: req.body.describe,//  描述
             content_id: req.body.content_id
@@ -424,9 +424,35 @@ exports.setjoin = async (req, res) => {
             data: {}
         }
     }
-    else{data = {
-        state: e,
-        data: {}
-    }}
+    else {
+        data = {
+            state: e,
+            data: {}
+        }
+    }
     res.send(data)
+}
+//搜索
+exports.search = async (req, res) => {
+    console.log(req.body.search)
+    info = []
+    const help = await query(`select * from help,user where help.user_id=user.user_id and help.help_title like '%${req.body.search}%'`, info)
+    const activity = await query(`select * from activity where activity.activity_title like '%${req.body.search}%'`, info)
+    const job = await query(`select * from job,user where job.user_id=user.user_id and job.job_name like '%${req.body.search}%'`, info)
+    const company = await query(`select * from company where  company.company_name like '%${req.body.search}%'`, info)
+    const oldstuff = await query(`select * from oldstuff where oldstuff_name like '%${req.body.search}%'`, info)
+    const article = await query(`select * from article,user where article.user_id=user.user_id and (article.article_title like '%${req.body.search}%' or article.article_introduction  like '%${req.body.search}%')`, info)
+    data = {
+        state: s,
+        data: {help:help,
+            activity:activity,
+            job:job,
+            oldstuff:oldstuff,
+            company:company,
+            article:article,
+        },
+    } 
+    // console.log(data)
+    // console.log(result)
+    res.send(data);
 }

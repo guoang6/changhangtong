@@ -2,17 +2,22 @@
   <div class="hoothelp">
     <aside class="span4 page-sidebar">
       <section class="widget">
-        <h3 class="title">公司</h3>
+        <div style="position:relative;cursor:pointer">
+           <h3 class="title">公司</h3>
+            <el-pagination
+            style="position: absolute;right: 100px;top: 4px;"
+          @current-change="handleCurrentChange"
+          layout="prev, next"
+          :total="pagelistquery.total"
+        ></el-pagination>
+        </div>
+       
         <ul>
           <li v-for="(item,id) in tableData" :key="id">
             <router-link :to="'/companycontent/'+item.company_id">{{item.company_name}}</router-link>
           </li>
         </ul>
-        <el-pagination
-          @current-change="handleCurrentChange"
-          layout="prev, next"
-          :total="pagelistquery.total"
-        ></el-pagination>
+        
       </section>
     </aside>
   </div>

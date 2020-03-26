@@ -21,6 +21,8 @@ module.exports = jwt({
         '/web/webgetcompanylist',
         '/web/getoldstuffcontent',
         '/web/getactivitycontent',
-        '/web/webgetweboldstufflist'
+        '/web/webgetweboldstufflist',
+        '/web/getactivitycontent',
+        '/web/search',
     ]
 })

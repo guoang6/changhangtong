@@ -24,6 +24,11 @@ router.post('/web/webgetcompanylist', service.webgetcompanylist)
 router.post('/web/getoldstuffcontent', service.getoldstuffcontent)
 router.post('/web/getactivitycontent', service.getactivitycontent)
 router.post('/web/setjoin', service.setjoin)
+//搜索
+router.post('/web/search', service.search)
+
+
+
 
 
 

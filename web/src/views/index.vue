@@ -1,6 +1,5 @@
 <template>
   <div class="index">
-
     <!-- Start of Header -->
     <div class="header-wrapper">
       <header>
@@ -124,8 +123,13 @@
         </p>
 
         <form class="search-form clearfix" @submit.prevent="onSubmit">
-          <input class="search-term required" type="text" placeholder="Type your search terms here" />
-          <input class="search-btn" type="submit" @click="search()" value="搜索" />
+          <input
+            class="search-term required"
+            type="text"
+            v-model="search"
+            placeholder="Type your search terms here"
+          />
+          <input class="search-btn" type="submit" @click="searchbtn" value="搜索" />
           <div id="search-error-container"></div>
         </form>
       </div>
@@ -136,9 +140,6 @@
     <foot />
     <!-- end of foot -->
     <!-- 弹窗组件 -->
-
-
-
 
     <div class="login" v-if="isclose">
       <div id="mask"></div>
@@ -183,7 +184,8 @@ export default {
       password: "",
       password1: "",
       username: "",
-      hover: false
+      hover: false,
+      search: ""
     };
   },
   computed: {
@@ -251,8 +253,12 @@ export default {
     onSubmit() {
       return false;
     },
-    search() {
-      console.log(111);
+    searchbtn() {
+      if (this.search == "") {
+        this.$message.error("关键字不能为空");
+        return;
+      }
+      this.$router.push({ name: "search", query: { search: this.search } });
     },
     registered() {
       const userReg = /^[1-9a-zA-Z]{1}[0-9a-zA-Z]{5,9}$/; //6-10位字母数字
@@ -448,6 +454,5 @@ export default {
   top: 10px;
   cursor: pointer;
 }
-
 </style>
 

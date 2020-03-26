@@ -5,6 +5,8 @@ import home from "../views/home.vue"
 import help from "../views//help.vue"
 import news from '../views/news.vue'
 import job from "../views/job.vue"
+import search from "../views/search.vue"
+
 
 
 import activity from "../views/activity.vue"
@@ -34,10 +36,17 @@ import createoldstuff from "../views/webadmin/oldstuff/createoldstuff.vue"
 import createoldstufflist from "../views/webadmin/oldstuff/createoldstufflist.vue"
 
 
-
+import Router from 'vue-router'
 
 Vue.use(VueRouter)
 
+/**
+ * 重写路由的push方法
+ */
+const routerPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return routerPush.call(this, location).catch(error=> error)
+}
 const routes = [
   // { path: '/', name: 'index',  component: index, meta:{ispublic:true}},
   {
@@ -45,6 +54,7 @@ const routes = [
       { path: '', name: 'home', component: home, meta:{ispublic:true} },
       { path: 'help', name: 'help', component: help, meta:{ispublic:true}},
       { path: 'help/:tag', name: 'help', component: help,props:true ,meta:{ispublic:true }},
+      { path: 'search/:search', name: 'search', component: search,meta:{ispublic:true }},
       { path: 'helpcontent/:id', name: 'helpcontent', component: helpcontent,props:true, meta:{ispublic:true}},
       { path: 'oldstuffcontent/:id', name: 'oldstuffcontent', component: oldstuffcontent,props:true, meta:{ispublic:true}},
       { path: 'activitycontent/:id', name: 'activitycontent', component: activitycontent,props:true, meta:{ispublic:true}},

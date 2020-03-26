@@ -1,16 +1,13 @@
 <template>
   <div class="help">
-    <!-- Start of Page Container -->
-    <div class="row">
-      <!-- start of page content -->
-      <div >
-        <router-link to="/oldstuff" tag="div"  class="page-header" style="position:relative;cursor:pointer">
+       
+        
+        <section class="widget">
+          <div class="row">
+             <router-link to="/oldstuff" tag="div"  class="page-header" style="position:relative;cursor:pointer">
           <h3 >二手交易</h3>
           <h4 style="  position: absolute;right: 100px;top: 4px;">更多></h4>
         </router-link>
-        <!-- Basic Home Page Template -->
-        <section class="widget">
-          <div class="row">
             <div
               style="margin :1%"
               class="col-sm-6 col-md-4"
@@ -36,8 +33,6 @@
           </div>
         </section>
       </div>
-    </div>
-  </div>
 </template>
 
 

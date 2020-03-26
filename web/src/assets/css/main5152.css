@@ -222,7 +222,7 @@ form.search-form input.search-btn:hover {
   width: 100%;
 }
 .page-container > .container {
-  padding: 40px 35px;
+  padding: 40px 0px;
   background-color: #fff;
 }
 
