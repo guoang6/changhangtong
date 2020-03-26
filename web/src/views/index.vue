@@ -258,7 +258,7 @@ export default {
         this.$message.error("关键字不能为空");
         return;
       }
-      this.$router.push({ name: "search", query: { search: this.search } });
+      this.$router.push({ path: "search", query: { search: this.search } });
     },
     registered() {
       const userReg = /^[1-9a-zA-Z]{1}[0-9a-zA-Z]{5,9}$/; //6-10位字母数字

@@ -13,6 +13,12 @@
               <span style="color:#1890ff">{{search}}</span>
               的搜素结果
             </h4>
+            <div
+              v-if="tableData.help==''&&tableData.activity==''&&tableData.job==''&&tableData.company==''&&tableData.article==''&&tableData.oldstuff==''"
+            >
+              <img src="../assets/images/noinfo.png" width="100%" alt />
+              <div style="width:100%;text-align:center">没有找到有关 <span style="color:#1890ff">{{search}}</span> 的搜素结果</div>
+            </div>
             <!--starthelp-->
             <section class="widget">
               <div class="row">

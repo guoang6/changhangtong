@@ -54,7 +54,7 @@ const routes = [
       { path: '', name: 'home', component: home, meta:{ispublic:true} },
       { path: 'help', name: 'help', component: help, meta:{ispublic:true}},
       { path: 'help/:tag', name: 'help', component: help,props:true ,meta:{ispublic:true }},
-      { path: 'search/:search', name: 'search', component: search,meta:{ispublic:true }},
+      { path: 'search', name: 'search', component: search,meta:{ispublic:true }},
       { path: 'helpcontent/:id', name: 'helpcontent', component: helpcontent,props:true, meta:{ispublic:true}},
       { path: 'oldstuffcontent/:id', name: 'oldstuffcontent', component: oldstuffcontent,props:true, meta:{ispublic:true}},
       { path: 'activitycontent/:id', name: 'activitycontent', component: activitycontent,props:true, meta:{ispublic:true}},
