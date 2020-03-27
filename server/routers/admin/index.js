@@ -17,6 +17,11 @@ router.post('/admin/announcementlist', service.announcementlist)
 router.post('/admin/setannouncement', service.setannouncement)
 
 
+//仪表盘数据
+router.post('/admin/numbering', service.numbering)
+
+
+
 
 
 

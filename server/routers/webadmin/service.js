@@ -27,10 +27,12 @@ exports.registered = async (req, res) => {
             data: {}
         }
     } else {
+        let time = Date.now() - 8 * 60 * 60
         let info = {
             user_id: uuid.v1(),   //用户id 
             username: req.body.username,//用户名
             password: req.body.password,//密码
+            user_createtime: time,//创建时间
             nickname: '该用户还没没有设置昵称',//昵称
             avatar: `${url}/uplodes/moren`,
             realstate: 1,
@@ -575,16 +577,17 @@ exports.getwebcompany = async (req, res) => {
     let company
     let sql = 'select * from company where user_id=? '
     const result = await query(sql, info)
-    if (result.length !== 0) company=result[0]
+    if (result.length !== 0) company = result[0]
     let sqljob = 'select * from job where user_id=? '
     const resultjob = await query(sqljob, info)
-        data = {
-            state: s,
-            data:{company:company,
-                   joblist:resultjob,
-            } ,
-        }
-    
+    data = {
+        state: s,
+        data: {
+            company: company,
+            joblist: resultjob,
+        },
+    }
+
 
     console.log(data)
     // console.log(result)
@@ -592,15 +595,15 @@ exports.getwebcompany = async (req, res) => {
 }
 //公司信息修改
 exports.changewebcompany = async (req, res) => {
-    let info = [req.body.company_name, req.body.company_scale,req.body.company_content,req.body.company_id, req.user.uid,]
+    let info = [req.body.company_name, req.body.company_scale, req.body.company_content, req.body.company_id, req.user.uid,]
     let sql = 'update company set  company_name=?,company_scale=? ,company_content=? where company_id=? and user_id=? '
     const result = await query(sql, info)
-        data = {
-            state: s,
-            data: {
-                
-            },
-        }
+    data = {
+        state: s,
+        data: {
+
+        },
+    }
     res.send(data);
 }
 //添加工作
@@ -609,11 +612,11 @@ exports.createjob = async (req, res) => {
     let info = {
         job_id: uuid.v1(),   //id 
         user_id: req.user.uid,//  用户di 
-        company_id:req.body.company_id,
+        company_id: req.body.company_id,
         job_name: req.body.job_name,// 岗位铭恒   
         job_salary: req.body.job_salary,// 薪资
         job_num: req.body.job_num,//人数 
-        job_lable:req.body.job_lable,//类型
+        job_lable: req.body.job_lable,//类型
         job_content: req.body.job_content,//内容  
         job_createtime: time,//创建时间
         job_updatetime: time,//更新时间
@@ -660,7 +663,7 @@ exports.createarticle = async (req, res) => {
         user_id: req.user.uid,//  用户di 
         article_title: req.body.article_title,// 标题 
         article_introduction: req.body.article_introduction,// 简介
-        article_lable:req.body.article_lable,//类型
+        article_lable: req.body.article_lable,//类型
         article_content: req.body.article_content,//内容
 
         article_createtime: time,//创建时间

@@ -5,16 +5,16 @@
       <p class="title">后台管理系统系统</p>
       <form action id="form" method>
         <p class="usericon">
-          <input type="text" placeholder="用户" id="username" />
+          <input type="text" v-model="username" placeholder="用户" id="username" />
         </p>
         <p class="passicon">
-          <input type="password" placeholder="密码" id="password" />
+          <input type="password" v-model="password" placeholder="密码" id="password" />
         </p>
         <p>
-          <input type="submit" value="立即登录" class="submit-btn" />
+          <input type="submit" @click="login" value="立即登录" class="submit-btn" />
         </p>
         <div class="others">
-          <a href="" class="register">立即注册</a>
+          <a href class="register">立即注册</a>
         </div>
       </form>
     </div>
@@ -22,11 +22,59 @@
 </template>
 <script>
 import loginparticles from "@/views/loginparticles.vue";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "login",
   components: {
     loginparticles
+  },
+  data() {
+    return {
+      password: "",  
+      username: ""
+    };
+  },
+  methods: {
+     ...mapActions("user", [
+      "setUserInfo",
+      "setToken",
+    ]),
+    //登录
+    login() {
+      if (this.password == "" || this.password == "") {
+        this.$message.error("账号或者密码为空");
+        return;
+      }
+      // this.pwdhash = crypto
+      //   .createHash("sha1")
+      //   .update(this.password)
+      //   .digest("hex");
+      // let this_ = this;
+      let obj = {
+        password: this.password,
+        username: this.username
+      };
+      this.$axios({
+        url: "/webadmin/login",
+        method: "POST",
+        data: this.qs.stringify(obj)
+      })
+        .then(res => {
+          let data = res.data.data;
+          if (res.data.state.type === "SUCCESS") {
+            this.$message.success("登录成功"); 
+            this.$router.push('/');
+            // this.$store.user.dispatch("setUserInfo", data)
+            this.setUserInfo(data.userinfo);
+            this.setToken(data.token);
+            console.log(data);
+          } else this.$message("用户名或密码错误");
+        })
+        .catch(e => {
+          this.$message(e);
+        });
+    }
   }
 };
 </script>

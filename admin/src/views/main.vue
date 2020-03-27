@@ -17,7 +17,7 @@
 
           <span slot="title">“昌航通”信息平台</span>
         </el-menu-item>
-        <el-menu-item index="/admin">
+        <el-menu-item index="/">
           <i class="el-icon-pie-chart"></i>
           <span slot="title">数据中心</span>
         </el-menu-item>
@@ -71,14 +71,7 @@
           <el-menu-item index="3-1">意见反馈</el-menu-item>
           <el-menu-item index="3-2">违规举报</el-menu-item>
         </el-submenu>
-        <el-submenu index="5">
-          <template slot="title">
-            <i class="el-icon-setting"></i>
-            <span slot="title">账号管理</span>
-          </template>
-          <el-menu-item index="4-1">标签管理</el-menu-item>
-          <el-menu-item index="4-2">预留</el-menu-item>
-        </el-submenu>
+       
       </el-menu>
        </div>
       <el-container style=" position:relative ;">

@@ -5,6 +5,7 @@ import login from '../views/login.vue'
 import contentexamine from '../views/examine/contentexamine.vue'
 import useruser from '../views/user/useruser.vue'
 import managementlable from '../views/management/managementlable.vue'
+import numbering from '../views/numbering/numbering.vue'
 
 
 
@@ -13,11 +14,13 @@ import managementlable from '../views/management/managementlable.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  {path: '/login',name: 'login',component: login },
+  {path: '/login',name: 'login',component: login ,meta:{ispublic:true}},
   {path: '/',name: 'main',component: main ,children: [
-    { path: '/contentexamine', name: 'contentexamine', component: contentexamine, },
-    { path: '/useruser', name: 'useruser', component: useruser, },
-    { path: '/managementlable', name: 'managementlable', component: managementlable, },
+    { path: '', name: 'numbering', component: numbering, },
+    { path: 'contentexamine', name: 'contentexamine', component: contentexamine, },
+    { path: 'useruser', name: 'useruser', component: useruser, },
+    { path: 'managementlable', name: 'managementlable', component: managementlable, },
+
 
   ]
 }
@@ -34,5 +37,11 @@ const routes = [
 const router = new VueRouter({
   routes
 })
-
+router.beforeEach((to,Form,next)=>{
+  // console.log(to)
+  if(!to.meta.ispublic&&!localStorage.admin_jwt_token){
+    return next('/login')
+  }
+  next()
+})
 export default router

@@ -4,6 +4,13 @@ import './plugins/element.js'
 import router from './router'
 import ElementUI from 'element-ui';
 
+//ecahrs
+import ECharts from 'vue-echarts'
+import 'echarts/lib/chart/line'
+import 'echarts/lib/chart/pie'
+import 'echarts/lib/chart/bar'
+
+Vue.component('chart', ECharts)
 import './assets/css/ali.css'
 //粒子特效   npm install vue-particles --save-dev 
 import VueParticles from 'vue-particles'  
@@ -39,9 +46,9 @@ Vue.prototype.qs = qs;
 // http request 拦截器
 axios.interceptors.request.use(
   config => {
-    console.log(luffy_jwt_token)
-    let luffy_jwt_token =window.localStorage.getItem('luffy_jwt_token');
-    config.headers.Authorization = `Bearer ${luffy_jwt_token}`;
+    let admin_jwt_token =window.localStorage.getItem('admin_jwt_token');
+    console.log(admin_jwt_token)
+    config.headers.Authorization = `Bearer ${admin_jwt_token}`;
     return config;
   },
   err => {
@@ -60,7 +67,7 @@ axios.interceptors.response.use(function (response) {
         type: 'warning'
       });
       // store.dispatch('user/deleteuserinfo')//清除用户信息
-      // routerIndex.push('/login');
+      this.$router.push('/login');
     }
     if (parseInt(response.data.code) === -1) {
       ElementUI.Notification({

@@ -30,6 +30,36 @@ let setnotice = async function (user_from, user_to, nickname, content_id, conten
 
 
 }
+//数据分析
+exports.numbering = async (req, res) => {
+    let info = []
+    let usersql = `select from_unixtime(user_createtime/1000, '%Y-%m') as time,  count(user_id) as num from user group by time order by time`
+    const user = await query(usersql, info)
+    let commentsql = `select from_unixtime(comment_createtime/1000, '%Y-%m') as time,  count(comment_id) as num from  comment group by time order by time`
+    const comment = await query(commentsql, info)
+    const count = await query(`SELECT
+	table_name,
+	concat(
+		TRUNCATE (data_length / 1024 / 1024, 2),
+		' MB'
+	) AS data_size,
+	table_rows
+FROM
+	information_schema. TABLES
+WHERE
+	TABLE_SCHEMA = 'changhangtong'
+`, info)
+    data = {
+        state: s,
+        data: {
+            user:user,
+            comment:comment,
+            count:count
+        },
+
+    }
+    res.send(data)
+}
 //web获取求助列表
 exports.contentexamine = async (req, res) => {
     console.log(req.body)
@@ -176,6 +206,9 @@ exports.lablelist = async (req, res) => {
     }
     res.send(data)
 }
+
+
+
 //修改分类
 exports.changelable = async (req, res) => {
     let info = [
