@@ -16,7 +16,7 @@
               <div class="post-meta clearfix">
                 <span class="date">{{content.article_createtime| dataFormat}}</span>
                 <span class="category">
-                  <a href="#" title="View all posts in Server &amp; Database">{{content.user_id}}</a>
+                  <a href="#" title="View all posts in Server &amp; Database">{{content.nickname}}</a>
                 </span>
                 <span class="comments">
                   <a

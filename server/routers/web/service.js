@@ -96,6 +96,51 @@ exports.getarticlecontent = async (req, res) => {
     console.log(result)
     res.send(data);
 }
+
+//求助公司详情
+exports.getcompanycontent = async (req, res) => {
+    let info = [req.body.id]
+    let sql = 'select * from job where  company_id=?'
+    const company = await query('select * from company where company_id=?', info)
+    const joblist = await query(sql, info)
+
+    if (company.length == 0) {
+        data = {
+            state: e,
+            data: {
+            }
+        }
+    } else {
+        data = {
+            state: s,
+            data: {
+                joblist: joblist,
+                company:company[0]
+            }
+        }
+    }
+    res.send(data);
+}
+//求助工作详情
+exports.getjobcontent = async (req, res) => {
+    let info = [req.body.id]
+    let sql = 'select * from job ,company where company.company_id =job.company_id and job_id=?'
+    const result = await query(sql, info)
+    if (result.length == 0) {
+        data = {
+            state: e,
+            data: {
+            }
+        }
+    } else {
+        data = {
+            state: s,
+            data: result[0]
+        }
+    }
+    console.log(result)
+    res.send(data);
+}
 //评论
 exports.setcomment = async (req, res) => {
     let time = Date.now() - 8 * 60 * 60

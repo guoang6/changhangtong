@@ -13,3 +13,9 @@
 .iconfont{
  font-size: 20px;
 }
+
+
+/**修改element样式**/
+.el-carousel__indicators {
+  z-index: -10;
+}

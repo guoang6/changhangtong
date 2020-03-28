@@ -18,32 +18,18 @@
           </el-carousel-item>
         </el-carousel>
       </section>
-      <activity />
-      <help />
-      <job />
     </aside>
     <!-- end of sidebar -->
   </div>
 </template>
 
 <script>
-import job from "@/components/job.vue";
-import activity from "@/components/activity.vue";
-import help from "@/components/help.vue";
-
 export default {
   name: "home",
-  components: {
-    job,
-    activity,
-    help
-  }
+
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style >
-.el-carousel__indicators {
-  z-index: -100;
-}
+<style>
 </style>

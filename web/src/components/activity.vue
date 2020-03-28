@@ -11,7 +11,6 @@
           <h3>校内活动</h3>
           <h4 style="  position: absolute;right: 10px;top: 4px;">更多></h4>
         </router-link>
-        <ul class="articles">
           <ul class="articles">
             <li class="article-entry standard" v-for="(activity,id) in tableData" :key="id">
               <h4>
@@ -34,7 +33,6 @@
               </span>
             </li>
           </ul>
-        </ul>
       </section>
     </div>
   </div>

@@ -7,9 +7,10 @@ import './assets/css/green-skin5152.css'
 import './assets/css/main5152.css'
 import './assets/css/red-skin5152.css'
 import './assets/css/responsive5152.css'
-import './assets/css/ali.css'
 import './plugins/element.js'
 import ElementUI from 'element-ui';
+import './assets/css/ali.css'
+
 //vuex
 import Vuex from 'vuex'
 import store from './store'

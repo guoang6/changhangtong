@@ -595,8 +595,8 @@ exports.getwebcompany = async (req, res) => {
 }
 //公司信息修改
 exports.changewebcompany = async (req, res) => {
-    let info = [req.body.company_name, req.body.company_scale, req.body.company_content, req.body.company_id, req.user.uid,]
-    let sql = 'update company set  company_name=?,company_scale=? ,company_content=? where company_id=? and user_id=? '
+    let info = [req.body.company_mail,req.body.company_name, req.body.company_scale, req.body.company_content, req.body.company_id, req.user.uid,]
+    let sql = 'update company set company_mail=?,  company_name=?,company_scale=? ,company_content=? where company_id=? and user_id=? '
     const result = await query(sql, info)
     data = {
         state: s,

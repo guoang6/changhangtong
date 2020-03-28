@@ -1,6 +1,6 @@
 <template>
   <div class="help">
-    <div v-title data-title="昌航通 | 问答"></div>
+    <div v-title data-title="昌航通 | 招聘"></div>
 
     <!-- Start of Page Container -->
     <div class="page-container">
@@ -43,7 +43,7 @@
                   style="position:relative"
                 >
                   <h4>
-                    <router-link :to="'/helpcontent/'+item.help_id">{{item.job_name}}</router-link>
+                    <router-link :to="'/jobcontent/'+item.job_id">{{item.job_name}}</router-link>
                   </h4>
                   <h4
                     style="  position: absolute;right: 40px; top: 2px; color:red"

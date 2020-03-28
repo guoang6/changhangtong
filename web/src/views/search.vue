@@ -114,7 +114,7 @@
                 >
                   <header class="clearfix">
                     <h3 class="post-title">
-                      <a href="single.html" v-html="item.titlewraper"></a>
+                      <router-link :to="'/newscontent/'+item.article_id" v-html="item.titlewraper"></router-link>
                     </h3>
 
                     <div class="post-meta clearfix">
@@ -136,7 +136,10 @@
                     <!-- end of post meta -->
                   </header>
                   <p v-html="item.introductionwraper">
-                    <a class="readmore-link">...查看更多</a>
+                      <router-link
+                      :to="'/newscontent/'+item.article_id"
+                  class="readmore-link"
+                >...查看更多</router-link>
                   </p>
                 </article>
               </div>
@@ -151,7 +154,8 @@
                     style="position:relative"
                   >
                     <h4>
-                      <router-link :to="'/helpcontent/'+item.help_id" v-html="item.namewraper"></router-link>
+                      
+                      <router-link :to="'/jobcontent/'+item.job_id" v-html="item.namewraper"></router-link>
                     </h4>
                     <h4
                       style="  position: absolute;right: 40px; top: 2px; color:red"

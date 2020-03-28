@@ -18,6 +18,8 @@ router.post('/web/webgetwebactivitylist', service.webgetwebactivitylist)
 router.post('/web/webgetweboldstufflist', service.webgetweboldstufflist)
 //岗位列表
 router.post('/web/webgetjoblist', service.webgetjoblist)
+router.post('/web/getjobcontent', service.getjobcontent)
+
 
 //文章列表
 router.post('/web/getarticlelist', service.getarticlelist)
@@ -25,6 +27,11 @@ router.post('/web/getarticlecontent', service.getarticlecontent)
 
 //公司列表
 router.post('/web/webgetcompanylist', service.webgetcompanylist)
+router.post('/web/getcompanycontent', service.getcompanycontent)
+
+
+
+
 router.post('/web/getoldstuffcontent', service.getoldstuffcontent)
 router.post('/web/getactivitycontent', service.getactivitycontent)
 router.post('/web/setjoin', service.setjoin)

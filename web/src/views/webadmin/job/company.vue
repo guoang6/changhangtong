@@ -11,6 +11,9 @@
           <el-form-item label="公司规模">
             <el-input v-model="form.company_scale"></el-input>
           </el-form-item>
+             <el-form-item label="投递方式">
+            <el-input v-model="form.company_mail"></el-input>
+          </el-form-item>
           <el-form-item label="公司简介">
             <vue-editor
               useCustomImageHandler

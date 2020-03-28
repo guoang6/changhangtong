@@ -1,6 +1,7 @@
 <template>
   <div class="job">
-  <section class="widget">
+    <aside class="span4 page-sidebar">
+      <section class="widget">
         <h3 class="title">公司</h3>
         <ul>
           <li>
@@ -30,6 +31,7 @@
           </li>
         </ul>
       </section>
+    </aside>
   </div>
 </template>
 
