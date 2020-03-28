@@ -48,7 +48,7 @@ Vue.prototype.qs = qs;
 axios.interceptors.request.use(
   config => {
     let luffy_jwt_token =window.localStorage.getItem('luffy_jwt_token');
-    console.log(luffy_jwt_token)
+    // console.log(luffy_jwt_token)
     config.headers.Authorization = `Bearer ${luffy_jwt_token}`;
     return config;
   },

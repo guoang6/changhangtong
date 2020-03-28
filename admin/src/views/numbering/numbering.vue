@@ -10,17 +10,17 @@
       <div>
         <div class="main card">
           <p>内容(条)</p>
-          <h3 style="margin-top:-7px">{{contentcount}}</h3>
+          <h2 style="margin-top:-7px">{{contentcount}}</h2>
         </div>
         <div class="card" style="width:2% ;height:20px"></div>
         <div class="main card">
           <p>评论(条)</p>
-          <h3 style="margin-top:-7px">{{commentcount}}</h3>
+          <h2 style="margin-top:-7px">{{commentcount}}</h2>
         </div>
         <div class="card" style="width:2% ;height:20px"></div>
         <div class="main card">
           <p>用户(个)</p>
-          <h3 style="margin-top:-7px">{{usercount}}</h3>
+          <h2 style="margin-top:-7px">{{usercount}}</h2>
         </div>
         <div style="clear:both"></div>
       </div>
@@ -30,7 +30,7 @@
           <el-tab-pane label="用户新增趋势" name="first">
             <chart ref="chart1" style="width:100%" :options="orgOptionsuser" :auto-resize="true"></chart>
           </el-tab-pane>
-          <el-tab-pane label="内容占比" name="second">
+          <el-tab-pane label="内容数据" name="second">
             <div v-if="tabname=='second'">
               <div style="float:left;width:55%">
                 <chart :options="optioncontentshadow" :auto-resize="true"></chart>
@@ -60,10 +60,10 @@ export default {
   name: "numbering",
   data() {
     return {
-      commentcount:0,
-      contentcount:0,
-      usercount:0,
-      count:[],
+      commentcount: 0,
+      contentcount: 0,
+      usercount: 0,
+      count: [],
       tabname: "",
       data: {},
       optioncontentshadow: {
@@ -121,7 +121,7 @@ export default {
             type: "pie",
             radius: "55%",
             center: ["50%", "60%"],
-            data: [ ],
+            data: [],
             emphasis: {
               itemStyle: {
                 shadowBlur: 10,
@@ -147,7 +147,7 @@ export default {
           }
         ]
       },
-       orgOptionscomment: {
+      orgOptionscomment: {
         xAxis: {
           type: "category",
           data: []
@@ -181,39 +181,38 @@ export default {
           this.orgOptionscomment.series[0].data.push(element.num);
           this.orgOptionscomment.xAxis.data.push(element.time);
         });
-   this.data.count.forEach(element => {
-          if(element.table_name=='help') {
-            this.count.push({name:'交流/问答',value:element.table_rows}) 
-            this.contentcount=this.contentcount+element.table_rows
+        this.data.count.forEach(element => {
+          if (element.table_name == "help") {
+            this.count.push({ name: "交流/问答", value: element.table_rows });
+            this.contentcount = this.contentcount + element.table_rows;
           }
-          if(element.table_name=='activity'){
-            this.count.push({name:'活动',value:element.table_rows})
-            this.contentcount=this.contentcount+element.table_rows
-          } 
-          if(element.table_name=='oldstuff') {
-            this.count.push({name:'二手',value:element.table_rows})
-            this.contentcount=this.contentcount+element.table_rows
+          if (element.table_name == "activity") {
+            this.count.push({ name: "活动", value: element.table_rows });
+            this.contentcount = this.contentcount + element.table_rows;
           }
-          if(element.table_name=='job'){
-            this.count.push({name:'工作',value:element.table_rows})
-          } 
-          if(element.table_name=='article'){
-            this.count.push({name:'文章新闻',value:element.table_rows})
-            this.contentcount=this.contentcount+element.table_rows
-          } 
-           if(element.table_name=='comment'){
-            this.commentcount=this.commentcount+element.table_rows
-          } 
-           if(element.table_name=='reply'){
-            this.commentcount=this.commentcount+element.table_rows
-          } 
-          if(element.table_name=='user'){
-            this.usercount=this.usercount+element.table_rows
-          } 
-        
+          if (element.table_name == "oldstuff") {
+            this.count.push({ name: "二手", value: element.table_rows });
+            this.contentcount = this.contentcount + element.table_rows;
+          }
+          if (element.table_name == "job") {
+            this.count.push({ name: "工作", value: element.table_rows });
+          }
+          if (element.table_name == "article") {
+            this.count.push({ name: "文章新闻", value: element.table_rows });
+            this.contentcount = this.contentcount + element.table_rows;
+          }
+          if (element.table_name == "comment") {
+            this.commentcount = this.commentcount + element.table_rows;
+          }
+          if (element.table_name == "reply") {
+            this.commentcount = this.commentcount + element.table_rows;
+          }
+          if (element.table_name == "user") {
+            this.usercount = this.usercount + element.table_rows;
+          }
         });
-        
- this.count.forEach(element => {
+
+        this.count.forEach(element => {
           this.optioncontentshadow.series[0].data.push(element.value);
           this.optioncontentpie.series[0].data.push(element);
           this.optioncontentshadow.xAxis[0].data.push(element.name);

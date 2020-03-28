@@ -6,14 +6,15 @@ import help from "../views//help.vue"
 import news from '../views/news.vue'
 import job from "../views/job.vue"
 import search from "../views/search.vue"
-
-
-
 import activity from "../views/activity.vue"
 import oldstuff from "../views/oldstuff.vue"
+
+
+
 import helpcontent from "../views/content/helpcontent.vue"
 import oldstuffcontent from "../views/content/oldstuffcontent.vue"
 import activitycontent from "../views/content/activitycontent.vue"
+import newscontent from "../views/content/newscontent.vue"
 
 
 
@@ -58,6 +59,7 @@ const routes = [
       { path: 'helpcontent/:id', name: 'helpcontent', component: helpcontent,props:true, meta:{ispublic:true}},
       { path: 'oldstuffcontent/:id', name: 'oldstuffcontent', component: oldstuffcontent,props:true, meta:{ispublic:true}},
       { path: 'activitycontent/:id', name: 'activitycontent', component: activitycontent,props:true, meta:{ispublic:true}},
+      { path: 'newscontent/:id', name: 'newscontent', component: newscontent,props:true, meta:{ispublic:true}},
       { path: 'news', name: 'news', component: news, meta:{ispublic:true}},
       { path: 'job', name: 'job', component: job, meta:{ispublic:true}},
       { path: 'oldstuff', name: 'oldstuff', component: oldstuff, meta:{ispublic:true}},

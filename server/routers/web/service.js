@@ -76,6 +76,26 @@ exports.gethelpcontent = async (req, res) => {
     console.log(result)
     res.send(data);
 }
+//求助文章详情
+exports.getarticlecontent = async (req, res) => {
+    let info = [req.body.id]
+    let sql = 'select * from article ,user where article.user_id =user.user_id and article_id=?'
+    const result = await query(sql, info)
+    if (result.length == 0) {
+        data = {
+            state: e,
+            data: {
+            }
+        }
+    } else {
+        data = {
+            state: s,
+            data: result[0]
+        }
+    }
+    console.log(result)
+    res.send(data);
+}
 //评论
 exports.setcomment = async (req, res) => {
     let time = Date.now() - 8 * 60 * 60
@@ -85,7 +105,7 @@ exports.setcomment = async (req, res) => {
         user_id: req.user.uid,//  用户di 
         content_id: req.body.content_id,//内容id
         comment_content: req.body.comment_content,//内容  
-        createtime: time,//创建时间  
+        comment_createtime: time,//创建时间  
         comment_state: 0, //状态  
         comment_istop: 0,//是否置顶
         comment_ispublic: 0,//是否显示
@@ -105,9 +125,9 @@ exports.getcomment = async (req, res) => {
     let sql1 = ' select count(*) as count from comment where  content_id=?'
     const counts = await query(sql1, info)
     let count = counts[0].count
-    let sql = 'select comment.comment_id ,comment.comment_content,comment.createtime,user.nickname,' +
+    let sql = 'select comment.comment_id ,comment.comment_content,comment.comment_createtime,user.nickname,' +
         'user.user_id,user.avatar from user,comment where comment.user_id = user.user_id and content_id=? '
-    'order by comment.createtime asc '
+    'order by comment.comment_createtime asc '
     const result = await query(sql, info)
     data = {
         state: s,

@@ -67,7 +67,7 @@ axios.interceptors.response.use(function (response) {
         type: 'warning'
       });
       // store.dispatch('user/deleteuserinfo')//清除用户信息
-      this.$router.push('/login');
+      router.push('/login');
     }
     if (parseInt(response.data.code) === -1) {
       ElementUI.Notification({

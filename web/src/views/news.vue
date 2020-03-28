@@ -37,7 +37,7 @@
  <article class="format-standard type-post hentry clearfix"  v-for="(item,id) in tableData" :key="id">
               <header class="clearfix">
                 <h3 class="post-title">
-                  <a href="single.html">{{item.article_title}}</a>
+                   <router-link :to="'/newscontent/'+item.article_id">{{item.article_title}}</router-link>
                 </h3>
 
                 <div class="post-meta clearfix">
@@ -61,10 +61,10 @@
 
               <p>
                 {{item.article_introduction}}
-                <a
+                  <router-link
+                      :to="'/newscontent/'+item.article_id"
                   class="readmore-link"
-                  href="http://knowledgebase.inspirythemes.com/integrating-wordpress-with-your-website/"
-                >...查看更多</a>
+                >...查看更多</router-link>
               </p>
             </article>
             

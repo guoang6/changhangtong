@@ -5,6 +5,8 @@ const service = require('./service')//相关操作逻辑s
 //求助
 router.post('/web/webgetwebhelplist', service.webgetwebhelplist)
 router.post('/web/gethelpcontent', service.gethelpcontent)
+
+
 //留言
 router.post('/web/setcomment', service.setcomment)
 router.post('/web/getcomment', service.getcomment)
@@ -19,6 +21,8 @@ router.post('/web/webgetjoblist', service.webgetjoblist)
 
 //文章列表
 router.post('/web/getarticlelist', service.getarticlelist)
+router.post('/web/getarticlecontent', service.getarticlecontent)
+
 //公司列表
 router.post('/web/webgetcompanylist', service.webgetcompanylist)
 router.post('/web/getoldstuffcontent', service.getoldstuffcontent)

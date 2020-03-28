@@ -3,15 +3,15 @@
     <loginparticles />
     <div class="login-box">
       <p class="title">后台管理系统系统</p>
-      <form action id="form" method>
+      <form action id="form" @submit.prevent="onSubmit">
         <p class="usericon">
           <input type="text" v-model="username" placeholder="用户" id="username" />
         </p>
         <p class="passicon">
           <input type="password" v-model="password" placeholder="密码" id="password" />
         </p>
-        <p>
-          <input type="submit" @click="login" value="立即登录" class="submit-btn" />
+        <p >
+          <input type="submit" @click.prevent ="login" value="立即登录" class="submit-btn" />
         </p>
         <div class="others">
           <a href class="register">立即注册</a>

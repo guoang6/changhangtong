@@ -47,7 +47,7 @@
               </h5>
               <p class="date">
                 <a href="#">
-                  <time>{{item.createtime|dataFormat}}</time>
+                  <time>{{item.comment_createtime|dataFormat}}</time>
                 </a>
               </p>
             </div>
