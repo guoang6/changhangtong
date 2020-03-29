@@ -78,7 +78,10 @@
           </div>
           <!-- end of page content -->
           <!-- start of sidebar -->
-          <sidebar />
+           <aside class="span4 page-sidebar">
+             <sidebar />
+          </aside>
+         
           <!-- end of sidebar -->
         </div>
       </div>

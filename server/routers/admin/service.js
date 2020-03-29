@@ -60,7 +60,7 @@ WHERE
     }
     res.send(data)
 }
-//web获取求助列表
+//获取求助列表
 exports.contentexamine = async (req, res) => {
     console.log(req.body)
     let sql1 = ' select count(*) as count from help '
@@ -115,7 +115,7 @@ exports.getreply = async (req, res) => {
     }
     res.send(data)
 }
-//web获取活动列表
+//获取活动列表
 exports.webgetwebactivitylist = async (req, res) => {
     let sql1 = ' select count(*) as count from activity '
     let info1 = []
@@ -149,8 +149,11 @@ exports.getuserlist = async (req, res) => {
     let infocounts = []
     const counts = await query(sqlcounts, infocounts)
     let count = counts[0].count
-    let info = [req.user.uid]
-    let sql = 'select * from user where 1=1'
+    let pagesize = req.body.pagesize * 1
+    let page = (req.body.page - 1) * pagesize
+    let info = [pagesize, page]
+    // let info = [req.user.uid]
+    let sql = 'select * from user where 1=1  limit ? offset ?'
     const result = await query(sql, info)
     data = {
         state: s,

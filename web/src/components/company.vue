@@ -1,6 +1,5 @@
 <template>
   <div class="hoothelp">
-    <aside class="span4 page-sidebar">
       <section class="widget">
         <div style="position:relative;cursor:pointer">
            <h3 class="title">公司</h3>
@@ -19,7 +18,6 @@
         </ul>
         
       </section>
-    </aside>
   </div>
 </template>
 

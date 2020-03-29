@@ -29,7 +29,7 @@ let setnotice = async function (user_from, user_to, nickname, content_id, conten
     const result = await query(sql, notice)
 
 }
-//web获取求助列表
+//获取求助列表
 exports.webgetwebhelplist = async (req, res) => {
     console.log(req.body)
 
@@ -56,7 +56,7 @@ exports.webgetwebhelplist = async (req, res) => {
     // console.log(result)
     res.send(data);
 }
-//求助文章详情
+//文章详情
 exports.gethelpcontent = async (req, res) => {
     let info = [req.body.id]
     let sql = 'select * from help ,user where help.user_id =user.user_id and help_id=?'
@@ -76,7 +76,7 @@ exports.gethelpcontent = async (req, res) => {
     console.log(result)
     res.send(data);
 }
-//求助文章详情
+//文章详情
 exports.getarticlecontent = async (req, res) => {
     let info = [req.body.id]
     let sql = 'select * from article ,user where article.user_id =user.user_id and article_id=?'
@@ -97,7 +97,7 @@ exports.getarticlecontent = async (req, res) => {
     res.send(data);
 }
 
-//求助公司详情
+//公司详情
 exports.getcompanycontent = async (req, res) => {
     let info = [req.body.id]
     let sql = 'select * from job where  company_id=?'
@@ -121,7 +121,7 @@ exports.getcompanycontent = async (req, res) => {
     }
     res.send(data);
 }
-//求助工作详情
+//工作详情
 exports.getjobcontent = async (req, res) => {
     let info = [req.body.id]
     let sql = 'select * from job ,company where company.company_id =job.company_id and job_id=?'
@@ -336,7 +336,7 @@ exports.getoldstuffcontent = async (req, res) => {
 }
 //web获取公司列表
 exports.webgetcompanylist = async (req, res) => {
-    console.log(req.body.lable)
+    console.log("------公司信息--------------------")
     let sql1 = ' select count(*) as count from company '
     let info1 = []
     const counts = await query(sql1, info1)
@@ -344,6 +344,7 @@ exports.webgetcompanylist = async (req, res) => {
     let pagesize = req.body.pagesize * 1
     let page = (req.body.page - 1) * pagesize
     let info = [pagesize, page]
+    console.log("------公司列表--------------------")
     let sql = 'select company_id,company_name from company  limit ? offset ?'
     const result = await query(sql, info)
     data = {

@@ -34,8 +34,8 @@
                 <a>{{this.pagelistquery.tag}}</a>
               </li>
             </ul>
-            <section class="widget">
-              <ul class="articles">
+            <section class="widget" >
+              <ul class="articles" style="min-height:730px">
                 <li
                   class="article-entry standard"
                   v-for="(item,id) in tableData"

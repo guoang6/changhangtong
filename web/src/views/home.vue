@@ -27,6 +27,7 @@
                   </el-carousel-item>
                 </el-carousel>
               </div>
+                   <help />
               <activity />
               <job />
             </section>

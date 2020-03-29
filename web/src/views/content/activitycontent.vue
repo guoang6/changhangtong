@@ -79,7 +79,9 @@
             <!-- end of comments -->
             <!-- end of page content -->
           </div>
+          <aside class="span4 page-sidebar">
           <sidebar />
+          </aside>
           <!-- end of sidebar -->
         </div>
       </div>
