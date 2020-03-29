@@ -53,7 +53,11 @@
             <!-- end of page content -->
           </div>
            <aside class="span4 page-sidebar">
-            <sidebar />
+            <carousel />
+            <div style="margin-left:30px">
+            <news/>
+
+            </div>
           </aside>
           
           <!-- end of sidebar -->
@@ -66,15 +70,17 @@
 
 
 <script>
-import sidebar from "@/components/sidebar.vue";
+import carousel from "@/components/carousel.vue";
 import comment from "@/components/comment.vue";
+import news from "@/components/news.vue";
 import { mapState, mapActions } from "vuex";
 
 export default {
     name:"newscontent",
   components: {
-    sidebar,
-    comment
+    carousel,
+    comment,
+    news
   },
   data() {
     return {

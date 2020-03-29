@@ -60,7 +60,7 @@ export default {
         lable: "",
         tag: "",
         total: 0,
-        pagesize: 4,
+        pagesize: 3,
         page: 1
       },
       tableData: {}

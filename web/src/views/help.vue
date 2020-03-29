@@ -62,7 +62,8 @@
           <!-- end of page content -->
           <!-- start of sidebar -->
            <aside class="span4 page-sidebar">
-             <sidebar />
+             <carousel />
+             <oldstuffhot />
           </aside>
          
           <!-- end of sidebar -->
@@ -75,11 +76,13 @@
 
 
 <script>
-import sidebar from "@/components/sidebar.vue";
+import carousel from "@/components/carousel.vue";
+import oldstuffhot from "@/components/oldstuffhot.vue";
 export default {
   name:'help',
   components: {
-    sidebar
+    carousel,
+    oldstuffhot,
   },
   data() {
     return {

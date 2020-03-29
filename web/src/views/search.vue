@@ -8,19 +8,22 @@
         <div class="row">
           <!-- start of page content -->
           <div class="span8 page-content">
-            <h4>
+            <h3>
               有关
               <span style="color:#1890ff">{{search}}</span>
               的搜素结果
-            </h4>
+            </h3>
             <div
               v-if="tableData.help==''&&tableData.activity==''&&tableData.job==''&&tableData.company==''&&tableData.article==''&&tableData.oldstuff==''"
             >
               <img src="../assets/images/noinfo.png" width="100%" alt />
-              <div style="width:100%;text-align:center">没有找到有关 <span style="color:#1890ff">{{search}}</span> 的搜素结果</div>
+              <div style="width:100%;text-align:center">
+                没有找到有关
+                <span style="color:#1890ff">{{search}}</span> 的搜素结果
+              </div>
             </div>
             <!--starthelp-->
-            <section class="widget">
+            <section class="widget" v-if="tableData.help.length!==0">
               <div class="row">
                 <ul class="articles">
                   <li class="article-entry standard" v-for="(item,id) in tableData.help" :key="id">
@@ -46,7 +49,7 @@
             </section>
             <!--end help-->
             <!--start oldstuff-->
-            <section class="widget">
+            <section class="widget" v-if="tableData.oldstuff.length!==0">
               <div class="row">
                 <div
                   style="margin :1%"
@@ -73,7 +76,8 @@
               </div>
             </section>
             <!--end oldstuff-->
-            <section class="widget">
+            <!--activity-->
+            <section class="widget" v-if="tableData.activity.length!==0">
               <div class="row">
                 <ul class="articles">
                   <li
@@ -104,8 +108,8 @@
                 </ul>
               </div>
             </section>
-
-            <section class="widget">
+            <!--article-->
+            <section class="widget" v-if="tableData.article.length!==0">
               <div class="row">
                 <article
                   class="format-standard type-post hentry clearfix"
@@ -136,15 +140,13 @@
                     <!-- end of post meta -->
                   </header>
                   <p v-html="item.introductionwraper">
-                      <router-link
-                      :to="'/newscontent/'+item.article_id"
-                  class="readmore-link"
-                >...查看更多</router-link>
+                    <router-link :to="'/newscontent/'+item.article_id" class="readmore-link">...查看更多</router-link>
                   </p>
                 </article>
               </div>
             </section>
-            <section class="widget">
+            <!--job-->
+            <section class="widget" v-if="tableData.job.length!==0">
               <div class="row">
                 <ul class="articles">
                   <li
@@ -154,7 +156,6 @@
                     style="position:relative"
                   >
                     <h4>
-                      
                       <router-link :to="'/jobcontent/'+item.job_id" v-html="item.namewraper"></router-link>
                     </h4>
                     <h4
@@ -173,8 +174,8 @@
                 </ul>
               </div>
             </section>
-
-            <section class="widget">
+            <!--company-->
+            <section class="widget" v-if="tableData.company.length!==0">
               <div class="row">
                 <ul>
                   <li v-for="(item,id) in tableData.company" :key="id">
@@ -190,14 +191,8 @@
           <aside class="span4 page-sidebar">
             <section class="widget">
               <div class="support-widget">
-                <el-carousel height="150px">
-                  <el-carousel-item v-for="item in 4" :key="item">
-                    <h3 class="title">Support</h3>
-                    <p
-                      class="intro"
-                    >Need more support? If you did not found an answer, contact us for further help.</p>
-                  </el-carousel-item>
-                </el-carousel>
+                <h3 class="title">搜索功能</h3>
+                <p class="intro">该功能会搜索含有关键字的所有信息，该模块只能进行简单的搜索</p>
               </div>
               <activity />
               <job />
@@ -245,7 +240,6 @@ export default {
       );
       if (res.data.state.type === "SUCCESS") {
         this.tableData = res.data.data;
-        console.log(this.tableData.help);
         this.tableData.help.forEach(element => {
           element.titlewraper = this.wraperkeyword(
             "help_title",

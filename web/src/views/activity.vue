@@ -49,7 +49,8 @@
           <!-- end of page content -->
           <!-- start of sidebar -->
            <aside class="span4 page-sidebar">
-              <sidebar />
+              <carousel />
+              <job />
           </aside>
        
           <!-- end of sidebar -->
@@ -62,10 +63,12 @@
 
 
 <script>
-import sidebar from "@/components/sidebar.vue";
+import job from "@/components/job.vue";
+import carousel from "@/components/carousel.vue";
 export default {
   components: {
-    sidebar
+    carousel,
+    job
   },
 data() {
     return {

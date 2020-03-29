@@ -80,7 +80,8 @@
             <!-- end of page content -->
           </div>
           <aside class="span4 page-sidebar">
-          <sidebar />
+          <carousel />
+          <activity/>
           </aside>
           <!-- end of sidebar -->
         </div>
@@ -92,14 +93,16 @@
 
 
 <script>
-import sidebar from "@/components/sidebar.vue";
+import carousel from "@/components/carousel.vue";
 import comment from "@/components/comment.vue";
+import activity from "@/components/activity.vue";
 import { mapState, mapActions } from "vuex";
 
 export default {
   components: {
-    sidebar,
-    comment
+    carousel,
+    comment,
+    activity
   },
   computed: {
     ...mapState({

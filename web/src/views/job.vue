@@ -54,7 +54,7 @@
                     <a
                       class="iconfont"
                       style="margin-left:50px"
-                    >&#xe688;</a>
+                    >&#xe679;</a>
                     {{item.company_name}}
                   </span>
                 </li>
@@ -69,8 +69,10 @@
           <!-- end of page content -->
           <!-- start of sidebar -->
           <aside class="span4 page-sidebar">
-            <section class="widget">
+            <section class="widget"> 
+               <carousel />
               <company />
+            
             </section>
           </aside>
 
@@ -84,11 +86,13 @@
 
 
 <script>
+import carousel from "@/components/carousel.vue";
 import company from "@/components/company.vue";
 export default {
   name: "help",
   components: {
-    company
+    company,
+    carousel
   },
   data() {
     return {

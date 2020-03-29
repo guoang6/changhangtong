@@ -1,7 +1,6 @@
 <template>
   <div class="hello">
     <!-- start of sidebar -->
-    <aside class="span4 page-sidebar">
       <section class="widget">
         <!-- <div class="support-widget">
         </div>-->
@@ -16,7 +15,6 @@
           </el-carousel-item>
         </el-carousel> 
       </section>
-    </aside>
     <!-- end of sidebar -->
   </div>
 </template>

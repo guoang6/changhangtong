@@ -12,27 +12,27 @@
             <article class="type-post format-standard hentry clearfix">
               <div>
                 <div class="show_unit fl ativity">
-                  <a class="iconfont ic">&#xe622;</a>
+                  <a class="iconfont ic">&#xe661;</a>
                   <a class="tagname">岗位名称:</a>
                   {{content.job_name}}
                 </div>
                 <div class="show_unit fl ativity">
-                  <a class="iconfont ic">&#xe66a;</a>
+                  <a class="iconfont ic">&#xe616;</a>
                   <a class="tagname">类型:</a>
                   {{content.job_lable}}
                 </div>
                 <div class="show_unit fl ativity">
-                  <a class="iconfont ic">&#xe62a;</a>
+                  <a class="iconfont ic">&#xe623;</a>
                   <a class="tagname">薪资:</a>
                   {{content.job_salary}}
                 </div>
                 <div class="show_unit fl ativity">
-                  <a class="iconfont ic">&#xe62a;</a>
+                  <a class="iconfont ic">&#xe678;</a>
                   <a class="tagname">招聘人数:</a>
                   {{content.job_num}}
                 </div>
                 <div class="show_unit fl ativity">
-                  <a class="iconfont ic">&#xe62a;</a>
+                  <a class="iconfont ic">&#xe61a;</a>
                   <a class="tagname">投递方式:</a>
                   {{content.company_mail}}
                 </div>
@@ -61,7 +61,8 @@
             <!-- end of page content -->
           </div>
           <aside class="span4 page-sidebar">
-          <sidebar />
+          <carousel />
+          <job/>
           </aside>
           <!-- end of sidebar -->
         </div>
@@ -73,14 +74,16 @@
 
 
 <script>
-import sidebar from "@/components/sidebar.vue";
+import carousel from "@/components/carousel.vue";
 import comment from "@/components/comment.vue";
+import job from "@/components/job.vue";
 import { mapState, mapActions } from "vuex";
 
 export default {
   components: {
-    sidebar,
-    comment
+    carousel,
+    comment,
+    job
   },
   computed: {
     ...mapState({

@@ -17,19 +17,11 @@
           <!-- start of sidebar -->
           <aside class="span4 page-sidebar">
             <section class="widget">
-              <div class="support-widget">
-                <el-carousel height="150px">
-                  <el-carousel-item v-for="item in 4" :key="item">
-                    <h3 class="title">Support</h3>
-                    <p
-                      class="intro"
-                    >Need more support? If you did not found an answer, contact us for further help.</p>
-                  </el-carousel-item>
-                </el-carousel>
-              </div>
-                   <help />
+              <carousel/>
+              <help />
               <activity />
               <job />
+              
             </section>
           </aside>
           <!-- end of sidebar -->
@@ -42,6 +34,7 @@
 <script>
 // @ is an alias to /src
 // import job from "@/components/job.vue";
+import carousel from "@/components/carousel.vue";
 import activity from "@/components/activity.vue";
 import news from "@/components/news.vue";
 import oldstuff from "@/components/oldstuff.vue";
@@ -55,7 +48,8 @@ export default {
     oldstuff,
     job,
     activity,
-    help
+    help,
+    carousel
   }
 };
 </script>

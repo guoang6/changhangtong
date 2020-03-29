@@ -68,7 +68,8 @@
             <!-- end of page content -->
           </div>
            <aside class="span4 page-sidebar">
-             <sidebar />
+             <carousel />
+             <oldstuffhot/>
           </aside>
          
           <!-- end of sidebar -->
@@ -81,14 +82,16 @@
 
 
 <script>
-import sidebar from "@/components/sidebar.vue";
+import carousel from "@/components/carousel.vue";
 import comment from "@/components/comment.vue";
+import oldstuffhot from "@/components/oldstuffhot.vue";
 import { mapState, mapActions } from "vuex";
 
 export default {
   components: {
-    sidebar,
-    comment
+    carousel,
+    comment,
+    oldstuffhot
   },
   data() {
     return {

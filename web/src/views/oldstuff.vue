@@ -62,7 +62,12 @@
           <!-- end of page content -->
           <!-- start of sidebar -->
            <aside class="span4 page-sidebar">
-              <sidebar />
+              <carousel /> 
+              <activity/>
+              <div style="margin-left:30px">
+                <news/>
+              </div>
+              
           </aside>
         
           <!-- end of sidebar -->
@@ -75,10 +80,16 @@
 
 
 <script>
-import sidebar from "@/components/sidebar.vue";
+import carousel from "@/components/carousel.vue";
+import activity from "@/components/activity.vue";
+import news from "@/components/news.vue";
+
+
 export default {
   components: {
-    sidebar
+    carousel,
+    activity,
+    news
   },
   data() {
     return {

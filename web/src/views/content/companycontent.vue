@@ -12,7 +12,7 @@
             <article class="type-post format-standard hentry clearfix">
               <div>
                 <div class="show_unit fl ativity">
-                  <a class="iconfont ic">&#xe622;</a>
+                  <a class="iconfont ic">&#xe679;</a>
                   <a class="tagname">公司规模:</a>
                   {{content.company_scale}}
                 </div>
@@ -49,7 +49,7 @@
           <aside class="span4 page-sidebar">
           
           
-          <job />
+          <carousel />
           <company />
           </aside>
 
@@ -65,7 +65,7 @@
 <script>
 import company from "@/components/company.vue";
 import comment from "@/components/comment.vue";
-import job from "@/components/job.vue";
+import carousel from "@/components/carousel.vue";
 
 import { mapState, mapActions } from "vuex";
 
@@ -73,7 +73,7 @@ export default {
   components: {
       company,
     comment,
-    job
+    carousel
   },
   computed: {
     ...mapState({

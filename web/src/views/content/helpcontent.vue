@@ -53,7 +53,8 @@
             <!-- end of page content -->
           </div>
           <aside class="span4 page-sidebar">
-             <sidebar />
+             <carousel />
+             <help/>
           </aside>
          
           
@@ -68,14 +69,17 @@
 
 
 <script>
-import sidebar from "@/components/sidebar.vue";
+import carousel from "@/components/carousel.vue";
 import comment from "@/components/comment.vue";
+import help from "@/components/help.vue";
+
 import { mapState, mapActions } from "vuex";
 
 export default {
   components: {
-    sidebar,
-    comment
+    carousel,
+    comment,
+    help
   },
   data() {
     return {

@@ -79,7 +79,8 @@
           <!-- end of page content -->
           <!-- start of sidebar -->
            <aside class="span4 page-sidebar">
-             <sidebar />
+             <carousel />
+             <oldstuffhot/>
           </aside>
          
           <!-- end of sidebar -->
@@ -92,11 +93,14 @@
 
 
 <script>
-import sidebar from "@/components/sidebar.vue";
+import carousel from "@/components/carousel.vue";
+import oldstuffhot from "@/components/oldstuffhot.vue";
+
 export default {
   name:'help',
   components: {
-    sidebar
+    carousel,
+    oldstuffhot
   },
   data() {
     return {
@@ -106,7 +110,7 @@ export default {
         lable: "",
         tag: "",
         total: 0,
-        pagesize: 10,
+        pagesize: 5,
         page: 1
       },
       tableData: {}
