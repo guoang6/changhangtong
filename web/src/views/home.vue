@@ -18,7 +18,6 @@
           <aside class="span4 page-sidebar">
             <section class="widget">
               <carousel/>
-              <help />
               <activity />
               <job />
               
@@ -37,9 +36,9 @@
 import carousel from "@/components/carousel.vue";
 import activity from "@/components/activity.vue";
 import news from "@/components/news.vue";
+import help from "@/components/help.vue";
 import oldstuff from "@/components/oldstuff.vue";
 import job from "@/components/job.vue";
-import help from "@/components/help.vue";
 
 export default {
   name: "home",
@@ -48,8 +47,8 @@ export default {
     oldstuff,
     job,
     activity,
-    help,
-    carousel
+    carousel,
+    help
   }
 };
 </script>

@@ -112,6 +112,16 @@ export default {
       }
     }
   },
+      watch: {
+    id: {
+      handler(newVal) {
+        this.gethelpcontent();
+    this.setcontentid(this.id);
+      },
+      deep: true,
+      immediate: true
+    }
+  },
   created() {
     this.gethelpcontent();
     this.setcontentid(this.id);

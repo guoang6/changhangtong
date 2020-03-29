@@ -7,7 +7,7 @@
              <router-link to="/oldstuff" tag="div"  class="page-header" style="position:relative;cursor:pointer">
           <h3 >二手交易</h3>
           <h4 style="  position: absolute;right: 100px;top: 4px;">更多></h4>
-        </router-link>
+          </router-link>
             <div
               style="margin :1%"
               class="col-sm-6 col-md-4"

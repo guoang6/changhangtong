@@ -1,7 +1,6 @@
  
 <template>
   <div class="help">
-    <div class="row">
       <!-- start of page content -->
       <div>
         <router-link
@@ -45,8 +44,8 @@
           </p>
         </article>
       </div>
+
     </div>
-  </div>
 </template>
 
 

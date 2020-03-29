@@ -80,8 +80,8 @@
             <!-- end of page content -->
           </div>
           <aside class="span4 page-sidebar">
-          <carousel />
-          <activity/>
+            <carousel />
+            <activity />
           </aside>
           <!-- end of sidebar -->
         </div>
@@ -126,7 +126,7 @@ export default {
     };
   },
   props: {
-    id: {}
+    id:{}
   },
   methods: {
     ...mapActions(["setcontentid", "setcontentinfo"]),
@@ -174,6 +174,17 @@ export default {
       if (res.data.state.type === "SUCCESS") {
         this.announcementlist = res.data.data;
       }
+    }
+  },
+  watch: {
+    id: {
+      handler(newVal) {
+        this.getactivitycontent();
+        this.getannouncementlist();
+        this.setcontentid(this.id);
+      },
+      deep: true,
+      immediate: true
     }
   },
   created() {

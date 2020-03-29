@@ -1,6 +1,6 @@
 <template>
   <div id="newscontent">
-<div v-title data-title="问答详情"></div>
+    <div v-title data-title="问答详情"></div>
 
     <!-- Start of Page Container -->
     <div class="page-container">
@@ -52,14 +52,11 @@
             <!-- end of comments -->
             <!-- end of page content -->
           </div>
-           <aside class="span4 page-sidebar">
+          <aside class="span4 page-sidebar">
             <carousel />
-            <div style="margin-left:30px">
-            <news/>
-
-            </div>
+            <news />
           </aside>
-          
+
           <!-- end of sidebar -->
         </div>
       </div>
@@ -76,7 +73,7 @@ import news from "@/components/news.vue";
 import { mapState, mapActions } from "vuex";
 
 export default {
-    name:"newscontent",
+  name: "newscontent",
   components: {
     carousel,
     comment,
@@ -107,10 +104,23 @@ export default {
       );
       if (res.data.state.type === "SUCCESS") {
         this.content = res.data.data;
-        console.log(res.data.data.article_title)
-        this.setcontentinfo({contentname:res.data.data.article_title,contentuserid:res.data.data.user_id})
+        console.log(res.data.data.article_title);
+        this.setcontentinfo({
+          contentname: res.data.data.article_title,
+          contentuserid: res.data.data.user_id
+        });
         // this.content.help_tag = res.data.data.help_tag.split(",");
       }
+    }
+  },
+  watch: {
+    id: {
+      handler(newVal) {
+        this.getarticlecontent();
+        this.setcontentid(this.id);
+      },
+      deep: true,
+      immediate: true
     }
   },
   created() {

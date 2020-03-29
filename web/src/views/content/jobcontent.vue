@@ -131,6 +131,16 @@ export default {
       }
     }
   },
+        watch: {
+    id: {
+      handler(newVal) {
+       this.getjobcontent();
+    this.setcontentid(this.id);
+      },
+      deep: true,
+      immediate: true
+    }
+  },
   created() {
     this.getjobcontent();
     this.setcontentid(this.id);

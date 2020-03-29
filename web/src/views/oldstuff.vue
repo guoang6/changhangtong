@@ -64,10 +64,7 @@
            <aside class="span4 page-sidebar">
               <carousel /> 
               <activity/>
-              <div style="margin-left:30px">
                 <news/>
-              </div>
-              
           </aside>
         
           <!-- end of sidebar -->

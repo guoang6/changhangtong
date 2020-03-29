@@ -29,7 +29,7 @@
                   <a>二手信息</a>
                 </router-link>
                 <router-link to="/news" tag="li" exact-active-class="current-menu-item">
-                  <a>文章</a>
+                  <a>文章/新闻</a>
                 </router-link>
 
                 <li v-if="nickname==''">

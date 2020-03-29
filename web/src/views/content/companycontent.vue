@@ -124,6 +124,16 @@ export default {
       }
     }
   },
+    watch: {
+    id: {
+      handler(newVal) {
+        this.getcompanycontent();
+    this.setcontentid(this.id);
+      },
+      deep: true,
+      immediate: true
+    }
+  },
   created() {
     this.getcompanycontent();
     this.setcontentid(this.id);

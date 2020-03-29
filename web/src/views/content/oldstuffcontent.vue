@@ -67,11 +67,11 @@
             <!-- end of comments -->
             <!-- end of page content -->
           </div>
-           <aside class="span4 page-sidebar">
-             <carousel />
-             <oldstuffhot/>
+          <aside class="span4 page-sidebar">
+            <carousel />
+            <oldstuffhot />
           </aside>
-         
+
           <!-- end of sidebar -->
         </div>
       </div>
@@ -153,7 +153,16 @@ export default {
       this.dialogFormVisible = false;
     }
   },
-
+  watch: {
+    id: {
+      handler(newVal) {
+        this.getoldstuffcontent();
+        this.setcontentid(this.id);
+      },
+      deep: true,
+      immediate: true
+    }
+  },
   created() {
     this.getoldstuffcontent();
     this.setcontentid(this.id);
