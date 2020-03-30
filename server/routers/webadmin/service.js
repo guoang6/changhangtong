@@ -34,7 +34,7 @@ exports.registered = async (req, res) => {
             password: req.body.password,//密码
             user_createtime: time,//创建时间
             nickname: '该用户还没没有设置昵称',//昵称
-            avatar: `${url}/uplodes/moren`,
+            avatar: 'http://oss.guoang.xyz/morentouxiang.jpg',
             realstate: 1,
             user_state: 2,
             companystate: 1
@@ -172,8 +172,8 @@ exports.updatauser = async (req, res) => {
 //图片上传  
 exports.uplod = (req, res) => {
     const file = req.file
-    // file.url = `${url}/uplodes/${file.filename}`
-    // console.log(file.url)
+    file.url = `http://oss.guoang.xyz/${file.filename}`
+    console.log(file)
     res.send(file)
 }
 /**
