@@ -20,7 +20,18 @@ router.use(function (err, req, res, next) {
 });
 //上传中间件
 const multer = require('multer')//上传npm i multer
-const uplod = multer({ dest: __dirname + '/../../uplodes' })//
+const MAO = require('multer-aliyun-oss');//npm install --save multer-aliyun-oss
+const uplod = multer({
+  storage: MAO({
+      config: {
+          region: 'oss-cn-hangzhou',
+          accessKeyId: 'LTAI4Fr4sf8xzgggy75Tofnr',
+          accessKeySecret: 'BdpR8FnmP8OmyBnWWIooPuD6Cef0b3',
+          bucket: 'guoang'
+      }
+  })
+});
+// const uplod = multer({ dest: __dirname + '/../../uplodes' })
 //图片图片上传
 router.post('/uplod', uplod.single('file'), service.uplod)
 /**

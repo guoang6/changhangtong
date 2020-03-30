@@ -1,7 +1,7 @@
 const { query } = require('../../plugins/db.js')
 const { md5 } = require('../../plugins/md5.js')
 var uuid = require('node-uuid');//npm install node-uuid
-const { PED_SALT, EXPIRE_SIN, PEIVATE_KEY, url } = require('../../plugins/config.js')
+const { PED_SALT, EXPIRE_SIN, PEIVATE_KEY } = require('../../plugins/config.js')
 var jwt = require('jsonwebtoken');
 let data
 const s = {
@@ -172,8 +172,8 @@ exports.updatauser = async (req, res) => {
 //图片上传  
 exports.uplod = (req, res) => {
     const file = req.file
-    file.url = `${url}/uplodes/${file.filename}`
-    console.log(file.url)
+    // file.url = `${url}/uplodes/${file.filename}`
+    // console.log(file.url)
     res.send(file)
 }
 /**

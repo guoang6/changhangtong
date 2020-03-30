@@ -8,7 +8,8 @@ const state = {
   contentid: '',
   contentname:'',
   contentuserid:'',
-  url:'http://localhost:8080'
+  url:'http://localhost:8080',
+  // url:'http://www.guoang.xyz/changhangtong'
 }
 const getters = {}
 const mutations = {

@@ -3,5 +3,4 @@ module.exports={
     PED_SALT:'adadadadad',//用户密码加密密钥
     EXPIRE_SIN:60*60,//token过期时间
     PEIVATE_KEY:'asdadadada',//token加密密钥
-    url:'http://127.0.0.1:3000'
 }

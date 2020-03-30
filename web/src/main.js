@@ -34,7 +34,7 @@ import axios from 'axios'
 //aciox基础url
 axios.defaults.baseURL = 'http://127.0.0.1:3000';
 
-// axios.defaults.baseURL = 'http://localhost:8081/';
+// axios.defaults.baseURL = 'http://www.guoang.xyz:3000';
 
 //将axios写成vue的原型属性
 Vue.prototype.$axios = axios;
