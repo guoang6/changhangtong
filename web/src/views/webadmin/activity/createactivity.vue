@@ -40,10 +40,12 @@
 
           <el-form-item label="信息管理">
             <el-radio-group v-model="form.activity_lable">
-              <el-radio label="娱乐"></el-radio>
-              <el-radio label="运动"></el-radio>
-              <el-radio label="志愿者"></el-radio>
-              <el-radio label="官方"></el-radio>
+              <el-radio
+                v-for="(item,id) in lable"
+                :key="id"
+                :class="'page_span_'+id "
+                :label="item"
+              >{{item}}</el-radio>
             </el-radio-group>
           </el-form-item>
 
@@ -124,6 +126,7 @@ import { VueEditor } from "vue2-editor";
 export default {
   data() {
     return {
+      lable: [],
       announcementlist: [],
       dialogFormVisible: false,
       tableData: [], //报名列表
@@ -192,7 +195,7 @@ export default {
     },
     //发布活动公告
     async setannouncement() {
-     this.announcement. contentname=this.form.activity_title
+      this.announcement.contentname = this.form.activity_title;
       this.announcement.content_id = this.id;
       let res = await this.$axios.post(
         "/admin/setannouncement",
@@ -230,12 +233,26 @@ export default {
         this.qs.stringify({ id: this.id })
       );
       this.tableData = res.data.data;
+    },
+    //分类列表
+    async lablelist() {
+      let res = await this.$axios.post(
+        "/admin/lablelist",
+        this.qs.stringify({ lable_name: "活动分类" })
+      );
+      if (res.data.state.type === "SUCCESS") {
+        // this.lable = res.data.data
+        this.lable = JSON.parse(res.data.data[0].lable);
+        console.log("分类列表");
+        console.log(this.lable);
+      }
     }
   },
   created() {
     this.id && this.getactivitydetails();
     this.id && this.getjoinslist();
     this.id && this.getannouncementlist();
+    this.lablelist();
   }
 };
 </script>

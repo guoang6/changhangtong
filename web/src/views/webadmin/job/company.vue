@@ -55,7 +55,7 @@
                 :label="item"
               >{{item}}</el-radio>
             </el-form-item>
-            <el-form-item label="公司简介">
+            <el-form-item label="岗位简介">
               <vue-editor
                 useCustomImageHandler
                 @image-added="handleImageAdded"
@@ -96,14 +96,13 @@
 </template>
 <script>
 import { VueEditor } from "vue2-editor";
-
+import { mapState } from "vuex";
 export default {
   data() {
     return {
-      lable: ["学习", "生活", "娱乐", "其他"],
-
+      lable: [],
       dialogFormVisible: false,
-      job: [],
+      job: {},
       joblist: [],
       form: {
         company_name: "",
@@ -112,10 +111,29 @@ export default {
       }
     };
   },
+  computed: {
+    ...mapState({
+      url: state => state.url
+    })
+  },
   components: {
     VueEditor
   },
   methods: {
+     /**
+     * npm install vue2-editor
+     *
+     * 富文本编辑器图片上传
+     */
+    async handleImageAdded(file, Editor, cursorLocation, resetUploader) {
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await this.$axios.post("/uplod", formData);
+      console.log(res);
+      Editor.insertEmbed(cursorLocation, "image", res.data.url);
+      resetUploader();
+    },
+
     async getwebcompany() {
       let res = await this.$axios.post("/webadmin/getwebcompany");
 
@@ -158,10 +176,23 @@ export default {
         this.dialogFormVisible = false;
         this.getwebcompany();
       }
+    },
+      async lablelist() { 
+      let res = await this.$axios.post(
+        "/admin/lablelist",
+        this.qs.stringify({ lable_name:'招聘分类' })
+      );
+      if (res.data.state.type === "SUCCESS") {
+        // this.lable = res.data.data
+          this.lable = JSON.parse(res.data.data[0].lable);
+        console.log("分类列表");
+        console.log(this.lable);
+      }
     }
   },
   created() {
     this.getwebcompany();
+    this.lablelist()
   }
 };
 </script>

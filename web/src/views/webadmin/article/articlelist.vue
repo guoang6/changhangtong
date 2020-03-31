@@ -47,6 +47,7 @@
 export default {
   data() {
     return {
+      lable:[],
       pagelistquery: {
         total: 0,
         page: 1,
@@ -104,10 +105,24 @@ export default {
         console.log(res.data);
         this.pagelistquery.total = res.data.count;
       }
+    },
+     //分类列表
+    async lablelist() {
+      let res = await this.$axios.post(
+        "/admin/lablelist",
+        this.qs.stringify({ lable_name: "文章分类" })
+      );
+      if (res.data.state.type === "SUCCESS") {
+        // this.lable = res.data.data
+        this.lable = JSON.parse(res.data.data[0].lable);
+        console.log("分类列表");
+        console.log(this.lable);
+      }
     }
   },
   created() {
     this.articlelist();
+    this.lablelist();
   }
 };
 </script>

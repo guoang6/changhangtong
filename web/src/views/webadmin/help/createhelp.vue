@@ -53,7 +53,7 @@ import { VueEditor } from "vue2-editor";
 export default {
   data() {
     return {
-      lable: ["学习", "生活", "娱乐", "其他"],
+      lable: [],
       dynamicTags: [],
       inputVisible: false,
       inputValue: "",
@@ -141,10 +141,23 @@ export default {
       this.form.help_lable = data.help_lable;
       this.form.help_content = data.help_content;
       this.dynamicTags=data.help_tag.split(",");
+    },
+    async lablelist() { 
+      let res = await this.$axios.post(
+        "/admin/lablelist",
+        this.qs.stringify({ lable_name:'问答分类' })
+      );
+      if (res.data.state.type === "SUCCESS") {
+        // this.lable = res.data.data
+          this.lable = JSON.parse(res.data.data[0].lable);
+        console.log("分类列表");
+        console.log(this.lable);
+      }
     }
   },
   created() {
     this.id && this.gethelpdetails();
+    this.lablelist()
   }
 };
 </script>

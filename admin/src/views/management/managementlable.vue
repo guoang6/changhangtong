@@ -14,8 +14,8 @@
         <div>
           <el-tag
             :key="tag"
-             effect="dark"
-             type="success"
+            effect="dark"
+            type="success"
             v-for="tag in lable.lable"
             closable
             :disable-transitions="false"
@@ -85,14 +85,17 @@ export default {
     },
 
     async lablelist() {
-      let res = await this.$axios.post("/admin/lablelist");
+      let res = await this.$axios.post(
+        "/admin/lablelist",
+        this.qs.stringify({ lable_name: "" })
+      );
       if (res.data.state.type === "SUCCESS") {
         this.lable = res.data.data;
         console.log(res.data);
         for (let i = 0; i < this.lable.length; i++) {
           this.lable[i].lable = JSON.parse(this.lable[i].lable);
         }
-        console.log('分类列表')
+        console.log("分类列表");
         console.log(this.lable);
       }
     }

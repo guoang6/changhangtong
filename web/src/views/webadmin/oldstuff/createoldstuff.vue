@@ -48,7 +48,7 @@ import { VueEditor } from "vue2-editor";
 export default {
   data() {
     return {
-      lable: ["学习", "生活", "娱乐", "其他"],
+      lable: [],
       form: {
         oldstuff_img: "",
         oldstuff_name: "",
@@ -97,10 +97,23 @@ export default {
       this.form = res.data.data;
       console.log(this.form);
       console.log(res);
+    },
+     async lablelist() { 
+      let res = await this.$axios.post(
+        "/admin/lablelist",
+        this.qs.stringify({ lable_name:'二手分类' })
+      );
+      if (res.data.state.type === "SUCCESS") {
+        // this.lable = res.data.data
+          this.lable = JSON.parse(res.data.data[0].lable);
+        console.log("分类列表");
+        console.log(this.lable);
+      }
     }
   },
   created() {
     // this.getuser();
+     this.lablelist()
   }
 };
 </script>

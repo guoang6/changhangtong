@@ -81,7 +81,6 @@ exports.contentexamine = async (req, res) => {
     // console.log(result)
     res.send(data);
 }
-
 //获取评论列表
 exports.getcomment = async (req, res) => {
     let info = [req.body.content_id]//内容id
@@ -100,7 +99,6 @@ exports.getcomment = async (req, res) => {
     }
     res.send(data)
 }
-
 //获取回复列表
 exports.getreply = async (req, res) => {
     let info = [req.body.comment_id]//评论id
@@ -201,6 +199,7 @@ exports.changeuserstate = async (req, res) => {
 exports.lablelist = async (req, res) => {
     let info = []
     let sql = `select * from lable`
+    if(req.body.lable_name!=='') sql=`${sql} where lable_name='${req.body.lable_name}'`
     const result = await query(sql, info)
     data = {
         state: s,

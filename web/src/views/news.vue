@@ -105,7 +105,7 @@ export default {
   data() {
     return {
       smallttle:'',
-      lables: ["学习", "生活", "娱乐", "其他"],
+      lables: [],
       pagelistquery: {
         lable: "",
         tag: "",
@@ -145,11 +145,24 @@ export default {
         console.log(res.data);
         this.pagelistquery.total = res.data.count;
       }
+    },
+    async lablelist() { 
+      let res = await this.$axios.post(
+        "/admin/lablelist",
+        this.qs.stringify({ lable_name:'文章分类' })
+      );
+      if (res.data.state.type === "SUCCESS") {
+        // this.lable = res.data.data
+          this.lables = JSON.parse(res.data.data[0].lable);
+        console.log("分类列表");
+        console.log(this.lables);
+      }
     }
   },
   created() {
     this.tag && this.changetag();
     this.getarticlelist();
+    this.lablelist();
   }
 };
 </script>
