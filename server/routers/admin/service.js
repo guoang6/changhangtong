@@ -208,9 +208,48 @@ exports.lablelist = async (req, res) => {
     }
     res.send(data)
 }
+//走马灯修改
+exports.changecarousel = async (req, res) => { 
+    console.log(req.body)
+    let time = Date.now() - 8 * 60 * 60
+    let carousel_id=uuid.v1()
+    let sql
+    let info = [req.body.carousel_img,req.body.carousel_url,time,carousel_id]
+    if(req.body.carousel_id=='')sql = `insert carousel  set carousel_img=?,carousel_url=?,carousel_createtime=?,carousel_id=?`
+    else sql=`update carousel  set carousel_img=?,carousel_url=? where carousel_id='${req.body.carousel_id}'`
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: result,
 
+    }
+    res.send(data)
+}
+//走马灯列表
+exports.carousellist = async (req, res) => {
+    let info = []
+    let sql = `select * from carousel ORDER BY carousel_createtime DESC`
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: result,
 
+    }
+    res.send(data)
+}
 
+//删除走马灯
+exports.deletecarouse = async (req, res) => {
+    let info = [req.body.carousel_id]
+    let sql = `delete  from carousel where carousel_id=? `
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: result,
+
+    }
+    res.send(data)
+}
 //修改分类
 exports.changelable = async (req, res) => {
     let info = [

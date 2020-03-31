@@ -60,7 +60,7 @@
           </template>
          
           <el-menu-item index="/managementlable">标签管理</el-menu-item>
-          <el-menu-item index="3-2">轮播管理</el-menu-item>
+          <el-menu-item index="/carousel">轮播管理</el-menu-item>
         </el-submenu>
         <el-submenu index="4">
           <template slot="title">

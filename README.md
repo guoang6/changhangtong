@@ -1,5 +1,5 @@
 # changhangtong
-vue.js+node.js全栈开发---“昌航通”信息平台
+vue.js+node.js毕业设计
 
 # 主要功能模块
 - 前台

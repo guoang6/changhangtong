@@ -9,6 +9,12 @@ router.post('/admin/changeuserstate', service.changeuserstate)
 //分类管理
 router.post('/admin/lablelist', service.lablelist)
 router.post('/admin/changelable', service.changelable)
+router.post('/admin/changecarousel', service.changecarousel)
+router.post('/admin/carousellist', service.carousellist)
+router.post('/admin/deletecarouse', service.deletecarouse)
+
+
+
 //公告列表
 
 router.post('/admin/announcementlist', service.announcementlist)

@@ -4,13 +4,9 @@ import main from '../views/main.vue'
 import login from '../views/login.vue'
 import contentexamine from '../views/examine/contentexamine.vue'
 import useruser from '../views/user/useruser.vue'
+import carousel from '../views/management/carousel.vue'
 import managementlable from '../views/management/managementlable.vue'
 import numbering from '../views/numbering/numbering.vue'
-
-
-
-
-
 Vue.use(VueRouter)
 
 const routes = [
@@ -20,6 +16,7 @@ const routes = [
     { path: 'contentexamine', name: 'contentexamine', component: contentexamine, },
     { path: 'useruser', name: 'useruser', component: useruser, },
     { path: 'managementlable', name: 'managementlable', component: managementlable, },
+    { path: 'carousel', name: 'carousel', component: carousel, },
 
 
   ]
