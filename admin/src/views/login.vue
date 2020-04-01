@@ -31,8 +31,8 @@ export default {
   },
   data() {
     return {
-      password: "",  
-      username: ""
+      password: "qqqqqqqq",  
+      username: "qqqqqqqq"
     };
   },
   methods: {
@@ -64,12 +64,13 @@ export default {
           let data = res.data.data;
           if (res.data.state.type === "SUCCESS") {
             this.$message.success("登录成功"); 
-            this.$router.push('/');
             // this.$store.user.dispatch("setUserInfo", data)
             this.setUserInfo(data.userinfo);
             this.setToken(data.token);
             console.log(data);
+            this.$router.push('/');
           } else this.$message("用户名或密码错误");
+
         })
         .catch(e => {
           this.$message(e);

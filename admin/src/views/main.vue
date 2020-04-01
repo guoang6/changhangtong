@@ -3,7 +3,6 @@
     <el-container style="height: 100vh;">
        <div class="aside" width="200px" style="background-color: #545c64">
       <el-menu
-        :default-openeds="[]"
         router
         default-active="2"
         class="el-menu-vertical-demo"

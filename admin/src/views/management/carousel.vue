@@ -8,10 +8,18 @@
           <el-breadcrumb-item>轮播图管理</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <div class="main">
-        <el-button type="primary" icon="el-icon-plus" @click="add" style="margin-left:40px;margin-top:20px" circle></el-button>
-        <span style="margin-left:50px;color:red"> 温馨提示：
-            填写完毕后按回车保存，如果上传图片前其相应的链接不为空，则自动完成相应的添加或修改动作</span>
+      <div class="main" style=" margin-top: 40px;">
+        <el-button
+          type="primary"
+          icon="el-icon-plus"
+          @click="add"
+          style="margin-left:40px;margin-top:20px"
+          circle
+        ></el-button>
+        <span style="margin-left:50px;color:red">
+          温馨提示：
+          填写完毕后按回车保存，如果上传图片前其相应的链接不为空，则自动完成相应的添加或修改动作
+        </span>
       </div>
       <div class="main" style=" position: relative;" v-for="(carousel,id) in carousel" :key="id">
         <el-form ref="form" :model="carousel" style="margin-top:40px;width:80%" label-width="80px">
@@ -46,19 +54,33 @@ export default {
   },
   methods: {
     async changecarousel(id) {
-      let res = await this.$axios.post(
-        "/admin/changecarousel",
-        this.qs.stringify(this.carousel[id])
-      );
-      if (res.data.state.type === "SUCCESS") {
-        this.carousel[id].carousel_id!==''&&this.$message.success("修改成功");
-        this.carousel[id].carousel_id==''&&this.$message.success("添加成功");
-        this.carousellist();
+      if (
+        this.carousel[id].carousel_img !== "" &&
+        this.carousel[id].carousel_url !== ""
+      ) {
+        let res = await this.$axios.post(
+          "/admin/changecarousel",
+          this.qs.stringify(this.carousel[id])
+        );
+        if (res.data.state.type === "SUCCESS") {
+          this.carousel[id].carousel_id !== "" &&
+            this.$message.success("修改成功");
+          this.carousel[id].carousel_id == "" &&
+            this.$message.success("添加成功");
+          this.carousellist();
+        }
+      } else {
+        this.carousel[id].carousel_id == ""&&this.carousel.shift();
       }
     },
-    del(id){
-        if(this.carousel[id].carousel_img!==''&&this.carousel[id].carousel_url!=='')this.deletecarouse(id)
-        else this.carousel.shift() 
+    del(id) {
+      if (
+        this.carousel[id].carousel_img !== "" &&
+        this.carousel[id].carousel_url !== ""&&
+        this.carousel[id].carousel_id !== ""
+      )
+        this.deletecarouse(id);
+      else this.carousel[id].carousel_id== ""&&this.carousel.shift();
     },
     add() {
       this.carousel.unshift({
@@ -72,7 +94,7 @@ export default {
       console.log(res);
       this.carousel[id].carousel_img = res.url;
       console.log(this.carousel);
-      if(this.carousel[id].carousel_url!=='') this.changecarousel(id)
+      if (this.carousel[id].carousel_url !== "") this.changecarousel(id);
     },
     async deletecarouse(id) {
       let res = await this.$axios.post(
@@ -83,7 +105,7 @@ export default {
         this.carousel = res.data.data;
         this.$message.success("删除成功");
         console.log(this.carousel);
-        this.carousellist()
+        this.carousellist();
       }
     },
     async carousellist() {
@@ -117,7 +139,7 @@ export default {
   width: 100%;
 }
 .main {
-  margin-top: 40px;
+  margin-top: 20px;
   padding: 5px 40px 20px 40px;
   background-color: #fff;
 }

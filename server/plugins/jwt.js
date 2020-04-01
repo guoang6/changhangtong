@@ -12,7 +12,6 @@ module.exports = jwt({
         '/web/webgetwebhelplist',
         '/web/gethelpcontent',
         '/web/getcomment',
-        '/web/getcomment',
         '/web/getreply',
         '/admin/contentexamine',
         '/web/getarticlelist',
@@ -23,6 +22,13 @@ module.exports = jwt({
         '/web/getactivitycontent',
         '/web/webgetweboldstufflist',
         '/web/getactivitycontent',
+        '/web/search',
+        '/admin/carousellist',
+        '/admin/lablelist',
+        '/web/getreply',
+        '/web/getjobcontent',
+        '/web/getarticlecontent',
+        '/web/getcompanycontent',
         '/web/search',
     ]
 })

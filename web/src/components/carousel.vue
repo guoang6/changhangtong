@@ -26,6 +26,8 @@ export default {
   },
   methods: {
     async carousellist() {
+        console.log("轮播图");
+
       let res = await this.$axios.post(
         "/admin/carousellist",
         this.qs.stringify({ lable_name: "" })

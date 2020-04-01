@@ -268,7 +268,7 @@ export default {
         return;
       }
       if (!pwdReg.test(this.password)) {
-        this.$message.error("密码为6-18位字母数字下划线 字母开头");
+        this.$message.error("密码为6-18位字母数字或下划线 字母开头");
         return;
       }
       if (this.password !== this.password1) {
@@ -342,13 +342,17 @@ export default {
         });
     },
     async getnocitenmu() {
-      const res = await this.$axios.post(
+      console.log(this.nickname)
+      if(this.nickname!==''){
+         const res = await this.$axios.post(
         "/web/getnotice",
         this.qs.stringify({ num: 1 })
       );
       console.log(res.data);
       this.setunread(res.data.data.count);
     }
+      }
+     
   },
   created() {
     this.getnocitenmu();

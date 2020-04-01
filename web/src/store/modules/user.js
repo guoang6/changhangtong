@@ -19,7 +19,10 @@ const mutations = {
         state.islog = !state.islog
     },
     DELETE_USERINFO(state) {
-        state.userinfo = {}
+        state.userinfo. nickname=''
+        window.localStorage.removeItem('userinfo')
+        window.localStorage.removeItem('luffy_jwt_token')
+
     },
     SET_TOKEN(state, data) {
         state.token = data
