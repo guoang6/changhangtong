@@ -11,12 +11,18 @@
 
       <div class="main">
         <div class="search">
-          <el-form :inline="true" :model="formInline" class="demo-form-inline">
+          <el-form :inline="true" :model="pagelistquery" class="demo-form-inline">
             <el-form-item>
-              <el-input v-model="formInline.user" placeholder="账号查找"></el-input>
+              <el-input v-model="pagelistquery.user" placeholder="账号模糊查找"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary">查询</el-button>
+              <el-select v-model="pagelistquery.state" placeholder="账号状态">
+                <el-option label="启用" value="1"></el-option>
+                <el-option label="停用" value="0"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="getadminlist">查询</el-button>
             </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="dialogFormVisibleadd=true">添加账号</el-button>
@@ -40,6 +46,22 @@
             <el-button type="primary" @click="registered">确 定</el-button>
           </div>
         </el-dialog>
+
+        <el-dialog title="输入新的密码" :visible.sync="dialogpw" width="500px">
+          <el-form :model="changepassword">
+             <el-form-item label="账号" label-width="100px">
+              {{changepassword.username}}
+            </el-form-item>
+            <el-form-item label="新密码" label-width="100px">
+              <el-input v-model="changepassword.newpassword" autocomplete="off"></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisibleadd = false">取 消</el-button>
+            <el-button type="primary" @click="change">确 定</el-button>
+          </div>
+        </el-dialog>
+
         <el-table
           :data="tableData"
           border
@@ -115,9 +137,9 @@
             </template>
           </el-table-column>
 
-          <el-table-column fixed="right" label="操作" width="170">
-            <template>
-              <el-button type="text" size="small">修改密码</el-button>
+          <el-table-column prop="nickname" fixed="right" label="操作" width="170">
+            <template slot-scope="scope">
+              <el-button type="text"  :disabled="scope.row.username == 'guoang'"  size="small" @click="changepw(scope.row)">修改密码</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -142,13 +164,11 @@ export default {
   name: "admin",
   data() {
     return {
-      loading:false,
+      changepassword: {},
+      dialogpw: false, //密码框
+      loading: false,
       dialogFormVisibleadd: false, //添加弹框
       form: {},
-      formInline: {
-        user: "",
-        region: ""
-      },
       user: {
         username: "",
         password: "",
@@ -157,7 +177,9 @@ export default {
       pagelistquery: {
         total: 0,
         page: 1,
-        pagesize: 10
+        pagesize: 10,
+        user: "",
+        state: ""
       },
       tableData: [] //列表信息
     };
@@ -222,6 +244,21 @@ export default {
         this.gethelplist();
       }
     },
+    changepw(row){
+      this.dialogpw=true
+      this.changepassword=row
+    },
+    async change() {
+      this.changepassword.type='adminadmin'
+      let res = await this.$axios.post(
+        "/admin/changepassword",
+        this.qs.stringify(this.changepassword)
+      );
+      if (res.data.state.type === "SUCCESS") {
+        this.$message.success("修改成功");
+        this.dialogpw=false
+      }
+    },
     handleSizeChange(val) {
       this.pagelistquery.pagesize = val;
       this.getuserlist();
@@ -233,21 +270,17 @@ export default {
       console.log(`当前页: ${val}`);
     },
     async getadminlist() {
-      this.loading=true
-      let data = {
-        page: this.pagelistquery.page,
-        pagesize: this.pagelistquery.pagesize
-      };
+      this.loading = true;
       let res = await this.$axios.post(
         "/admin/getadminlist",
-        this.qs.stringify(data)
+        this.qs.stringify(this.pagelistquery)
       );
       if (res.data.state.type === "SUCCESS") {
         this.tableData = res.data.data;
         console.log(res.data.data);
         this.pagelistquery.total = res.data.count;
       }
-       this.loading=false
+      this.loading = false;
     }
   },
   created() {

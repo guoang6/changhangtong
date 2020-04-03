@@ -31,8 +31,8 @@ export default {
   },
   data() {
     return {
-      password: "qqqqqqqq",  
-      username: "qqqqqqqq"
+      password: "guoang",  
+      username: "guoang"
     };
   },
   methods: {
@@ -46,11 +46,6 @@ export default {
         this.$message.error("账号或者密码为空");
         return;
       }
-      // this.pwdhash = crypto
-      //   .createHash("sha1")
-      //   .update(this.password)
-      //   .digest("hex");
-      // let this_ = this;
       let obj = {
         password: this.password,
         username: this.username
@@ -62,15 +57,15 @@ export default {
       })
         .then(res => {
           let data = res.data.data;
+          console.log(res.data)
           if (res.data.state.type === "SUCCESS") {
             this.$message.success("登录成功"); 
-            // this.$store.user.dispatch("setUserInfo", data)
             this.setUserInfo(data.userinfo);
             this.setToken(data.token);
             console.log(data);
             this.$router.push('/');
-          } else this.$message("用户名或密码错误");
-
+          } else if (res.data.state.type === "ERROE")
+            this.$message.error("用户名或密码错误");
         })
         .catch(e => {
           this.$message(e);

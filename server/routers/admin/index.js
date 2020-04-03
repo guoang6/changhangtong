@@ -7,6 +7,7 @@ router.post('/admin/registered', service.registered)
 router.post('/admin/getadminlist', service.getadminlist)
 router.post('/admin/changeadminstate', service.changeadminstate)
 router.post('/admin/login', service.login)
+router.post('/admin/changepassword', service.changepassword)
 
 
 

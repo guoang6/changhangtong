@@ -26,7 +26,7 @@
           </el-menu-item>
           <el-submenu index="1" 
           >
-            <template slot="title"  :disabled="uinfo.jurisdiction.issh !=='1'|| uinfo.username !== 'guoang'">
+            <template slot="title"  :disabled="uinfo.jurisdiction.issh !=='1'&& uinfo.username !== 'guoang'">
               <i class="el-icon-folder-checked"></i>
               <span slot="title">审核中心</span>
             </template>
@@ -43,7 +43,7 @@
               <el-menu-item index="1-1">评论</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <el-submenu index="2"  :disabled="uinfo.jurisdiction.isyh !=='1'|| uinfo.username !== 'guoang'" >
+          <el-submenu index="2"  :disabled="uinfo.jurisdiction.isyh !=='1'&& uinfo.username !== 'guoang'" >
             <template slot="title">
               <i class="iconfont">&#xe65c;</i>
               <span slot="title">用户管理</span>
@@ -51,7 +51,7 @@
             <el-menu-item index="/useruser">用户管理</el-menu-item>
             <el-menu-item index="/useradmin" :disabled="uinfo.username !== 'guoang'" >管理员管理</el-menu-item>
           </el-submenu>
-          <el-submenu index="3"  :disabled="uinfo.jurisdiction.isgl !=='1'|| uinfo.username !== 'guoang'">
+          <el-submenu index="3"  :disabled="uinfo.jurisdiction.isgl !=='1'&& uinfo.username !== 'guoang'">
             <template slot="title">
               <i class="el-icon-setting"></i>
               <span slot="title">网站管理中心</span>
@@ -60,7 +60,7 @@
             <el-menu-item index="/managementlable">标签管理</el-menu-item>
             <el-menu-item index="/carousel">轮播管理</el-menu-item>
           </el-submenu>
-          <el-submenu index="4"  :disabled="uinfo.jurisdiction.isfk !=='1'|| uinfo.username !== 'guoang'">
+          <el-submenu index="4"  :disabled="uinfo.jurisdiction.isfk !=='1'&& uinfo.username !== 'guoang'">
             <template slot="title">
               <i class="el-icon-message"></i>
               <span slot="title">反馈中心</span>

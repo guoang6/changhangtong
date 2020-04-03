@@ -12,9 +12,9 @@ const e = {
     "type": 'ERROE',
     "msg": "操作失败"
 }
-const en ={
-        "type": 'ERROE_NO_ AUTHORITY',
-        "msg": "没有权限"
+const en = {
+    "type": 'ERROE_NO_ AUTHORITY',
+    "msg": "没有权限"
 }
 const ep = {
     "type": 'ERROR_PARAMS_EXIST',
@@ -36,12 +36,12 @@ exports.registered = async (req, res) => {
             user_id: uuid.v1(),   //用户id 
             username: req.body.username,//用户名
             password: req.body.password,//密码
-            nickname:'管理员',
+            nickname: '管理员',
             user_createtime: time,//创建时间
             isfk: '0',
-            isgl:'0',
-            issh:'0',
-            isyh:'0',
+            isgl: '0',
+            issh: '0',
+            isyh: '0',
             user_state: '1',
         }
         info.password = md5(`${info.password}${PED_SALT}`)
@@ -71,16 +71,16 @@ exports.login = async (req, res) => {
         let uid = result[0].user_id
         let nickname = result[0].nickname
         let username = result[0].username
-        let jurisdiction={
+        let jurisdiction = {
             isrz: result[0].isrz,
-            isgl:result[0].isgl,
-            issh:result[0].issh,
-            isyh:result[0].isfk,
-            user_state: result[0].user_state, 
+            isgl: result[0].isgl,
+            issh: result[0].issh,
+            isyh: result[0].isfk,
+            user_state: result[0].user_state,
         }
         //通过jwt生成token     npm i -s jsonwebtoken
         let token = jwt.sign(
-            { uid, username ,jurisdiction},
+            { uid, username, jurisdiction },
             PEIVATE_KEY,
             { expiresIn: EXPIRE_SIN }
         )
@@ -91,36 +91,42 @@ exports.login = async (req, res) => {
                 userinfo: {
                     uid: uid,
                     nickname: nickname,
-                    username:username,
+                    username: username,
                     jurisdiction: jurisdiction
                 }
             }
         }//返回登录成功
-        console.log(result)
+        console.log(data)
         res.send(data);
     }
 }
-//获取用户信息
-exports.getuser = async (req, res) => {
-    let info = [req.user.uid]
-    let sql = 'select * from user where user_id =?'
-    const result = await query(sql, info)
-    data = {
-        state: s,
-        data: result[0]
+//修改密码
+exports.changepassword = async (req, res) => {
+    console.log(req.body)
+    if(req.body.type=='adminadmin'){
+        let info = [req.body.newpassword, req.body.username]
+        info.newpassword = md5(`${info.password}${PED_SALT}`)
+        let sql = 'update admin set  password=? where username =?'
+        const result = await query(sql, info)
+        console.log(result)
+        data = {
+            state: s,
+            data: {}
+        }
+        res.send(data)
     }
-    res.send(data)
 }
+
 //管理员授权
 exports.changeadminstate = async (req, res) => {
-    if(req.user.username='guoang'){
+    if (req.user.username = 'guoang') {
         let info = [
             req.body.isfk,
             req.body.isyh,
             req.body.isgl,
             req.body.issh,
             req.body.user_id
-            ]
+        ]
         console.log(info)
         let sql = 'update admin set isfk =?,isyh=?,isgl=?,issh=? where user_id =?'
         const result = await query(sql, info)
@@ -128,7 +134,7 @@ exports.changeadminstate = async (req, res) => {
             state: s,
             data: {}
         }
-    }else{
+    } else {
         data = {
             state: en,
             data: {}
@@ -178,9 +184,9 @@ WHERE
     data = {
         state: s,
         data: {
-            user:user,
-            comment:comment,
-            count:count
+            user: user,
+            comment: comment,
+            count: count
         },
 
     }
@@ -286,66 +292,72 @@ exports.getuserlist = async (req, res) => {
     }
     res.send(data)
 },
-//获取管理员列表
-exports.getadminlist = async (req, res) => {
-    let sqlcounts = ' select count(*) as count from admin where 1=1 '
-    let infocounts = []
-    const counts = await query(sqlcounts, infocounts)
-    let count = counts[0].count
-    let pagesize = req.body.pagesize * 1
-    let page = (req.body.page - 1) * pagesize
-    let info = [pagesize, page]
-    // let info = [req.user.uid]
-    let sql = 'select * from admin where 1=1  limit ? offset ?'
-    const result = await query(sql, info)
-    console.log(result)
-    data = {
-        state: s,
-        data: result,
-        count: count
-    }
-    res.send(data)
-},
-exports.changeuserstate = async (req, res) => {
-    console.log(req.body)
-
-    let info = [
-        req.body.state,
-        req.body.user_id
-    ]
-    let sql = `update user set ${req.body.type}=? where user_id=?`
-    const result = await query(sql, info)
-    if (req.body.type === 'companystate' && req.body.state == 3) {
-        const resultonly = await query('select * from company where user_id=?', [req.body.user_id])
-        if (resultonly.length == 0) {
-            let time = Date.now() - 8 * 60 * 60
-            let info = {
-                company_id: uuid.v1(),   //公司idid 
-                user_id: req.body.user_id,//  用户di 
-                company_name: req.body.company_name,// 公司名称 
-                company_createtime: time,//创建时间
-                company_updatetime: time,//更新时间
-                company_favour_num: 0,//点赞数    
-                company_read_num: 0,//浏览量
-                company_state: 0, //状态  
-                company_istop: 0,//是否置顶
-                company_ispublic: 0,//是否显示
-            }
-            let sql = 'insert into company set ?'
-            const result = await query(sql, info)
+    //获取管理员列表
+    exports.getadminlist = async (req, res) => {
+        console.log(req.body.search)
+        let sqlcounts = ' select count(*) as count from admin where 1=1 '
+        if (req.body.user !== '') sqlcounts = `${sqlcounts} and username like '%${req.body.user}%'`
+        if (req.body.state !== '') sqlcounts = `${sqlcounts} and user_state ='${req.body.state}'`
+        let infocounts = []
+        const counts = await query(sqlcounts, infocounts)
+        let count = counts[0].count
+        let pagesize = req.body.pagesize * 1
+        let page = (req.body.page - 1) * pagesize
+        let info = [pagesize, page]
+        // let info = [req.user.uid]
+        let sql = 'select * from admin where 1=1  '
+        if (req.body.user !== '') sql = `${sql} and username like '%${req.body.user}%'`
+        if (req.body.state !== '') sql = `${sql} and user_state ='${req.body.state}'`
+        sql = `${sql} limit ? offset ?`
+        const result = await query(sql, info)
+        console.log(result)
+        data = {
+            state: s,
+            data: result,
+            count: count
         }
+        res.send(data)
+    },
+    exports.changeuserstate = async (req, res) => {
+        console.log(req.body)
+
+        let info = [
+            req.body.state,
+            req.body.user_id
+        ]
+        let sql = `update user set ${req.body.type}=? where user_id=?`
+        const result = await query(sql, info)
+        if (req.body.type === 'companystate' && req.body.state == 3) {
+            const resultonly = await query('select * from company where user_id=?', [req.body.user_id])
+            if (resultonly.length == 0) {
+                let time = Date.now() - 8 * 60 * 60
+                let info = {
+                    company_id: uuid.v1(),   //公司idid 
+                    user_id: req.body.user_id,//  用户di 
+                    company_name: req.body.company_name,// 公司名称 
+                    company_createtime: time,//创建时间
+                    company_updatetime: time,//更新时间
+                    company_favour_num: 0,//点赞数    
+                    company_read_num: 0,//浏览量
+                    company_state: 0, //状态  
+                    company_istop: 0,//是否置顶
+                    company_ispublic: 0,//是否显示
+                }
+                let sql = 'insert into company set ?'
+                const result = await query(sql, info)
+            }
+        }
+        data = {
+            state: s,
+            data: {}
+        }
+        res.send(data)
     }
-    data = {
-        state: s,
-        data: {}
-    }
-    res.send(data)
-}
 //分类列表
 exports.lablelist = async (req, res) => {
     let info = []
     let sql = `select * from lable`
-    if(req.body.lable_name!=='') sql=`${sql} where lable_name='${req.body.lable_name}'`
+    if (req.body.lable_name !== '') sql = `${sql} where lable_name='${req.body.lable_name}'`
     const result = await query(sql, info)
     data = {
         state: s,
@@ -355,14 +367,14 @@ exports.lablelist = async (req, res) => {
     res.send(data)
 }
 //走马灯修改
-exports.changecarousel = async (req, res) => { 
+exports.changecarousel = async (req, res) => {
     console.log(req.body)
     let time = Date.now() - 8 * 60 * 60
-    let carousel_id=uuid.v1()
+    let carousel_id = uuid.v1()
     let sql
-    let info = [req.body.carousel_img,req.body.carousel_url,time,carousel_id]
-    if(req.body.carousel_id=='')sql = `insert carousel  set carousel_img=?,carousel_url=?,carousel_createtime=?,carousel_id=?`
-    else sql=`update carousel  set carousel_img=?,carousel_url=? where carousel_id='${req.body.carousel_id}'`
+    let info = [req.body.carousel_img, req.body.carousel_url, time, carousel_id]
+    if (req.body.carousel_id == '') sql = `insert carousel  set carousel_img=?,carousel_url=?,carousel_createtime=?,carousel_id=?`
+    else sql = `update carousel  set carousel_img=?,carousel_url=? where carousel_id='${req.body.carousel_id}'`
     const result = await query(sql, info)
     data = {
         state: s,
