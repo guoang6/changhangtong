@@ -4,17 +4,21 @@ import main from '../views/main.vue'
 import login from '../views/login.vue'
 import contentexamine from '../views/examine/contentexamine.vue'
 import useruser from '../views/user/useruser.vue'
+import useradmin from '../views/user/useradmin.vue'
 import carousel from '../views/management/carousel.vue'
 import managementlable from '../views/management/managementlable.vue'
 import numbering from '../views/numbering/numbering.vue'
+import myself from '../views/myself/myself.vue'
 Vue.use(VueRouter)
 
 const routes = [
   {path: '/login',name: 'login',component: login ,meta:{ispublic:true}},
   {path: '/',name: 'main',component: main ,children: [
     { path: '', name: 'numbering', component: numbering, },
+    { path: 'myself', name: 'myself', component: myself, },
     { path: 'contentexamine', name: 'contentexamine', component: contentexamine, },
     { path: 'useruser', name: 'useruser', component: useruser, },
+    { path: 'useradmin', name: 'useradmin', component: useradmin, },
     { path: 'managementlable', name: 'managementlable', component: managementlable, },
     { path: 'carousel', name: 'carousel', component: carousel, },
 

@@ -1,4 +1,5 @@
 const { query } = require('../../plugins/db.js')
+const { md5 } = require('../../plugins/md5.js')
 var uuid = require('node-uuid');//npm install node-uuid
 const { PED_SALT, EXPIRE_SIN, PEIVATE_KEY } = require('../../plugins/config.js')
 var jwt = require('jsonwebtoken');
@@ -10,6 +11,117 @@ const s = {
 const e = {
     "type": 'ERROE',
     "msg": "操作失败"
+}
+const ep = {
+    "type": 'ERROR_PARAMS_EXIST',
+    "msg": "用户名重复"
+}
+//添加账号
+exports.registered = async (req, res) => {
+    let infogetuser = [req.body.username]
+    let sqlgetuser = 'select * from admin where username =?'
+    const result = await query(sqlgetuser, infogetuser)
+    if (result.length != 0) {
+        data = {
+            state: ep,
+            data: {}
+        }
+    } else {
+        let time = Date.now() - 8 * 60 * 60
+        let info = {
+            user_id: uuid.v1(),   //用户id 
+            username: req.body.username,//用户名
+            password: req.body.password,//密码
+            nickname:'管理员',
+            user_createtime: time,//创建时间
+            isfk: '0',
+            isgl:'0',
+            issh:'0',
+            isyh:'0',
+            user_state: '1',
+        }
+        info.password = md5(`${info.password}${PED_SALT}`)
+        let sql = 'insert into admin set ?'
+        const result = await query(sql, info)
+        data = {
+            state: s,
+            data: {}
+        }
+    }
+    res.send(data)
+}
+//登录
+exports.login = async (req, res) => {
+    req.body.password = md5(`${req.body.password}${PED_SALT}`)
+    let info = [req.body.username, req.body.password]
+    let sql = 'select * from admin where username=? and password=?'
+    const result = await query(sql, info)
+    if (result.length == 0) {
+        data = {
+            state: e,
+            data: {
+            }
+        }   //    数据库里面没找到配对的内容返回参数
+    } else {
+        console.log(result[0].user_id)
+        let uid = result[0].user_id
+        let nickname = result[0].nickname
+        let jurisdiction={
+            isrz: result[0].isrz,
+            isgl:result[0].isgl,
+            issh:result[0].issh,
+            isyh:result[0].isfk,
+            user_state: result[0].user_state, 
+        }
+        //通过jwt生成token     npm i -s jsonwebtoken
+        let token = jwt.sign(
+            { uid, nickname ,jurisdiction},
+            PEIVATE_KEY,
+            { expiresIn: EXPIRE_SIN }
+        )
+        data = {
+            state: s,
+            data: {
+                token: token,
+                userinfo: {
+                    uid: uid,
+                    nickname: nickname,
+                    jurisdiction: jurisdiction
+                }
+            }
+        }//返回登录成功
+        console.log(result)
+        res.send(data);
+    }
+}
+//获取用户信息
+exports.getuser = async (req, res) => {
+    let info = [req.user.uid]
+    let sql = 'select * from user where user_id =?'
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: result[0]
+    }
+    res.send(data)
+}
+//管理员授权
+exports.changeadminstate = async (req, res) => {
+        let info = [
+            req.body.isfk,
+            req.body.isyh,
+            req.body.isgl,
+            req.body.issh,
+            req.body.user_id
+            ]
+        console.log(info)
+        let sql = 'update admin set isfk =?,isyh=?,isgl=?,issh=? where user_id =?'
+        const result = await query(sql, info)
+        data = {
+            state: s,
+            data: {}
+        }
+    res.send(data)
 }
 //添加消息
 let setnotice = async function (user_from, user_to, nickname, content_id, content_name, action, router) {
@@ -159,7 +271,27 @@ exports.getuserlist = async (req, res) => {
         count: count
     }
     res.send(data)
-}
+},
+//获取管理员列表
+exports.getadminlist = async (req, res) => {
+    let sqlcounts = ' select count(*) as count from admin where 1=1 '
+    let infocounts = []
+    const counts = await query(sqlcounts, infocounts)
+    let count = counts[0].count
+    let pagesize = req.body.pagesize * 1
+    let page = (req.body.page - 1) * pagesize
+    let info = [pagesize, page]
+    // let info = [req.user.uid]
+    let sql = 'select * from admin where 1=1  limit ? offset ?'
+    const result = await query(sql, info)
+    console.log(result)
+    data = {
+        state: s,
+        data: result,
+        count: count
+    }
+    res.send(data)
+},
 exports.changeuserstate = async (req, res) => {
     console.log(req.body)
 

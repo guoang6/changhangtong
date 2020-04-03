@@ -35,7 +35,13 @@
           </el-form-item>
 
           <el-form-item label="活动人数">
-            <el-input v-model="form.activity_num"></el-input>
+            <el-input
+              :rules="[
+      { required: true, message: '人数不能为空'},
+      { type: 'number', message: '人数必须为数字值'}
+    ]"
+              v-model="form.activity_num"
+            ></el-input>
           </el-form-item>
 
           <el-form-item label="信息管理">

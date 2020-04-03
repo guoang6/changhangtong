@@ -244,7 +244,7 @@ export default {
   background-color: #fff;
 }
 .card {
-  width: 26%;
+  width: 25%;
 
   /* padding: 5px 20px 5px 20px; */
   float: left;

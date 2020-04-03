@@ -1,6 +1,14 @@
 const express = require('express')
 const router = express.Router()
 const service = require('./service')//相关操作逻辑
+//管理员账号
+
+router.post('/admin/registered', service.registered)
+router.post('/admin/getadminlist', service.getadminlist)
+router.post('/admin/changeadminstate', service.changeadminstate)
+
+
+
 
 router.post('/admin/contentexamine', service.contentexamine)
 router.post('/admin/getuserlist', service.getuserlist)

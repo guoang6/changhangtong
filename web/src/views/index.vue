@@ -264,7 +264,7 @@ export default {
       const userReg = /^[1-9a-zA-Z]{1}[0-9a-zA-Z]{5,9}$/; //6-10位字母数字
       const pwdReg = /^[a-zA-Z]\w{5,17}$/; //6-18位字母数字下划线 字母开头
       if (!userReg.test(this.username)) {
-        this.$message.error("账号为6-10位字母数字");
+        this.$message.error("账号为6-10位字母数字字母");
         return;
       }
       if (!pwdReg.test(this.password)) {
