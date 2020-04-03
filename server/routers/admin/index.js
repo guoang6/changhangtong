@@ -6,6 +6,7 @@ const service = require('./service')//相关操作逻辑
 router.post('/admin/registered', service.registered)
 router.post('/admin/getadminlist', service.getadminlist)
 router.post('/admin/changeadminstate', service.changeadminstate)
+router.post('/admin/login', service.login)
 
 
 

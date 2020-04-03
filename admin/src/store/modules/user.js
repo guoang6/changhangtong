@@ -2,7 +2,7 @@ const state = {
     islog: true,
     islogin: true,
     isclose: false,
-    userinfo: JSON.parse(localStorage.getItem("uinfo")) || {},//先去localStorage中获取数据
+    uinfo: JSON.parse(localStorage.getItem("uinfo")) || {},//先去localStorage中获取数据
     unread: 0
 
 }
@@ -10,10 +10,10 @@ const getters = {
 
 }
 const mutations = {
-    SET_USERINFO(state, userinfo) {
-        console.log(userinfo)
-        state.userinfo = userinfo,
-            localStorage.setItem('uinfo', JSON.stringify(userinfo))
+    SET_USERINFO(state, uinfo) {
+        console.log(uinfo)
+        state.uinfo = uinfo,
+            localStorage.setItem('uinfo', JSON.stringify(uinfo))
     },
     CHANGE_ISLOG(state) {
         state.islog = !state.islog

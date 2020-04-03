@@ -12,6 +12,10 @@ const e = {
     "type": 'ERROE',
     "msg": "操作失败"
 }
+const en ={
+        "type": 'ERROE_NO_ AUTHORITY',
+        "msg": "没有权限"
+}
 const ep = {
     "type": 'ERROR_PARAMS_EXIST',
     "msg": "用户名重复"
@@ -66,6 +70,7 @@ exports.login = async (req, res) => {
         console.log(result[0].user_id)
         let uid = result[0].user_id
         let nickname = result[0].nickname
+        let username = result[0].username
         let jurisdiction={
             isrz: result[0].isrz,
             isgl:result[0].isgl,
@@ -75,7 +80,7 @@ exports.login = async (req, res) => {
         }
         //通过jwt生成token     npm i -s jsonwebtoken
         let token = jwt.sign(
-            { uid, nickname ,jurisdiction},
+            { uid, username ,jurisdiction},
             PEIVATE_KEY,
             { expiresIn: EXPIRE_SIN }
         )
@@ -86,6 +91,7 @@ exports.login = async (req, res) => {
                 userinfo: {
                     uid: uid,
                     nickname: nickname,
+                    username:username,
                     jurisdiction: jurisdiction
                 }
             }
@@ -107,6 +113,7 @@ exports.getuser = async (req, res) => {
 }
 //管理员授权
 exports.changeadminstate = async (req, res) => {
+    if(req.user.username='guoang'){
         let info = [
             req.body.isfk,
             req.body.isyh,
@@ -121,6 +128,13 @@ exports.changeadminstate = async (req, res) => {
             state: s,
             data: {}
         }
+    }else{
+        data = {
+            state: en,
+            data: {}
+        }
+    }
+
     res.send(data)
 }
 //添加消息

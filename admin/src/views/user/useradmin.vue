@@ -31,7 +31,7 @@
             <el-form-item label="密码" label-width="100px">
               <el-input type="password" v-model="user.password" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item  label="确认密码" label-width="100px">
+            <el-form-item label="确认密码" label-width="100px">
               <el-input type="password" v-model="user.password1" autocomplete="off"></el-input>
             </el-form-item>
           </el-form>
@@ -40,13 +40,20 @@
             <el-button type="primary" @click="registered">确 定</el-button>
           </div>
         </el-dialog>
-        <el-table :data="tableData" border style="width: 100%">
+        <el-table
+          :data="tableData"
+          border
+          style="width: 100%;min-height:500px"
+          v-loading="loading"
+          element-loading-text="拼命加载中"
+          element-loading-spinner="el-icon-loading"
+        >
           <el-table-column prop="username" label="账号"></el-table-column>
           <el-table-column prop="nickname" label="昵称"></el-table-column>
           <el-table-column prop="nickname" label="审核中心">
             <template slot-scope="scope">
               <el-switch
-            @click.native.prevent="changestate(scope.row)"
+                @click.native.prevent="changestate(scope.row)"
                 v-model="scope.row.issh"
                 active-color="#13ce66"
                 inactive-color="#ff4949"
@@ -59,8 +66,7 @@
           <el-table-column prop="nickname" label="用户管理">
             <template slot-scope="scope">
               <el-switch
-            @click.native.prevent="changestate(scope.row)"
-
+                @click.native.prevent="changestate(scope.row)"
                 v-model="scope.row.isyh"
                 active-color="#13ce66"
                 inactive-color="#ff4949"
@@ -73,7 +79,7 @@
           <el-table-column prop="nickname" label="网站管理中心">
             <template slot-scope="scope">
               <el-switch
-            @click.native.prevent="changestate(scope.row)"
+                @click.native.prevent="changestate(scope.row)"
                 v-model="scope.row.isgl"
                 active-color="#13ce66"
                 inactive-color="#ff4949"
@@ -86,7 +92,7 @@
           <el-table-column prop="nickname" label="反馈中心">
             <template slot-scope="scope">
               <el-switch
-            @click.native.prevent="changestate(scope.row)"
+                @click.native.prevent="changestate(scope.row)"
                 v-model="scope.row.isfk"
                 active-color="#13ce66"
                 inactive-color="#ff4949"
@@ -99,7 +105,7 @@
           <el-table-column prop="nickname" label="账号状态">
             <template slot-scope="scope">
               <el-switch
-            @click.native.prevent="changestate(scope.row)"
+                @click.native.prevent="changestate(scope.row)"
                 v-model="scope.row.user_state"
                 active-color="#13ce66"
                 inactive-color="#ff4949"
@@ -136,6 +142,7 @@ export default {
   name: "admin",
   data() {
     return {
+      loading:false,
       dialogFormVisibleadd: false, //添加弹框
       form: {},
       formInline: {
@@ -187,7 +194,7 @@ export default {
             return;
           }
           this.$message.success("账号添加成功");
-          this.dialogFormVisibleadd = false
+          this.dialogFormVisibleadd = false;
           this.getadminlist();
         })
         .catch(e => {
@@ -195,7 +202,7 @@ export default {
         });
     },
     async changestate(row) {
-      console.log(row)
+      console.log(row);
       let res = await this.$axios.post(
         "/admin/changeadminstate",
         this.qs.stringify(row)
@@ -226,6 +233,7 @@ export default {
       console.log(`当前页: ${val}`);
     },
     async getadminlist() {
+      this.loading=true
       let data = {
         page: this.pagelistquery.page,
         pagesize: this.pagelistquery.pagesize
@@ -239,6 +247,7 @@ export default {
         console.log(res.data.data);
         this.pagelistquery.total = res.data.count;
       }
+       this.loading=false
     }
   },
   created() {

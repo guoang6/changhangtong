@@ -56,7 +56,7 @@ export default {
         username: this.username
       };
       this.$axios({
-        url: "/webadmin/login",
+        url: "/admin/login",
         method: "POST",
         data: this.qs.stringify(obj)
       })

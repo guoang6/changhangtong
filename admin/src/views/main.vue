@@ -16,22 +16,22 @@
 
             <span slot="title">“昌航通”信息平台</span>
           </el-menu-item>
-          <el-menu-item index="/">
+          <el-menu-item index="/" >
             <i class="el-icon-pie-chart"></i>
-            <span slot="title">数据中心</span>
+            <span slot="title" >数据中心</span>
           </el-menu-item>
-          <el-menu-item index="/myself">
+          <el-menu-item   index="/myself">
             <i class="el-icon-user-solid"></i>
             <span slot="title">个人中心</span>
           </el-menu-item>
-          <el-submenu index="1">
-            <template slot="title">
+          <el-submenu index="1" 
+          >
+            <template slot="title"  :disabled="uinfo.jurisdiction.issh !=='1'|| uinfo.username !== 'guoang'">
               <i class="el-icon-folder-checked"></i>
               <span slot="title">审核中心</span>
             </template>
-            <el-menu-item-group>
+            <el-menu-item-group >
               <span slot="title">内容审核</span>
-
               <el-menu-item index="/contentexamine">问答</el-menu-item>
               <el-menu-item index="1-1">活动</el-menu-item>
               <el-menu-item index="1-2">二手信息</el-menu-item>
@@ -43,15 +43,15 @@
               <el-menu-item index="1-1">评论</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <el-submenu index="2">
+          <el-submenu index="2"  :disabled="uinfo.jurisdiction.isyh !=='1'|| uinfo.username !== 'guoang'" >
             <template slot="title">
               <i class="iconfont">&#xe65c;</i>
               <span slot="title">用户管理</span>
             </template>
             <el-menu-item index="/useruser">用户管理</el-menu-item>
-            <el-menu-item index="/useradmin">管理员管理</el-menu-item>
+            <el-menu-item index="/useradmin" :disabled="uinfo.username !== 'guoang'" >管理员管理</el-menu-item>
           </el-submenu>
-          <el-submenu index="3">
+          <el-submenu index="3"  :disabled="uinfo.jurisdiction.isgl !=='1'|| uinfo.username !== 'guoang'">
             <template slot="title">
               <i class="el-icon-setting"></i>
               <span slot="title">网站管理中心</span>
@@ -60,7 +60,7 @@
             <el-menu-item index="/managementlable">标签管理</el-menu-item>
             <el-menu-item index="/carousel">轮播管理</el-menu-item>
           </el-submenu>
-          <el-submenu index="4">
+          <el-submenu index="4"  :disabled="uinfo.jurisdiction.isfk !=='1'|| uinfo.username !== 'guoang'">
             <template slot="title">
               <i class="el-icon-message"></i>
               <span slot="title">反馈中心</span>
@@ -78,7 +78,7 @@
             <a class="iconfont" @click="changeCollapse" v-if="!isCollapse">&#xe61f;</a>
           </li>
 
-          <span style="margin-right: 30px">王小虎</span>
+          <span style="margin-right: 30px">{{uinfo.nickname}}</span>
           <span>退出</span>
         </el-header>
 
@@ -93,6 +93,8 @@
 
 
 <script>
+import { mapState, mapActions } from "vuex";
+
 export default {
   data() {
     const item = {
@@ -104,6 +106,11 @@ export default {
       tableData: Array(20).fill(item),
       isCollapse: true
     };
+  },
+   computed: {
+    ...mapState({
+      uinfo: state => state.user.uinfo,
+    })
   },
   methods: {
     changeCollapse() {
