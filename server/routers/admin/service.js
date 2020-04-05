@@ -100,6 +100,19 @@ exports.login = async (req, res) => {
     console.log(data)
     res.send(data);
 }
+//删除走马灯
+exports.deleteuser = async (req, res) => {
+    console.log(req.body)
+    let info = [req.body.user_id]
+    let sql = `delete  from ${req.body.usertype} where user_id=? `
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: result,
+
+    }
+    res.send(data)
+}
 //修改密码
 exports.changepassword = async (req, res) => {
     console.log(req.body)
@@ -127,7 +140,7 @@ exports.changepassword = async (req, res) => {
         }
         res.send(data)
     }
-    
+
 }
 
 //管理员授权
@@ -160,7 +173,7 @@ exports.changeadminstate = async (req, res) => {
 //用户状态修改
 exports.changeuseruserstate = async (req, res) => {
     console.log(req.body)
-    if (req.user.isyh == '1'||req.user.username == 'guoang' ) {
+    if (req.user.isyh == '1' || req.user.username == 'guoang') {
         let info = [
             req.body.user_state,
             req.body.user_id,

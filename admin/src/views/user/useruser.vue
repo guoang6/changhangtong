@@ -71,25 +71,34 @@
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="170">
             <template slot-scope="scope">
-              <el-button type="text" size="small" :disabled="uinfo.username !== 'guoang'" @click="changepw(scope.row)">删除</el-button>
-              <el-button type="text" size="small" :disabled="uinfo.jurisdiction.isyh !=='1'&& uinfo.username !== 'guoang'" @click="changepw(scope.row)">修改密码</el-button>
+              <el-button
+                type="text"
+                size="small"
+                :disabled="uinfo.username !== 'guoang'"
+                @click="deleteuser(scope.row)"
+              >删除</el-button>
+              <el-button
+                type="text"
+                size="small"
+                :disabled="uinfo.jurisdiction.isyh !=='1'&& uinfo.username !== 'guoang'"
+                @click="changepw(scope.row)"
+              >修改密码</el-button>
             </template>
- 
           </el-table-column>
-        </el-table>  
+        </el-table>
         <!--密码框-->
-                 <el-dialog title="输入新的密码" :visible.sync="dialogpw" width="500px">
-              <el-form :model="changepassword">
-                <el-form-item label="账号" label-width="100px">{{changepassword.username}}</el-form-item>
-                <el-form-item label="新密码" label-width="100px">
-                  <el-input v-model="changepassword.newpassword" autocomplete="off"></el-input>
-                </el-form-item>
-              </el-form>
-              <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogpw = false">取 消</el-button>
-                <el-button type="primary" @click="change">确 定</el-button>
-              </div>
-            </el-dialog>
+        <el-dialog title="输入新的密码" :visible.sync="dialogpw" width="500px">
+          <el-form :model="changepassword">
+            <el-form-item label="账号" label-width="100px">{{changepassword.username}}</el-form-item>
+            <el-form-item label="新密码" label-width="100px">
+              <el-input v-model="changepassword.newpassword" autocomplete="off"></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogpw = false">取 消</el-button>
+            <el-button type="primary" @click="change">确 定</el-button>
+          </div>
+        </el-dialog>
         <!--公司信息认证-->
         <el-dialog title="公司信息认证" :visible.sync="dialogcompany">
           <div v-if="changecompanystateuser.companystate===1">
@@ -178,7 +187,6 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
-  
   name: "useruser",
   data() {
     return {
@@ -201,7 +209,7 @@ export default {
   },
   computed: {
     ...mapState({
-      uinfo: state => state.user.uinfo,
+      uinfo: state => state.user.uinfo
     })
   },
   filters: {
@@ -254,6 +262,23 @@ export default {
       if (res.data.state.type === "SUCCESS") {
         this.$message.success("修改成功");
         this.dialogpw = false;
+      }
+    },
+    //删除用户
+
+    async deleteuser(row) {
+      let data = {
+        user_id: row.user_id,
+        usertype: "user"
+      };
+      let res = await this.$axios.post(
+        "/admin/deleteuser",
+        this.qs.stringify(data)
+      );
+      if (res.data.state.type === "SUCCESS") {
+        this.$message.success("删除成功");
+        this.dialogpw = false;
+        this.getuserlist()
       }
     },
     //用户账号修改

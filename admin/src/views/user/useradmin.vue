@@ -49,9 +49,7 @@
 
         <el-dialog title="输入新的密码" :visible.sync="dialogpw" width="500px">
           <el-form :model="changepassword">
-             <el-form-item label="账号" label-width="100px">
-              {{changepassword.username}}
-            </el-form-item>
+            <el-form-item label="账号" label-width="100px">{{changepassword.username}}</el-form-item>
             <el-form-item label="新密码" label-width="100px">
               <el-input v-model="changepassword.newpassword" autocomplete="off"></el-input>
             </el-form-item>
@@ -139,7 +137,18 @@
 
           <el-table-column prop="nickname" fixed="right" label="操作" width="170">
             <template slot-scope="scope">
-              <el-button type="text"  :disabled="scope.row.username == 'guoang'"  size="small" @click="changepw(scope.row)">修改密码</el-button>
+              <el-button
+                type="text"
+                size="small"
+                :disabled="scope.row.username == 'guoang'"
+                @click="deleteuser(scope.row)"
+              >删除</el-button>
+              <el-button
+                type="text"
+                :disabled="scope.row.username == 'guoang'"
+                size="small"
+                @click="changepw(scope.row)"
+              >修改密码</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -244,20 +253,37 @@ export default {
         this.gethelplist();
       }
     },
-    changepw(row){
-      this.dialogpw=true
-      this.changepassword=row
+    changepw(row) {
+      this.dialogpw = true;
+      this.changepassword = row;
     },
     //修改密码
     async change() {
-      this.changepassword.type='adminadmin'
+      this.changepassword.type = "adminadmin";
       let res = await this.$axios.post(
         "/admin/changepassword",
         this.qs.stringify(this.changepassword)
       );
       if (res.data.state.type === "SUCCESS") {
         this.$message.success("修改成功");
-        this.dialogpw=false
+        this.dialogpw = false;
+      }
+    },
+    //删除用户
+
+    async deleteuser(row) {
+      let data = {
+        user_id: row.user_id,
+        usertype: "admin"
+      };
+      let res = await this.$axios.post(
+        "/admin/deleteuser",
+        this.qs.stringify(data)
+      );
+      if (res.data.state.type === "SUCCESS") {
+        this.$message.success("删除成功");
+        this.dialogpw = false;
+        this.getuserlist();
       }
     },
     handleSizeChange(val) {
