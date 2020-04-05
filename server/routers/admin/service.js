@@ -96,14 +96,14 @@ exports.login = async (req, res) => {
                 }
             }
         }//返回登录成功
-        console.log(data)
-        res.send(data);
     }
+    console.log(data)
+    res.send(data);
 }
 //修改密码
 exports.changepassword = async (req, res) => {
     console.log(req.body)
-    if(req.body.type=='adminadmin'){
+    if (req.body.type == 'adminadmin') {
         let info = [req.body.newpassword, req.body.username]
         info.newpassword = md5(`${info.password}${PED_SALT}`)
         let sql = 'update admin set  password=? where username =?'
@@ -115,20 +115,60 @@ exports.changepassword = async (req, res) => {
         }
         res.send(data)
     }
+    if (req.body.type == 'adminuser') {
+        let info = [req.body.newpassword, req.body.username]
+        info.newpassword = md5(`${info.password}${PED_SALT}`)
+        let sql = 'update user set  password=? where username =?'
+        const result = await query(sql, info)
+        console.log(result)
+        data = {
+            state: s,
+            data: {}
+        }
+        res.send(data)
+    }
+    
 }
 
 //管理员授权
 exports.changeadminstate = async (req, res) => {
-    if (req.user.username = 'guoang') {
+    if (req.user.username == 'guoang') {
         let info = [
             req.body.isfk,
             req.body.isyh,
             req.body.isgl,
             req.body.issh,
+            req.body.user_state,
             req.body.user_id
         ]
         console.log(info)
-        let sql = 'update admin set isfk =?,isyh=?,isgl=?,issh=? where user_id =?'
+        let sql = 'update admin set isfk =?,isyh=?,isgl=?,issh=? ,user_state=? where user_id =?'
+        const result = await query(sql, info)
+        data = {
+            state: s,
+            data: {}
+        }
+    } else {
+        data = {
+            state: en,
+            data: {}
+        }
+    }
+
+    res.send(data)
+}
+//用户状态修改
+exports.changeuseruserstate = async (req, res) => {
+    console.log(req.body)
+    if (req.user.isyh == '1'||req.user.username == 'guoang' ) {
+        let info = [
+            req.body.user_state,
+            req.body.user_id,
+        ]
+        console.log(123)
+        console.log(info)
+        let sql = 'update user set user_state=? where user_id = ?'
+        console.log(sql)
         const result = await query(sql, info)
         data = {
             state: s,
@@ -273,9 +313,13 @@ exports.webgetwebactivitylist = async (req, res) => {
     // console.log(result)
     res.send(data);
 }
-//获取用户信息
+//获取用户列表
 exports.getuserlist = async (req, res) => {
+    console.log(req.body)
     let sqlcounts = ' select count(*) as count from user where 1=1 '
+    if (req.body.user !== '') sqlcounts = `${sqlcounts} and username like '%${req.body.user}%'`
+    if (req.body.companystate !== '') sqlcounts = `${sqlcounts} and companystate ='${req.body.companystate * 1}'`
+    if (req.body.realstate !== '') sqlcounts = `${sqlcounts} and realstate ='${req.body.realstate * 1}'`
     let infocounts = []
     const counts = await query(sqlcounts, infocounts)
     let count = counts[0].count
@@ -283,13 +327,18 @@ exports.getuserlist = async (req, res) => {
     let page = (req.body.page - 1) * pagesize
     let info = [pagesize, page]
     // let info = [req.user.uid]
-    let sql = 'select * from user where 1=1  limit ? offset ?'
+    let sql = 'select * from user where 1=1'
+    if (req.body.user !== '') sql = `${sql} and username like '%${req.body.user}%'`
+    if (req.body.companystate !== '') sql = `${sql} and companystate ='${req.body.companystate * 1}'`
+    if (req.body.realstate !== '') sql = `${sql} and realstate ='${req.body.realstate * 1}'`
+    sql = `${sql} limit ? offset ?`
     const result = await query(sql, info)
     data = {
         state: s,
         data: result,
         count: count
     }
+    console.log(data)
     res.send(data)
 },
     //获取管理员列表

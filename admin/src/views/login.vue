@@ -46,6 +46,7 @@ export default {
         this.$message.error("账号或者密码为空");
         return;
       }
+      console.log(111)
       let obj = {
         password: this.password,
         username: this.username
@@ -57,17 +58,15 @@ export default {
       })
         .then(res => {
           let data = res.data.data;
+            console.log(11111);
           console.log(res.data)
           if (res.data.state.type === "SUCCESS") {
             this.$message.success("登录成功"); 
             this.setUserInfo(data.userinfo);
             this.setToken(data.token);
-            console.log(data);
             this.$router.push('/');
-          } else if (res.data.state.type === "ERROE")
-            this.$message.error("用户名或密码错误");
-        })
-        .catch(e => {
+          } else this.$message.error("用户名或密码错误");
+        }).catch(e => {
           this.$message(e);
         });
     }
