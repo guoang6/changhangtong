@@ -10,6 +10,7 @@ router.post('/admin/login', service.login)
 router.post('/admin/changepassword', service.changepassword)
 router.post('/admin/changeuseruserstate', service.changeuseruserstate)
 router.post('/admin/deleteuser', service.deleteuser)
+router.post('/admin/getadmin', service.getadmin)
 
 
 

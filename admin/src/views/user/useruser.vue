@@ -38,7 +38,14 @@
             </el-form-item>
           </el-form>
         </div>
-        <el-table :data="tableData" border style="width: 100%">
+        <el-table
+          v-loading="loading"
+          element-loading-text="拼命加载中"
+          element-loading-spinner="el-icon-loading"
+          :data="tableData"
+          border
+          style="width: 100%;min-height:500px"
+        >
           <el-table-column prop="username" label="账号"></el-table-column>
           <el-table-column prop="nickname" label="昵称"></el-table-column>
           <el-table-column prop="realstate" label="实名认证状态">
@@ -196,6 +203,7 @@ export default {
       dialogstudent: false,
       dialogcompany: false,
       dialogpw: false, //密码框
+      loading: false,
       pagelistquery: {
         user: "",
         realstate: "",
@@ -278,7 +286,7 @@ export default {
       if (res.data.state.type === "SUCCESS") {
         this.$message.success("删除成功");
         this.dialogpw = false;
-        this.getuserlist()
+        this.getuserlist();
       }
     },
     //用户账号修改
@@ -332,6 +340,7 @@ export default {
       console.log(`当前页: ${val}`);
     },
     async getuserlist() {
+      this.loading = true;
       let res = await this.$axios.post(
         "/admin/getuserlist",
         this.qs.stringify(this.pagelistquery)
@@ -340,6 +349,7 @@ export default {
         this.tableData = res.data.data;
         console.log(res.data);
         this.pagelistquery.total = res.data.count;
+        this.loading = false;
       }
     }
   },

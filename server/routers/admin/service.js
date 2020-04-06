@@ -100,6 +100,17 @@ exports.login = async (req, res) => {
     console.log(data)
     res.send(data);
 }
+//获取管理员信息
+exports.getadmin = async (req, res) => {
+    let info = [req.user.uid]
+    let sql = 'select * from admin where user_id =?'
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: result[0]
+    }
+    res.send(data)
+}
 //删除走马灯
 exports.deleteuser = async (req, res) => {
     console.log(req.body)

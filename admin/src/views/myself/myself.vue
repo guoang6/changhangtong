@@ -16,31 +16,37 @@
           <ul class="first-userInfo">
             <li class="user-li">
               账号 :
-              <span class="user-name" title="726647774@qq.com">726647774@qq.com</span>
+              <span class="user-name" title="726647774@qq.com">{{tableData.username}}</span>
             </li>
             <li>
               昵称 :
-              <span>无</span>
+              <span>{{tableData.nickname}}</span>
                 <el-button type="text" size="small">修改昵称</el-button>
 
             </li>
             <li>
               账号创建时间 :
-              <span>2020-03-14 11:29:41</span>
+              <span>{{tableData.user_createtime | dataFormat }}</span>
             </li>
           </ul>
           <ul>
             <li>
               账号状态 :
-              <span>启用</span>
+              <span v-if="tableData.user_state=='1'">启用</span>
+              <span v-else>停用</span>
             </li>
             <li>
               身份 :
-              <span>超级管理员</span>
+              <span style="margin-left:20px" v-if="tableData.username=='guoang'">超级管理员</span>
+              <span style="margin-left:20px" v-else>普通管理员管理员</span>
             </li>
             <li>
               权限 :
-              <span>超级管理员拥有所有权限</span>
+               <span style="margin-left:20px" v-if="tableData.issh=='1'&&tableData.username!=='guoang'">审核中心</span>
+              <span style="margin-left:20px" v-if="tableData.isyh=='1'&&tableData.username!=='guoang'">用户中心</span>
+              <span style="margin-left:20px" v-if="tableData.isgl=='1'&&tableData.username!=='guoang'">平台管理中心</span>
+              <span style="margin-left:20px" v-if="tableData.isfk=='1'&&tableData.username!=='guoang'">反馈中心</span>
+              <span style="margin-left:20px" v-if="tableData.username=='guoang'">超级管理员拥有最高权限</span>
             </li>
           </ul>
           <ul>
@@ -81,75 +87,9 @@ export default {
       tableData: [] //列表信息
     };
   },
-  filters: {
-    userstatefilter(state) {
-      if (state == 3) {
-        return "认证成功";
-      }
-      if (state == 2) {
-        return "待审核";
-      }
-      if (state == 1) {
-        return "未认证";
-      }
-      if (state == 0) {
-        return "认证失败";
-      }
-    },
-    buttonfilter(state) {
-      if (state == 1) {
-        return "封禁";
-      }
-      if (state == 0) {
-        return "启用";
-      }
-    },
-    statefilter(state) {
-      if (state == 1) {
-        return "启用状态";
-      }
-      if (state == 0) {
-        return "停用状态";
-      }
-    }
-  },
+ 
   methods: {
-    async changestate(type, state, userid, companyname) {
-      let data = {
-        type: type,
-        state: state,
-        user_id: userid,
-        company_name: companyname
-      };
-      let res = await this.$axios.post(
-        "/admin/changeuserstate",
-        this.qs.stringify(data)
-      );
-      if (res.data.state.type === "SUCCESS") {
-        this.$message.success("操作成功成功");
-        this.getuserlist();
-        this.dialogstudent = false;
-        this.dialogcompany = false;
-      }
-    },
-    //公司认证信息
-    changecompanystatedialog(user) {
-      this.changecompanystateuser = JSON.stringify(user);
-      this.changecompanystateuser = JSON.parse(this.changecompanystateuser);
-      this.changecompanystateuser.companyimg = JSON.parse(
-        this.changecompanystateuser.companyimg
-      );
-      this.dialogcompany = true;
-    },
-    //学生认证信息
-    changerealstatedialog(user) {
-      this.changerealstateuser = JSON.stringify(user);
-      this.changerealstateuser = JSON.parse(this.changerealstateuser);
-      this.changerealstateuser.studentcard = JSON.parse(
-        this.changerealstateuser.studentcard
-      );
-      this.dialogstudent = true;
-    },
+   
     async del(help_id) {
       console.log(help_id);
       let res = await this.$axios.post(
@@ -161,34 +101,19 @@ export default {
         this.gethelplist();
       }
     },
-    handleSizeChange(val) {
-      this.pagelistquery.pagesize = val;
-      this.getuserlist();
-      console.log(`每页 ${val} 条`);
-    },
-    handleCurrentChange(val) {
-      this.pagelistquery.page = val;
-      this.getuserlist();
-      console.log(`当前页: ${val}`);
-    },
-    async getuserlist() {
-      let data = {
-        page: this.pagelistquery.page,
-        pagesize: this.pagelistquery.pagesize
-      };
+
+    async getadmin() {
       let res = await this.$axios.post(
-        "/admin/getuserlist",
-        this.qs.stringify(data)
+        "/admin/getadmin",
       );
       if (res.data.state.type === "SUCCESS") {
         this.tableData = res.data.data;
         console.log(res.data);
-        this.pagelistquery.total = res.data.count;
       }
     }
   },
   created() {
-    this.getuserlist();
+    this.getadmin();
   }
 };
 </script>
