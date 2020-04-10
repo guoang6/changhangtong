@@ -198,7 +198,7 @@ exports.createhelp = async (req, res) => {
         help_read_num: 0,//浏览量
         help_state: 0, //状态  
         help_istop: 0,//是否置顶
-        help_ispublic: 0,//是否显示
+        ispublic: 0,//是否显示
     }
     let sql = 'insert into help set ?'
     const result = await query(sql, info)
@@ -337,7 +337,7 @@ exports.createactivity = async (req, res) => {
         activity_read_num: 0,//浏览量
         activity_state: 0, //状态  
         activity_istop: 0,//是否置顶
-        activity_ispublic: 0,//是否显示
+        ispublic: 0,//是否显示
     }
     let sql = 'insert into activity set ?'
     const result = await query(sql, info)
@@ -510,7 +510,7 @@ exports.createoldstuff = async (req, res) => {
         oldstuff_read_num: 0,//浏览量
         oldstuff_state: 0, //状态  
         oldstuff_istop: 0,//是否置顶
-        oldstuff_ispublic: 0,//是否显示
+        ispublic: 0,//是否显示
     }
     let sql = 'insert into oldstuff set ?'
     const result = await query(sql, info)
@@ -624,7 +624,7 @@ exports.createjob = async (req, res) => {
         job_read_num: 0,//浏览量
         job_state: 0, //状态  
         job_istop: 0,//是否置顶
-        job_ispublic: 0,//是否显示
+        ispublic: 0,//是否显示
     }
     let sql = 'insert job  set ?'
     const result = await query(sql, info)
@@ -672,7 +672,7 @@ exports.createarticle = async (req, res) => {
         article_read_num: 0,//浏览量
         article_state: 0, //状态  
         article_istop: 0,//是否置顶
-        article_ispublic: 0,//是否显示
+        ispublic: 0,//是否显示
     }
     let sql = 'insert article  set ?'
     const result = await query(sql, info)

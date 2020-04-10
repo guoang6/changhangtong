@@ -282,18 +282,17 @@ export default {
       );
       if (res.data.state.type === "SUCCESS") {
         this.$message.success("删除成功");
-        this.dialogpw = false;
-        this.getuserlist();
+        this.getadminlist();
       }
     },
     handleSizeChange(val) {
       this.pagelistquery.pagesize = val;
-      this.getuserlist();
+      this.getadminlist();
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
       this.pagelistquery.page = val;
-      this.getuserlist();
+      this.getadminlist();
       console.log(`当前页: ${val}`);
     },
     async getadminlist() {

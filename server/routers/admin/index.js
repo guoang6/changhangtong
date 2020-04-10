@@ -17,6 +17,8 @@ router.post('/admin/getadmin', service.getadmin)
 
 
 router.post('/admin/contentexamine', service.contentexamine)
+router.post('/admin/changecontentstate', service.changecontentstate)
+
 router.post('/admin/getuserlist', service.getuserlist)
 router.post('/admin/changeuserstate', service.changeuserstate)
 

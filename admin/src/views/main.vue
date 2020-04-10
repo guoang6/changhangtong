@@ -30,18 +30,8 @@
               <i class="el-icon-folder-checked"></i>
               <span slot="title">审核中心</span>
             </template>
-            <el-menu-item-group >
-              <span slot="title">内容审核</span>
-              <el-menu-item index="/contentexamine">问答</el-menu-item>
-              <el-menu-item index="1-1">活动</el-menu-item>
-              <el-menu-item index="1-2">二手信息</el-menu-item>
-              <el-menu-item index="/contentexamine">招聘</el-menu-item>
-              <el-menu-item index="/contentexamine">文章/新闻</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group>
-              <span slot="title">评论</span>
-              <el-menu-item index="1-1">评论</el-menu-item>
-            </el-menu-item-group>
+              <el-menu-item index="/contentexamine">内容审核</el-menu-item>
+              <el-menu-item index="/contentexamine">评论审核</el-menu-item>
           </el-submenu>
           <el-submenu index="2"  :disabled="uinfo.jurisdiction.isyh !=='1'&& uinfo.username !== 'guoang'" >
             <template slot="title">

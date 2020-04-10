@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import main from '../views/main.vue'
 import login from '../views/login.vue'
 import contentexamine from '../views/examine/contentexamine.vue'
+
 import useruser from '../views/user/useruser.vue'
 import useradmin from '../views/user/useradmin.vue'
 import carousel from '../views/management/carousel.vue'

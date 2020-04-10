@@ -256,22 +256,52 @@ WHERE
     }
     res.send(data)
 }
-//获取求助列表
+//获取内容列表
 exports.contentexamine = async (req, res) => {
     console.log(req.body)
-    let sql1 = ' select count(*) as count from help '
     let info1 = []
-    const counts = await query(sql1, info1)
-    let count = counts[0].count
     let pagesize = req.body.pagesize * 1
     let page = (req.body.page - 1) * pagesize
     let info = [pagesize, page]
-    let sql = 'select * from help,user where help.user_id=user.user_id limit ? offset ?'
+    let sql1 = `select count(*) as count from ${req.body.type} ,user where ${req.body.type}.user_id=user.user_id`
+    let sql = `select * from ${req.body.type},user where ${req.body.type}.user_id=user.user_id `
+    if (req.body.user !== '') {
+        sql1 = `${sql1} and user.nickname like '%${req.body.user}%'`
+        sql = `${sql} and user.nickname like'%${req.body.user}%'`
+    }
+    if (req.body.admin !== '') {
+        sql1 = `${sql1} and ${req.body.type}.admin  like '%${req.body.admin}%'`
+        sql = `${sql} and  ${req.body.type}.admin like '%${req.body.admin}%'`
+    }
+    if (req.body.state !== '') {
+        sql1 = `${sql1} and ${req.body.type}.ispublic=${req.body.state} `
+        sql = `${sql} and  ${req.body.type}.ispublic=${req.body.state} `
+    }
+    sql = `${sql} limit ? offset ?`
+    const counts = await query(sql1, info1)
+    let count = counts[0].count
+
+
+
     const result = await query(sql, info)
     data = {
         state: s,
         data: result,
         count: count
+    }
+    // console.log(data)
+    // console.log(result)
+    res.send(data);
+}
+//内容审核
+exports.changecontentstate = async (req, res) => {
+    console.log(req.body)
+    let sql = `update ${req.body.type} set ispublic=?,admin=? where ${req.body.type}_id=?`
+    let info = [req.body.state, req.user.username, req.body.id]
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: {},
     }
     // console.log(data)
     // console.log(result)
