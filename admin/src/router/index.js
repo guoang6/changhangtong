@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import main from '../views/main.vue'
 import login from '../views/login.vue'
 import contentexamine from '../views/examine/contentexamine.vue'
+import comment from '../views/examine/comment.vue'
 
 import useruser from '../views/user/useruser.vue'
 import useradmin from '../views/user/useradmin.vue'
@@ -18,6 +19,7 @@ const routes = [
     { path: '', name: 'numbering', component: numbering, },
     { path: 'myself', name: 'myself', component: myself, },
     { path: 'contentexamine', name: 'contentexamine', component: contentexamine, },
+    { path: 'comment', name: 'comment', component: comment, },
     { path: 'useruser', name: 'useruser', component: useruser, },
     { path: 'useradmin', name: 'useradmin', component: useradmin, },
     { path: 'managementlable', name: 'managementlable', component: managementlable, },

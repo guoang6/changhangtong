@@ -31,7 +31,7 @@
               <span slot="title">审核中心</span>
             </template>
               <el-menu-item index="/contentexamine">内容审核</el-menu-item>
-              <el-menu-item index="/contentexamine">评论审核</el-menu-item>
+              <el-menu-item index="/comment">评论审核</el-menu-item>
           </el-submenu>
           <el-submenu index="2"  :disabled="uinfo.jurisdiction.isyh !=='1'&& uinfo.username !== 'guoang'" >
             <template slot="title">

@@ -23,6 +23,7 @@
             </el-form-item>
             <el-form-item>
               <el-select v-model="pagelistquery.state" placeholder="状态">
+                <el-option label="全部" value=""></el-option>
                 <el-option label="待审核" value="0"></el-option>
                 <el-option label="审核通过" value="1"></el-option>
 
@@ -59,7 +60,7 @@
             <el-form-item label="地点">{{content.activity_locale}}</el-form-item>
             <el-form-item
               label="时间"
-            >{{content.activity_statetime| dataFormat }}-{{content.activity_endtime| dataFormat }}</el-form-item>
+            >{{content.activity_statetime| dataFormat }}——{{content.activity_endtime| dataFormat }}</el-form-item>
             <el-form-item label="内容">
               <span v-html="content.activity_content"></span>
             </el-form-item>

@@ -12,6 +12,10 @@ router.post('/admin/changeuseruserstate', service.changeuseruserstate)
 router.post('/admin/deleteuser', service.deleteuser)
 router.post('/admin/getadmin', service.getadmin)
 
+router.post('/admin/getcomment', service.getcomment)
+router.post('/admin/getreply', service.getreply)
+
+
 
 
 

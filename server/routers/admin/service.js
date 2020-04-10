@@ -277,6 +277,14 @@ exports.contentexamine = async (req, res) => {
         sql1 = `${sql1} and ${req.body.type}.ispublic=${req.body.state} `
         sql = `${sql} and  ${req.body.type}.ispublic=${req.body.state} `
     }
+    let title
+    if(req.body.type=='job'||req.body.type=='oldstuff') title='name'
+    else  title='title'
+    if (req.body.search !== '') {
+        sql1 = `${sql1} and ${req.body.type}.${req.body.type}_${title}  like '%${req.body.search}%' `
+        sql = `${sql} and  ${req.body.type}.${req.body.type}_${title} like '%${req.body.search}%' `
+    }
+    
     sql = `${sql} limit ? offset ?`
     const counts = await query(sql1, info1)
     let count = counts[0].count
@@ -569,6 +577,41 @@ exports.announcementlist = async (req, res) => {
         state: s,
         data: result,
 
+    }
+    res.send(data)
+}
+//获取评论列表
+exports.getcomment = async (req, res) => { 
+    let info1 = []
+
+    let sql1 = ' select count(*) as count from comment where 1=1'
+    const counts = await query(sql1, info1)
+    let count = counts[0].count
+        
+    let pagesize = req.body.pagesize * 1
+    let page = (req.body.page - 1) * pagesize
+    let info = [pagesize, page]
+    let sql = 'select * from user,comment where comment.user_id = user.user_id order by comment.comment_createtime asc  limit ? offset ?'
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: result,
+        count: count
+    }
+    res.send(data)
+}
+
+//获取回复列表
+exports.getreply = async (req, res) => {
+    let info = [req.body.comment_id]//评论id
+    console.log(req.body)
+    let sql = 'select reply.reply_content ,reply.createtime,reply.touserid,reply.tousernickname,' +
+        'user.user_id,user.avatar,user.nickname from user,reply where reply.user_id = user.user_id and comment_id=? ' +
+        'order by reply.createtime asc '
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: result,
     }
     res.send(data)
 }
