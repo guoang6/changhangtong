@@ -304,8 +304,8 @@ exports.contentexamine = async (req, res) => {
 //内容审核
 exports.changecontentstate = async (req, res) => {
     console.log(req.body)
-    let sql = `update ${req.body.type} set ispublic=?,admin=? where ${req.body.type}_id=?`
     let info = [req.body.state, req.user.username, req.body.id]
+    let sql = `update ${req.body.type} set ispublic=?,admin=? where ${req.body.type}_id=?`
     const result = await query(sql, info)
     data = {
         state: s,
@@ -585,14 +585,22 @@ exports.getcomment = async (req, res) => {
     let info1 = []
 
     let sql1 = ' select count(*) as count from comment where 1=1'
-    const counts = await query(sql1, info1)
-    let count = counts[0].count
-        
     let pagesize = req.body.pagesize * 1
     let page = (req.body.page - 1) * pagesize
     let info = [pagesize, page]
-    let sql = 'select * from user,comment where comment.user_id = user.user_id order by comment.comment_createtime asc  limit ? offset ?'
+    let sql = 'select * from user,comment where comment.user_id = user.user_id '
+    if (req.body.admin !== '') {
+        sql1 = `${sql1} and comment.admin  like '%${req.body.admin}%'`
+        sql = `${sql} and  comment.admin like '%${req.body.admin}%'`
+    }
+    if (req.body.state !== '') {
+        sql1 = `${sql1} and comment.ispublic=${req.body.state} `
+        sql = `${sql} and  comment.ispublic=${req.body.state} `
+    }
+    sql = `${sql}  order by comment.comment_createtime DESC  limit ? offset ?`
     const result = await query(sql, info)
+    const counts = await query(sql1, info1)
+    let count = counts[0].count
     data = {
         state: s,
         data: result,
@@ -605,9 +613,8 @@ exports.getcomment = async (req, res) => {
 exports.getreply = async (req, res) => {
     let info = [req.body.comment_id]//评论id
     console.log(req.body)
-    let sql = 'select reply.reply_content ,reply.createtime,reply.touserid,reply.tousernickname,' +
-        'user.user_id,user.avatar,user.nickname from user,reply where reply.user_id = user.user_id and comment_id=? ' +
-        'order by reply.createtime asc '
+    let sql = 'select * from user,reply where reply.user_id = user.user_id and comment_id=? ' +
+        'order by reply.createtime DESC '
     const result = await query(sql, info)
     data = {
         state: s,

@@ -153,7 +153,7 @@ exports.setcomment = async (req, res) => {
         comment_createtime: time,//创建时间  
         comment_state: 0, //状态  
         comment_istop: 0,//是否置顶
-        comment_ispublic: 0,//是否显示
+        ispublic: 0,//是否显示
     }
     let sql = 'insert comment set ?'
     const result = await query(sql, info)
@@ -195,7 +195,7 @@ exports.setreply = async (req, res) => {
         createtime: time,//创建时间  
         reply_state: 0, //状态  
         reply_istop: 0,//是否置顶
-        reply_ispublic: 0,//是否显示
+        ispublic: 0,//是否显示
     }
     let sql = 'insert reply set ?'
     const result = await query(sql, info)

@@ -10,30 +10,144 @@
       </div>
 
       <div class="main">
-        <el-table :data="tableData" border style="width: 100%" @expand-change="getreply">
+        <div class="search">
+          <el-form :inline="true" :model="pagelistquery" class="demo-form-inline">
+            <el-form-item>
+              <el-input v-model="pagelistquery.admin" placeholder="审批人"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-select v-model="pagelistquery.state" placeholder="状态">
+                <el-option label="全部" value></el-option>
+                <el-option label="待审核" value="0"></el-option>
+                <el-option label="审核通过" value="1"></el-option>
+
+                <el-option label="审核未通过" value="-1"></el-option>
+              </el-select>
+            </el-form-item>
+
+            <el-form-item>
+              <el-button type="primary" @click="getcommentlist">查询</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+
+        <el-table
+          :data="tableData"
+          border
+          style="width: 100%;min-height:500px"
+          v-loading="loading"
+          element-loading-text="拼命加载中"
+          element-loading-spinner="el-icon-loading"
+        >
+          <!-- @expand-change="getreply" -->
           <el-table-column type="expand">
             <template slot-scope="props">
               <el-table :data="props.row.child" style="width: 100%">
+                <el-table-column type="index" width="50"></el-table-column>
                 <el-table-column prop="createtime" label="创建日期">
                   <template slot-scope="scope">{{ scope.row.comment_createtime | dataFormat }}</template>
                 </el-table-column>
                 <el-table-column label="回复者" prop="nickname"></el-table-column>
                 <el-table-column label="被回复者" prop="tousernickname"></el-table-column>
-                <el-table-column label="内容" prop="desc"></el-table-column>
+                <el-table-column label="状态" prop="comment_ispublic">
+                  <template slot-scope="scope">
+                    <span style="color:#6cbb7a" v-if="scope.row.ispublic==1">审核通过</span>
+                    <span style="color:#409eff" v-if="scope.row.ispublic==0">未审核</span>
+                    <span style="color:#f60c6c" v-if="scope.row.ispublic==-1">审核未通过</span>
+                  </template>
+                </el-table-column>
+                <el-table-column label="回复内容" prop="desc">
+                  <template slot-scope="scope">
+                    <el-popover placement="right" width="400" trigger="hover">
+                      <span v-html="scope.row.reply_content"></span>
+                      <el-button type="text" slot="reference">回复类容</el-button>
+                    </el-popover>
+                  </template>
+                </el-table-column>
+                <el-table-column label="审核人" prop="admin"></el-table-column>
+
+                <el-table-column fixed="right" label="操作" width="250">
+                  <template slot-scope="scope">
+                    <el-button
+                      type="text"
+                      size="small"
+                      v-if="scope.row.ispublic==1"
+                      @click="changestate('reply',-1,scope.row.reply_id)"
+                    >不通过审核</el-button>
+                    <el-button
+                      type="text"
+                      size="small"
+                      v-if="scope.row.ispublic==0"
+                      @click="changestate('reply',1,scope.row.reply_id)"
+                    >通过审核</el-button>
+                    <el-button
+                      type="text"
+                      size="small"
+                      v-if="scope.row.ispublic==0"
+                      @click="changestate('reply',-1,scope.row.reply_id)"
+                    >不通过审核</el-button>
+                    <el-button
+                      type="text"
+                      size="small"
+                      v-if="scope.row.ispublic==-1"
+                      @click="changestate('reply',1,scope.row.reply_id)"
+                    >通过审核</el-button>
+                    <el-button type="text" size="small" @click="del(scope.row.help_id)">删除</el-button>
+                  </template>
+                </el-table-column>
               </el-table>
             </template>
           </el-table-column>
-
           <el-table-column prop="createtime" label="创建日期">
             <template slot-scope="scope">{{ scope.row.comment_createtime | dataFormat }}</template>
           </el-table-column>
-          <!-- <el-table-column label="内容id" prop="content_id">
-              <template slot-scope="scope">评论内容</template>
-              </el-table-column> 
-          -->
           <el-table-column label="评论者" prop="nickname"></el-table-column>
+          <el-table-column label="状态" prop="comment_ispublic">
+            <template slot-scope="scope">
+              <span style="color:#6cbb7a" v-if="scope.row.ispublic==1">审核通过</span>
+              <span style="color:#409eff" v-if="scope.row.ispublic==0">未审核</span>
+              <span style="color:#f60c6c" v-if="scope.row.ispublic==-1">审核未通过</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="评论内容" prop="desc">
+            <template slot-scope="scope">
+              <el-popover placement="right" width="400" trigger="hover">
+                <span v-html="scope.row.comment_content"></span>
+                <el-button type="text" slot="reference">评论类容</el-button>
+              </el-popover>
+            </template>
+          </el-table-column>
+          <el-table-column label="审核人" prop="admin"></el-table-column>
 
-          <el-table-column label="评论内容" prop="desc"></el-table-column>
+          <el-table-column fixed="right" label="操作" width="250">
+            <template slot-scope="scope">
+              <el-button
+                type="text"
+                size="small"
+                v-if="scope.row.ispublic==1"
+                @click="changestate('comment',-1,scope.row.comment_id)"
+              >不通过审核</el-button>
+              <el-button
+                type="text"
+                size="small"
+                v-if="scope.row.ispublic==0"
+                @click="changestate('comment',1,scope.row.comment_id)"
+              >通过审核</el-button>
+              <el-button
+                type="text"
+                size="small"
+                v-if="scope.row.ispublic==0"
+                @click="changestate('comment',-1,scope.row.comment_id)"
+              >不通过审核</el-button>
+              <el-button
+                type="text"
+                size="small"
+                v-if="scope.row.ispublic==-1"
+                @click="changestate('comment',1,scope.row.comment_id)"
+              >通过审核</el-button>
+              <el-button type="text" size="small" @click="del(scope.row.help_id)">删除</el-button>
+            </template>
+          </el-table-column>
         </el-table>
 
         <!--分页-->
@@ -59,6 +173,8 @@ export default {
       loading: false,
 
       pagelistquery: {
+        admin: "",
+        state: "",
         total: 0,
         page: 1,
         pagesize: 10
@@ -67,100 +183,32 @@ export default {
     };
   },
   methods: {
-    async getreply(row) {
-      let res = await this.$axios.post(
-        "/admin/getreply",
-        this.qs.stringify(row)
-      );
-      if (res.data.state.type === "SUCCESS") {
-        console.log(res.data.data);
-        for (let index = 0; index < this.tableData.length; index++) {
-          if (this.tableData[index].comment_id === row.comment_id) {
+    async getreply() {
+      for (let index = 0; index < this.tableData.length; index++) {
+        let res = await this.$axios.post(
+          "/admin/getreply",
+          this.qs.stringify({ comment_id: this.tableData[index].comment_id })
+        );
+        if (res.data.state.type === "SUCCESS") {
+          console.log(res.data.data);
           this.tableData[index].child = res.data.data;
-              console.log(this.tableData[index])
-          }
         }
-      
-      }
-       
-    },
-    registered() {
-      const userReg = /^[1-9a-zA-Z]{1}[0-9a-zA-Z]{5,9}$/; //6-10位字母数字
-      const pwdReg = /^[a-zA-Z]\w{5,17}$/; //6-18位字母数字下划线 字母开头
-      if (!userReg.test(this.user.username)) {
-        this.$message.error("账号为6-10位字母数字字母");
-        return;
-      }
-      if (!pwdReg.test(this.user.password)) {
-        this.$message.error("密码为6-18位字母数字或下划线 字母开头");
-        return;
-      }
-      if (this.user.password !== this.user.password1) {
-        this.$message.error("两次密码不相等");
-        return;
-      }
-      this.$axios({
-        url: "/admin/registered",
-        method: "POST",
-        data: this.qs.stringify(this.user)
-      })
-        .then(res => {
-          let data = res.data;
-          if (data.state.type !== "SUCCESS") {
-            if (data.state.type == "ERROR_PARAMS_EXIST") {
-              this.$message.error("账户名重复");
-            } else {
-              this.$message.error("账号添加失败失败");
-            }
-            return;
-          }
-          this.$message.success("账号添加成功");
-          this.dialogFormVisibleadd = false;
-          this.getadminlist();
-        })
-        .catch(e => {
-          this.$message.error(e);
-        });
-    },
-    async changestate(row) {
-      console.log(row);
-      let res = await this.$axios.post(
-        "/admin/changeadminstate",
-        this.qs.stringify(row)
-      );
-      if (res.data.state.type === "SUCCESS") {
-        this.$message.success("更改授权成功");
       }
     },
-    async del(help_id) {
-      console.log(help_id);
-      let res = await this.$axios.post(
-        "/webadmin/deletehelp",
-        this.qs.stringify({ help_id: help_id })
-      );
-      if (res.data.state.type === "SUCCESS") {
-        this.$message.success("删除成功");
-        this.gethelplist();
-      }
-    },
-    changepw(row) {
-      this.dialogpw = true;
-      this.changepassword = row;
-    },
-
-    //删除用户
-    async deleteuser(row) {
+    async changestate(type, state, id) {
       let data = {
-        user_id: row.user_id,
-        usertype: "admin"
+        id: id,
+        type: type,
+        state: state
       };
       let res = await this.$axios.post(
-        "/admin/deleteuser",
+        "/admin/changecontentstate",
         this.qs.stringify(data)
       );
       if (res.data.state.type === "SUCCESS") {
-        this.$message.success("删除成功");
-        this.getadminlist();
+        this.$message.success("操作成功");
+        this.getcommentlist();
+        this.dialog = false;
       }
     },
     handleSizeChange(val) {
@@ -183,6 +231,7 @@ export default {
         this.tableData = res.data.data;
         console.log(res.data.data);
         this.pagelistquery.total = res.data.count;
+        this.getreply();
       }
       this.loading = false;
     }

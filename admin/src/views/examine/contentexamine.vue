@@ -23,7 +23,7 @@
             </el-form-item>
             <el-form-item>
               <el-select v-model="pagelistquery.state" placeholder="状态">
-                <el-option label="全部" value=""></el-option>
+                <el-option label="全部" value></el-option>
                 <el-option label="待审核" value="0"></el-option>
                 <el-option label="审核通过" value="1"></el-option>
 
@@ -97,7 +97,15 @@
           </div>
         </el-dialog>
         <!--help-->
-        <el-table :data="tableData" border style="width: 100%" v-if="type=='help'">
+        <el-table
+          :data="tableData"
+          border
+          style="width: 100%;min-height:500px"
+          v-loading="loading"
+          element-loading-text="拼命加载中"
+          element-loading-spinner="el-icon-loading"
+          v-if="type=='help'"
+        >
           <el-table-column fixed prop="createtime" label="创建日期">
             <template slot-scope="scope">{{ scope.row.createtime | dataFormat }}</template>
           </el-table-column>
@@ -106,11 +114,11 @@
             <template slot-scope="scope">{{scope.row.help_title}}</template>
           </el-table-column>
           <el-table-column prop="help_lable" label="分类"></el-table-column>
-        <el-table-column prop="ispublic" label="状态">
+          <el-table-column prop="ispublic" label="状态">
             <template slot-scope="scope">
-             <span style="color:#6cbb7a" v-if="scope.row.ispublic==1">审核通过</span>
-             <span style="color:#409eff"  v-if="scope.row.ispublic==0">未审核</span>
-             <span style="color:#f60c6c" v-if="scope.row.ispublic==-1">审核未通过</span>
+              <span style="color:#6cbb7a" v-if="scope.row.ispublic==1">审核通过</span>
+              <span style="color:#409eff" v-if="scope.row.ispublic==0">未审核</span>
+              <span style="color:#f60c6c" v-if="scope.row.ispublic==-1">审核未通过</span>
             </template>
           </el-table-column>
           <el-table-column prop="admin" label="审核人"></el-table-column>
@@ -123,121 +131,148 @@
         </el-table>
         <!--activity-->
         <div v-if="type=='activity'">
-           <el-table :data="tableData" border style="width: 100%" >
-          <el-table-column fixed prop="createtime" label="创建日期">
-            <template slot-scope="scope">{{ scope.row.activity_statetime | dataFormat }}</template>
-          </el-table-column>
-          <el-table-column prop="nickname" label="作者"></el-table-column>
-          <el-table-column prop="activity_title" label="活动名称">
-            <template slot-scope="scope">{{scope.row.activity_title}}</template>
-          </el-table-column>
-          <el-table-column prop="activity_locale" label="地点"></el-table-column>
-          <el-table-column prop="activity_lable" label="分类"></el-table-column>
-          <el-table-column prop="ispublic" label="状态">
-            <template slot-scope="scope">
-             <span style="color:#6cbb7a" v-if="scope.row.ispublic==1">审核通过</span>
-             <span style="color:#409eff"  v-if="scope.row.ispublic==0">未审核</span>
-             <span style="color:#f60c6c" v-if="scope.row.ispublic==-1">审核未通过</span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="admin" label="审核人"></el-table-column>
-          <el-table-column fixed="right" label="操作" width="170">
-            <template slot-scope="scope">
-              <el-button @click=" shenhe(scope.row)" type="text" size="small">审核</el-button>
-              <el-button type="text" size="small" @click="del(scope.row.help_id)">删除</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
+          <el-table
+            :data="tableData"
+            border
+            style="width: 100%;min-height:500px"
+            v-loading="loading"
+            element-loading-text="拼命加载中"
+            element-loading-spinner="el-icon-loading"
+          >
+            <el-table-column fixed prop="createtime" label="创建日期">
+              <template slot-scope="scope">{{ scope.row.activity_statetime | dataFormat }}</template>
+            </el-table-column>
+            <el-table-column prop="nickname" label="作者"></el-table-column>
+            <el-table-column prop="activity_title" label="活动名称">
+              <template slot-scope="scope">{{scope.row.activity_title}}</template>
+            </el-table-column>
+            <el-table-column prop="activity_locale" label="地点"></el-table-column>
+            <el-table-column prop="activity_lable" label="分类"></el-table-column>
+            <el-table-column prop="ispublic" label="状态">
+              <template slot-scope="scope">
+                <span style="color:#6cbb7a" v-if="scope.row.ispublic==1">审核通过</span>
+                <span style="color:#409eff" v-if="scope.row.ispublic==0">未审核</span>
+                <span style="color:#f60c6c" v-if="scope.row.ispublic==-1">审核未通过</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="admin" label="审核人"></el-table-column>
+            <el-table-column fixed="right" label="操作" width="170">
+              <template slot-scope="scope">
+                <el-button @click=" shenhe(scope.row)" type="text" size="small">审核</el-button>
+                <el-button type="text" size="small" @click="del(scope.row.help_id)">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
         </div>
-       
+
         <!--oldstuff-->
         <div v-if="type=='oldstuff'">
-          <el-table :data="tableData" border style="width: 100%" >
-          <el-table-column fixed prop="createtime" label="创建日期">
-            <template slot-scope="scope">{{ scope.row.createtime | dataFormat }}</template>
-          </el-table-column>
-          <el-table-column prop="nickname" label="作者"></el-table-column>
-          <el-table-column prop="nickname" label="图片">
-            <template slot-scope="scope">
-              <img :src="scope.row.oldstuff_img" alt="图片地址错误" height="100px" />
-            </template>
-          </el-table-column>
-          <el-table-column prop="oldstuff_name" label="名称"></el-table-column>
-          <el-table-column prop="oldstuff_lable" label="分类"></el-table-column>
-           <el-table-column prop="ispublic" label="状态">
-            <template slot-scope="scope">
-             <span style="color:#6cbb7a" v-if="scope.row.ispublic==1">审核通过</span>
-             <span style="color:#409eff"  v-if="scope.row.ispublic==0">未审核</span>
-             <span style="color:#f60c6c" v-if="scope.row.ispublic==-1">审核未通过</span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="admin" label="审核人"></el-table-column>
-          <el-table-column fixed="right" label="操作" width="170">
-            <template slot-scope="scope">
-              <el-button @click=" shenhe(scope.row)" type="text" size="small">审核</el-button>
-              <el-button type="text" size="small" @click="del(scope.row.help_id)">删除</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
+          <el-table
+            :data="tableData"
+            border
+            style="width: 100%;min-height:500px"
+            v-loading="loading"
+            element-loading-text="拼命加载中"
+            element-loading-spinner="el-icon-loading"
+          >
+            <el-table-column fixed prop="createtime" label="创建日期">
+              <template slot-scope="scope">{{ scope.row.createtime | dataFormat }}</template>
+            </el-table-column>
+            <el-table-column prop="nickname" label="作者"></el-table-column>
+            <el-table-column prop="nickname" label="图片">
+              <template slot-scope="scope">
+                <img :src="scope.row.oldstuff_img" alt="图片地址错误" height="100px" />
+              </template>
+            </el-table-column>
+            <el-table-column prop="oldstuff_name" label="名称"></el-table-column>
+            <el-table-column prop="oldstuff_lable" label="分类"></el-table-column>
+            <el-table-column prop="ispublic" label="状态">
+              <template slot-scope="scope">
+                <span style="color:#6cbb7a" v-if="scope.row.ispublic==1">审核通过</span>
+                <span style="color:#409eff" v-if="scope.row.ispublic==0">未审核</span>
+                <span style="color:#f60c6c" v-if="scope.row.ispublic==-1">审核未通过</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="admin" label="审核人"></el-table-column>
+            <el-table-column fixed="right" label="操作" width="170">
+              <template slot-scope="scope">
+                <el-button @click=" shenhe(scope.row)" type="text" size="small">审核</el-button>
+                <el-button type="text" size="small" @click="del(scope.row.help_id)">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
         </div>
-        
+
         <!--job-->
         <div v-if="type=='job'">
-          <el-table :data="tableData" border style="width: 100%" >
-          <el-table-column fixed prop="createtime" label="创建日期">
-            <template slot-scope="scope">{{ scope.row.createtime | dataFormat }}</template>
-          </el-table-column>
-          <el-table-column prop="nickname" label="作者"></el-table-column>
-          <el-table-column prop="job_name" label="岗位名称">
-            <template slot-scope="scope">{{scope.row.job_name}}</template>
-          </el-table-column>
-          <el-table-column prop="job_salary" label="薪资"></el-table-column>
-          <el-table-column prop="job_lable" label="分类"></el-table-column>
-          <el-table-column prop="ispublic" label="状态">
-            <template slot-scope="scope">
-             <span style="color:#6cbb7a" v-if="scope.row.ispublic==1">审核通过</span>
-             <span style="color:#409eff"  v-if="scope.row.ispublic==0">未审核</span>
-             <span style="color:#f60c6c" v-if="scope.row.ispublic==-1">审核未通过</span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="admin" label="审核人"></el-table-column>
-          <el-table-column fixed="right" label="操作" width="170">
-            <template slot-scope="scope">
-              <el-button @click=" shenhe(scope.row)" type="text" size="small">审核</el-button>
-              <el-button type="text" size="small" @click="del(scope.row.help_id)">删除</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
+          <el-table
+            :data="tableData"
+            border
+            style="width: 100%;min-height:500px"
+            v-loading="loading"
+            element-loading-text="拼命加载中"
+            element-loading-spinner="el-icon-loading"
+          >
+            <el-table-column fixed prop="createtime" label="创建日期">
+              <template slot-scope="scope">{{ scope.row.createtime | dataFormat }}</template>
+            </el-table-column>
+            <el-table-column prop="nickname" label="作者"></el-table-column>
+            <el-table-column prop="job_name" label="岗位名称">
+              <template slot-scope="scope">{{scope.row.job_name}}</template>
+            </el-table-column>
+            <el-table-column prop="job_salary" label="薪资"></el-table-column>
+            <el-table-column prop="job_lable" label="分类"></el-table-column>
+            <el-table-column prop="ispublic" label="状态">
+              <template slot-scope="scope">
+                <span style="color:#6cbb7a" v-if="scope.row.ispublic==1">审核通过</span>
+                <span style="color:#409eff" v-if="scope.row.ispublic==0">未审核</span>
+                <span style="color:#f60c6c" v-if="scope.row.ispublic==-1">审核未通过</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="admin" label="审核人"></el-table-column>
+            <el-table-column fixed="right" label="操作" width="170">
+              <template slot-scope="scope">
+                <el-button @click=" shenhe(scope.row)" type="text" size="small">审核</el-button>
+                <el-button type="text" size="small" @click="del(scope.row.help_id)">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
         </div>
-        
+
         <!--article-->
         <div v-if="type=='article'">
-          <el-table :data="tableData" border style="width: 100%" >
-          <el-table-column fixed prop="createtime" label="创建日期">
-            <template slot-scope="scope">{{ scope.row.article_createtime | dataFormat }}</template>
-          </el-table-column>
-          <el-table-column prop="nickname" label="作者"></el-table-column>
-          <el-table-column prop="help_title" label="标题">
-            <template slot-scope="scope">{{scope.row.article_title}}</template>
-          </el-table-column>
-          <el-table-column prop="article_lable" label="分类"></el-table-column>
-         <el-table-column prop="ispublic" label="状态">
-            <template slot-scope="scope">
-             <span style="color:#6cbb7a" v-if="scope.row.ispublic==1">审核通过</span>
-             <span style="color:#409eff"  v-if="scope.row.ispublic==0">未审核</span>
-             <span style="color:#f60c6c" v-if="scope.row.ispublic==-1">审核未通过</span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="admin" label="审核人"></el-table-column>
-          <el-table-column fixed="right" label="操作" width="170">
-            <template slot-scope="scope">
-              <el-button @click=" shenhe(scope.row)" type="text" size="small">审核</el-button>
-              <el-button type="text" size="small" @click="del(scope.row.help_id)">删除</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
+          <el-table
+            :data="tableData"
+            border
+            style="width: 100%;min-height:500px"
+            v-loading="loading"
+            element-loading-text="拼命加载中"
+            element-loading-spinner="el-icon-loading"
+          >
+            <el-table-column fixed prop="createtime" label="创建日期">
+              <template slot-scope="scope">{{ scope.row.article_createtime | dataFormat }}</template>
+            </el-table-column>
+            <el-table-column prop="nickname" label="作者"></el-table-column>
+            <el-table-column prop="help_title" label="标题">
+              <template slot-scope="scope">{{scope.row.article_title}}</template>
+            </el-table-column>
+            <el-table-column prop="article_lable" label="分类"></el-table-column>
+            <el-table-column prop="ispublic" label="状态">
+              <template slot-scope="scope">
+                <span style="color:#6cbb7a" v-if="scope.row.ispublic==1">审核通过</span>
+                <span style="color:#409eff" v-if="scope.row.ispublic==0">未审核</span>
+                <span style="color:#f60c6c" v-if="scope.row.ispublic==-1">审核未通过</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="admin" label="审核人"></el-table-column>
+            <el-table-column fixed="right" label="操作" width="170">
+              <template slot-scope="scope">
+                <el-button @click=" shenhe(scope.row)" type="text" size="small">审核</el-button>
+                <el-button type="text" size="small" @click="del(scope.row.help_id)">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
         </div>
-        
 
         <el-pagination
           @size-change="handleSizeChange"
@@ -258,6 +293,7 @@ export default {
   name: "contentexamine",
   data() {
     return {
+            loading: false,
       dialog: false,
       pagelistquery: {
         user: "",
@@ -334,6 +370,7 @@ export default {
       console.log(`当前页: ${val}`);
     },
     async getcontentlist() {
+      this.loading = true;
       this.type = this.pagelistquery.type;
       let res = await this.$axios.post(
         "/admin/contentexamine",
@@ -343,6 +380,8 @@ export default {
         this.tableData = res.data.data;
         console.log(res.data);
         this.pagelistquery.total = res.data.count;
+      this.loading = false;
+
       }
     }
   },
