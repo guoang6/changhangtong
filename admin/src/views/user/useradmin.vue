@@ -242,17 +242,6 @@ export default {
         this.$message.success("更改授权成功");
       }
     },
-    async del(help_id) {
-      console.log(help_id);
-      let res = await this.$axios.post(
-        "/webadmin/deletehelp",
-        this.qs.stringify({ help_id: help_id })
-      );
-      if (res.data.state.type === "SUCCESS") {
-        this.$message.success("删除成功");
-        this.gethelplist();
-      }
-    },
     changepw(row) {
       this.dialogpw = true;
       this.changepassword = row;

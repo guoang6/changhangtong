@@ -21,8 +21,7 @@
             <li>
               昵称 :
               <span>{{tableData.nickname}}</span>
-                <el-button type="text" size="small">修改昵称</el-button>
-
+              <el-button type="text" size="small">修改昵称</el-button>
             </li>
             <li>
               账号创建时间 :
@@ -42,24 +41,61 @@
             </li>
             <li>
               权限 :
-               <span style="margin-left:20px" v-if="tableData.issh=='1'&&tableData.username!=='guoang'">审核中心</span>
-              <span style="margin-left:20px" v-if="tableData.isyh=='1'&&tableData.username!=='guoang'">用户中心</span>
-              <span style="margin-left:20px" v-if="tableData.isgl=='1'&&tableData.username!=='guoang'">平台管理中心</span>
-              <span style="margin-left:20px" v-if="tableData.isfk=='1'&&tableData.username!=='guoang'">反馈中心</span>
+              <span
+                style="margin-left:20px"
+                v-if="tableData.issh=='1'&&tableData.username!=='guoang'"
+              >审核中心</span>
+              <span
+                style="margin-left:20px"
+                v-if="tableData.isyh=='1'&&tableData.username!=='guoang'"
+              >用户中心</span>
+              <span
+                style="margin-left:20px"
+                v-if="tableData.isgl=='1'&&tableData.username!=='guoang'"
+              >平台管理中心</span>
+              <span
+                style="margin-left:20px"
+                v-if="tableData.isfk=='1'&&tableData.username!=='guoang'"
+              >反馈中心</span>
               <span style="margin-left:20px" v-if="tableData.username=='guoang'">超级管理员拥有最高权限</span>
             </li>
           </ul>
           <ul>
             <li>
               密码 :
-                <el-button type="text" size="small">修改密码</el-button>
+              <el-button type="text" size="small">修改密码</el-button>
             </li>
           </ul>
           <div style="clear:both"></div>
           <!--占位-->
         </div>
         <div class="renwu">
-          <h4>任务</h4>
+          <h4>职责</h4>
+          <el-divider></el-divider>
+          <div v-if="uinfo.jurisdiction.issh =='1'|| uinfo.username == 'guoang'">
+         <span>网站内容的审核，用户评论的审核</span>
+          <el-divider></el-divider>
+          </div>
+          <div v-if="uinfo.jurisdiction.isyh =='1'|| uinfo.username == 'guoang'">
+           <span>用户的学生认证，公司认证，用户账号状态的管理</span>
+          <el-divider></el-divider>
+          </div>
+          <div v-if="uinfo.jurisdiction.isgl=='1'|| uinfo.username == 'guoang'">
+           <span>网站轮播图的管理，各模块分类的管理</span>
+          <el-divider></el-divider>
+            </div>
+          <div v-if="uinfo.jurisdiction.isfk =='1'|| uinfo.username == 'guoang'">
+            <span>用户反馈信息的管理，用户举报信息的管理</span>
+          <el-divider></el-divider>
+          </div>
+          <div v-if="uinfo.username == 'guoang'">
+            <span>管理员账号的管理，网站内容的删除</span>
+          <el-divider></el-divider>
+          </div>
+            <div v-if="uinfo.user_state == '0'">
+            <span>你的账号现在是停用状态</span>
+          <el-divider></el-divider>
+          </div>
         </div>
       </div>
     </el-main>
@@ -67,6 +103,8 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+
 export default {
   name: "myself",
   data() {
@@ -87,9 +125,12 @@ export default {
       tableData: [] //列表信息
     };
   },
- 
+ computed: {
+    ...mapState({
+      uinfo: state => state.user.uinfo,
+    })
+  },
   methods: {
-   
     async del(help_id) {
       console.log(help_id);
       let res = await this.$axios.post(
@@ -103,9 +144,7 @@ export default {
     },
 
     async getadmin() {
-      let res = await this.$axios.post(
-        "/admin/getadmin",
-      );
+      let res = await this.$axios.post("/admin/getadmin");
       if (res.data.state.type === "SUCCESS") {
         this.tableData = res.data.data;
         console.log(res.data);

@@ -87,7 +87,7 @@
               <el-button
                 type="text"
                 size="small"
-                :disabled="uinfo.jurisdiction.isyh !=='1'&& uinfo.username !== 'guoang'"
+               :disabled="scope.row.username !== 'guoang'"
                 @click="changepw(scope.row)"
               >修改密码</el-button>
             </template>
@@ -318,17 +318,7 @@ export default {
       );
       this.dialogstudent = true;
     },
-    async del(help_id) {
-      console.log(help_id);
-      let res = await this.$axios.post(
-        "/webadmin/deletehelp",
-        this.qs.stringify({ help_id: help_id })
-      );
-      if (res.data.state.type === "SUCCESS") {
-        this.$message.success("删除成功");
-        this.gethelplist();
-      }
-    },
+
     handleSizeChange(val) {
       this.pagelistquery.pagesize = val;
       this.getuserlist();

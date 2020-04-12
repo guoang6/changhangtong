@@ -92,7 +92,12 @@
                       v-if="scope.row.ispublic==-1"
                       @click="changestate('reply',1,scope.row.reply_id)"
                     >通过审核</el-button>
-                    <el-button type="text" size="small" @click="del(scope.row.help_id)">删除</el-button>
+                    <el-button
+                      type="text"
+                      size="small"
+                      @click="del(scope.row.reply_id,'reply')"
+                      :disabled="uinfo.username !== 'guoang'"
+                    >删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -145,7 +150,12 @@
                 v-if="scope.row.ispublic==-1"
                 @click="changestate('comment',1,scope.row.comment_id)"
               >通过审核</el-button>
-              <el-button type="text" size="small" @click="del(scope.row.help_id)">删除</el-button>
+              <el-button
+                type="text"
+                size="small"
+                @click="del(scope.row.comment_id,'comment')"
+                :disabled="uinfo.username !== 'guoang'"
+              >删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -166,8 +176,15 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+
 export default {
   name: "comment",
+  computed: {
+    ...mapState({
+      uinfo: state => state.user.uinfo
+    })
+  },
   data() {
     return {
       loading: false,
@@ -220,6 +237,20 @@ export default {
       this.pagelistquery.page = val;
       this.getcommentlist();
       console.log(`当前页: ${val}`);
+    },
+    async del(id, type) {
+      let data = {
+        id: id,
+        type: type
+      };
+      let res = await this.$axios.post(
+        "/admin/admindelete",
+        this.qs.stringify(data)
+      );
+      if (res.data.state.type === "SUCCESS") {
+        this.$message.success("删除成功");
+        this.getcommentlist();
+      }
     },
     async getcommentlist() {
       this.loading = true;

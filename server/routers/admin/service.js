@@ -72,10 +72,10 @@ exports.login = async (req, res) => {
         let nickname = result[0].nickname
         let username = result[0].username
         let jurisdiction = {
-            isrz: result[0].isrz,
+            isyh: result[0].isyh,
             isgl: result[0].isgl,
             issh: result[0].issh,
-            isyh: result[0].isfk,
+            isfk: result[0].isfk,
             user_state: result[0].user_state,
         }
         //通过jwt生成token     npm i -s jsonwebtoken
@@ -111,7 +111,7 @@ exports.getadmin = async (req, res) => {
     }
     res.send(data)
 }
-//删除走马灯
+//删除用户
 exports.deleteuser = async (req, res) => {
     console.log(req.body)
     let info = [req.body.user_id]
@@ -619,6 +619,18 @@ exports.getreply = async (req, res) => {
     data = {
         state: s,
         data: result,
+    }
+    res.send(data)
+}
+//后台删除数据
+exports.admindelete = async (req, res) => {
+    let info = [req.body.id]
+    console.log(req.body)
+    let sql = `delete  from ${req.body.type} where ${req.body.type}_id=?`
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: {},
     }
     res.send(data)
 }

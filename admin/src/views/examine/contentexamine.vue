@@ -67,26 +67,33 @@
           </el-form>
 
           <el-form v-if="this.pagelistquery.type=='job'">
-            <el-form-item label="标题">{{content.help_title}}</el-form-item>
-            <el-form-item label="分类">{{content.help_lable}}</el-form-item>
+            <el-form-item label="岗位">{{content.job_name}}</el-form-item>
+            <el-form-item label="薪资">{{content.job_salary}}</el-form-item>
+            <el-form-item label="人数">{{content.job_num}}</el-form-item>
+            <el-form-item label="分类">{{content.job_lable}}</el-form-item>
             <el-form-item label="内容">
-              <span v-html="content.help_content"></span>
+              <span v-html="content.job_content"></span>
             </el-form-item>
           </el-form>
 
-          <el-form v-if="this.pagelistquery.type=='help'">
-            <el-form-item label="标题">{{content.help_title}}</el-form-item>
-            <el-form-item label="分类">{{content.help_lable}}</el-form-item>
+          <el-form v-if="this.pagelistquery.type=='article'">
+            <el-form-item label="标题">{{content.article_title}}</el-form-item>
+            <el-form-item label="分类">{{content.article_lable}}</el-form-item>
+            <el-form-item label="分类">{{content.article_introduction}}</el-form-item>
             <el-form-item label="内容">
-              <span v-html="content.help_content"></span>
+              <span v-html="content.article_content"></span>
             </el-form-item>
           </el-form>
 
-          <el-form v-if="this.pagelistquery.type=='help'">
-            <el-form-item label="标题">{{content.help_title}}</el-form-item>
-            <el-form-item label="分类">{{content.help_lable}}</el-form-item>
-            <el-form-item label="内容">
-              <span v-html="content.help_content"></span>
+          <el-form v-if="this.pagelistquery.type=='oldstuff'">
+            <el-form-item label="实物">
+              <img :src="content.oldstuff_img" alt width="300px" />
+            </el-form-item>
+            <el-form-item label="名称">{{content.oldstuff_name}}</el-form-item>
+            <el-form-item label="价格">{{content.oldstuff_price}}</el-form-item>
+            <el-form-item label="分类">{{content.oldstuff_lable}}</el-form-item>
+            <el-form-item label="描述">
+              <span v-html="content.oldstuff_content"></span>
             </el-form-item>
           </el-form>
 
@@ -125,7 +132,12 @@
           <el-table-column fixed="right" label="操作" width="170">
             <template slot-scope="scope">
               <el-button @click=" shenhe(scope.row)" type="text" size="small">审核</el-button>
-              <el-button type="text" size="small" @click="del(scope.row.help_id)">删除</el-button>
+              <el-button
+                type="text"
+                size="small"
+                @click="del(scope.row.help_id)"
+                :disabled="uinfo.username !== 'guoang'"
+              >删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -159,7 +171,12 @@
             <el-table-column fixed="right" label="操作" width="170">
               <template slot-scope="scope">
                 <el-button @click=" shenhe(scope.row)" type="text" size="small">审核</el-button>
-                <el-button type="text" size="small" @click="del(scope.row.help_id)">删除</el-button>
+                <el-button
+                  type="text"
+                  size="small"
+                  @click="del(scope.row.activity_id)"
+                  :disabled="uinfo.username !== 'guoang'"
+                >删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -197,7 +214,12 @@
             <el-table-column fixed="right" label="操作" width="170">
               <template slot-scope="scope">
                 <el-button @click=" shenhe(scope.row)" type="text" size="small">审核</el-button>
-                <el-button type="text" size="small" @click="del(scope.row.help_id)">删除</el-button>
+                <el-button
+                  type="text"
+                  size="small"
+                  @click="del(scope.row.oldstuff_id)"
+                  :disabled="uinfo.username !== 'guoang'"
+                >删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -233,7 +255,12 @@
             <el-table-column fixed="right" label="操作" width="170">
               <template slot-scope="scope">
                 <el-button @click=" shenhe(scope.row)" type="text" size="small">审核</el-button>
-                <el-button type="text" size="small" @click="del(scope.row.help_id)">删除</el-button>
+                <el-button
+                  type="text"
+                  size="small"
+                  @click="del(scope.row.job_id)"
+                  :disabled="uinfo.username !== 'guoang'"
+                >删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -268,7 +295,12 @@
             <el-table-column fixed="right" label="操作" width="170">
               <template slot-scope="scope">
                 <el-button @click=" shenhe(scope.row)" type="text" size="small">审核</el-button>
-                <el-button type="text" size="small" @click="del(scope.row.help_id)">删除</el-button>
+                <el-button
+                  type="text"
+                  size="small"
+                  @click="del(scope.row.article_id)"
+                  :disabled="uinfo.username !== 'guoang'"
+                >删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -289,11 +321,17 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 export default {
   name: "contentexamine",
+  computed: {
+    ...mapState({
+      uinfo: state => state.user.uinfo
+    })
+  },
   data() {
     return {
-            loading: false,
+      loading: false,
       dialog: false,
       pagelistquery: {
         user: "",
@@ -344,19 +382,22 @@ export default {
       );
       if (res.data.state.type === "SUCCESS") {
         this.$message.success("操作成功");
-        this.gethelplist();
         this.dialog = false;
+        this.getcontentlist();
       }
     },
-    async del(help_id) {
-      console.log(help_id);
+    async del(id) {
+      let data = {
+        id: id,
+        type: this.pagelistquery.type
+      };
       let res = await this.$axios.post(
-        "/webadmin/deletehelp",
-        this.qs.stringify({ help_id: help_id })
+        "/admin/admindelete",
+        this.qs.stringify(data)
       );
       if (res.data.state.type === "SUCCESS") {
         this.$message.success("删除成功");
-        this.gethelplist();
+        this.getcontentlist();
       }
     },
     handleSizeChange(val) {
@@ -380,8 +421,7 @@ export default {
         this.tableData = res.data.data;
         console.log(res.data);
         this.pagelistquery.total = res.data.count;
-      this.loading = false;
-
+        this.loading = false;
       }
     }
   },

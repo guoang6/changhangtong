@@ -14,6 +14,7 @@ router.post('/admin/getadmin', service.getadmin)
 
 router.post('/admin/getcomment', service.getcomment)
 router.post('/admin/getreply', service.getreply)
+router.post('/admin/admindelete', service.admindelete)
 
 
 
