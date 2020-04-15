@@ -142,7 +142,7 @@ export default {
     }
   },
   created() {
-    this.getjobcontent();
+    // this.getjobcontent();
     this.setcontentid(this.id);
   }
 };

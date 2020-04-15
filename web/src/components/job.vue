@@ -17,7 +17,7 @@
           <h4 style="  position: absolute;right: 100px;top: 4px;">更多></h4>
         </router-link>
       <ul id="recentcomments">
-        <li class="recentcomments"  v-for="(company,id) in job " :key="id">
+        <li class="recentcomments"  v-for="(company,id) in company " :key="id">
            <router-link :to="'/companycontent/'+company.company_id">{{company.company_name}}</router-link>
         </li>
         

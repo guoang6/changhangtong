@@ -46,9 +46,7 @@
                     >&#xe688;</a>哈哈哈哈
                   </span>
                   <span class="like-count">
-                    <span class="like-count">
-                      <a class="iconfont">&#xe61c;</a>55
-                    </span>
+                      <a class="iconfont">&#xe61c;</a>{{item.help_read_num}}
                   </span>
                 </li>
               </ul>

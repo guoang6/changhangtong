@@ -1,7 +1,7 @@
  
 <template>
-  <div  class="help">
-<div v-title data-title="昌航通 | 问答"></div>
+  <div class="help">
+    <div v-title data-title="昌航通 | 问答"></div>
 
     <!-- Start of Page Container -->
     <div class="page-container">
@@ -17,7 +17,10 @@
             </div>
             <!-- Basic Home Page Template -->
             <ul class="tabs-nav">
-              <li :class="pagelistquery.lable===''&&pagelistquery.tag===''?'active':''" @click="changelable('')">
+              <li
+                :class="pagelistquery.lable===''&&pagelistquery.tag===''?'active':''"
+                @click="changelable('')"
+              >
                 <a>全部</a>
               </li>
               <li
@@ -28,25 +31,25 @@
               >
                 <a>{{lable}}</a>
               </li>
-               <li v-if="pagelistquery.tag!=''"  class="active" @click="changelable('')">
+              <li v-if="pagelistquery.tag!=''" class="active" @click="changelable('')">
                 <a>{{this.pagelistquery.tag}}</a>
               </li>
             </ul>
 
-
- <article class="format-standard type-post hentry clearfix"  v-for="(item,id) in tableData" :key="id">
+            <article
+              class="format-standard type-post hentry clearfix"
+              v-for="(item,id) in tableData"
+              :key="id"
+            >
               <header class="clearfix">
                 <h3 class="post-title">
-                   <router-link :to="'/newscontent/'+item.article_id">{{item.article_title}}</router-link>
+                  <router-link :to="'/newscontent/'+item.article_id">{{item.article_title}}</router-link>
                 </h3>
 
                 <div class="post-meta clearfix">
                   <span class="date">{{ item.article_createtime| dataFormat}}</span>
                   <span class="category">
-                    <a
-                      href="#"
-                      title="View all posts in Server &amp; Database"
-                    >{{item.nickname}}</a>
+                    <a href="#" title="View all posts in Server &amp; Database">{{item.nickname}}</a>
                   </span>
                   <span class="comments">
                     <a
@@ -54,21 +57,18 @@
                       title="Comment on Integrating WordPress with Your Website"
                     >3 Comments</a>
                   </span>
-                  <span class="like-count">66</span>
+                  <span class="like-count">
+                      <a class="iconfont">&#xe61c;</a>{{item.article_read_num}}
+                  </span>
                 </div>
                 <!-- end of post meta -->
               </header>
 
               <p>
                 {{item.article_introduction}}
-                  <router-link
-                      :to="'/newscontent/'+item.article_id"
-                  class="readmore-link"
-                >...查看更多</router-link>
+                <router-link :to="'/newscontent/'+item.article_id" class="readmore-link">...查看更多</router-link>
               </p>
             </article>
-            
-
 
             <el-pagination
               @current-change="handleCurrentChange"
@@ -78,11 +78,11 @@
           </div>
           <!-- end of page content -->
           <!-- start of sidebar -->
-           <aside class="span4 page-sidebar">
-             <carousel />
-             <oldstuffhot/>
+          <aside class="span4 page-sidebar">
+            <carousel />
+            <oldstuffhot />
           </aside>
-         
+
           <!-- end of sidebar -->
         </div>
       </div>
@@ -97,14 +97,14 @@ import carousel from "@/components/carousel.vue";
 import oldstuffhot from "@/components/oldstuffhot.vue";
 
 export default {
-  name:'help',
+  name: "help",
   components: {
     carousel,
     oldstuffhot
   },
   data() {
     return {
-      smallttle:'',
+      smallttle: "",
       lables: [],
       pagelistquery: {
         lable: "",
@@ -117,18 +117,18 @@ export default {
     };
   },
   props: {
-    tag:{}
+    tag: {}
   },
   methods: {
     changelable(lable) {
       this.pagelistquery.lable = lable;
-      this.smallttle=this.pagelistquery.lable
+      this.smallttle = this.pagelistquery.lable;
       this.pagelistquery.tag = "";
       this.getarticlelist();
     },
     changetag() {
       this.pagelistquery.tag = this.tag;
-      this.smallttle=this.tag
+      this.smallttle = this.tag;
     },
     handleCurrentChange(val) {
       this.pagelistquery.page = val;
@@ -146,14 +146,14 @@ export default {
         this.pagelistquery.total = res.data.count;
       }
     },
-    async lablelist() { 
+    async lablelist() {
       let res = await this.$axios.post(
         "/admin/lablelist",
-        this.qs.stringify({ lable_name:'文章分类' })
+        this.qs.stringify({ lable_name: "文章分类" })
       );
       if (res.data.state.type === "SUCCESS") {
         // this.lable = res.data.data
-          this.lables = JSON.parse(res.data.data[0].lable);
+        this.lables = JSON.parse(res.data.data[0].lable);
         console.log("分类列表");
         console.log(this.lables);
       }

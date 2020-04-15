@@ -164,7 +164,7 @@ export default {
     }
   },
   created() {
-    this.getoldstuffcontent();
+    // this.getoldstuffcontent();
     this.setcontentid(this.id);
   }
 };

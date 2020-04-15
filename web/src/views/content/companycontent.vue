@@ -135,7 +135,7 @@ export default {
     }
   },
   created() {
-    this.getcompanycontent();
+    // this.getcompanycontent();
     this.setcontentid(this.id);
   }
 };

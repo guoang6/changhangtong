@@ -1,14 +1,14 @@
 <template>
-  <div class="help"> 
-<div v-title data-title="昌航通 | 活动"></div>
+  <div class="help">
+    <div v-title data-title="昌航通 | 活动"></div>
 
-       <!-- Start of Page Container -->
+    <!-- Start of Page Container -->
     <div class="page-container">
       <div class="container">
         <div class="row">
           <!-- start of page content -->
           <div class="span8 page-content">
-             <div>
+            <div>
               <h3 class="title">活动区</h3>
             </div>
             <!-- Basic Home Page Template -->
@@ -25,22 +25,32 @@
                 <a>{{lable}}</a>
               </li>
             </ul>
-               <section class="widget">
-        <ul class="articles">
-          <li class="article-entry standard" v-for="(activity,id) in tableData" :key="id">
-            <h4>
-              <router-link :to="'/activitycontent/'+activity.activity_id">{{activity.activity_title}}</router-link>
-            </h4>
-            <span class="article-meta">
-             <a class="iconfont">&#xe619;</a> {{activity.createtime|dataFormat}}
-              <a class="iconfont" style="margin-left:50px">&#xe609;</a>{{activity.activity_locale}}
-            </span>
-            <span class="like-count"><a class="iconfont">&#xe61c;</a>{{activity.activity_num}}</span>
-          </li>
-         
-        </ul>
-      </section>
-              <el-pagination
+            <section class="widget">
+              <ul class="articles">
+                <li class="article-entry standard" v-for="(activity,id) in tableData" :key="id">
+                  <h4>
+                    <router-link
+                      :to="'/activitycontent/'+activity.activity_id"
+                    >{{activity.activity_title}}</router-link>
+                  </h4>
+                  <span class="article-meta">
+                    <a class="iconfont">&#xe619;</a>
+                    {{activity.createtime|dataFormat}}
+                    <a
+                      class="iconfont"
+                      style="margin-left:50px"
+                    >&#xe609;</a>
+                    {{activity.activity_locale}}
+                  </span>
+                  <span class="like-count">
+                    <span class="like-count">
+                      <a class="iconfont">&#xe61c;</a>{{activity.activity_read_num}}
+                    </span>
+                  </span>
+                </li>
+              </ul>
+            </section>
+            <el-pagination
               @current-change="handleCurrentChange"
               layout="prev, pager, next"
               :total="pagelistquery.total"
@@ -48,11 +58,11 @@
           </div>
           <!-- end of page content -->
           <!-- start of sidebar -->
-           <aside class="span4 page-sidebar">
-              <carousel />
-              <job />
+          <aside class="span4 page-sidebar">
+            <carousel />
+            <job />
           </aside>
-       
+
           <!-- end of sidebar -->
         </div>
       </div>
@@ -70,11 +80,9 @@ export default {
     carousel,
     job
   },
-data() {
+  data() {
     return {
-
-     
-      smallttle:'',
+      smallttle: "",
       lables: [],
       pagelistquery: {
         lable: "",
@@ -86,9 +94,9 @@ data() {
     };
   },
   methods: {
-        changelable(lable) {
+    changelable(lable) {
       this.pagelistquery.lable = lable;
-      this.smallttle=this.pagelistquery.lable
+      this.smallttle = this.pagelistquery.lable;
       this.getactivitylist();
     },
     handleCurrentChange(val) {
@@ -107,23 +115,22 @@ data() {
         this.pagelistquery.total = res.data.count;
       }
     },
-     async lablelist() { 
+    async lablelist() {
       let res = await this.$axios.post(
         "/admin/lablelist",
-        this.qs.stringify({ lable_name:'活动分类' })
+        this.qs.stringify({ lable_name: "活动分类" })
       );
       if (res.data.state.type === "SUCCESS") {
         // this.lable = res.data.data
-          this.lables = JSON.parse(res.data.data[0].lable);
+        this.lables = JSON.parse(res.data.data[0].lable);
         console.log("分类列表");
         console.log(this.lables);
       }
     }
-
   },
   created() {
     this.getactivitylist();
-    this.lablelist()
+    this.lablelist();
   }
 };
 </script>

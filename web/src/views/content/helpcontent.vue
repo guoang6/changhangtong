@@ -123,7 +123,7 @@ export default {
     }
   },
   created() {
-    this.gethelpcontent();
+    // this.gethelpcontent();
     this.setcontentid(this.id);
   }
 };

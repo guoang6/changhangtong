@@ -188,7 +188,7 @@ export default {
     }
   },
   created() {
-    this.getactivitycontent();
+    // this.getactivitycontent();
     this.getannouncementlist();
     this.setcontentid(this.id);
   }

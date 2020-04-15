@@ -29,7 +29,7 @@
               </span>
               <span class="like-count">
                 <a class="iconfont" style="color:red">&#xe647;</a>
-                {{activity.activity_num}}
+                {{activity.activity_read_num}}
               </span>
             </li>
           </ul>

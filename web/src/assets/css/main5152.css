@@ -614,15 +614,11 @@ ul.articles li.article-entry:last-child {
 .hentry .post-meta .author {
   background: url("../images/user.png") no-repeat left center;
 }
-.hentry .post-meta .comments {
-  background: url("../images/comment.png") no-repeat left center;
-}
+
 .hentry .post-meta .like-count {
   float: right;
-  background: url("../images/like.png") no-repeat 4px 6px;
 }
 .hentry .post-meta .like-count:hover {
-  background: url("../images/like.png") no-repeat 4px -24px;
   color: #395996;
 }
 

@@ -124,7 +124,7 @@ export default {
     }
   },
   created() {
-    this.getarticlecontent();
+    // this.getarticlecontent();
     this.setcontentid(this.id);
   }
 };
