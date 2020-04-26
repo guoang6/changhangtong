@@ -53,7 +53,7 @@ exports.registered = async (req, res) => {
 exports.login = async (req, res) => {
     req.body.password = md5(`${req.body.password}${PED_SALT}`)
     let info = [req.body.username, req.body.password]
-    let sql = 'select nickname,user_id,avatar from user where username=? and password=?'
+    let sql = 'select nickname,user_id,avatar ,realstate,companystate from user where username=? and password=?'
     const result = await query(sql, info)
     if (result.length == 0) {
         data = {
@@ -79,7 +79,9 @@ exports.login = async (req, res) => {
                 userinfo: {
                     uid: result[0].id,
                     nickname: result[0].nickname,
-                    avatar: result[0].avatar
+                    avatar: result[0].avatar,
+                    companystate:result[0].companystate,
+                    realstate:result[0].realstate,
                 }
             }
         }//返回登录成功
@@ -701,5 +703,104 @@ exports.articlelist = async (req, res) => {
     }
     console.log(data)
     // console.log(result)
+    res.send(data);
+}
+//文章详情
+exports.getarticledetails = async (req, res) => {
+    console.log(req.body)
+    let info = [req.body.id]
+    let sql = 'select * from article where article_id=?'
+    const result = await query(sql, info)
+    if (result.length == 0) {
+        data = {
+            state: e,
+            data: {
+            }
+        }
+    } else {
+        data = {
+            state: s,
+            data: result[0]
+        }
+    }
+    console.log(result)
+    res.send(data);
+}
+//二手详情
+exports.getoldstuffdetails = async (req, res) => {
+    console.log(req.body)
+    let info = [req.body.id]
+    let sql = 'select * from oldstuff where oldstuff_id=?'
+    const result = await query(sql, info)
+    if (result.length == 0) {
+        data = {
+            state: e,
+            data: {
+            }
+        }
+    } else {
+        data = {
+            state: s,
+            data: result[0]
+        }
+    }
+    console.log(result)
+    res.send(data);
+}
+//修改文章
+exports.updatearticle = async (req, res) => {
+    console.log(req.body)
+    let info = [
+        req.body.article_title,
+        req.body.article_lable,
+        req.body.article_content,
+        req.body.article_introduction,
+        req.user.uid,
+        req.body.article_id]
+     console.log(info)
+    let sql = 'update article set article_title =?, article_lable=?,article_content=?,article_introduction=? where user_id =? and article_id=?'
+    const result = await query(sql, info)
+    if (result.length == 0) {
+        data = {
+            state: e,
+            data: {
+            }
+        }
+    } else {
+        data = {
+            state: s,
+            data: result[0]
+        }
+    }
+    console.log(result)
+    res.send(data);
+}
+//修改文章
+exports.updateoldstuff = async (req, res) => {
+    console.log(req.body)
+    let info = [
+        req.body.oldstuff_img,
+        req.body.oldstuff_name,
+        req.body.oldstuff_price,
+        req.body.oldstuff_content,
+        req.body.oldstuff_lable,
+        req.user.uid,
+        req.body.oldstuff_id]
+     console.log(info)
+    let sql = 'update oldstuff set oldstuff_img =?, oldstuff_name=?,oldstuff_price=?,oldstuff_content=?,oldstuff_lable=? where user_id =? and oldstuff_id=?'
+    const result = await query(sql, info)
+    if (result.length == 0) {
+        data = {
+            state: e,
+            data: {
+            }
+        }
+    } else {
+        data = {
+            state: s,
+            data: result[0]
+        }
+    }
+    console.log(result)
     res.send(data);
 }

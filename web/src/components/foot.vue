@@ -55,7 +55,7 @@
               <h3 class="title">客服中心</h3>
              <ul>
                 <li>
-                  <a href="#" title="Lorem ipsum dolor sit amet,">权限申请</a>
+                  <a href="#" title="Lorem ipsum dolor sit amet,">意见反馈</a>
                 </li>
                 <li>
                   <a href="#" title="Lorem ipsum dolor sit amet,">账号解封</a>

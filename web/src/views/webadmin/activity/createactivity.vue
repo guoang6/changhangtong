@@ -44,7 +44,7 @@
             ></el-input>
           </el-form-item>
 
-          <el-form-item label="信息管理">
+          <el-form-item label="活动分类">
             <el-radio-group v-model="form.activity_lable">
               <el-radio
                 v-for="(item,id) in lable"

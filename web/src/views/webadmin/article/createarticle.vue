@@ -37,9 +37,9 @@ import { VueEditor } from "vue2-editor";
 export default {
   data() {
     return {
-      lable: ["学习", "生活", "娱乐", "其他"],
+      lable: [],
       dialogVisible: false,
-      article: []
+      article:{}
     };
   },
   props: {
@@ -62,10 +62,9 @@ export default {
     async onSubmit() {
       let res;
       if (this.id) {
-        this.form.id = this.id;
         res = await this.$axios.post(
           "/webadmin/updatearticle",
-          this.qs.stringify(this.form)
+          this.qs.stringify(this.article)
         );
       } else {
         res = await this.$axios.post(
@@ -84,15 +83,27 @@ export default {
         "/webadmin/getarticledetails",
         this.qs.stringify({ id: this.id })
       );
-      let data = res.data.data;
-      // console.log(data)
-      this.form.help_title = data.help_title;
-      this.form.help_lable = data.help_lable;
-      this.form.help_content = data.help_content;
+      this.article= res.data.data;
+    },
+       //分类列表
+    async lablelist() {
+      let res = await this.$axios.post(
+        "/admin/lablelist",
+        this.qs.stringify({ lable_name: "文章分类" })
+      );
+      if (res.data.state.type === "SUCCESS") {
+        // this.lable = res.data.data
+        this.lable = JSON.parse(res.data.data[0].lable);
+        console.log("分类列表");
+        console.log(this.lable);
+      }
     }
+
   },
   created() {
+    this.lablelist();
     this.id && this.getarticledetails();
+
   }
 };
 </script>

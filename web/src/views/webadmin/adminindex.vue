@@ -21,10 +21,10 @@
                 <span>内容管理</span>
               </template>
               <el-menu-item index="/admin/createhelplist">问答</el-menu-item>
-              <el-menu-item index="/admin/createactivitylist">活动</el-menu-item>
-              <el-menu-item index="/admin/createoldstufflist">二手</el-menu-item>
-              <el-menu-item index="/admin/company">招聘</el-menu-item>
-              <el-menu-item index="/admin/articlelist">文章/新闻</el-menu-item>
+              <el-menu-item index="/admin/createactivitylist" :disabled="userinfo.realstate !==3">活动</el-menu-item>
+              <el-menu-item index="/admin/createoldstufflist" :disabled="userinfo.realstate !==3">二手</el-menu-item>
+              <el-menu-item index="/admin/company"  :disabled="userinfo.companystate !==3">招聘</el-menu-item>
+              <el-menu-item index="/admin/articlelist" :disabled="userinfo.realstate !==3">文章/新闻</el-menu-item>
             </el-submenu>
  <el-menu-item index="/admin/notice">
               <i class="el-icon-bell"></i>
@@ -44,17 +44,20 @@
   </div>
 </template>
 <script>
+import { mapState, mapActions } from "vuex";
+
 export default {
+  
   data() {
-    const item = {
-      date: "2016-05-02",
-      name: "王小虎",
-      address: "上海市普陀区金沙江路 1518 弄"
-    };
     return {
-      tableData: Array(20).fill(item)
+      tableData:[]
     };
-  }
+  },
+  computed: {
+  ...mapState({
+      userinfo: state => state.user.userinfo,
+    })
+  },
 };
 </script>
 <style scoped>

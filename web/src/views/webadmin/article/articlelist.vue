@@ -19,7 +19,7 @@
       <el-table-column prop="article_title" label="标题"></el-table-column>
       <el-table-column prop="article_lable" label="分类"></el-table-column>
       <el-table-column fixed prop="help_state" label="状态">
-        <template slot-scope="scope">{{ scope.row.article_state |statefilter}}</template>
+        <template slot-scope="scope">{{ scope.row.ispublic |statefilter}}</template>
       </el-table-column>
       <el-table-column fixed="right" label="操作" width="100">
         <template slot-scope="scope">
@@ -106,23 +106,10 @@ export default {
         this.pagelistquery.total = res.data.count;
       }
     },
-     //分类列表
-    async lablelist() {
-      let res = await this.$axios.post(
-        "/admin/lablelist",
-        this.qs.stringify({ lable_name: "文章分类" })
-      );
-      if (res.data.state.type === "SUCCESS") {
-        // this.lable = res.data.data
-        this.lable = JSON.parse(res.data.data[0].lable);
-        console.log("分类列表");
-        console.log(this.lable);
-      }
-    }
+  
   },
   created() {
     this.articlelist();
-    this.lablelist();
   }
 };
 </script>

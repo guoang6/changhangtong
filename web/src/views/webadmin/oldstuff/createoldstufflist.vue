@@ -46,7 +46,7 @@
           type="text"
           icon="el-icon-plus"
           @click="$router.push('/admin/createactivity') "
-        >发布新的活动</el-button>
+        >寻找二手信息</el-button>
       </el-tab-pane>
     </el-tabs>
   </div>

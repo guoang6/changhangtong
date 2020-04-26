@@ -83,6 +83,8 @@ const routes = [
           { path: 'createactivity', name: 'createactivity', component: createactivity },
           { path: 'createarticle', name: 'createarticle', component: createarticle },
           { path: 'updataarticle/:id', name: 'updataarticle', component: createarticle ,props:true},
+          { path: 'updateoldstuff/:id', name: 'updateoldstuff', component: createoldstuff ,props:true},
+          
           { path: 'articlelist', name: 'articlelist', component: articlelist },
           { path: 'createoldstuff', name: 'createoldstuff', component: createoldstuff },
           { path: 'createoldstufflist', name: 'createoldstufflist', component: createoldstufflist },

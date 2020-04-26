@@ -103,6 +103,14 @@ router.post('/webadmin/deletejob', service.deletejob)
 router.post('/webadmin/createarticle', service.createarticle)
 //文章列表
 router.post('/webadmin/articlelist', service.articlelist)
+//文章详情
+
+router.post('/webadmin/getarticledetails', service.getarticledetails)
+router.post('/webadmin/getoldstuffdetails', service.getoldstuffdetails)
+router.post('/webadmin/updatearticle', service.updatearticle)
+router.post('/webadmin/updateoldstuff', service.updateoldstuff)
+
+
 
 
 

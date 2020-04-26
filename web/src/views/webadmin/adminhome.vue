@@ -8,7 +8,7 @@
           <div class="comment-meta">
             <h5 class="author">{{form.nickname}}</h5>
 
-            <p class="date" v-if="form.realstate">
+            <p class="date" v-if="form.realstate==3">
               认证用户
             </p>
              <p class="date" v-else>

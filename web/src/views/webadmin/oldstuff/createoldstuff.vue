@@ -61,6 +61,9 @@ export default {
    components: {
     VueEditor
   },
+    props: {
+    id: {}
+  },
   methods: {
         /**
      * npm install vue2-editor
@@ -79,16 +82,25 @@ export default {
     uplogsuccess(res) {
       this.form.oldstuff_img = res.url;
     },
-    //用户信息修改
+    //二手信息添加修改
     async onSubmit() {
-      const res = await this.$axios.post(
+       let res;
+      if (this.id) {
+        res = await this.$axios.post(
+          "/webadmin/updateoldstuff",
+          this.qs.stringify(this.form)
+        );
+      } else {
+        res = await this.$axios.post(
         "/webadmin/createoldstuff",
         this.qs.stringify(this.form)
       );
+      }
       let data = res.data.data;
       if (res.data.state.type === "SUCCESS") {
         this.$message.success("成功");
-        this.setUserInfo(data.userinfo);
+        this.$router.push("/admin/createoldstufflist");
+
       }
     },
     //获取用户信息
@@ -109,11 +121,20 @@ export default {
         console.log("分类列表");
         console.log(this.lable);
       }
-    }
+    },
+        async getoldstuffdetails() {
+      const res = await this.$axios.post(
+        "/webadmin/getoldstuffdetails",
+        this.qs.stringify({ id: this.id })
+      );
+      this.form= res.data.data;
+    },
   },
   created() {
     // this.getuser();
      this.lablelist()
+    this.id && this.getoldstuffdetails();
+
   }
 };
 </script>

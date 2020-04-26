@@ -90,7 +90,7 @@ export default {
   },
   data() {
     return {
-      lables: ["学习", "生活", "娱乐", "其他"],
+      lables: [],
       pagelistquery: {
         lable: "",
         total: 0,
@@ -111,6 +111,18 @@ export default {
       this.getoldstufflist();
       console.log(`当前页: ${val}`);
     },
+      async lablelist() {
+      let res = await this.$axios.post(
+        "/admin/lablelist",
+        this.qs.stringify({ lable_name: "二手分类" })
+      );
+      if (res.data.state.type === "SUCCESS") {
+        // this.lable = res.data.data
+        this.lables = JSON.parse(res.data.data[0].lable);
+        console.log("分类列表");
+        console.log(this.lables);
+      }
+    },
     async getoldstufflist() {
       let res = await this.$axios.post(
         "/web/webgetweboldstufflist",
@@ -125,6 +137,7 @@ export default {
   },
   created() {
     this.getoldstufflist();
+    this.lablelist()
   }
 };
 </script>
