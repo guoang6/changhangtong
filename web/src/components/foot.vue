@@ -55,13 +55,13 @@
               <h3 class="title">客服中心</h3>
              <ul>
                 <li>
-                  <a href="#" title="Lorem ipsum dolor sit amet,">意见反馈</a>
+                  <router-link to="/fankui" title="Lorem ipsum dolor sit amet,">意见反馈</router-link>
                 </li>
                 <li>
-                  <a href="#" title="Lorem ipsum dolor sit amet,">账号解封</a>
+                  <router-link to="/fankui" title="Lorem ipsum dolor sit amet,">账号解封</router-link>
                 </li>
                  <li>
-                  <a href="#" title="Lorem ipsum dolor sit amet,">不良行为举报</a>
+                  <router-link to="/fankui" title="Lorem ipsum dolor sit amet,">不良行为举报</router-link>
                 </li>
                 
               </ul>

@@ -37,6 +37,7 @@ import articlelist from "../views/webadmin/article/articlelist.vue"
 
 import createoldstuff from "../views/webadmin/oldstuff/createoldstuff.vue"
 import createoldstufflist from "../views/webadmin/oldstuff/createoldstufflist.vue"
+import fankui from "../views/kefu/fankui.vue"
 
 
 import Router from 'vue-router'
@@ -68,6 +69,8 @@ const routes = [
       { path: 'job', name: 'job', component: job, meta:{ispublic:true}},
       { path: 'oldstuff', name: 'oldstuff', component: oldstuff, meta:{ispublic:true}},
       { path: 'activity', name: 'activity', component: activity, meta:{ispublic:true}},
+      { path: 'fankui', name: 'fankui', component: fankui, meta:{ispublic:true}},
+      
       {
         path: 'admin', name: 'adminindex',  component: adminindex, children: [
           // { path: '*', redirect: 'admin/home', },

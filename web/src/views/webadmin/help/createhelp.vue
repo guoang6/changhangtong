@@ -11,7 +11,7 @@
           :key="id"
           :class="'page_span_'+id "
           v-model="form.help_lable"
-          :label="item"
+          :label="item" 
         >{{item}}</el-radio>
       </el-form-item>
       <el-form-item label="标签">
