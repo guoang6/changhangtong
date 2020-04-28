@@ -109,6 +109,8 @@ router.post('/webadmin/getarticledetails', service.getarticledetails)
 router.post('/webadmin/getoldstuffdetails', service.getoldstuffdetails)
 router.post('/webadmin/updatearticle', service.updatearticle)
 router.post('/webadmin/updateoldstuff', service.updateoldstuff)
+router.post('/webadmin/createkefu', service.createkefu)
+
 
 
 

@@ -10,6 +10,7 @@ module.exports = jwt({
         '/admin/login',
         '/webadmin/login',
         '/uplod',
+        '/webadmin/createkefu',
         '/web/webgetwebhelplist',
         '/web/gethelpcontent',
         '/web/getcomment',

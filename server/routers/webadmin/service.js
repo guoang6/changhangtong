@@ -804,3 +804,24 @@ exports.updateoldstuff = async (req, res) => {
     console.log(result)
     res.send(data);
 }
+//添加kefu
+exports.createkefu = async (req, res) => {
+    let time = Date.now() - 8 * 60 * 60
+    let info = {
+        kefu_id: uuid.v1(),   //id 
+        kefu_content: req.body.kefu_content,//内容  
+        kefu_user: req.body.kefu_user,//  用户di 
+        kefu_img:req.body.kefu_img,
+        kefu_url:req.body.kefu_url,
+        kefu_createtime: time,//创建时间
+        kefu_type:req.body.kefu_type,
+        job_state: 0, //状态  
+    }
+    let sql = 'insert kefu  set ?'
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: {}
+    }
+    res.send(data)
+}
