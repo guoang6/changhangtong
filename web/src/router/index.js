@@ -39,7 +39,7 @@ import createoldstuff from "../views/webadmin/oldstuff/createoldstuff.vue"
 import createoldstufflist from "../views/webadmin/oldstuff/createoldstufflist.vue"
 import fankui from "../views/kefu/fankui.vue"
 import jubao from "../views/kefu/jubao.vue"
-import jubao from "../views/kefu/jubao.vue"
+import shensu from "../views/kefu/shensu.vue"
 
 
 import Router from 'vue-router'

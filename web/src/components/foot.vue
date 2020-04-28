@@ -58,10 +58,10 @@
                   <router-link to="/fankui" title="Lorem ipsum dolor sit amet,">意见反馈</router-link>
                 </li>
                 <li>
-                  <router-link to="/jubao" title="Lorem ipsum dolor sit amet,">账号解封</router-link>
+                  <router-link to="/shensu" title="Lorem ipsum dolor sit amet,">账号解封</router-link>
                 </li>
                  <li>
-                  <router-link to="/sheneu" title="Lorem ipsum dolor sit amet,">不良行为举报</router-link>
+                  <router-link to="/jubao" title="Lorem ipsum dolor sit amet,">不良行为举报</router-link>
                 </li>
                 
               </ul>
