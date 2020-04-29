@@ -11,6 +11,8 @@ import carousel from '../views/management/carousel.vue'
 import managementlable from '../views/management/managementlable.vue'
 import numbering from '../views/numbering/numbering.vue'
 import myself from '../views/myself/myself.vue'
+import fankui from '../views/kefu/fankui.vue'
+import jubao from '../views/kefu/jubao.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -24,6 +26,8 @@ const routes = [
     { path: 'useradmin', name: 'useradmin', component: useradmin, },
     { path: 'managementlable', name: 'managementlable', component: managementlable, },
     { path: 'carousel', name: 'carousel', component: carousel, },
+    { path: 'fankui', name: 'fankui', component: fankui, },
+    { path: 'jubao', name: 'jubao', component: jubao, },
 
 
   ]

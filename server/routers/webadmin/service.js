@@ -815,7 +815,7 @@ exports.createkefu = async (req, res) => {
         kefu_url:req.body.kefu_url,
         kefu_createtime: time,//创建时间
         kefu_type:req.body.kefu_type,
-        job_state: 0, //状态  
+        kefu_state: 0, //状态  
     }
     let sql = 'insert kefu  set ?'
     const result = await query(sql, info)

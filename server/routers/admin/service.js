@@ -634,3 +634,46 @@ exports.admindelete = async (req, res) => {
     }
     res.send(data)
 }
+//kefu列表
+exports.kefullist = async (req, res) => {
+    console.log(req.body)
+    let pagesize = req.body.pagesize * 1
+    let page = (req.body.page - 1) * pagesize
+    let info = [req.body.kefu_type,pagesize, page]
+    let sql = `select * from kefu where kefu_type=?`
+    if(req.body.state) sql= `${sql} and kefu_state=${req.body.state}`
+    sql= `${sql}   ORDER BY kefu_createtime DESC limit ? offset ?`
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: result,
+
+    }
+    res.send(data)
+}
+
+//kefu改变状态
+exports.changkefustate = async (req, res) => {
+    let info = [req.body.kefu_state,req.user.username,req.body.kefu_id]
+    let sql = 'update kefu  set kefu_state=?,admin=? where kefu_id=?'
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: result,
+
+    }
+    res.send(data)
+}
+//删除kefu
+exports.deletekefu = async (req, res) => {
+    let info = [req.body.kefu_id]
+    console.log(info)
+    let sql = `delete  from kefu where kefu_id=? `
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: result,
+
+    }
+    res.send(data)
+}

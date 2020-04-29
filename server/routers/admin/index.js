@@ -15,12 +15,6 @@ router.post('/admin/getadmin', service.getadmin)
 router.post('/admin/getcomment', service.getcomment)
 router.post('/admin/getreply', service.getreply)
 router.post('/admin/admindelete', service.admindelete)
-
-
-
-
-
-
 router.post('/admin/contentexamine', service.contentexamine)
 router.post('/admin/changecontentstate', service.changecontentstate)
 
@@ -33,6 +27,12 @@ router.post('/admin/changelable', service.changelable)
 router.post('/admin/changecarousel', service.changecarousel)
 router.post('/admin/carousellist', service.carousellist)
 router.post('/admin/deletecarouse', service.deletecarouse)
+router.post('/admin/kefullist', service.kefullist)
+router.post('/admin/changkefustate', service.changkefustate)
+
+router.post('/admin/deletekefu', service.deletekefu)
+
+
 
 
 

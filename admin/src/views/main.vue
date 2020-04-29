@@ -56,8 +56,9 @@
               <span slot="title">反馈中心</span>
             </template>
 
-            <el-menu-item index="3-1">意见反馈</el-menu-item>
-            <el-menu-item index="3-2">违规举报</el-menu-item>
+            <el-menu-item index="/fankui">意见反馈</el-menu-item>
+            <el-menu-item index="/jubao">违规举报</el-menu-item>
+            <el-menu-item index="/shenshu">账号申诉</el-menu-item>
           </el-submenu>
         </el-menu>
       </div>
