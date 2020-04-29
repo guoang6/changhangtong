@@ -34,16 +34,15 @@
           element-loading-spinner="el-icon-loading"
         >
           <el-table-column prop="createtime" label="创建日期">
-            <template slot-scope="scope">{{ scope.row.kefu_createtime | dataFormat }}</template>
+            <template slot-scope="scope">{{ scope.row.fankui_createtime | dataFormat }}</template>
           </el-table-column>
-          <el-table-column prop="kefu_user" label="邮箱"></el-table-column>
-          <el-table-column prop="kefu_content" label="反馈内容分"></el-table-column>
-          <el-table-column prop="admin" label="管理员"></el-table-column>
-          <el-table-column label="状态" prop="kefu_state">
+          <el-table-column prop="fankui_user" label="邮箱"></el-table-column>
+          <el-table-column prop="fankui_content" label="反馈内容分"></el-table-column>
+          <el-table-column label="状态" prop="fankui_state">
             <template slot-scope="scope">
-              <span style="color:#409eff" v-if="scope.row.kefu_state==0">未处理</span>
-              <span style="color:#6cbb7a"  v-if="scope.row.kefu_state==1">已查看</span>
-              <span style="color:#f60c6c" v-if="scope.row.kefu_state==2">标记</span>
+              <span style="color:#409eff" v-if="scope.row.fankui_state==0">未处理</span>
+              <span style="color:#6cbb7a"  v-if="scope.row.fankui_state==1">已查看</span>
+              <span style="color:#f60c6c" v-if="scope.row.fankui_state==2">标记</span>
             </template>
           </el-table-column>
           <el-table-column prop="admin" label="管理员"></el-table-column>
@@ -112,8 +111,9 @@ export default {
   methods: {
   async changestate(row,state) {
     let data={
-        kefu_id:row.kefu_id,
-        kefu_state:state
+        kefu_id:row.fankui_id,
+        kefu_state:state,
+        type:'fankui'
     }
       let res = await this.$axios.post(
         "/admin/changkefustate",
@@ -129,7 +129,7 @@ export default {
     async deletkefu(row) {
       let res = await this.$axios.post(
         "/admin/deletekefu",
-        this.qs.stringify({kefu_id: row.kefu_id,})
+        this.qs.stringify({id: row.fankui_id,type:'fankui'})
       );
       if (res.data.state.type === "SUCCESS") {
         this.$message.success("删除成功");

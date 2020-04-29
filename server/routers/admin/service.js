@@ -127,7 +127,9 @@ exports.deleteuser = async (req, res) => {
 //修改密码
 exports.changepassword = async (req, res) => {
     console.log(req.body)
+    req.body.newpassword = md5(`${req.body.newpassword}${PED_SALT}`)
     if (req.body.type == 'adminadmin') {
+
         let info = [req.body.newpassword, req.body.username]
         info.newpassword = md5(`${info.password}${PED_SALT}`)
         let sql = 'update admin set  password=? where username =?'
@@ -278,13 +280,13 @@ exports.contentexamine = async (req, res) => {
         sql = `${sql} and  ${req.body.type}.ispublic=${req.body.state} `
     }
     let title
-    if(req.body.type=='job'||req.body.type=='oldstuff') title='name'
-    else  title='title'
+    if (req.body.type == 'job' || req.body.type == 'oldstuff') title = 'name'
+    else title = 'title'
     if (req.body.search !== '') {
         sql1 = `${sql1} and ${req.body.type}.${req.body.type}_${title}  like '%${req.body.search}%' `
         sql = `${sql} and  ${req.body.type}.${req.body.type}_${title} like '%${req.body.search}%' `
     }
-    
+
     sql = `${sql} limit ? offset ?`
     const counts = await query(sql1, info1)
     let count = counts[0].count
@@ -581,7 +583,7 @@ exports.announcementlist = async (req, res) => {
     res.send(data)
 }
 //获取评论列表
-exports.getcomment = async (req, res) => { 
+exports.getcomment = async (req, res) => {
     let info1 = []
 
     let sql1 = ' select count(*) as count from comment where 1=1'
@@ -639,10 +641,10 @@ exports.kefullist = async (req, res) => {
     console.log(req.body)
     let pagesize = req.body.pagesize * 1
     let page = (req.body.page - 1) * pagesize
-    let info = [req.body.kefu_type,pagesize, page]
-    let sql = `select * from kefu where kefu_type=?`
-    if(req.body.state) sql= `${sql} and kefu_state=${req.body.state}`
-    sql= `${sql}   ORDER BY kefu_createtime DESC limit ? offset ?`
+    let info = [pagesize, page]
+    let sql = `select * from ${req.body.kefu_type} where 1=1`
+    if (req.body.state) sql = `${sql} and ${req.body.kefu_type}_state=${req.body.state}`
+    sql = `${sql}   ORDER BY ${req.body.kefu_type}_createtime DESC limit ? offset ?`
     const result = await query(sql, info)
     data = {
         state: s,
@@ -654,8 +656,9 @@ exports.kefullist = async (req, res) => {
 
 //kefu改变状态
 exports.changkefustate = async (req, res) => {
-    let info = [req.body.kefu_state,req.user.username,req.body.kefu_id]
-    let sql = 'update kefu  set kefu_state=?,admin=? where kefu_id=?'
+    console.log(req.body)
+    let info = [req.body.kefu_state, req.user.username, req.body.kefu_id]
+    let sql = `update ${req.body.type}  set ${req.body.type}_state=?,admin=? where ${req.body.type}_id=?`
     const result = await query(sql, info)
     data = {
         state: s,
@@ -664,11 +667,36 @@ exports.changkefustate = async (req, res) => {
     }
     res.send(data)
 }
-//删除kefu
+exports.changresult = async (req, res) => {
+    console.log(req.body)
+    let info = [req.user.username, req.body.result, req.body.jubao_id]
+    let sql = `update jubao  set jubao_state=1,admin=?,result=? where jubao_id=?`
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: result,
+
+    }
+    res.send(data)
+}
+exports.changeactivationdate = async (req, res) => {
+    let time = Date.now() + req.body.time * 24 * 60 * 60*1000
+    console.log(req.body)
+    let info = [time, req.body.jubao_id, req.body.userid]
+    let sql = `update user  set activationdate=?,jubao_id=? where user_id=?`
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: result,
+
+    }
+    res.send(data)
+}
+
+//删除客服数据
 exports.deletekefu = async (req, res) => {
-    let info = [req.body.kefu_id]
-    console.log(info)
-    let sql = `delete  from kefu where kefu_id=? `
+    let info = [req.body.id]
+    let sql = `delete  from ${req.body.type} where ${req.body.type}_id=? `
     const result = await query(sql, info)
     data = {
         state: s,

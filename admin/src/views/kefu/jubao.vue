@@ -34,28 +34,52 @@
           element-loading-spinner="el-icon-loading"
         >
           <el-table-column prop="createtime" label="创建日期">
-            <template slot-scope="scope">{{ scope.row.kefu_createtime | dataFormat }}</template>
+            <template slot-scope="scope">{{ scope.row.jubao_createtime | dataFormat }}</template>
           </el-table-column>
-          <el-table-column prop="kefu_user" label="举报账号"></el-table-column>
-          <el-table-column prop="kefu_url" label="违规链接">
+          <el-table-column prop="jubao_user" label="举报账号"></el-table-column>
+          <el-table-column prop="jubao_url" label="违规链接">
             <template slot-scope="scope">
-              <a :href="scope.row.kefu_url" target="_blank">举报地址</a>
+              <a :href="scope.row.jubao_url" target="_blank">举报地址</a>
             </template>
           </el-table-column>
-          <el-table-column prop="kefu_content" label="反馈内容分"></el-table-column>
-          <el-table-column label="状态" prop="kefu_state">
+          <el-table-column prop="jubao_content" label="详情">
             <template slot-scope="scope">
-              <span style="color:#409eff" v-if="scope.row.kefu_state==0">未处理</span>
-              <span style="color:#6cbb7a" v-if="scope.row.kefu_state==1">已查看</span>
-              <span style="color:#f60c6c" v-if="scope.row.kefu_state==2">标记</span>
+              <el-popover placement="right" width="400" trigger="hover">
+                <span>
+                  <el-form status-icon label-width="100px">
+                    <el-form-item label="举报内容">{{scope.row.jubao_content}}</el-form-item>
+                    <el-form-item label="截图">
+                      <div>
+                        <img
+                          v-for="(img,id) in scope.row.jubao_img"
+                          style="width:250px ;margin-top:5px"
+                          :key="id"
+                          :src="img.url"
+                          alt
+                        />
+                      </div>
+                    </el-form-item>
+                    <el-form-item label="处理结果">{{scope.row.result}}</el-form-item>
+                  </el-form>
+                </span>
+                <el-button type="text" slot="reference">查看详情</el-button>
+              </el-popover>
+            </template>
+          </el-table-column>
+          <el-table-column label="状态" prop="jubao_state">
+            <template slot-scope="scope">
+              <span style="color:#409eff" v-if="scope.row.jubao_state==0">未处理</span>
+              <span style="color:#6cbb7a" v-if="scope.row.jubao_state==1">已处理</span>
+              <span style="color:#f60c6c" v-if="scope.row.jubao_state==2">标记</span>
             </template>
           </el-table-column>
           <el-table-column prop="admin" label="管理员"></el-table-column>
           <el-table-column prop="nickname" fixed="right" label="操作" width="200">
             <template slot-scope="scope">
-              <el-button type="text" size="small" @click="changepw(scope.row)">去处理</el-button>
+              <el-button type="text" size="small" @click="touser(scope.row)">去处理</el-button>
               <el-button type="text" size="small" @click="changestate(scope.row,2)">标记</el-button>
-              <el-button type="text" size="small" @click="changestate(scope.row,1)">已处理</el-button>
+              <el-button type="text" size="small" @click="jieguo(scope.row)">已处理</el-button>
+              
               <el-button
                 type="text"
                 size="small"
@@ -65,7 +89,17 @@
             </template>
           </el-table-column>
         </el-table>
-
+<el-dialog title="处理结果" :visible.sync="dialog" width="500px">
+                <el-form :model="result">
+                  <el-form-item label>
+                    <el-input type="textarea" v-model="result"></el-input>
+                  </el-form-item>
+                </el-form>
+                <div slot="footer" class="dialog-footer">
+                  <el-button @click="dialog = false">取 消</el-button>
+                  <el-button type="primary" @click="setjieguo">确 定</el-button>
+                </div>
+              </el-dialog>
         <!--分页-->
         <el-pagination
           @size-change="handleSizeChange"
@@ -86,8 +120,9 @@ export default {
   name: "admin",
   data() {
     return {
+      result: "",
       changepassword: {},
-      dialogpw: false, //密码框
+      dialog: false, //结果框
       loading: false,
       dialogFormVisibleadd: false, //添加弹框
       form: {},
@@ -103,14 +138,36 @@ export default {
         kefu_type: "jubao",
         state: "0"
       },
+      row: {},
       tableData: [] //列表信息
     };
   },
   methods: {
+    jieguo(row) {
+      this.dialog = true;
+      this.row = row;
+    },
+    async setjieguo() {
+      let data = {
+        jubao_id: this.row.jubao_id,
+        result: this.result
+      };
+      let res = await this.$axios.post(
+        "/admin/changresult",
+        this.qs.stringify(data)
+      );
+      if (res.data.state.type === "SUCCESS") {
+        this.$message.success("成功");
+        this.kefulist();
+        this.dialog = false;
+      }
+    },
+
     async changestate(row, state) {
       let data = {
-        kefu_id: row.kefu_id,
-        kefu_state: state
+        kefu_id: row.jubao_id,
+        kefu_state: state,
+        type: "jubao"
       };
       let res = await this.$axios.post(
         "/admin/changkefustate",
@@ -121,7 +178,9 @@ export default {
         this.kefulist();
       }
     },
-
+    touser(row) {
+        this.$router.push({ path: "/useruser", query: { user: row.jubao_user, jubao_id: row.jubao_id} });
+    },
     //删除
     async deletkefu(row) {
       let res = await this.$axios.post(
@@ -153,6 +212,9 @@ export default {
         this.tableData = res.data.data;
         console.log(res.data.data);
         this.pagelistquery.total = res.data.count;
+        this.tableData.forEach(element => {
+          element.jubao_img = JSON.parse(element.jubao_img);
+        });
       }
       this.loading = false;
     }

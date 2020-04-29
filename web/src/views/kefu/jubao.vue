@@ -13,10 +13,10 @@
         style="margin-top:40px"
       >
         <el-form-item label="举报的账号">
-          <el-input v-model="form.kefu_user" useCustomImageHandler ></el-input>
+          <el-input v-model="form.jubao_user" useCustomImageHandler ></el-input>
         </el-form-item>
           <el-form-item label="违规类容地址">
-          <el-input v-model="form.kefu_url" useCustomImageHandler ></el-input>
+          <el-input v-model="form.jubao_url" useCustomImageHandler ></el-input>
         </el-form-item>
           <el-form-item label="截图">
             <el-upload
@@ -24,16 +24,16 @@
               list-type="picture-card"
               :on-success="uploadsuccess"
               :on-remove="handleRemove"
-              :file-list="this.kefu_img"
+              :file-list="this.jubao_img"
             >
               <i class="el-icon-plus" ></i>
             </el-upload>
             <el-dialog>
-              <img width="100%" :src="kefu_img" alt />
+              <img width="100%" :src="jubao_img" alt />
             </el-dialog>
           </el-form-item>
         <el-form-item label="举报描述">
-          <el-input type="textarea" :rows="10" placeholder="请输入反馈的内容" v-model="form.kefu_content"></el-input>
+          <el-input type="textarea" :rows="10" placeholder="请输入反馈的内容" v-model="form.jubao_content"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">确定</el-button>
@@ -57,20 +57,20 @@ export default {
   data() {
     return {
       type: 0,
-        kefu_img: [],
+        jubao_img: [],
       form: {
-        kefu_content: "",
-        kefu_user: "", //  用户di
-        kefu_img: [],
-        kefu_url: "",
-        kefu_type: "jubao"
+        jubao_content: "",
+        jubao_user: "", //  用户di
+        jubao_img: [],
+        jubao_url: "",
+        jubao_type: "jubao"
       }
     };
   },
   methods: {
      uploadsuccess(res) {
-      this.form.kefu_img.push({ url: res.url });
-      this.kefu_img.push({ url: res.url });
+      this.form.jubao_img.push({ url: res.url });
+      this.jubao_img.push({ url: res.url });
     },
     //文件列表移除文件时的钩子
     handleRemove(file, fileList) {
@@ -80,9 +80,9 @@ export default {
       // console.log( this.form.kefu_img);
     },
     async onSubmit() {
-       this.form.kefu_img = JSON.stringify(this.form.kefu_img);
+       this.form.jubao_img = JSON.stringify(this.form.jubao_img);
       let res = await this.$axios.post(
-        "/webadmin/createkefu",
+        "/webadmin/createjubao",
         this.qs.stringify(this.form)
       );
       let data = res.data.data;

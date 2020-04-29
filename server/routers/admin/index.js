@@ -29,13 +29,9 @@ router.post('/admin/carousellist', service.carousellist)
 router.post('/admin/deletecarouse', service.deletecarouse)
 router.post('/admin/kefullist', service.kefullist)
 router.post('/admin/changkefustate', service.changkefustate)
-
 router.post('/admin/deletekefu', service.deletekefu)
-
-
-
-
-
+router.post('/admin/changresult', service.changresult)
+router.post('/admin/changeactivationdate', service.changeactivationdate)
 //公告列表
 
 router.post('/admin/announcementlist', service.announcementlist)

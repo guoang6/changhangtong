@@ -53,9 +53,9 @@ exports.registered = async (req, res) => {
 exports.login = async (req, res) => {
     req.body.password = md5(`${req.body.password}${PED_SALT}`)
     let info = [req.body.username, req.body.password]
-    let sql = 'select nickname,user_id,avatar ,realstate,companystate from user where username=? and password=?'
+    let sql = 'select * from user where username=? and password=?'
     const result = await query(sql, info)
-    if (result.length == 0) {
+    if (result == 0) {
         data = {
             state: e,
             data: {
@@ -80,15 +80,22 @@ exports.login = async (req, res) => {
                     uid: result[0].id,
                     nickname: result[0].nickname,
                     avatar: result[0].avatar,
-                    companystate:result[0].companystate,
-                    realstate:result[0].realstate,
+                    companystate: result[0].companystate,
+                    realstate: result[0].realstate,
                 }
+            }
+
+        }
+        if (req.body.type == '' && result[0].activationdate > Date.now()) {
+            data = {
+                state: 's',
+                data: result[0].activationdate
             }
         }//返回登录成功
 
-        console.log(result)
-        res.send(data);
     }
+    console.log(result)
+    res.send(data);
 }
 //获取用户信息
 exports.getuser = async (req, res) => {
@@ -597,7 +604,7 @@ exports.getwebcompany = async (req, res) => {
 }
 //公司信息修改
 exports.changewebcompany = async (req, res) => {
-    let info = [req.body.company_mail,req.body.company_name, req.body.company_scale, req.body.company_content, req.body.company_id, req.user.uid,]
+    let info = [req.body.company_mail, req.body.company_name, req.body.company_scale, req.body.company_content, req.body.company_id, req.user.uid,]
     let sql = 'update company set company_mail=?,  company_name=?,company_scale=? ,company_content=? where company_id=? and user_id=? '
     const result = await query(sql, info)
     data = {
@@ -757,7 +764,7 @@ exports.updatearticle = async (req, res) => {
         req.body.article_introduction,
         req.user.uid,
         req.body.article_id]
-     console.log(info)
+    console.log(info)
     let sql = 'update article set article_title =?, article_lable=?,article_content=?,article_introduction=? where user_id =? and article_id=?'
     const result = await query(sql, info)
     if (result.length == 0) {
@@ -786,7 +793,7 @@ exports.updateoldstuff = async (req, res) => {
         req.body.oldstuff_lable,
         req.user.uid,
         req.body.oldstuff_id]
-     console.log(info)
+    console.log(info)
     let sql = 'update oldstuff set oldstuff_img =?, oldstuff_name=?,oldstuff_price=?,oldstuff_content=?,oldstuff_lable=? where user_id =? and oldstuff_id=?'
     const result = await query(sql, info)
     if (result.length == 0) {
@@ -804,20 +811,37 @@ exports.updateoldstuff = async (req, res) => {
     console.log(result)
     res.send(data);
 }
-//添加kefu
-exports.createkefu = async (req, res) => {
+//添加反馈
+exports.createfankui = async (req, res) => {
     let time = Date.now() - 8 * 60 * 60
     let info = {
-        kefu_id: uuid.v1(),   //id 
-        kefu_content: req.body.kefu_content,//内容  
-        kefu_user: req.body.kefu_user,//  用户di 
-        kefu_img:req.body.kefu_img,
-        kefu_url:req.body.kefu_url,
-        kefu_createtime: time,//创建时间
-        kefu_type:req.body.kefu_type,
-        kefu_state: 0, //状态  
+        fankui_id: uuid.v1(),   //id 
+        fankui_content: req.body.fankui_content,//内容  
+        fankui_user: req.body.fankui_user,//  用户di 
+        fankui_createtime: time,//创建时间
+        fankui_state: 0, //状态  
     }
-    let sql = 'insert kefu  set ?'
+    let sql = 'insert fankui  set ?'
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: {}
+    }
+    res.send(data)
+}
+//添加举报
+exports.createjubao = async (req, res) => {
+    let time = Date.now() - 8 * 60 * 60
+    let info = {
+        jubao_id: uuid.v1(),   //id 
+        jubao_content: req.body.jubao_content,//内容  
+        jubao_user: req.body.jubao_user,//  用户di 
+        jubao_img: req.body.jubao_img,
+        jubao_url: req.body.jubao_url,
+        jubao_createtime: time,//创建时间
+        jubao_state: 0, //状态  
+    }
+    let sql = 'insert jubao  set ?'
     const result = await query(sql, info)
     data = {
         state: s,

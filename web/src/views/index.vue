@@ -173,6 +173,8 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import foot from "@/components/foot.vue";
+import moment from 'moment';
+
 export default {
   name: "index",
   components: {
@@ -318,7 +320,8 @@ export default {
       // let this_ = this;
       let obj = {
         password: this.password,
-        username: this.username
+        username: this.username,
+        type: ""
       };
       this.$axios({
         url: "/webadmin/login",
@@ -335,24 +338,30 @@ export default {
             this.changeislog();
             console.log(data);
             this.close();
-          } else this.$message("用户名或密码错误");
+          }
+          if (res.data.state === "s") {
+           
+            let time =  moment( res.data.data).format("YYYY-MM-DD HH:mm")
+            this.$message.error(`您的账号由于不良行为被限制登录至${time}`);
+          }
+          if (res.data.state.type === "ERROE")
+            this.$message.error("用户名或密码错误");
         })
         .catch(e => {
           this.$message(e);
         });
     },
     async getnocitenmu() {
-      console.log(this.nickname)
-      if(this.nickname!==''){
-         const res = await this.$axios.post(
-        "/web/getnotice",
-        this.qs.stringify({ num: 1 })
-      );
-      console.log(res.data);
-      this.setunread(res.data.data.count);
-    }
+      console.log(this.nickname);
+      if (this.nickname !== "") {
+        const res = await this.$axios.post(
+          "/web/getnotice",
+          this.qs.stringify({ num: 1 })
+        );
+        console.log(res.data);
+        this.setunread(res.data.data.count);
       }
-     
+    }
   },
   created() {
     this.getnocitenmu();

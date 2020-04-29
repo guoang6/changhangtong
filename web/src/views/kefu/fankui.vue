@@ -13,10 +13,10 @@
         style="margin-top:40px"
       >
         <el-form-item label="邮箱">
-          <el-input v-model="form.kefu_user" useCustomImageHandler ></el-input>
+          <el-input v-model="form.fankui_user" useCustomImageHandler ></el-input>
         </el-form-item>
         <el-form-item label="反馈">
-          <el-input type="textarea" :rows="10" placeholder="请输入反馈的内容" v-model="form.kefu_content"></el-input>
+          <el-input type="textarea" :rows="10" placeholder="请输入反馈的内容" v-model="form.fankui_content"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">确定</el-button>
@@ -41,18 +41,15 @@ export default {
     return {
       type: 0,
       form: {
-        kefu_content: "",
-        kefu_user: "", //  用户di
-        kefu_img: "",
-        kefu_url: "",
-        kefu_type: "fankui"
+        fankui_content: "",
+        fankui_user: "", //  用户di
       }
     };
   },
   methods: {
     async onSubmit() {
       let res = await this.$axios.post(
-        "/webadmin/createkefu",
+        "/webadmin/createfankui",
         this.qs.stringify(this.form)
       );
       let data = res.data.data;

@@ -64,20 +64,17 @@
               >{{ scope.row.companystate |userstatefilter}}</el-button>
             </template>
           </el-table-column>
-          <el-table-column prop="user_state" label="账号状态">
-            <template slot-scope="scope">
-              <el-switch
-                @click.native.prevent="changeuseruserstate(scope.row)"
-                v-model="scope.row.user_state"
-                active-color="#13ce66"
-                inactive-color="#ff4949"
-                active-value="1"
-                inactive-value="0"
-              ></el-switch>
-            </template>
+          <el-table-column prop="activationdate" label="启用时间">
+            <template slot-scope="scope">{{ scope.row.activationdate | dataFormat }}</template>
           </el-table-column>
           <el-table-column fixed="right" label="操作" width="170">
             <template slot-scope="scope">
+              <el-button
+                type="text"
+                size="small"
+                :disabled="uinfo.username !== 'guoang'"
+                @click="activationdate(scope.row)"
+              >封禁解封</el-button>
               <el-button
                 type="text"
                 size="small"
@@ -87,7 +84,7 @@
               <el-button
                 type="text"
                 size="small"
-               :disabled="scope.row.username !== 'guoang'"
+                :disabled="scope.row.username== 'guoang'||uinfo.username !== 'guoang'"
                 @click="changepw(scope.row)"
               >修改密码</el-button>
             </template>
@@ -175,6 +172,17 @@
             <el-button @click="dialogstudent = false">取消</el-button>
           </div>
         </el-dialog>
+        <el-dialog title="封禁时间(天)" :visible.sync="activationttime.dialog" width="500px">
+          <el-form :model="activationttime">
+            <el-form-item label>
+              <el-input v-model="activationttime.time"></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="activationttime.dialog = false">取 消</el-button>
+            <el-button type="primary" @click="changeactivationdate">确 定</el-button>
+          </div>
+        </el-dialog>
         <!--分页-->
         <el-pagination
           @size-change="handleSizeChange"
@@ -212,7 +220,14 @@ export default {
         page: 1,
         pagesize: 10
       },
-      tableData: [] //列表信息
+      tableData: [], //列表信息
+
+      activationttime: {
+        time: 0,
+        userid: "",
+        jubao_id: "",
+        dialog: false //密码框
+      }
     };
   },
   computed: {
@@ -237,6 +252,23 @@ export default {
     }
   },
   methods: {
+    activationdate(row) {
+      this.activationttime.userid = row.user_id;
+      this.activationttime.dialog = true;
+    },
+    //修改账号封禁时间
+    async changeactivationdate() {
+      this.changepassword.type = "adminuser";
+      let res = await this.$axios.post(
+        "/admin/changeactivationdate",
+        this.qs.stringify(this.activationttime)
+      );
+      if (res.data.state.type === "SUCCESS") {
+        this.$message.success("操作成功");
+        this.getuserlist();
+        this.activationttime.dialog = false;
+      }
+    },
     async changestate(type, state, userid, companyname) {
       let data = {
         type: type,
@@ -289,7 +321,7 @@ export default {
         this.getuserlist();
       }
     },
-    //用户账号修改
+    //用户状态修改
     async changeuseruserstate(row) {
       console.log(row);
       let res = await this.$axios.post(
@@ -341,9 +373,14 @@ export default {
         this.pagelistquery.total = res.data.count;
         this.loading = false;
       }
+    },
+    jubao() {
+      this.pagelistquery.user = this.$route.query.user;
+      this.activationttime.jubao_id = this.$route.query.jubao_id;
     }
   },
   created() {
+    this.$route.query && this.jubao();
     this.getuserlist();
   }
 };
