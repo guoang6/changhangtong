@@ -173,7 +173,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import foot from "@/components/foot.vue";
-import moment from 'moment';
+import moment from "moment";
 
 export default {
   name: "index",
@@ -340,8 +340,7 @@ export default {
             this.close();
           }
           if (res.data.state === "s") {
-           
-            let time =  moment( res.data.data).format("YYYY-MM-DD HH:mm")
+            let time = moment(res.data.data).format("YYYY-MM-DD HH:mm");
             this.$message.error(`您的账号由于不良行为被限制登录至${time}`);
           }
           if (res.data.state.type === "ERROE")
@@ -352,14 +351,16 @@ export default {
         });
     },
     async getnocitenmu() {
-      console.log(this.nickname);
-      if (this.nickname !== "") {
-        const res = await this.$axios.post(
-          "/web/getnotice",
-          this.qs.stringify({ num: 1 })
-        );
-        console.log(res.data);
-        this.setunread(res.data.data.count);
+      if (!localStorage.luffy_jwt_token) {
+        console.log(this.nickname);
+        if (this.nickname !== "") {
+          const res = await this.$axios.post(
+            "/web/getnotice",
+            this.qs.stringify({ num: 1 })
+          );
+          console.log(res.data);
+          this.setunread(res.data.data.count);
+        }
       }
     }
   },

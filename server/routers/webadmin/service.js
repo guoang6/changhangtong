@@ -75,6 +75,11 @@ exports.login = async (req, res) => {
         data = {
             state: s,
             data: {
+                shensu:{
+                    activationdate:result[0].activationdate,
+                    jubao_id:result[0].jubao_id,
+                    username:result[0].username
+                },
                 token: token,
                 userinfo: {
                     uid: result[0].id,
@@ -849,3 +854,44 @@ exports.createjubao = async (req, res) => {
     }
     res.send(data)
 }
+//添加申诉
+exports.createshensu = async (req, res) => {
+    let time = Date.now() - 8 * 60 * 60
+    let info = {
+        shensu_id: uuid.v1(),   //id 
+        shensu_content: req.body.shensu_content,//内容  
+        shensu_user: req.body.shensu_user,//  用户
+        shensu_jubao_id: req.body.shensu_jubao_id,
+        shensu_createtime: time,//创建时间
+        shensu_state: 0, //状态  
+    }
+    let sql = 'insert  shensu  set ?'
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: {}
+    }
+    res.send(data)
+}
+//举报详情
+exports.jubaocontent = async (req, res) => {
+    console.log(req.body)
+    let info = [req.body.id]
+    let sql = 'select * from jubao where jubao_id=?'
+    const result = await query(sql, info)
+    if (result.length == 0) {
+        data = {
+            state: e,
+            data: {
+            }
+        }
+    } else {
+        data = {
+            state: s,
+            data: result[0]
+        }
+    }
+    console.log(result)
+    res.send(data);
+}
+

@@ -33,5 +33,7 @@ module.exports = jwt({
         '/web/getarticlecontent',
         '/web/getcompanycontent',
         '/web/search',
+        '/webadmin/jubaocontent',
+        '/webadmin/createshensu',
     ]
 })
