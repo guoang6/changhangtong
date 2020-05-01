@@ -536,6 +536,27 @@ exports.changelable = async (req, res) => {
     res.send(data)
 }
 
+//修改管理员信息
+exports.changeadminuser = async (req, res) => {
+    let info = [
+        req.body.nickname,
+        req.body.user_id,
+    ]
+    console.log(req.body)
+    let sql = `update admin set nickname=? `
+    if (req.body.newpassword) {
+        req.body.newpassword = md5(`${req.body.newpassword}${PED_SALT}`)
+        sql = `${sql},password='${req.body.newpassword}'`
+    }
+    sql = `${sql} where user_id =?`
+
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: {}
+    }
+    res.send(data)
+}
 //发布公告
 exports.setannouncement = async (req, res) => {
     let time = Date.now() - 8 * 60 * 60
@@ -644,7 +665,7 @@ exports.kefullist = async (req, res) => {
     let info = [pagesize, page]
     let sql = `select * from ${req.body.kefu_type} where 1=1`
     if (req.body.state) sql = `${sql} and ${req.body.kefu_type}_state=${req.body.state}`
-    if(req.body.id)  sql=`${sql} and ${req.body.kefu_type}_id='${req.body.id}'`
+    if (req.body.id) sql = `${sql} and ${req.body.kefu_type}_id='${req.body.id}'`
     sql = `${sql}   ORDER BY ${req.body.kefu_type}_createtime DESC limit ? offset ?`
     const result = await query(sql, info)
     data = {
@@ -681,7 +702,7 @@ exports.changresult = async (req, res) => {
     res.send(data)
 }
 exports.changeactivationdate = async (req, res) => {
-    let time = Date.now() + req.body.time * 24 * 60 * 60*1000
+    let time = Date.now() + req.body.time * 24 * 60 * 60 * 1000
     console.log(req.body)
     let info = [time, req.body.jubao_id, req.body.userid]
     let sql = `update user  set activationdate=?,jubao_id=? where user_id=?`

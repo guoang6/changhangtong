@@ -21,7 +21,13 @@
             <li>
               昵称 :
               <span>{{tableData.nickname}}</span>
-              <el-button type="text" size="small">修改昵称</el-button>
+              <el-button type="text" size="small" @click="name=true">修改昵称</el-button>
+              <el-input
+                style
+                v-if="name"
+                v-model="tableData.nickname"
+                @keyup.enter.native="changeadminuser()"
+              ></el-input>
             </li>
             <li>
               账号创建时间 :
@@ -63,7 +69,13 @@
           <ul>
             <li>
               密码 :
-              <el-button type="text" size="small">修改密码</el-button>
+              <el-button type="text" size="small" @click="password=true">修改密码</el-button>
+              <el-input
+                style
+                v-if="password"
+                v-model="tableData.newpassword"
+                @keyup.enter.native="changeadminuser()"
+              ></el-input>
             </li>
           </ul>
           <div style="clear:both"></div>
@@ -73,28 +85,28 @@
           <h4>职责</h4>
           <el-divider></el-divider>
           <div v-if="uinfo.jurisdiction.issh =='1'|| uinfo.username == 'guoang'">
-         <span>网站内容的审核，用户评论的审核</span>
-          <el-divider></el-divider>
+            <span>网站内容的审核，用户评论的审核</span>
+            <el-divider></el-divider>
           </div>
           <div v-if="uinfo.jurisdiction.isyh =='1'|| uinfo.username == 'guoang'">
-           <span>用户的学生认证，公司认证，用户账号状态的管理</span>
-          <el-divider></el-divider>
+            <span>用户的学生认证，公司认证，用户账号状态的管理</span>
+            <el-divider></el-divider>
           </div>
           <div v-if="uinfo.jurisdiction.isgl=='1'|| uinfo.username == 'guoang'">
-           <span>网站轮播图的管理，各模块分类的管理</span>
-          <el-divider></el-divider>
-            </div>
+            <span>网站轮播图的管理，各模块分类的管理</span>
+            <el-divider></el-divider>
+          </div>
           <div v-if="uinfo.jurisdiction.isfk =='1'|| uinfo.username == 'guoang'">
             <span>用户反馈信息的管理，用户举报信息的管理</span>
-          <el-divider></el-divider>
+            <el-divider></el-divider>
           </div>
           <div v-if="uinfo.username == 'guoang'">
             <span>管理员账号的管理，网站内容的删除</span>
-          <el-divider></el-divider>
+            <el-divider></el-divider>
           </div>
-            <div v-if="uinfo.user_state == '0'">
+          <div v-if="uinfo.user_state == '0'">
             <span>你的账号现在是停用状态</span>
-          <el-divider></el-divider>
+            <el-divider></el-divider>
           </div>
         </div>
       </div>
@@ -109,10 +121,8 @@ export default {
   name: "myself",
   data() {
     return {
-      changerealstateuser: {}, //正在审核的用户信息
-      changecompanystateuser: {}, //公司认证信息
-      dialogstudent: false,
-      dialogcompany: false,
+      name: false,
+      password: false,
       formInline: {
         user: "",
         region: ""
@@ -125,21 +135,22 @@ export default {
       tableData: [] //列表信息
     };
   },
- computed: {
+  computed: {
     ...mapState({
-      uinfo: state => state.user.uinfo,
+      uinfo: state => state.user.uinfo
     })
   },
   methods: {
-    async del(help_id) {
-      console.log(help_id);
+    async changeadminuser() {
       let res = await this.$axios.post(
-        "/webadmin/deletehelp",
-        this.qs.stringify({ help_id: help_id })
+        "/admin/changeadminuser",
+        this.qs.stringify(this.tableData)
       );
       if (res.data.state.type === "SUCCESS") {
-        this.$message.success("删除成功");
-        this.gethelplist();
+        this.$message.success("操作成功");
+        this.getadmin();
+        this.name = false;
+        this.password = false;
       }
     },
 

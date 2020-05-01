@@ -20,6 +20,7 @@ router.post('/admin/changecontentstate', service.changecontentstate)
 
 router.post('/admin/getuserlist', service.getuserlist)
 router.post('/admin/changeuserstate', service.changeuserstate)
+router.post('/admin/changeuserstate', service.changeuserstate)
 
 //分类管理
 router.post('/admin/lablelist', service.lablelist)
@@ -31,7 +32,7 @@ router.post('/admin/kefullist', service.kefullist)
 router.post('/admin/changkefustate', service.changkefustate)
 router.post('/admin/deletekefu', service.deletekefu)
 router.post('/admin/changresult', service.changresult)
-router.post('/admin/changeactivationdate', service.changeactivationdate)
+router.post('/admin/changeadminuser', service.changeadminuser)
 //公告列表
 
 router.post('/admin/announcementlist', service.announcementlist)
