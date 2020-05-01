@@ -644,6 +644,7 @@ exports.kefullist = async (req, res) => {
     let info = [pagesize, page]
     let sql = `select * from ${req.body.kefu_type} where 1=1`
     if (req.body.state) sql = `${sql} and ${req.body.kefu_type}_state=${req.body.state}`
+    if(req.body.id)  sql=`${sql} and ${req.body.kefu_type}_id='${req.body.id}'`
     sql = `${sql}   ORDER BY ${req.body.kefu_type}_createtime DESC limit ? offset ?`
     const result = await query(sql, info)
     data = {

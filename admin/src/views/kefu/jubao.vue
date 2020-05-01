@@ -136,7 +136,8 @@ export default {
         page: 1,
         pagesize: 10,
         kefu_type: "jubao",
-        state: "0"
+        state: "0",
+         id:''
       },
       row: {},
       tableData: [] //列表信息
@@ -185,7 +186,7 @@ export default {
     async deletkefu(row) {
       let res = await this.$axios.post(
         "/admin/deletekefu",
-        this.qs.stringify({ kefu_id: row.kefu_id })
+        this.qs.stringify({ id: row.jubao_id,type:'jubao' })
       );
       if (res.data.state.type === "SUCCESS") {
         this.$message.success("删除成功");
@@ -217,9 +218,15 @@ export default {
         });
       }
       this.loading = false;
+    },
+     shensu() {
+      this.pagelistquery.id = this.$route.query.jubao_id;
+       this.pagelistquery. state=''
+
     }
   },
   created() {
+    this.$route.query && this.shensu();
     this.kefulist();
   }
 };

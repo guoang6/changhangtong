@@ -13,6 +13,7 @@ import numbering from '../views/numbering/numbering.vue'
 import myself from '../views/myself/myself.vue'
 import fankui from '../views/kefu/fankui.vue'
 import jubao from '../views/kefu/jubao.vue'
+import shensu from '../views/kefu/shensu.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -28,6 +29,7 @@ const routes = [
     { path: 'carousel', name: 'carousel', component: carousel, },
     { path: 'fankui', name: 'fankui', component: fankui, },
     { path: 'jubao', name: 'jubao', component: jubao, },
+    { path: 'shensu', name: 'shensu', component: shensu, },
 
 
   ]
