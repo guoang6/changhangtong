@@ -49,7 +49,7 @@
       
               <a  style="color:#409eff"  target="_blank" :href="`${url}/#/activitycontent/${scope.row.activity_id}` ">查看</a>
              </el-button>
-              <el-button type="text" size="small" @click="del(scope.row.activity_id)">取消报名</el-button>
+              <el-button type="text" size="small" @click="deljoin(scope.row.join_id)">取消报名</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -88,6 +88,17 @@ export default {
       if (res.data.state.type === "SUCCESS") {
         this.$message.success("删除成功");
         this.getactivitylist();
+      }
+    },
+        async deljoin(activity_id) {
+      let res = await this.$axios.post(
+        "/webadmin/deletejoin",
+        this.qs.stringify({ id: activity_id })
+      );
+      if (res.data.state.type === "SUCCESS") {
+        this.$message.success("取消成功");
+            this.getactivityjoinlist();
+
       }
     },
     handleSizeChange(val) {

@@ -263,7 +263,7 @@ export default {
   },
   methods: {
     jubao(username) {
-      let url = escape(window.location.href);
+      let url = escape(window.location.href);//escape对url进行编码方便在地址栏传递
       this.$router.push({
         path: "/jubao",
         query: { user: username, url: url }

@@ -690,6 +690,27 @@ exports.deletejob = async (req, res) => {
     console.log(result)
     res.send(data)
 }
+//删除join
+exports.deletejoin = async (req, res) => {
+    let info = [req.body.id, req.user.uid]
+    let sql = 'delete  from joins where join_id=? and user_id=?'
+    const result = await query(sql, info)
+    if (result.length == 0) {
+        data = {
+            state: e,
+            data: {
+            }
+        }
+    } else {
+        data = {
+            state: s,
+            data: {
+            }
+        }
+    }
+    console.log(result)
+    res.send(data)
+}
 //添加文章
 exports.createarticle = async (req, res) => {
     let time = Date.now() - 8 * 60 * 60
