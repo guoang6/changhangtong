@@ -65,6 +65,12 @@
                   <p style="  color: #000;">个人简介：</p>
                   <p>{{item.synopsis}}</p>
                 </div>
+                <el-button
+                  @click="jubao(item.username)"
+                  style="margin:10px 150px"
+                  type="danger"
+                  plain
+                >举报</el-button>
               </span>
               <div slot="reference">
                 <a href="#">
@@ -121,67 +127,73 @@
               :key="index"
             >
               <article id="comment-3">
-                 <el-popover placement="top" width="400" trigger="hover">
-              <span>
-                <li class="comment even thread-odd thread-alt depth-1" id="li-comment-4">
-                  <article id="comment-4">
-                    <img
-                      :src="item.avatar"
-                      class="avatar touxiang avatar-60 photo"
-                      height="60"
-                      width="60"
-                    />
+                <el-popover placement="top" width="400" trigger="hover">
+                  <span>
+                    <li class="comment even thread-odd thread-alt depth-1" id="li-comment-4">
+                      <article id="comment-4">
+                        <img
+                          :src="item.avatar"
+                          class="avatar touxiang avatar-60 photo"
+                          height="60"
+                          width="60"
+                        />
+
+                        <div class="comment-meta">
+                          <h5 class="author">{{item.nickname}}</h5>
+
+                          <p class="date" v-if="item.realstate==3">认证用户</p>
+                          <p class="date" v-else>未认证用户</p>
+                        </div>
+                      </article>
+                    </li>
+                    <div class="xinxi">
+                      <p style="  color: #000;">账号：</p>
+                      <p>{{item.username}}</p>
+                    </div>
+                    <div class="xinxi">
+                      <p style="  color: #000;">邮箱：</p>
+                      <p>{{item.mail}}</p>
+                    </div>
+                    <div class="xinxi">
+                      <p style="  color: #000;">QQ：</p>
+                      <p>{{item.qq}}</p>
+                    </div>
+                    <div class="xinxi">
+                      <p style="  color: #000;">个人简介：</p>
+                      <p>{{item.synopsis}}</p>
+                    </div>
+                    <el-button
+                      @click="jubao(item.username)"
+                      style="margin:10px 150px"
+                      type="danger"
+                      plain
+                    >举报</el-button>
+                  </span>
+                  <div slot="reference">
+                    <a href="#">
+                      <img
+                        alt
+                        :src="item.avatar"
+                        class="avatar touxiang avatar-60 photo"
+                        height="40"
+                        width="40"
+                      />
+                    </a>
 
                     <div class="comment-meta">
-                      <h5 class="author">{{item.nickname}}</h5>
-
-                      <p class="date" v-if="item.realstate==3">认证用户</p>
-                      <p class="date" v-else>未认证用户</p>
+                      <h5 class="author">
+                        <cite class="fn">
+                          <a href="#" rel="external nofollow" class="url">{{item.nickname}}</a>
+                        </cite>
+                      </h5>
+                      <p class="date">
+                        <a href="#">
+                          <time>{{item.comment_createtime|dataFormat}}</time>
+                        </a>
+                      </p>
                     </div>
-                  </article>
-                </li>
-                <div class="xinxi">
-                  <p style="  color: #000;">账号：</p>
-                  <p>{{item.username}}</p>
-                </div>
-                <div class="xinxi">
-                  <p style="  color: #000;">邮箱：</p>
-                  <p>{{item.mail}}</p>
-                </div>
-                <div class="xinxi">
-                  <p style="  color: #000;">QQ：</p>
-                  <p>{{item.qq}}</p>
-                </div>
-                <div class="xinxi">
-                  <p style="  color: #000;">个人简介：</p>
-                  <p>{{item.synopsis}}</p>
-                </div>
-              </span>
-              <div slot="reference">
-                <a href="#">
-                  <img
-                    alt
-                    :src="item.avatar"
-                    class="avatar touxiang avatar-60 photo"
-                    height="40"
-                    width="40"
-                  />
-                </a>
-
-                <div class="comment-meta">
-                  <h5 class="author">
-                    <cite class="fn">
-                      <a href="#" rel="external nofollow" class="url">{{item.nickname}}</a>
-                    </cite>
-                  </h5>
-                  <p class="date">
-                    <a href="#">
-                      <time>{{item.comment_createtime|dataFormat}}</time>
-                    </a>
-                  </p>
-                </div>
-              </div>
-            </el-popover>
+                  </div>
+                </el-popover>
 
                 <!-- end .comment-meta -->
 
@@ -250,6 +262,13 @@ export default {
     };
   },
   methods: {
+    jubao(username) {
+      let url = escape(window.location.href);
+      this.$router.push({
+        path: "/jubao",
+        query: { user: username, url: url }
+      });
+    },
     ...mapActions(["setcommentnum"]),
     //
     usercomment() {

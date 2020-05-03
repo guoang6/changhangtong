@@ -90,7 +90,16 @@ export default {
         this.$message.success("举报成功");
         this.type = 1;
       }
+    },
+    seturl(){
+      this.form.jubao_url=unescape(this.$route.query.url)
+      this.form.jubao_user=this.$route.query.user
+      console.log(123)
     }
+
+  },
+  created(){
+    this.$route.query&&this.seturl()
   }
 };
 </script>

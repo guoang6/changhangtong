@@ -56,6 +56,12 @@
                           <p style="  color: #000;">个人简介：</p>
                           <p>{{content.synopsis}}</p>
                         </div>
+                         <el-button
+                      @click="jubao(content.username)"
+                      style="margin:10px 150px"
+                      type="danger"
+                      plain
+                    >举报</el-button>
                       </span>
                       <div slot="reference" class="show_unit fl">
                         <a class="iconfont ic">&#xe622;</a>
@@ -156,7 +162,13 @@ export default {
   },
   methods: {
     ...mapActions(["setcontentid", "setcontentinfo"]),
-
+    jubao(username) {
+      let url=escape(window.location.href)
+      this.$router.push({
+        path: "/jubao",
+        query : { user: username, url: url }
+      });
+    },
     async getoldstuffcontent() {
       let data = {
         id: this.id
