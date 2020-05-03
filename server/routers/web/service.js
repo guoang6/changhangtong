@@ -176,8 +176,7 @@ exports.getcomment = async (req, res) => {
     let sql1 = ' select count(*) as count from comment where  content_id=?'
     const counts = await query(sql1, info)
     let count = counts[0].count
-    let sql = 'select comment.comment_id ,comment.comment_content,comment.comment_createtime,user.nickname,' +
-        'user.user_id,user.avatar from user,comment where comment.user_id = user.user_id and content_id=? '
+    let sql = 'select * from user,comment where comment.user_id = user.user_id and content_id=? '
     'order by comment.comment_createtime asc '
     const result = await query(sql, info)
     data = {
@@ -215,8 +214,7 @@ exports.setreply = async (req, res) => {
 exports.getreply = async (req, res) => {
     let info = [req.body.comment_id]//评论id
     console.log(req.body)
-    let sql = 'select reply.reply_content ,reply.createtime,reply.touserid,reply.tousernickname,' +
-        'user.user_id,user.avatar,user.nickname from user,reply where reply.user_id = user.user_id and comment_id=? ' +
+    let sql = 'select * from user,reply where reply.user_id = user.user_id and comment_id=? ' +
         'order by reply.createtime asc '
     const result = await query(sql, info)
     data = {

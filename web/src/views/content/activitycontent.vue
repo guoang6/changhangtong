@@ -17,11 +17,49 @@
                   <a class="tagname">活动名称:</a>
                   {{content.activity_title}}
                 </div>
-                <div class="show_unit fl ativity">
-                  <a class="iconfont ic">&#xe66a;</a>
-                  <a class="tagname">发起者:</a>
-                  {{content.nickname}}
-                </div>
+                <el-popover placement="left" width="400" trigger="hover">
+                  <span>
+                    <li class="comment even thread-odd thread-alt depth-1" id="li-comment-4">
+                      <article id="comment-4">
+                        <img
+                          :src="content.avatar"
+                          class="avatar touxiang avatar-60 photo"
+                          height="60"
+                          width="60"
+                        />
+
+                        <div class="comment-meta">
+                          <h5 class="author">{{content.nickname}}</h5>
+
+                          <p class="date" v-if="content.realstate==3">认证用户</p>
+                          <p class="date" v-else>未认证用户</p>
+                        </div>
+                      </article>
+                    </li>
+                    <div class="xinxi">
+                      <p style="  color: #000;">账号：</p>
+                      <p>{{content.username}}</p>
+                    </div>
+                    <div class="xinxi">
+                      <p style="  color: #000;">邮箱：</p>
+                      <p>{{content.mail}}</p>
+                    </div>
+                    <div class="xinxi">
+                      <p style="  color: #000;">QQ：</p>
+                      <p>{{content.qq}}</p>
+                    </div>
+                    <div class="xinxi">
+                      <p style="  color: #000;">个人简介：</p>
+                      <p>{{content.synopsis}}</p>
+                    </div>
+                  </span>
+                  <div slot="reference" class="show_unit fl ativity">
+                    <a class="iconfont ic">&#xe66a;</a>
+                    <a class="tagname">发起者:</a>
+                    {{content.nickname}}
+                  </div>
+                </el-popover>
+
                 <div class="show_unit fl ativity">
                   <a class="iconfont ic">&#xe62a;</a>
                   <a class="tagname">活动时间:</a>
@@ -126,7 +164,7 @@ export default {
     };
   },
   props: {
-    id:{}
+    id: {}
   },
   methods: {
     ...mapActions(["setcontentid", "setcontentinfo"]),

@@ -100,13 +100,7 @@ export default {
 };
 </script>
 <style scoped>
-.xinxi p {
-  display: inline;
-}
-.xinxi {
-  margin-top: 30px;
-  margin-left: 30px;
-}
+
 .left {
   width: 30%;
   float: left;
@@ -116,4 +110,15 @@ export default {
   width: 60%;
   float: left;
 }
+
+</style>
+<style >
+.xinxi p {
+  display: inline;
+}
+.xinxi {
+  margin-top: 30px;
+  margin-left: 30px;
+}
+li {list-style-type:none;}
 </style>

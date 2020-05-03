@@ -1,6 +1,6 @@
 <template>
   <div class="help">
-<div v-title data-title="问答详情"></div>
+    <div v-title data-title="问答详情"></div>
 
     <!-- Start of Page Container -->
     <div class="page-container">
@@ -16,7 +16,48 @@
               <div class="post-meta clearfix">
                 <span class="date">{{content.createtime| dataFormat}}</span>
                 <span class="category">
-                  <a href="#" title="View all posts in Server &amp; Database">{{content.nickname}}</a>
+                  <el-popover placement="right" width="400" trigger="hover">
+                    <span>
+                      <li class="comment even thread-odd thread-alt depth-1" id="li-comment-4">
+                        <article id="comment-4">
+                          <img
+                            :src="content.avatar"
+                            class="avatar touxiang avatar-60 photo"
+                            height="60"
+                            width="60"
+                          />
+
+                          <div class="comment-meta">
+                            <h5 class="author">{{content.nickname}}</h5>
+
+                            <p class="date" v-if="content.realstate==3">认证用户</p>
+                            <p class="date" v-else>未认证用户</p>
+                          </div>
+                        </article>
+                      </li>
+                      <div class="xinxi">
+                        <p style="  color: #000;">账号：</p>
+                        <p>{{content.username}}</p>
+                      </div>
+                      <div class="xinxi">
+                        <p style="  color: #000;">邮箱：</p>
+                        <p>{{content.mail}}</p>
+                      </div>
+                      <div class="xinxi">
+                        <p style="  color: #000;">QQ：</p>
+                        <p>{{content.qq}}</p>
+                      </div>
+                      <div class="xinxi">
+                        <p style="  color: #000;">个人简介：</p>
+                        <p>{{content.synopsis}}</p>
+                      </div>
+                    </span>
+                    <a
+                      href="#"
+                      slot="reference"
+                      title="View all posts in Server &amp; Database"
+                    >{{content.nickname}}</a>
+                  </el-popover>
                 </span>
                 <span class="comments">
                   <a
@@ -53,11 +94,9 @@
             <!-- end of page content -->
           </div>
           <aside class="span4 page-sidebar">
-             <carousel />
-             <help/>
+            <carousel />
+            <help />
           </aside>
-         
-          
 
           <!-- end of sidebar -->
         </div>
@@ -106,17 +145,20 @@ export default {
       );
       if (res.data.state.type === "SUCCESS") {
         this.content = res.data.data;
-        console.log(res.data.data.help_title)
-        this.setcontentinfo({contentname:res.data.data.help_title,contentuserid:res.data.data.user_id})
+        console.log(res.data.data.help_title);
+        this.setcontentinfo({
+          contentname: res.data.data.help_title,
+          contentuserid: res.data.data.user_id
+        });
         this.content.help_tag = res.data.data.help_tag.split(",");
       }
     }
   },
-      watch: {
+  watch: {
     id: {
       handler(newVal) {
         this.gethelpcontent();
-    this.setcontentid(this.id);
+        this.setcontentid(this.id);
       },
       deep: true,
       immediate: true

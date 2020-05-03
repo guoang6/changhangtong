@@ -30,27 +30,68 @@
           id="li-comment-2"
         >
           <article id="comment-2">
-            <a href="#">
-              <img
-                alt
-                :src="item.avatar"
-                class="avatar touxiang avatar-60 photo"
-                height="40"
-                width="40"
-              />
-            </a>
-            <div class="comment-meta">
-              <h5 class="author">
-                <cite class="fn">
-                  <a href="#" rel="external nofollow" class="url">{{item.nickname}}</a>
-                </cite>
-              </h5>
-              <p class="date">
+            <el-popover placement="top" width="400" trigger="hover">
+              <span>
+                <li class="comment even thread-odd thread-alt depth-1" id="li-comment-4">
+                  <article id="comment-4">
+                    <img
+                      :src="item.avatar"
+                      class="avatar touxiang avatar-60 photo"
+                      height="60"
+                      width="60"
+                    />
+
+                    <div class="comment-meta">
+                      <h5 class="author">{{item.nickname}}</h5>
+
+                      <p class="date" v-if="item.realstate==3">认证用户</p>
+                      <p class="date" v-else>未认证用户</p>
+                    </div>
+                  </article>
+                </li>
+                <div class="xinxi">
+                  <p style="  color: #000;">账号：</p>
+                  <p>{{item.username}}</p>
+                </div>
+                <div class="xinxi">
+                  <p style="  color: #000;">邮箱：</p>
+                  <p>{{item.mail}}</p>
+                </div>
+                <div class="xinxi">
+                  <p style="  color: #000;">QQ：</p>
+                  <p>{{item.qq}}</p>
+                </div>
+                <div class="xinxi">
+                  <p style="  color: #000;">个人简介：</p>
+                  <p>{{item.synopsis}}</p>
+                </div>
+              </span>
+              <div slot="reference">
                 <a href="#">
-                  <time>{{item.comment_createtime|dataFormat}}</time>
+                  <img
+                    alt
+                    :src="item.avatar"
+                    class="avatar touxiang avatar-60 photo"
+                    height="40"
+                    width="40"
+                  />
                 </a>
-              </p>
-            </div>
+
+                <div class="comment-meta">
+                  <h5 class="author">
+                    <cite class="fn">
+                      <a href="#" rel="external nofollow" class="url">{{item.nickname}}</a>
+                    </cite>
+                  </h5>
+                  <p class="date">
+                    <a href="#">
+                      <time>{{item.comment_createtime|dataFormat}}</time>
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </el-popover>
+
             <!-- end .comment-meta -->
 
             <div class="comment-body" v-html="item.comment_content"></div>
@@ -80,25 +121,68 @@
               :key="index"
             >
               <article id="comment-3">
+                 <el-popover placement="top" width="400" trigger="hover">
+              <span>
+                <li class="comment even thread-odd thread-alt depth-1" id="li-comment-4">
+                  <article id="comment-4">
+                    <img
+                      :src="item.avatar"
+                      class="avatar touxiang avatar-60 photo"
+                      height="60"
+                      width="60"
+                    />
+
+                    <div class="comment-meta">
+                      <h5 class="author">{{item.nickname}}</h5>
+
+                      <p class="date" v-if="item.realstate==3">认证用户</p>
+                      <p class="date" v-else>未认证用户</p>
+                    </div>
+                  </article>
+                </li>
+                <div class="xinxi">
+                  <p style="  color: #000;">账号：</p>
+                  <p>{{item.username}}</p>
+                </div>
+                <div class="xinxi">
+                  <p style="  color: #000;">邮箱：</p>
+                  <p>{{item.mail}}</p>
+                </div>
+                <div class="xinxi">
+                  <p style="  color: #000;">QQ：</p>
+                  <p>{{item.qq}}</p>
+                </div>
+                <div class="xinxi">
+                  <p style="  color: #000;">个人简介：</p>
+                  <p>{{item.synopsis}}</p>
+                </div>
+              </span>
+              <div slot="reference">
                 <a href="#">
                   <img
                     alt
-                    :src="data.avatar"
-                    class="avatar avatar-60 photo"
-                    style=" width: 40px;height: 40px"
+                    :src="item.avatar"
+                    class="avatar touxiang avatar-60 photo"
+                    height="40"
+                    width="40"
                   />
                 </a>
 
                 <div class="comment-meta">
                   <h5 class="author">
-                    <cite class="fn">{{data.nickname}}</cite>
-                    @
-                    <a
-                      class="comment-reply-link touser"
-                      href="#"
-                    >{{data.tousernickname}}</a>
+                    <cite class="fn">
+                      <a href="#" rel="external nofollow" class="url">{{item.nickname}}</a>
+                    </cite>
                   </h5>
+                  <p class="date">
+                    <a href="#">
+                      <time>{{item.comment_createtime|dataFormat}}</time>
+                    </a>
+                  </p>
                 </div>
+              </div>
+            </el-popover>
+
                 <!-- end .comment-meta -->
 
                 <div class="comment-body" v-html="data.reply_content"></div>
@@ -170,7 +254,7 @@ export default {
     //
     usercomment() {
       this.editorid = -1;
-        this.replyinputid = -2;
+      this.replyinputid = -2;
     },
     //回复回复按钮
     showreplyinput(index, tousernickname, touserid, comment_id) {
