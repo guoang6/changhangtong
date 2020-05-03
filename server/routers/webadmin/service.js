@@ -109,7 +109,28 @@ exports.getuser = async (req, res) => {
     const result = await query(sql, info)
     data = {
         state: s,
-        data: result[0]
+        data: result[0],
+    }
+    res.send(data)
+}
+exports.getusernumbering = async (req, res) => {
+    let info = [req.user.uid]
+    const help = await query(' select count(*) as count from help where user_id=?', info)
+    const article = await query(' select count(*) as count from article where user_id=?', info)
+    const activity = await query(' select count(*) as count from activity where user_id=?', info)
+    const oldstuff = await query(' select count(*) as count from oldstuff where user_id=?', info)
+    const job = await query(' select count(*) as count from job where user_id=?', info)
+    data = {
+        state: s,
+        data: {
+            article:article[0].count,
+            help:help[0].count,
+            activity:activity[0].count,
+            oldstuff:oldstuff[0].count,
+            job:job[0].count,
+
+        }
+
     }
     res.send(data)
 }

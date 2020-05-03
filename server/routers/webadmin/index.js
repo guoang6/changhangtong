@@ -113,6 +113,7 @@ router.post('/webadmin/createfankui', service.createfankui)
 router.post('/webadmin/createjubao', service.createjubao)
 router.post('/webadmin/jubaocontent', service.jubaocontent)
 router.post('/webadmin/createshensu', service.createshensu)
+router.post('/webadmin/getusernumbering', service.getusernumbering)
 
 
 

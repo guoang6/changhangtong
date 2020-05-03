@@ -11,6 +11,12 @@ import './plugins/element.js'
 import ElementUI from 'element-ui';
 import './assets/css/ali.css'
 
+
+//ecahrs
+import ECharts from 'vue-echarts'
+import 'echarts/lib/chart/bar'
+
+Vue.component('chart', ECharts)
 //vuex
 import Vuex from 'vuex'
 import store from './store'
