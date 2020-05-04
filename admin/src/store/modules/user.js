@@ -19,7 +19,8 @@ const mutations = {
         state.islog = !state.islog
     },
     DELETE_USERINFO(state) {
-        state.userinfo = {}
+        window.localStorage.removeItem('uinfo')
+        window.localStorage.removeItem('admin_jwt_token')
     },
     SET_TOKEN(state, data) {
         state.token = data

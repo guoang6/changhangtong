@@ -492,6 +492,7 @@ exports.changecarousel = async (req, res) => {
     data = {
         state: s,
         data: result,
+        
 
     }
     res.send(data)
@@ -660,6 +661,10 @@ exports.admindelete = async (req, res) => {
 //kefu列表
 exports.kefullist = async (req, res) => {
     console.log(req.body)
+    let sqlcounts = `select count(*) as count from ${req.body.kefu_type} where 1=1 `
+    if (req.body.id) sqlcounts = `${sqlcounts} and ${req.body.kefu_type}_id='${req.body.id}'`
+    const counts = await query(sqlcounts, [])
+    let count = counts[0].count
     let pagesize = req.body.pagesize * 1
     let page = (req.body.page - 1) * pagesize
     let info = [pagesize, page]
@@ -671,6 +676,8 @@ exports.kefullist = async (req, res) => {
     data = {
         state: s,
         data: result,
+        count: count
+
 
     }
     res.send(data)

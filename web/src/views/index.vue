@@ -32,7 +32,7 @@
                   <a>文章/新闻</a>
                 </router-link>
 
-                <li v-if="nickname==''">
+                <li v-if="userinfo">
                   <a @click="closein">登录/注册</a>
                 </li>
                 <el-dropdown v-else>
@@ -103,7 +103,6 @@
               <option value="4">失物</option>
               <option value="5">招聘信息</option>
               <option value="6">二手信息</option>
-              <option value="7">{{nickname}}</option>
               <option value="8">登录/注册</option>
             </select>
           </nav>
@@ -196,6 +195,7 @@ export default {
       islogin: state => state.user.islogin,
       avatar: state => state.user.userinfo.avatar,
       nickname: state => state.user.userinfo.nickname,
+      userinfo: state => state.user.userinfo,
       unread: state => state.user.unread
     })
   },
@@ -206,7 +206,8 @@ export default {
       "setToken",
       "join",
       "close",
-      "setunread"
+      "setunread",
+      "deleteuserinfo"
     ]),
     //个人hover弹窗
     overShow() {
@@ -242,8 +243,7 @@ export default {
     },
     //退出登录
     logout() {
-      console.log("退出");
-      this.setUserInfo({ nickname: "" });
+      this.deleteuserinfo();
       this.$message.success("退出成功");
     },
     joinin() {
@@ -350,22 +350,17 @@ export default {
           this.$message(e);
         });
     },
-    async getnocitenmu() {
-      if (!localStorage.luffy_jwt_token) {
-        console.log(this.nickname);
-        if (this.nickname !== "") {
+    async getnocitenmu() {     
           const res = await this.$axios.post(
             "/web/getnotice",
             this.qs.stringify({ num: 1 })
           );
           console.log(res.data);
           this.setunread(res.data.data.count);
-        }
-      }
     }
   },
   created() {
-    this.getnocitenmu();
+     localStorage.luffy_jwt_token&&this.getnocitenmu();
   }
 };
 </script>

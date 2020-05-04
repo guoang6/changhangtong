@@ -3,7 +3,7 @@
     <section id="comments">
       <h3 id="comments-title">({{commentnum}}) 留言</h3>
 
-      <article id="comment-4">
+      <article id="comment-4" v-if="userinfo">
         <img
           :src="avatar"
           class="avatar touxiang avatar-60 photo"
@@ -243,6 +243,7 @@ export default {
       contentid: state => state.contentid,
       commentnum: state => state.commentnum,
       contentname: state => state.contentname,
+      userinfo: state => state.userinfo,
       contentuserid: state => state.contentuserid
     })
   },

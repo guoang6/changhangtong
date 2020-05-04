@@ -14,7 +14,7 @@
           <input type="submit" @click.prevent ="login" value="立即登录" class="submit-btn" />
         </p>
         <div class="others">
-          <a href class="register">立即注册</a>
+          <!-- <a href class="register">立即注册</a> -->
         </div>
       </form>
     </div>
