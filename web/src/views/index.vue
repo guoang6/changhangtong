@@ -100,10 +100,9 @@
               <option value="1">首页</option>
               <option value="2">问答</option>
               <option value="3">活动</option>
-              <option value="4">失物</option>
-              <option value="5">招聘信息</option>
-              <option value="6">二手信息</option>
-              <option value="8">登录/注册</option>
+              <option value="4">招聘信息</option>
+              <option value="5">二手信息</option>
+              <option value="6">登录/注册</option>
             </select>
           </nav>
           <!-- End of Main Navigation -->
@@ -225,18 +224,12 @@ export default {
           this.$router.push({ path: "/activity" });
           break;
         case 4:
-          this.$router.push({ path: "/cityArea" });
+          this.$router.push({ path: "/job" });
           break;
         case 5:
-          this.$router.push({ path: "/cityArea" });
+          this.$router.push({ path: "/oldstuff" });
           break;
         case 6:
-          this.$router.push({ path: "/cityArea" });
-          break;
-        case 7:
-          this.$router.push({ path: "/admin" });
-          break;
-        case 8:
           this.close();
           break;
       }

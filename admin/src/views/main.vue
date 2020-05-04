@@ -70,7 +70,7 @@
           </li>
 
           <span style="margin-right: 30px">{{uinfo.nickname}}</span>
-          <span @click="$router.push('/login');">退出</span>
+          <span @click="withdraw">退出</span>
         </el-header>
 
         <el-main style=" padding: 0px; background-color: #f7f7f7;">
@@ -104,6 +104,13 @@ export default {
     })
   },
   methods: {
+    ...mapActions("user", [
+      "deleteuserinfo",
+    ]),
+    withdraw(){
+      this.$router.push('/login');
+       this.deleteuserinfo()
+    },
     changeCollapse() {
       this.isCollapse = !this.isCollapse;
     }
