@@ -213,12 +213,13 @@ export default {
       dialogpw: false, //密码框
       loading: false,
       pagelistquery: {
-        user: "",
         realstate: "",
         companystate: "",
         total: 0,
         page: 1,
-        pagesize: 10
+        pagesize: 10,
+        user: "",
+
       },
       tableData: [], //列表信息
 
@@ -362,6 +363,7 @@ export default {
       console.log(`当前页: ${val}`);
     },
     async getuserlist() {
+      console.log(this.pagelistquery)
       this.loading = true;
       let res = await this.$axios.post(
         "/admin/getuserlist",
@@ -375,12 +377,13 @@ export default {
       }
     },
     jubao() {
+      console.log(1)
       this.pagelistquery.user = this.$route.query.user;
       this.activationttime.jubao_id = this.$route.query.jubao_id;
     }
   },
   created() {
-    this.$route.query && this.jubao();
+    this.$route.query .user&& this.jubao();
     this.getuserlist();
   }
 };

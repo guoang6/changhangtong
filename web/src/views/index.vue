@@ -32,7 +32,7 @@
                   <a>文章/新闻</a>
                 </router-link>
 
-                <li v-if="userinfo">
+                <li v-if="avatar==''">
                   <a @click="closein">登录/注册</a>
                 </li>
                 <el-dropdown v-else>
@@ -194,7 +194,6 @@ export default {
       islogin: state => state.user.islogin,
       avatar: state => state.user.userinfo.avatar,
       nickname: state => state.user.userinfo.nickname,
-      userinfo: state => state.user.userinfo,
       unread: state => state.user.unread
     })
   },

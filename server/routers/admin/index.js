@@ -33,6 +33,7 @@ router.post('/admin/changkefustate', service.changkefustate)
 router.post('/admin/deletekefu', service.deletekefu)
 router.post('/admin/changresult', service.changresult)
 router.post('/admin/changeadminuser', service.changeadminuser)
+router.post('/admin/changeactivationdate', service.changeactivationdate)
 //公告列表
 
 router.post('/admin/announcementlist', service.announcementlist)

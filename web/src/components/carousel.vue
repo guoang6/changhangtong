@@ -6,9 +6,13 @@
       </div>-->
       <el-carousel height="250px">
         <el-carousel-item v-for="(carousel,id) in carousel" :key="id">
-          <a :href="carousel.carousel_url" target="_blank">
+          <div style="height:250px;position:relative">
+            <a  :href="carousel.carousel_url" target="_blank">
+            <h3 style="z-index=33; position: absolute;left: 6px;bottom: 0px;">厚度卡湖卡号对啊后的</h3>
             <img :src="carousel.carousel_img" alt class="carouselimg" />
           </a>
+          </div>
+          
         </el-carousel-item>
       </el-carousel>
     </section>
@@ -26,7 +30,7 @@ export default {
   },
   methods: {
     async carousellist() {
-        console.log("轮播图");
+      console.log("轮播图");
 
       let res = await this.$axios.post(
         "/admin/carousellist",

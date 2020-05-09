@@ -32,8 +32,7 @@ let setnotice = async function (user_from, user_to, nickname, content_id, conten
 //获取求助列表
 exports.webgetwebhelplist = async (req, res) => {
     console.log(req.body)
-
-    let sql1 = ' select count(*) as count from help where 1=1 '
+    let sql1 = ' select count(*) as count from help where ispublic=1 or ispublic=0'
     if (req.body.lable != '') sql1 = `${sql1} and help_lable='${req.body.lable}'`//有分类时
     if (req.body.tag != '') sql1 = `${sql1} and help_tag like '%${req.body.tag}%'`//标签时
     let info1 = []
@@ -45,6 +44,7 @@ exports.webgetwebhelplist = async (req, res) => {
     let sql = 'select help.help_id,help.help_title,help.createtime,help.help_read_num, user.nickname from help,user where help.user_id=user.user_id'
     if (req.body.lable != '') sql = `${sql} and help.help_lable='${req.body.lable}'`//有分类时
     if (req.body.tag != '') sql = `${sql} and help.help_tag like '%${req.body.tag}%'`//标签时
+    sql = `${sql}  and help.ispublic=1 or help.ispublic=0`
     sql = `${sql} order by help.help_read_num desc  limit ? offset ?`
     const result = await query(sql, info)
     data = {
@@ -68,7 +68,8 @@ exports.gethelpcontent = async (req, res) => {
             data: {
             }
         }
-    } else {s
+    } else {
+        s
         data = {
             state: s,
             data: result[0]
@@ -119,7 +120,7 @@ exports.getcompanycontent = async (req, res) => {
             state: s,
             data: {
                 joblist: joblist,
-                company:company[0]
+                company: company[0]
             }
         }
     }
@@ -130,7 +131,7 @@ exports.getjobcontent = async (req, res) => {
     let info = [req.body.id]
     let sql = 'select * from job ,company where company.company_id =job.company_id and job_id=?'
     const add = await query('update job set job_read_num=job_read_num+1 where job_id = ?', info)
-    
+
     const result = await query(sql, info)
     if (result.length == 0) {
         data = {
@@ -223,41 +224,12 @@ exports.getreply = async (req, res) => {
     }
     res.send(data)
 }
-//web获取活动列表
-exports.webgetwebactivitylist = async (req, res) => {
-    let sql1 = ' select count(*) as count from activity '
-    let info1 = []
-    const counts = await query(sql1, info1)
-    let count = counts[0].count
-    let pagesize = req.body.pagesize * 1
-    let page = (req.body.page - 1) * pagesize
-    let info = [pagesize, page]
-    let sql = 'select activity_id,activity_title,createtime from activity order by activity_read_num desc limit ? offset ?'
-    const result = await query(sql, info)
-    if (result.length == 0) {
-        data = {
-            state: e,
-            data: {
-            }
-        }   //    数据库里面没找到配对的内容返回参数
-    } else {
-        data = {
-            state: s,
-            data: result,
-            count: count
-        }
-    }
-    console.log(data)
-    // console.log(result)
-    res.send(data);
-}
+
 //活动详情
 exports.getactivitycontent = async (req, res) => {
     let info = [req.body.id]
     let sql = 'select * from activity,user where user.user_id=activity.user_id and activity.activity_id=?'
     const add = await query('update activity set activity_read_num=activity_read_num+1 where activity_id = ?', info)
-
-
     const result = await query(sql, info)
     if (result.length == 0) {
         data = {
@@ -274,10 +246,37 @@ exports.getactivitycontent = async (req, res) => {
     console.log(result)
     res.send(data);
 }
+//获取求助列表
+exports.webgetwebhelplist = async (req, res) => {
+    console.log(req.body)
+    let sql1 = ' select count(*) as count from help where ispublic=1 or ispublic=0'
+    if (req.body.lable != '') sql1 = `${sql1} and help_lable='${req.body.lable}'`//有分类时
+    if (req.body.tag != '') sql1 = `${sql1} and help_tag like '%${req.body.tag}%'`//标签时
+    let info1 = []
+    const counts = await query(sql1, info1)
+    let count = counts[0].count
+    let pagesize = req.body.pagesize * 1
+    let page = (req.body.page - 1) * pagesize
+    let info = [pagesize, page]
+    let sql = 'select help.help_id,help.help_title,help.createtime,help.help_read_num, user.nickname from help,user where help.user_id=user.user_id'
+    if (req.body.lable != '') sql = `${sql} and help.help_lable='${req.body.lable}'`//有分类时
+    if (req.body.tag != '') sql = `${sql} and help.help_tag like '%${req.body.tag}%'`//标签时
+    sql = `${sql}  and (help.ispublic=1 or help.ispublic=0)`
+    sql = `${sql} order by help.help_read_num desc  limit ? offset ?`
+    const result = await query(sql, info)
+    data = {
+        state: s,
+        data: result,
+        count: count
+    }
+    // console.log(data)
+    // console.log(result)
+    res.send(data);
+}
 //web获取活动列表
 exports.webgetwebactivitylist = async (req, res) => {
     console.log(req.body.lable)
-    let sql1 = ' select count(*) as count from activity '
+    let sql1 = ' select count(*) as count from activity where ispublic=1 or ispublic=0'
     let info1 = []
     const counts = await query(sql1, info1)
     let count = counts[0].count
@@ -286,6 +285,7 @@ exports.webgetwebactivitylist = async (req, res) => {
     let info = [pagesize, page]
     let sql = 'select * from activity,user where activity.user_id=user.user_id'
     if (req.body.lable != '') sql = `${sql} and activity.activity_lable='${req.body.lable}'`//有分类时
+    sql = `${sql}  and (activity.ispublic=1 or activity.ispublic=0)`
     sql = `${sql} order by activity.activity_read_num desc limit ? offset ?`
     const result = await query(sql, info)
     data = {
@@ -300,8 +300,8 @@ exports.webgetwebactivitylist = async (req, res) => {
 //web获取二手列表
 exports.webgetweboldstufflist = async (req, res) => {
     console.log(req.body.lable)
-    let sql1 = ' select count(*) as count from oldstuff '
-    if (req.body.lable != '') sql1 = `${sql1} where oldstuff_lable='${req.body.lable}'`//有分类时
+    let sql1 = ' select count(*) as count from oldstuff where ispublic=1 or ispublic=0'
+    if (req.body.lable != '') sql1 = `${sql1} and oldstuff_lable='${req.body.lable}'`//有分类时
     let info1 = []
     const counts = await query(sql1, info1)
     let count = counts[0].count
@@ -310,6 +310,8 @@ exports.webgetweboldstufflist = async (req, res) => {
     let info = [pagesize, page]
     let sql = 'select * from oldstuff,user where oldstuff.user_id=user.user_id'
     if (req.body.lable != '') sql = `${sql} and oldstuff.oldstuff_lable='${req.body.lable}'`//有分类时
+    sql = `${sql}  and (oldstuff.ispublic=1 or oldstuff.ispublic=0)`
+
     sql = `${sql} order by oldstuff.oldstuff_read_num desc limit ? offset ?`
     const result = await query(sql, info)
     data = {
@@ -321,7 +323,62 @@ exports.webgetweboldstufflist = async (req, res) => {
     // console.log(result)
     res.send(data);
 }
-//求助二手详情
+//web获取工作列表
+exports.webgetjoblist = async (req, res) => {
+    let sql1 = ' select count(*) as count from job  where ispublic=1 or ispublic=0'
+    if (req.body.lable != '') sql1 = `${sql1} and job_lable='${req.body.lable}'`//有分类时
+    let info1 = []
+    const counts = await query(sql1, info1)
+    let count = counts[0].count
+    let pagesize = req.body.pagesize * 1
+    let page = (req.body.page - 1) * pagesize
+    let info = [pagesize, page]
+    let sql = 'select job.job_id,job.job_name,job.job_createtime,job.job_salary,company.company_name' +
+        ' from job,company where job.company_id=company.company_id '
+    if (req.body.lable != '') sql = `${sql} and job.job_lable='${req.body.lable}'`//有分类时
+    sql = `${sql}  and (job.ispublic=1 or job.ispublic=0)`
+    sql = `${sql} order by job.job_read_num desc limit ? offset ?`
+    const result = await query(sql, info)
+
+    data = {
+        state: s,
+        data: result,
+        count: count
+    }
+    console.log(data)
+    // console.log(result)
+    res.send(data);
+}
+//获取文章列表
+exports.getarticlelist = async (req, res) => {
+    let sql1 = ' select count(*) as count from article  where ispublic=1 or ispublic=0'
+    if (req.body.lable != '') sql1 = `${sql1} and article_lable='${req.body.lable}'`//有分类时
+
+    let info1 = []
+    const counts = await query(sql1, info1)
+    let count = counts[0].count
+    let pagesize = req.body.pagesize * 1
+    let page = (req.body.page - 1) * pagesize
+    let info = [pagesize, page]
+    let sql = 'select article.article_read_num,article.article_id,article.article_title,article.article_introduction,' +
+        'article.article_createtime,user.nickname from article,user where article.user_id=user.user_id '
+    if (req.body.lable != '') sql = `${sql} and article.article_lable='${req.body.lable}'`//有分类时
+    sql = `${sql}  and (article.ispublic=1 or article.ispublic=0)`
+
+    sql = `${sql} order by article.article_read_num desc limit ? offset ?`
+    const result = await query(sql, info)
+
+    data = {
+        state: s,
+        data: result,
+        count: count
+    }
+    console.log(data)
+    // console.log(result)
+    res.send(data);
+}
+
+//二手详情
 exports.getoldstuffcontent = async (req, res) => {
     let info = [req.body.id]
     let sql = 'select * from oldstuff,user where user.user_id=oldstuff.user_id and oldstuff.oldstuff_id=?'
@@ -365,59 +422,7 @@ exports.webgetcompanylist = async (req, res) => {
     // console.log(result)
     res.send(data);
 }
-//web获取工作列表
-exports.webgetjoblist = async (req, res) => {
-    let sql1 = ' select count(*) as count from job where 1=1'
-    if (req.body.lable != '') sql1 = `${sql1} and job_lable='${req.body.lable}'`//有分类时
 
-    let info1 = []
-    const counts = await query(sql1, info1)
-    let count = counts[0].count
-    let pagesize = req.body.pagesize * 1
-    let page = (req.body.page - 1) * pagesize
-    let info = [pagesize, page]
-    let sql = 'select job.job_id,job.job_name,job.job_createtime,job.job_salary,company.company_name' +
-        ' from job,company where job.company_id=company.company_id '
-    if (req.body.lable != '') sql = `${sql} and job.job_lable='${req.body.lable}'`//有分类时
-    sql = `${sql} order by job.job_read_num desc limit ? offset ?`
-    const result = await query(sql, info)
-
-    data = {
-        state: s,
-        data: result,
-        count: count
-    }
-    console.log(data)
-    // console.log(result)
-    res.send(data);
-}
-//获取文章列表
-
-exports.getarticlelist = async (req, res) => {
-    let sql1 = ' select count(*) as count from article where 1=1'
-    if (req.body.lable != '') sql1 = `${sql1} and article_lable='${req.body.lable}'`//有分类时
-
-    let info1 = []
-    const counts = await query(sql1, info1)
-    let count = counts[0].count
-    let pagesize = req.body.pagesize * 1
-    let page = (req.body.page - 1) * pagesize
-    let info = [pagesize, page]
-    let sql = 'select article.article_read_num,article.article_id,article.article_title,article.article_introduction,' +
-        'article.article_createtime,user.nickname from article,user where article.user_id=user.user_id '
-    if (req.body.lable != '') sql = `${sql} and article.article_lable='${req.body.lable}'`//有分类时
-    sql = `${sql} order by article.article_read_num desc limit ? offset ?`
-    const result = await query(sql, info)
-
-    data = {
-        state: s,
-        data: result,
-        count: count
-    }
-    console.log(data)
-    // console.log(result)
-    res.send(data);
-}
 //获取消息
 exports.getnotice = async (req, res) => {
     let sqlnoticenum = ' select count(*) as count from notice where user_to=? and state=0'
@@ -519,14 +524,15 @@ exports.search = async (req, res) => {
     const article = await query(`select * from article,user where article.user_id=user.user_id and (article.article_title like '%${req.body.search}%' or article.article_introduction  like '%${req.body.search}%')`, info)
     data = {
         state: s,
-        data: {help:help,
-            activity:activity,
-            job:job,
-            oldstuff:oldstuff,
-            company:company,
-            article:article,
+        data: {
+            help: help,
+            activity: activity,
+            job: job,
+            oldstuff: oldstuff,
+            company: company,
+            article: article,
         },
-    } 
+    }
     // console.log(data)
     // console.log(result)
     res.send(data);

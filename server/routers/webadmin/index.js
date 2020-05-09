@@ -115,6 +115,7 @@ router.post('/webadmin/jubaocontent', service.jubaocontent)
 router.post('/webadmin/createshensu', service.createshensu)
 router.post('/webadmin/getusernumbering', service.getusernumbering)
 router.post('/webadmin/deletejoin', service.deletejoin)
+router.post('/webadmin/deleteoldstuff', service.deleteoldstuff)
 
 
 

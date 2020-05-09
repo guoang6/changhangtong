@@ -59,6 +59,7 @@ exports.login = async (req, res) => {
     req.body.password = md5(`${req.body.password}${PED_SALT}`)
     let info = [req.body.username, req.body.password]
     let sql = 'select * from admin where username=? and password=?'
+    
     const result = await query(sql, info)
     if (result.length == 0) {
         data = {

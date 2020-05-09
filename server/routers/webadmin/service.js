@@ -584,6 +584,28 @@ exports.getweboldstufflist = async (req, res) => {
     // console.log(result)
     res.send(data);
 }
+//删除二手
+exports.deleteoldstuff = async (req, res) => {
+    let info = [req.body.oldstuff_id, req.user.uid]
+
+    let sql = 'delete  from oldstuff where oldstuff_id=? and user_id=?'
+    const result = await query(sql, info)
+    if (result.length == 0) {
+        data = {
+            state: e,
+            data: {
+            }
+        }
+    } else {
+        data = {
+            state: s,
+            data: {
+            }
+        }
+    }
+    console.log(result)
+    res.send(data)
+}
 //活动详情
 exports.getoldstuffdetails = async (req, res) => {
     console.log(req.body)

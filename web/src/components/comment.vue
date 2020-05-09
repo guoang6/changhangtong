@@ -132,38 +132,37 @@
                     <li class="comment even thread-odd thread-alt depth-1" id="li-comment-4">
                       <article id="comment-4">
                         <img
-                          :src="item.avatar"
+                          :src="data.avatar"
                           class="avatar touxiang avatar-60 photo"
                           height="60"
                           width="60"
                         />
-
                         <div class="comment-meta">
-                          <h5 class="author">{{item.nickname}}</h5>
+                          <h5 class="author">{{data.nickname}}</h5>
 
-                          <p class="date" v-if="item.realstate==3">认证用户</p>
+                          <p class="date" v-if="data.realstate==3">认证用户</p>
                           <p class="date" v-else>未认证用户</p>
                         </div>
                       </article>
                     </li>
                     <div class="xinxi">
                       <p style="  color: #000;">账号：</p>
-                      <p>{{item.username}}</p>
+                      <p>{{data.username}}</p>
                     </div>
                     <div class="xinxi">
                       <p style="  color: #000;">邮箱：</p>
-                      <p>{{item.mail}}</p>
+                      <p>{{data.mail}}</p>
                     </div>
                     <div class="xinxi">
                       <p style="  color: #000;">QQ：</p>
-                      <p>{{item.qq}}</p>
+                      <p>{{data.qq}}</p>
                     </div>
                     <div class="xinxi">
                       <p style="  color: #000;">个人简介：</p>
-                      <p>{{item.synopsis}}</p>
+                      <p>{{data.synopsis}}</p>
                     </div>
                     <el-button
-                      @click="jubao(item.username)"
+                      @click="jubao(data.username)"
                       style="margin:10px 150px"
                       type="danger"
                       plain
@@ -173,7 +172,7 @@
                     <a href="#">
                       <img
                         alt
-                        :src="item.avatar"
+                        :src="data.avatar"
                         class="avatar touxiang avatar-60 photo"
                         height="40"
                         width="40"
@@ -183,12 +182,14 @@
                     <div class="comment-meta">
                       <h5 class="author">
                         <cite class="fn">
-                          <a href="#" rel="external nofollow" class="url">{{item.nickname}}</a>
+                          <a href="#" rel="external nofollow" class="url">{{data.nickname}}</a>
                         </cite>
+                        @
+                        <a class="comment-reply-link touser" href="#">{{data.tousernickname}}</a>
                       </h5>
                       <p class="date">
                         <a href="#">
-                          <time>{{item.comment_createtime|dataFormat}}</time>
+                          <time>{{data.comment_createtime|dataFormat}}</time>
                         </a>
                       </p>
                     </div>
@@ -202,10 +203,10 @@
                 <div class="comment-footer">
                   <p class="date">
                     <a href="#">
-                      <time>{{item.createtime|dataFormat}}</time>
+                      <time>{{data.createtime|dataFormat}}</time>
                     </a>
                   </p>
-                  <p @click="showreplyinput(index,data.nickname,data.user_id,item.comment_id)">回复</p>
+                  <p @click="showreplyinput(index,data.nickname,data.user_id,data.comment_id)">回复</p>
                 </div>
                 <div class="reply" v-if="index===replyinputid">
                   <vue-editor
@@ -264,7 +265,7 @@ export default {
   },
   methods: {
     jubao(username) {
-      let url = escape(window.location.href);//escape对url进行编码方便在地址栏传递
+      let url = escape(window.location.href); //escape对url进行编码方便在地址栏传递
       this.$router.push({
         path: "/jubao",
         query: { user: username, url: url }

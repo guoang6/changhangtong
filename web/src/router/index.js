@@ -8,25 +8,17 @@ import job from "../views/job.vue"
 import search from "../views/search.vue"
 import activity from "../views/activity.vue"
 import oldstuff from "../views/oldstuff.vue"
-
-
-
 import helpcontent from "../views/content/helpcontent.vue"
 import oldstuffcontent from "../views/content/oldstuffcontent.vue"
 import activitycontent from "../views/content/activitycontent.vue"
 import newscontent from "../views/content/newscontent.vue"
 import jobcontent from "../views/content/jobcontent.vue"
 import companycontent from "../views/content/companycontent.vue"
-
-
-
-
 import adminindex from "../views/webadmin/adminindex.vue"
 import adminhome from "../views/webadmin/adminhome.vue"
 import myself from "../views/webadmin/myself.vue"
 // import list from "../views/webadmin/list.vue"
 import notice from "../views/webadmin/notice.vue"
-
 import createhelp from "../views/webadmin/help/createhelp.vue"
 import createhelplist from "../views/webadmin/help/createhelplist.vue"
 import createactivity from "../views/webadmin/activity/createactivity.vue"
@@ -34,14 +26,11 @@ import createactivitylist from "../views/webadmin/activity/createactivitylist.vu
 import company from "../views/webadmin/job/company.vue"
 import createarticle from "../views/webadmin/article/createarticle.vue"
 import articlelist from "../views/webadmin/article/articlelist.vue"
-
 import createoldstuff from "../views/webadmin/oldstuff/createoldstuff.vue"
 import createoldstufflist from "../views/webadmin/oldstuff/createoldstufflist.vue"
 import fankui from "../views/kefu/fankui.vue"
 import jubao from "../views/kefu/jubao.vue"
 import shensu from "../views/kefu/shensu.vue"
-
-
 import Router from 'vue-router'
 
 Vue.use(VueRouter)
@@ -74,7 +63,6 @@ const routes = [
       { path: 'fankui', name: 'fankui', component: fankui, meta:{ispublic:true}},
       { path: 'jubao', name: 'jubao', component: jubao, meta:{ispublic:true}},
       { path: 'shensu', name: 'shensu', component: shensu, meta:{ispublic:true}},
-      
       {
         path: 'admin', name: 'adminindex',  component: adminindex, children: [
           // { path: '*', redirect: 'admin/home', },

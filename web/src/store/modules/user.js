@@ -2,7 +2,7 @@ const state = {
     islog: true,
     islogin: true,
     isclose: false,
-    userinfo: JSON.parse(localStorage.getItem("userinfo")) || {},//先去localStorage中获取数据
+    userinfo: JSON.parse(localStorage.getItem("userinfo")) || {avatar:''},//先去localStorage中获取数据
     unread: 0
 
 }
@@ -19,7 +19,7 @@ const mutations = {
         state.islog = !state.islog
     },
     DELETE_USERINFO(state) {
-        state.userinfo={}
+        state.userinfo={avatar:''}
         window.localStorage.removeItem('userinfo')
         window.localStorage.removeItem('luffy_jwt_token')
 
