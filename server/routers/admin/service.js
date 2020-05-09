@@ -486,9 +486,9 @@ exports.changecarousel = async (req, res) => {
     let time = Date.now() - 8 * 60 * 60
     let carousel_id = uuid.v1()
     let sql
-    let info = [req.body.carousel_img, req.body.carousel_url, time, carousel_id]
-    if (req.body.carousel_id == '') sql = `insert carousel  set carousel_img=?,carousel_url=?,carousel_createtime=?,carousel_id=?`
-    else sql = `update carousel  set carousel_img=?,carousel_url=? where carousel_id='${req.body.carousel_id}'`
+    let info = [req.body.carousel_img, req.body.carousel_url ,req.body.carousel_title, time, carousel_id]
+    if (req.body.carousel_id == '') sql = `insert carousel  set carousel_img=?,carousel_url=?,carousel_title=?,carousel_createtime=?,carousel_id=?`
+    else sql = `update carousel  set carousel_img=?,carousel_url=?,carousel_title=? where carousel_id='${req.body.carousel_id}'`
     const result = await query(sql, info)
     data = {
         state: s,

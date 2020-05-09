@@ -34,6 +34,9 @@
               <i v-else class="el-icon-plus avatar-uploader-icon"></i>
             </el-upload>
           </el-form-item>
+          <el-form-item label="标题">
+            <el-input v-model="carousel.carousel_title" @keyup.enter.native="changecarousel(id)"></el-input>
+          </el-form-item>
           <el-form-item label="链接">
             <el-input v-model="carousel.carousel_url" @keyup.enter.native="changecarousel(id)"></el-input>
           </el-form-item>
@@ -56,7 +59,8 @@ export default {
     async changecarousel(id) {
       if (
         this.carousel[id].carousel_img !== "" &&
-        this.carousel[id].carousel_url !== ""
+        this.carousel[id].carousel_url !== "" &&
+        this.carousel[id].carousel_title !== ""
       ) {
         let res = await this.$axios.post(
           "/admin/changecarousel",
@@ -70,23 +74,25 @@ export default {
           this.carousellist();
         }
       } else {
-        this.carousel[id].carousel_id == ""&&this.carousel.shift();
+        this.carousel[id].carousel_id == "" && this.carousel.shift();
       }
     },
     del(id) {
       if (
         this.carousel[id].carousel_img !== "" &&
-        this.carousel[id].carousel_url !== ""&&
-        this.carousel[id].carousel_id !== ""
+        this.carousel[id].carousel_url !== "" &&
+        this.carousel[id].carousel_id !== "" &&
+        this.carousel[id].carousel_title !== ""
       )
         this.deletecarouse(id);
-      else this.carousel[id].carousel_id== ""&&this.carousel.shift();
+      else this.carousel[id].carousel_id == "" && this.carousel.shift();
     },
     add() {
       this.carousel.unshift({
         carousel_img: "",
         carousel_url: "",
-        carousel_id: ""
+        carousel_id: "",
+        carousel_title: ""
       });
     },
     //文件上传成功时的钩子
@@ -94,7 +100,11 @@ export default {
       console.log(res);
       this.carousel[id].carousel_img = res.url;
       console.log(this.carousel);
-      if (this.carousel[id].carousel_url !== "") this.changecarousel(id);
+      if (
+        this.carousel[id].carousel_url !== "" &&
+        this.carousel[id].carousel_title !== ""
+      )
+        this.changecarousel(id);
     },
     async deletecarouse(id) {
       let res = await this.$axios.post(

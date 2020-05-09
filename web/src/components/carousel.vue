@@ -7,12 +7,13 @@
       <el-carousel height="250px">
         <el-carousel-item v-for="(carousel,id) in carousel" :key="id">
           <div style="height:250px;position:relative">
-            <a  :href="carousel.carousel_url" target="_blank">
-            <h3 style="z-index=33; position: absolute;left: 6px;bottom: 0px;">厚度卡湖卡号对啊后的</h3>
-            <img :src="carousel.carousel_img" alt class="carouselimg" />
-          </a>
+            <a :href="carousel.carousel_url" target="_blank">
+              <div class="carouseltitle">
+               {{carousel.carousel_title}}
+              </div>
+              <img :src="carousel.carousel_img" alt class="carouselimg" />
+            </a>
           </div>
-          
         </el-carousel-item>
       </el-carousel>
     </section>
@@ -55,5 +56,18 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.carouseltitle {
+  position: absolute;
+  left: 0px;
+  bottom: 4px;
+  width: 100%;
+  height: 30px;
+ background-color: aliceblue;
+ font-size: 20px;
+ opacity:0.4;
+ font-weight:800;
+ color: black;
+ padding: 5px;
 }
 </style>
