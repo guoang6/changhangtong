@@ -46,9 +46,20 @@ http://www.guoang.xyz/changhangtong/admin
      * 账号管理
              账号添加/删除/授权/
 
-# 前台台   
+# 前台   
 ## 前台-首页
 <img  src="./tu/qt-sy.png"> 
+
+## 前台-功能模块
+|                                                                                     |                                           |
+| ----------- | --------------- |
+| ![](./tu/qt-wd-list.png)   交流问答列表核                                                       | ![](./tu/qt-pl.png) 评论        |
+| ----------- | --------------- |
+| ![](./tu/qt-hd-list.png)   校内活动列表核                                                       | ![](./tu/qt-es-list.png) 二手信息列表         |
+| ----------- | --------------- |
+| ![](./tu/qt-wd-list.png)   招聘列表核                                                       | ![](./tu/qt-wz-list.png) 文章列表         |
+## 前台-个人中心
+<img  src="./tu/qt-grzx.png">  
 
 # 后台   
 ## 后台-首页
