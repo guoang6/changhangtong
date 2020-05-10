@@ -1,7 +1,7 @@
 # changhangtong
 vue.js+node.js毕业设计 -----
 ## 线上演示
-http://www.guoang.xyz/changhangtong
+http://www.guoang.xyz/changhangtong<br>
 http://www.guoang.xyz/changhangtong/admin
 
 # 主要功能模块
@@ -78,7 +78,7 @@ http://www.guoang.xyz/changhangtong/admin
 
 |                                                                                     |                                           |
 | --------------------------------------------------------------------------------------- | ------------------------------------------- |
-| ![](./tu/h-gl1.png)分类管理                                                       | ![][](./tu/ht-gl2.png) 轮播图管理        |
+| ![](./tu/h-gl1.png)分类管理                                                       | ![](./tu/ht-gl2.png) 轮播图管理        |
 
 
 
