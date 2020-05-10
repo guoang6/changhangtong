@@ -68,6 +68,6 @@ export default {
  opacity:0.4;
  font-weight:800;
  color: black;
- padding: 5px;
+ line-height: 30px;
 }
 </style>
