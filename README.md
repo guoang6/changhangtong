@@ -1,5 +1,8 @@
 # changhangtong
-vue.js+node.js毕业设计
+vue.js+node.js毕业设计 -----
+## 线上演示
+http://www.guoang.xyz/changhangtong
+http://www.guoang.xyz/changhangtong/admin
 
 # 主要功能模块
 - 前台
