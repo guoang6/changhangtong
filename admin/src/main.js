@@ -47,7 +47,7 @@ axios.interceptors.request.use(
   config => {
     let admin_jwt_token =window.localStorage.getItem('admin_jwt_token');
     // console.log(admin_jwt_token)
-    config.headers.Authorization = `Bearer ${admin_jwt_token}`;
+    config.headers.Authorization = `Bearer ${admin_jwt_token}`;//请求头携带token
     return config;
   },
   err => {

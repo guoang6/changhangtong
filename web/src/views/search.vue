@@ -36,11 +36,11 @@
                       <a
                         class="iconfont"
                         style="margin-left:50px"
-                      >&#xe688;</a>哈哈哈哈
+                      >&#xe688;</a>{{item.nickname}}
                     </span>
                     <span class="like-count">
                       <span class="like-count">
-                        <a class="iconfont">&#xe61c;</a>55
+                        <a class="iconfont">&#xe61c;</a>{{item.help_read_num}}
                       </span>
                     </span>
                   </li>
@@ -135,7 +135,7 @@
                           title="Comment on Integrating WordPress with Your Website"
                         >3 Comments</a>
                       </span>
-                      <span class="like-count">66</span>
+                      <span class="like-count"> <a class="iconfont">&#xe61c;</a>{{item.article_read_num}}</span>
                     </div>
                     <!-- end of post meta -->
                   </header>

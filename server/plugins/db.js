@@ -3,16 +3,16 @@ const { dbmysql } = require('./DataBase.ini')//数据库配置文件
 const { debug } = require('./config.js')//debug配置文件
 function connection() {
   return mysql.createConnection({
-    host: dbmysql.host,
-    user: dbmysql.user,
+    host: dbmysql.host,//地址
+    user: dbmysql.user,//用户名
     password: dbmysql.password,
-    database: dbmysql.database,
-    port: dbmysql.port
+    database: dbmysql.database,//数据库名
+    port: dbmysql.port//端口
   })
 }
 function query(sql, data) {
   const conn = connection()
-  return new Promise((resovle, reject) => {
+  return new Promise((resovle, reject) => {//返回Promise对象
     debug && console.log('sql语句：' + JSON.stringify(sql))
     try {
       conn.query(sql, data, function (error, results, fields) {
@@ -27,7 +27,7 @@ function query(sql, data) {
         }
       });
     } catch (e) {
-      reject(e)
+      reject(e)//抛出异常
     }
     finally {
       conn.end()

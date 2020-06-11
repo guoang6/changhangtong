@@ -305,11 +305,6 @@ export default {
         this.$message.error("账号或者密码为空");
         return;
       }
-      // this.pwdhash = crypto
-      //   .createHash("sha1")
-      //   .update(this.password)
-      //   .digest("hex");
-      // let this_ = this;
       let obj = {
         password: this.password,
         username: this.username,

@@ -16,7 +16,7 @@
                     <a
                       class="iconfont"
                       style="margin-left:50px"
-                    >&#xe688;</a>哈哈哈哈
+                    >&#xe688;</a>{{item.nickname}}
                   </span>
                   <span class="like-count">
                     <span class="like-count">

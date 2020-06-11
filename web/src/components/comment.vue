@@ -264,18 +264,27 @@ export default {
     };
   },
   methods: {
-    jubao(username) {
-      let url = escape(window.location.href); //escape对url进行编码方便在地址栏传递
-      this.$router.push({
-        path: "/jubao",
-        query: { user: username, url: url }
-      });
-    },
+   
     ...mapActions(["setcommentnum"]),
     //
     usercomment() {
       this.editorid = -1;
       this.replyinputid = -2;
+    },
+    //获取评论
+    async getcomment() {
+      let data = {
+        content_id: this.contentid
+      };
+      let res = await this.$axios.post(
+        "/web/getcomment",
+        this.qs.stringify(data)
+      );
+      if (res.data.state.type === "SUCCESS") {
+        this.commentlist = res.data.data;
+        console.log(this.commentlist);
+        this.setcommentnum(res.data.count);
+      }
     },
     //回复回复按钮
     showreplyinput(index, tousernickname, touserid, comment_id) {
@@ -301,12 +310,7 @@ export default {
         this.comment_id = comment_id;
       }
     },
-    // reply(){
-    //   this.touserid='',
-    //   this.tousernickname='',
-    //   this.editorid= -1
-    // },
-    //富文本编辑器图片上传npm install vue2-editor
+   
     async handleImageAdded(file, Editor, cursorLocation, resetUploader) {
       const formData = new FormData();
       formData.append("file", file);
@@ -377,21 +381,13 @@ export default {
         this.editorid = -2;
       }
     },
-    //获取评论
-    async getcomment() {
-      let data = {
-        content_id: this.contentid
-      };
-      let res = await this.$axios.post(
-        "/web/getcomment",
-        this.qs.stringify(data)
-      );
-      if (res.data.state.type === "SUCCESS") {
-        this.commentlist = res.data.data;
-        console.log(this.commentlist);
-        this.setcommentnum(res.data.count);
-      }
-    }
+     jubao(username) {
+      let url = escape(window.location.href); //escape对url进行编码方便在地址栏传递
+      this.$router.push({
+        path: "/jubao",
+        query: { user: username, url: url }
+      });
+    },
   },
   created() {
     this.getcomment();

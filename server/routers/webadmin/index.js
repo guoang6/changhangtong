@@ -3,6 +3,8 @@ const express = require('express')
 const router = express.Router()
 const service = require('./service')//相关操作逻辑
 const jwt = require('../../plugins/jwt')//引入jwt
+const { accessKeyId, accessKeySecret, region,bucket } = require('../../plugins/config.js')
+
 router.use(jwt)//express-jwt中间件
 router.use(function (err, req, res, next) {
   if (err) {
@@ -24,10 +26,10 @@ const MAO = require('multer-aliyun-oss');//npm install --save multer-aliyun-oss
 const uplod = multer({
   storage: MAO({
       config: {
-          region: 'oss-cn-hangzhou',
-          accessKeyId: 'LTAI4Fr4sf8xzgggy75Tofnr',
-          accessKeySecret: 'BdpR8FnmP8OmyBnWWIooPuD6Cef0b3',
-          bucket: 'guoang'
+          region: region,
+          accessKeyId: accessKeyId,
+          accessKeySecret: accessKeySecret,
+          bucket: bucket
       }
   })
 });
