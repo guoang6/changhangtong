@@ -3,7 +3,8 @@ const express = require('express')
 const router = express.Router()
 const service = require('./service')//相关操作逻辑
 const jwt = require('../../plugins/jwt')//引入jwt
-const { accessKeyId, accessKeySecret, region,bucket } = require('../../plugins/config.js')
+const { dbmysql } = require('./DataBase.ini')//数据库配置文件
+
 
 router.use(jwt)//express-jwt中间件
 router.use(function (err, req, res, next) {
@@ -26,10 +27,10 @@ const MAO = require('multer-aliyun-oss');//npm install --save multer-aliyun-oss
 const uplod = multer({
   storage: MAO({
       config: {
-          region: region,
-          accessKeyId: accessKeyId,
-          accessKeySecret: accessKeySecret,
-          bucket: bucket
+          region: dbmysql.region,
+          accessKeyId: dbmysql.accessKeyId,
+          accessKeySecret: dbmysql.accessKeySecret,
+          bucket: dbmysql.bucket
       }
   })
 });
